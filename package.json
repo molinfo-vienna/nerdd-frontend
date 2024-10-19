@@ -1,0 +1,104 @@
+{
+    "name": "nerdd-frontend",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@floating-ui/react": "^0.26.19",
+        "@reduxjs/toolkit": "^1.9.7",
+        "@shippr/supersocket": "^1.0.6",
+        "@testing-library/jest-dom": "^5.17.0",
+        "@testing-library/react": "^13.4.0",
+        "@testing-library/user-event": "^13.5.0",
+        "@uidotdev/usehooks": "^2.4.1",
+        "bootstrap": "^5.3.2",
+        "final-form": "^4.20.10",
+        "http-proxy-middleware": "^3.0.0",
+        "lorem-ipsum": "^2.0.8",
+        "mock-socket": "^9.3.1",
+        "object-hash": "^3.0.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-draggable": "^4.4.6",
+        "react-dropzone": "^14.2.3",
+        "react-final-form": "^6.5.9",
+        "react-icons": "^5.2.1",
+        "react-markdown": "^9.0.0",
+        "react-redux": "^8.1.3",
+        "react-router-dom": "^6.17.0",
+        "react-scripts": "^5.0.1",
+        "react-scrollspy-navigation": "^2.0.6",
+        "reconnecting-websocket": "^4.4.0",
+        "rehype-slug": "^6.0.0",
+        "remark-parse": "^11.0.0",
+        "tweakpane": "^1.6.1",
+        "use-tweaks": "^0.3.1",
+        "web-vitals": "^2.1.4"
+    },
+    "scripts": {
+        "start": "ESLINT_NO_DEV_ERRORS='true' react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "devDependencies": {
+        "@faker-js/faker": "^8.3.1",
+        "eslint": "^8.52.0",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-plugin-import": "^2.29.0",
+        "eslint-plugin-prettier": "^5.1.3",
+        "miragejs": "^0.1.48",
+        "prettier": "^3.2.4"
+    },
+    "eslintConfig": {
+        "env": {
+            "browser": true
+        },
+        "extends": [
+            "plugin:react/recommended",
+            "plugin:prettier/recommended"
+        ],
+        "plugins": [
+            "prettier"
+        ],
+        "rules": {
+            "prettier/prettier": [
+                "error",
+                {
+                    "semi": false,
+                    "tabWidth": 4,
+                    "eslintIntegration": true
+                }
+            ],
+            "semi": [
+                "error",
+                "never"
+            ],
+            "no-param-reassign": [
+                "error",
+                {
+                    "props": false
+                }
+            ]
+        },
+        "parserOptions": {
+            "ecmaVersion": "latest",
+            "sourceType": "module",
+            "ecmaFeatures": {
+                "jsx": true
+            }
+        }
+    }
+}
