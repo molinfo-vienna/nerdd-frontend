@@ -1,0 +1,227 @@
+@import url(http://fonts.googleapis.com/css?family=Cabin:400,500,700);
+@import url(http://fonts.googleapis.com/css?family=Dosis:500,700);
+
+// $font-family-base: 'Martel Sans';
+// $font-size-base: 1.1rem;
+
+// fonts tried
+// x Work Sans
+// x Nobile 
+// x Karma
+// Dosis
+// Domine
+// Overpass
+
+// h4, h5, h6
+// Neuton looks ugly
+// Martal Sans is sans serif
+// Overpass is too thin
+// Domine (?)
+// Dosis (?)
+
+// Vollkorn
+// Cabin
+// x Cuprum
+
+// $font-family-sans-serif:      
+// $font-family-monospace: 
+
+$enable-negative-margins: true;
+$card-border-radius: 0.8em;
+
+// $body-bg: #f0f7ee;
+// $body-color: #1D1E2C;
+// $headings-color: $body-color;
+// $card-bg: #4a7b9d;
+// $card-cap-bg: $card-bg;
+// $card-title-color: #F0F7EE;
+// $card-color: $card-title-color;
+// $card-border-color: #1D1E2C;
+// $card-border-width: 0;
+// $navbar-bg: #4a7b9d;
+// $body-tertiary-bg: #1D1E2C;
+// $body-tertiary-color: #F0F7EE;
+
+// $primary: #4a7b9d;
+// $secondary: #E6E8E6;
+// $success: #1D1E2C;
+// $info: #1D1E2C;
+// $warning: #1D1E2C;
+// $danger: #1D1E2C;
+// $body-bg: #FFFFFF;
+// $body-color: #1D1E2C;
+
+//
+// primary: used for
+// * module cards on landing page (when hovering)
+// * buttons, links, and other elements that denote primary actions
+//
+$primary: #084887; // polynesian blue
+// $primary: #4a7b9d; // steel blue
+// $primary: #1F2041; // space cadet
+// $primary: #454E9E; // violet blue
+// $primary: #033F63; // indigo dye
+
+// $primary: #1C7C54; // dark spring green
+// $primary: #5e8c61; // sea green
+
+
+
+
+$secondary: #E6E8E6; // platinum
+// $secondary: #A2BCE0; // powder blue
+
+
+//
+// danger
+//
+$danger: #e55934;
+// $danger: #e55934; // cinnabar
+// $danger: #F58A07; // tangerine
+// $danger: #FF9F1C; // orange peel
+// $danger: #A44A3F; // chestnut
+// $danger: #D66853; // jasper
+
+// $success: #1D1E2C;
+// $info: #1D1E2C;
+// $warning: #1D1E2C;
+
+
+//
+// body-bg
+//
+$body-bg: #FFFFFF;
+
+//
+// body-color
+//
+// $body-color: #3F403F; // onyx
+$body-color: #1D1E2C; // raisin black
+// $body-color: #0B2027; // rich black
+// $body-color: #1E2019; // eerie black
+// $body-color: #2E3138; // gunmetal
+
+$body-emphasis-color: $body-color;
+// $body-tertiary-bg: #1D1E2C;
+// $body-tertiary-color: #E6E8E6;
+
+$card-bg: $body-bg;
+$card-cap-bg: $card-bg;
+
+// $table-color: $secondary;
+// $card-title-color: #1D1E2C;
+// $card-color: $card-title-color;
+// $card-border-color: #1D1E2C;
+// $card-border-width: 0px;
+// $navbar-bg: #4a7b9d;
+// $navbar-light-color: #1D1E2C;
+
+// nice colors
+// mint cream: #f0f7ee
+// sea salt: #F9F8F8
+// ghostly white: #ECEBF3
+
+
+@import "~bootstrap/scss/bootstrap.scss";
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Cabin';
+    font-weight: 700;
+}
+
+h4,
+h5,
+h6 {
+    // font-family: 'Dosis';
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        monospace;
+}
+
+/*
+ * A muted link is a link that is styled like regular text, but will look like a link 
+ * when hovered.
+ */
+a.muted-link {
+    color: $body-secondary-color;
+    text-decoration: none;
+}
+
+a.muted-link:hover,
+a.muted-link:focus {
+    color: $primary;
+    text-decoration: underline;
+}
+
+/*
+ * A primary muted link is a link that is styled like *primary* regular text, but will 
+ * look like a link when hovered.
+ */
+a.primary-muted-link {
+    color: $primary;
+    text-decoration: none;
+}
+
+a.primary-muted-link:hover,
+a.primary-muted-link:focus {
+    color: $primary;
+    text-decoration: underline;
+}
+
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+    @include media-breakpoint-up($breakpoint) {
+        $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+        .border#{$infix}-top {
+            border-top: $border-width solid $border-color !important;
+        }
+
+        .border#{$infix}-right {
+            border-right: $border-width solid $border-color !important;
+        }
+
+        .border#{$infix}-bottom {
+            border-bottom: $border-width solid $border-color !important;
+        }
+
+        .border#{$infix}-left {
+            border-left: $border-width solid $border-color !important;
+        }
+
+        .border#{$infix}-top-0 {
+            border-top: 0 !important;
+        }
+
+        .border#{$infix}-right-0 {
+            border-right: 0 !important;
+        }
+
+        .border#{$infix}-bottom-0 {
+            border-bottom: 0 !important;
+        }
+
+        .border#{$infix}-left-0 {
+            border-left: 0 !important;
+        }
+
+        .border#{$infix}-x {
+            border-left: $border-width solid $border-color !important;
+            border-right: $border-width solid $border-color !important;
+        }
+
+        .border#{$infix}-y {
+            border-top: $border-width solid $border-color !important;
+            border-bottom: $border-width solid $border-color !important;
+        }
+    }
+}
