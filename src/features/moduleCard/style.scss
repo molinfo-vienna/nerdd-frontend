@@ -1,0 +1,33 @@
+@import "../../index.scss";
+
+// note: we use .card.module-card to make this rule more specific
+// -> the following properties have precedence over the default card properties
+.card.module-card {
+    // cards need to have a fixed width so they can be arranged in a grid
+    width: 18rem;
+}
+
+.card.module-card .card-header img {
+    max-height: 11rem;
+}
+
+.card.module-card:hover {
+    background-color: $body-tertiary-bg;
+    border-color: $primary;
+
+    // I tried to make the card grow on hover (below), but I liked the color change more
+    // transform: scale(1.05);
+    // box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+}
+
+.card.module-card:hover .card-header {
+    background-color: $body-tertiary-bg;
+}
+
+.card.module-card:hover .card-title {
+    color: $primary;
+}
+
+.card.module-card:hover .card-body {
+    color: $primary;
+}
