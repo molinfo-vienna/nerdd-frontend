@@ -1,0 +1,18 @@
+@import "../../index.scss";
+
+// note: we use .card.header-card to make this rule more specific
+// -> the following properties have precedence over the default card properties
+.card.header-card {
+    // cards need to have a fixed width and height so they can be arranged in a grid
+    min-width: 180px;
+    max-width: 180px;
+    min-height: 130px;
+    max-height: 130px;
+
+    background-color: transparent;
+}
+
+.card.header-card:hover {
+    background-color: rgba($primary, .03);
+    border-color: $primary;
+}
