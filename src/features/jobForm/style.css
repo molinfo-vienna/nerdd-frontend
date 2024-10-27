@@ -1,0 +1,8 @@
+.connection-line {
+    /* length of the line connecting tooltip and its reference element */
+    width: 100px;
+}
+
+.tooltip-text {
+    max-width: 300px;
+}
