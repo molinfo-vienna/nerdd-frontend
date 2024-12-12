@@ -52,28 +52,28 @@ export default function App() {
                     element: <LandingPage />,
                 },
                 {
-                    path: "/:moduleName",
+                    path: "/:moduleId",
                     id: "createJob",
                     element: <CreateJobPage />,
                 },
                 {
-                    path: "/:moduleName/about",
+                    path: "/:moduleId/about",
                     id: "about",
                     element: <AboutPage />,
                 },
                 {
-                    path: "/:moduleName/api",
+                    path: "/:moduleId/api",
                     id: "api",
                     element: <DeveloperPage />,
                 },
                 {
-                    path: "/:moduleName/cite",
+                    path: "/:moduleId/cite",
                     id: "cite",
                     element: <CitationPage />,
                 },
                 {
                     // put this route at the bottom to avoid conflicts with other routes
-                    path: "/:moduleName/:jobId",
+                    path: "/:moduleId/:jobId",
                     id: "results",
                     element: <ResultsPage />,
                 },

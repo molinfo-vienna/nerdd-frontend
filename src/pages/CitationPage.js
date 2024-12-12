@@ -5,21 +5,19 @@ import Footer from "../features/footer/Footer"
 import Header from "../features/header/Header"
 import Icon from "../features/icon/Icon"
 import TangleRuntime from "../features/tangleRuntime/TangleRuntime"
-import { useGetModulesQuery } from "../services"
+import { useGetModuleQuery } from "../services"
 import LoadingPage from "./LoadingPage"
 
 export default function CitationPage() {
-    const { moduleName } = useParams()
+    const { moduleId } = useParams()
 
-    const { data: modules, error, isLoading } = useGetModulesQuery()
+    const { data: module, error, isLoading } = useGetModuleQuery(moduleId)
 
     if (isLoading) {
         return LoadingPage()
     }
 
-    const module = modules[moduleName]
-
-    if (!module) {
+    if (error || !module) {
         return <div>Module not found</div>
     }
 
@@ -29,19 +27,19 @@ export default function CitationPage() {
                 <Header.Content>
                     <Markdown className="lead">{module.description}</Markdown>
                 </Header.Content>
-                <Header.Card href={`/${moduleName}/about`}>
+                <Header.Card href={`/${moduleId}/about`}>
                     <p className="mb-2">
                         <Icon name="FaBookOpen" size={35} className="me-2" />
                     </p>
                     <span>Documentation</span>
                 </Header.Card>
-                <Header.Card href={`/${moduleName}/api`}>
+                <Header.Card href={`/${moduleId}/api`}>
                     <p className="mb-2">
                         <Icon name="FaPlug" size={35} className="me-2" />
                     </p>
                     <span>Developer API</span>
                 </Header.Card>
-                <Header.Card href={`/${moduleName}/cite`}>
+                <Header.Card href={`/${moduleId}/cite`}>
                     <p className="mb-2">
                         <Icon name="FaBook" size={35} className="me-2" />
                     </p>

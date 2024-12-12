@@ -5,7 +5,7 @@ import recursiveCamelToSnakeCase from "./recursiveCamelToSnakeCase"
 
 export default function JobStatusWebSocketMockServer({ job, pageSize }) {
     const [socketServer, setSocketServer] = useState(null)
-    const moduleName = job.moduleName
+    const moduleId = job.moduleId
 
     const jobResponse = {
         ...job,
@@ -23,7 +23,7 @@ export default function JobStatusWebSocketMockServer({ job, pageSize }) {
     // create a socket server
     useEffect(() => {
         const server = new SocketServer(
-            `ws://localhost:3000/websocket/${moduleName}/jobs/${job.id}`,
+            `ws://localhost:3000/websocket/${moduleId}/jobs/${job.id}`,
         )
 
         // initially send the job status once when connecting
@@ -38,7 +38,7 @@ export default function JobStatusWebSocketMockServer({ job, pageSize }) {
             server.clients().forEach((client) => client.close())
             server.stop()
         }
-    }, [moduleName, job.id])
+    }, [moduleId, job.id])
 
     // send the job status if job (specifically numPagesProcessed) changes
     useEffect(() => {

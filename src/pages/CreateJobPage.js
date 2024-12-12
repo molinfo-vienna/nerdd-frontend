@@ -4,29 +4,26 @@ import { useNavigate, useParams } from "react-router-dom"
 import Footer from "../features/footer/Footer"
 import HeaderOneCard from "../features/header/HeaderOneCard"
 import JobForm from "../features/jobForm/JobForm"
-import { useAddJobMutation, useGetModulesQuery } from "../services"
+import { useAddJobMutation, useGetModuleQuery } from "../services"
 import ErrorPage from "./ErrorPage"
 import LoadingPage from "./LoadingPage"
 
 export default function CreateJobPage() {
     const navigate = useNavigate()
 
-    const { moduleName } = useParams()
+    const { moduleId } = useParams()
 
-    const { data: modules, error, isLoading } = useGetModulesQuery()
+    const { data: module, error, isLoading } = useGetModuleQuery(moduleId)
 
     const [addJob, {}] = useAddJobMutation()
 
-    if (isLoading || Object.keys(modules).length === 0) {
+    if (error) {
+        return ErrorPage({ message: "Error fetching modules", error: error })
+    }
+
+    if (isLoading) {
         return LoadingPage()
     }
-
-    // check if moduleName is a valid module (by looking it up in the modules object)
-    if (!(moduleName in modules)) {
-        return ErrorPage({ errorMessage: `Module ${moduleName} not found` })
-    }
-
-    const module = modules[moduleName]
 
     const onSubmit = async (values) => {
         // input
@@ -59,20 +56,20 @@ export default function CreateJobPage() {
             },
         }
 
-        addJob({ moduleName, data }).then((response) => {
+        addJob({ moduleId, data }).then((response) => {
             if (response.error) {
                 console.error(response.error)
                 return
             }
 
-            navigate(`/${moduleName}/${response.data.id}`)
+            navigate(`/${moduleId}/${response.data.id}`)
         })
     }
 
-    const authorList = module.publication.authors.map(
-        (author) => `${author.firstName} ${author.lastName}`,
-    )
-    const authorText = authorList.join(", ")
+    // const authorList = module.publication.authors.map(
+    //     (author) => `${author.firstName} ${author.lastName}`,
+    // )
+    // const authorText = authorList.join(", ")
 
     return (
         <>
@@ -81,29 +78,29 @@ export default function CreateJobPage() {
                     <Markdown className="lead">{module.description}</Markdown>
                 </HeaderOneCard.Content>
                 <HeaderOneCard.CardSection>
-                    <p className="fw-bold mb-2">
+                    {/* <p className="fw-bold mb-2">
                         {module.publication.title}{" "}
                         <span className="fw-normal text-body-secondary">
                             ({module.publication.journal}{" "}
                             {module.publication.year})
                         </span>
                     </p>
-                    <p className="mb-2">{authorText}</p>
+                    <p className="mb-2">{authorText}</p> */}
                 </HeaderOneCard.CardSection>
                 <HeaderOneCard.Icon
                     icon="FaBookOpen"
                     caption="Docs"
-                    href={`/${moduleName}/about`}
+                    href={`/${moduleId}/about`}
                 />
                 <HeaderOneCard.Icon
                     icon="FaPlug"
                     caption="API"
-                    href={`/${moduleName}/api`}
+                    href={`/${moduleId}/api`}
                 />
                 <HeaderOneCard.Icon
                     icon="FaBook"
                     caption="Cite"
-                    href={`/${moduleName}/cite`}
+                    href={`/${moduleId}/cite`}
                 />
                 {/* <Header.Card>
                     <p className="mb-2">
