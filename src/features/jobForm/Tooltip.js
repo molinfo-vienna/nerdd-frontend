@@ -19,7 +19,7 @@ export default function Tooltip({ children, helpText, positionReference }) {
     const arrowRef = useRef(null)
 
     // check if the help text is empty
-    const hasHelpText = helpText !== undefined && helpText.trim().length > 0
+    const hasHelpText = helpText != null && helpText.trim().length > 0
 
     const { refs, floatingStyles, context } = useFloating({
         placement: "right",
