@@ -28,7 +28,8 @@ export default function HeaderOneCard({ module, children, title }) {
                     <div className="col-sm-6">
                         <h1 className="pb-3">
                             <span className="text-primary fw-bold">
-                                {module.visibleName}:{" "}
+                                {module.visibleName}
+                                {module.title ? ": " : ""}
                             </span>
                             {module.title}
                         </h1>

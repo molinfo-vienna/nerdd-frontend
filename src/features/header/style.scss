@@ -16,3 +16,13 @@
     background-color: rgba($primary, .03);
     border-color: $primary;
 }
+
+.header-button {
+    // cards need to have a fixed width and height so they can be arranged in a grid
+    min-width: 100px;
+    max-width: 100px;
+    min-height: 100px;
+    max-height: 100px;
+
+    background-color: transparent;
+}
