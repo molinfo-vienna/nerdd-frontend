@@ -70,7 +70,8 @@ export const nerddApi = createApi({
                 // --> Convert array to object.
                 const modules = {}
                 for (const module of responseCamelCase) {
-                    modules[module.id] = normalizeModule(module)
+                    const normalizedModule = normalizeModule(module)
+                    modules[normalizedModule.id] = normalizedModule
                 }
 
                 return modules
