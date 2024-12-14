@@ -12,7 +12,7 @@ export default function ResultsGenerator({ job, predictionSpeed }) {
 
     useTweaks("Jobs", {
         ...makeButton(`Goto job ${job.id}`, () =>
-            navigate(`${job.moduleName}/${job.id}`),
+            navigate(`${job.moduleId}/${job.id}`),
         ),
     })
 

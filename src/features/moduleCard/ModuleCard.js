@@ -7,10 +7,10 @@ export default function ModuleCard({ module }) {
     return (
         <Link
             to={module.name}
-            className="card module-card h-100 mb-3 mx-auto overflow-hidden text-decoration-none"
+            className="card module-card text-center h-100 mb-3 mx-auto overflow-hidden text-decoration-none"
         >
             {/* border-0: remove separation line between card header and body */}
-            <div className="card-header border-0 pt-4 pb-3">
+            <div className="card-header border-0 pt-5 pb-4">
                 {/* object-fit-contain: image keeps aspect ratio */}
                 <img
                     className="card-img-top object-fit-contain"
@@ -18,7 +18,7 @@ export default function ModuleCard({ module }) {
                     alt={module.visibleName}
                 />
             </div>
-            <div className="card-body text-center pt-0">
+            <div className="card-body pt-0">
                 <h3 className="card-title fw-bold">{module.visibleName}</h3>
                 <p className="card-text fs-6">{module.logoCaption}</p>
             </div>

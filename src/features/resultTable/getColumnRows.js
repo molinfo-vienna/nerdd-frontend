@@ -16,7 +16,7 @@ export default function getColumnRows(resultProperties) {
         const partOfGroup =
             firstColumnRow.length > 0 && !!group && lastColumn.group === group
 
-        if (group !== undefined) {
+        if (group != null) {
             if (partOfGroup) {
                 lastColumn.colspan += 1
             } else {

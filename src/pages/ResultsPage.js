@@ -1,15 +1,16 @@
 import React, { useState } from "react"
-import Markdown from "react-markdown"
-import { useNavigate, useParams, useSearchParams } from "react-router-dom"
+import { CircularProgressbar } from "react-circular-progressbar"
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom"
 import ColumnSelect from "../features/columnSelect/ColumnSelect"
 import DeleteJobDialog from "../features/deleteJobDialog/DeleteJobDialog"
 import Footer from "../features/footer/Footer"
-import HeaderOneCard from "../features/header/HeaderOneCard"
+import Icon from "../features/icon/Icon"
+import NavigationBar from "../features/navigationBar/NavigationBar"
 import Pagination from "../features/pagination/Pagination"
 import ResultTable from "../features/resultTable/ResultTable"
 import {
     useGetJobStatusQuery,
-    useGetModulesQuery,
+    useGetModuleQuery,
     useGetResultsQuery,
 } from "../services"
 import LoadingPage from "./LoadingPage"
@@ -21,15 +22,15 @@ export default function ResultsPage() {
     // get parameters from url
     //
 
-    // get the moduleName and jobId from the URL
-    const { moduleName, jobId } = useParams()
+    // get the moduleId and jobId from the URL
+    const { moduleId, jobId } = useParams()
 
     // get the (optional) page parameter from the URL (default to 1)
     const [searchParams, setSearchParams] = useSearchParams()
     const pageOneBased = parseInt(searchParams.get("page")) || 1
 
     if (pageOneBased <= 0) {
-        navigate(`/${moduleName}/${jobId}`)
+        navigate(`/${moduleId}/${jobId}`)
     }
 
     //
@@ -48,17 +49,17 @@ export default function ResultsPage() {
     // fetch data
     //
     const {
-        data: modules,
-        error: errorModules,
-        isLoading: isLoadingModules,
-    } = useGetModulesQuery()
+        data: module,
+        error: errorModule,
+        isLoading: isLoadingModule,
+    } = useGetModuleQuery(moduleId)
 
     const {
         data: results,
         error: errorResults,
         isLoading: isLoadingResults,
     } = useGetResultsQuery({
-        moduleName,
+        moduleId,
         jobId,
         page: pageOneBased,
     })
@@ -67,12 +68,12 @@ export default function ResultsPage() {
         data: jobStatus,
         error: errorJobStatus,
         isLoading: isLoadingJobStatus,
-    } = useGetJobStatusQuery({ moduleName, jobId })
+    } = useGetJobStatusQuery({ moduleId, jobId })
 
     // console.log("results", results, errorResults, isLoadingResults)
     // console.log("jobStatus", jobStatus, errorJobStatus, isLoadingJobStatus)
 
-    if (errorModules) {
+    if (errorModule) {
         return <div>Error fetching modules</div>
     }
 
@@ -84,28 +85,16 @@ export default function ResultsPage() {
         return <div>Error fetching results</div>
     }
 
-    if (
-        isLoadingModules ||
-        isLoadingResults ||
-        isLoadingJobStatus ||
-        (modules !== undefined && Object.keys(modules).length === 0)
-    ) {
+    if (isLoadingModule || isLoadingJobStatus) {
         return LoadingPage()
     }
 
-    const numEntriesTotal = jobStatus?.numEntriesTotal
-    const pageSize = jobStatus?.pageSize ?? 1
+    const numEntriesTotal = jobStatus.numEntriesTotal
+    const pageSize = jobStatus.pageSize
     const numPagesTotal =
-        numEntriesTotal !== undefined
+        numEntriesTotal != null
             ? Math.ceil(numEntriesTotal / pageSize)
             : undefined
-
-    // check if moduleName is a key in modules
-    if (!(moduleName in modules)) {
-        return <div>Module not found</div>
-    }
-
-    const module = modules[moduleName]
 
     //
     // get columns
@@ -146,8 +135,8 @@ export default function ResultsPage() {
         setColumnSelection(newColumnSelection)
 
     const progressAvailable =
-        jobStatus?.numEntriesTotal !== undefined &&
-        jobStatus?.numEntriesProcessed !== undefined
+        jobStatus?.numEntriesTotal != null &&
+        jobStatus?.numEntriesProcessed != null
 
     const progress = progressAvailable
         ? jobStatus.numEntriesProcessed / jobStatus.numEntriesTotal
@@ -161,19 +150,19 @@ export default function ResultsPage() {
                 <Header.Content>
                     <Markdown className="lead">{module.description}</Markdown>
                 </Header.Content>
-                <Header.Card href={`/${moduleName}/about`}>
+                <Header.Card href={`/${moduleId}/about`}>
                     <p className="mb-2">
                         <Icon name="FaBookOpen" size={35} className="me-2" />
                     </p>
                     <span>Documentation</span>
                 </Header.Card>
-                <Header.Card href={`/${moduleName}/api`}>
+                <Header.Card href={`/${moduleId}/api`}>
                     <p className="mb-2">
                         <Icon name="FaPlug" size={35} className="me-2" />
                     </p>
                     <span>Developer API</span>
                 </Header.Card>
-                <Header.Card href={`/${moduleName}/cite`}>
+                <Header.Card href={`/${moduleId}/cite`}>
                     <p className="mb-2">
                         <Icon name="FaBook" size={35} className="me-2" />
                     </p>
@@ -192,7 +181,7 @@ export default function ResultsPage() {
                     <span>Delete</span>
                 </Header.Card>
             </Header> */}
-            <HeaderOneCard module={module} title="Job parameters">
+            {/* <HeaderOneCard module={module} title="Job parameters">
                 <HeaderOneCard.Content>
                     <Markdown className="lead">{module.description}</Markdown>
                     <h4>
@@ -200,53 +189,113 @@ export default function ResultsPage() {
                             ? `${progressPercent}%`
                             : "Estimating job size..."}
                     </h4>
-                    <div className="progress">
-                        <div
-                            className={`progress-bar ${progressAvailable ? "" : "progress-bar-striped progress-bar-animated"}`}
-                            role="progressbar"
-                            style={{ width: `${progressPercent}%` }}
-                            aria-valuenow={progressPercent}
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                        ></div>
-                    </div>
                 </HeaderOneCard.Content>
-                <HeaderOneCard.CardSection>
-                    <p></p>
-                </HeaderOneCard.CardSection>
-                <HeaderOneCard.Icon
-                    icon="FaBookOpen"
-                    caption="Docs"
-                    href={`/${moduleName}/about`}
-                />
-                <HeaderOneCard.Icon
-                    icon="FaDownload"
-                    caption="Download"
-                    href={`/${moduleName}/api`}
-                />
-                <HeaderOneCard.Icon
-                    icon="FaTrash"
-                    caption="Delete"
-                    className="border-danger text-danger"
-                    href="#"
-                    data-bs-toggle="modal"
-                    data-bs-target="#deleteJobModal"
-                    aria-expanded="false"
-                />
-            </HeaderOneCard>
+                
+                
+            </HeaderOneCard> */}
+            <header className="bg-body-tertiary">
+                <NavigationBar />
+                <section className="container py-5">
+                    <div className="row justify-content-center pb-3">
+                        <div className="col-sm-4">
+                            <div className="d-flex">
+                                <div
+                                    className="mx-2"
+                                    style={{ width: "80px", height: "80px" }}
+                                >
+                                    <CircularProgressbar
+                                        value={
+                                            progressAvailable
+                                                ? progressPercent
+                                                : 0
+                                        }
+                                        text={
+                                            progressAvailable
+                                                ? `${progressPercent}%`
+                                                : ""
+                                        }
+                                    />
+                                </div>
+                                <div className="d-flex flex-column">
+                                    <div style={{ height: "50px" }}>
+                                        <h1 className="text-primary fw-bold my-auto">
+                                            {module.visibleName}
+                                        </h1>
+                                    </div>
+                                    <div style={{ height: "20px" }}>
+                                        <p className="mb-0">
+                                            {progressAvailable
+                                                ? `${jobStatus.numEntriesProcessed} / ${jobStatus.numEntriesTotal} molecules processed`
+                                                : "Estimating job size..."}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-sm-4 d-flex flex-wrap align-content-center justify-content-center">
+                            <Link
+                                className="text-center text-decoration-none text-reset d-block mx-4"
+                                to={`/${moduleId}/about`}
+                            >
+                                <div className="d-flex flex-column">
+                                    <div style={{ height: "50px" }}>
+                                        <p className="mb-0 text-primary">
+                                            <Icon name="FaBookOpen" size={39} />
+                                        </p>
+                                    </div>
+                                    <span className="text-primary">Docs</span>
+                                </div>
+                            </Link>
+
+                            <Link
+                                className="text-center text-decoration-none text-reset d-block mx-4"
+                                to={`/${moduleId}/api`}
+                            >
+                                <div className="d-flex flex-column">
+                                    <div style={{ height: "50px" }}>
+                                        <p className="mb-0 text-primary">
+                                            <Icon name="FaDownload" size={39} />
+                                        </p>
+                                    </div>
+                                    <span className="text-primary">
+                                        Download
+                                    </span>
+                                </div>
+                            </Link>
+
+                            <Link
+                                className="text-center text-decoration-none text-reset d-block mx-4"
+                                to="#"
+                                data-bs-toggle="modal"
+                                data-bs-target="#deleteJobModal"
+                                aria-expanded="false"
+                            >
+                                <div className="d-flex flex-column">
+                                    <div style={{ height: "50px" }}>
+                                        <p className="mb-0 text-danger">
+                                            <Icon name="FaTrash" size={39} />
+                                        </p>
+                                    </div>
+                                    <span className="text-danger">Delete</span>
+                                </div>
+                            </Link>
+                        </div>
+                    </div>
+                </section>
+            </header>
 
             <DeleteJobDialog
                 id="deleteJobModal"
-                moduleName={moduleName}
+                moduleId={moduleId}
                 jobId={jobId}
             />
 
-            <div className="container py-5">
+            <div className="container py-4">
                 <div className="row justify-content-center">
                     <div className="col-10">
                         <div className="d-flex justify-content-between">
                             <Pagination
-                                moduleName={moduleName}
+                                moduleId={moduleId}
                                 jobId={jobId}
                                 currentPageOneBased={pageOneBased}
                                 numEntriesTotal={numEntriesTotal}
@@ -275,23 +324,30 @@ export default function ResultsPage() {
                         > */}
                         <div className="mx-auto">
                             <div className="clearfix"></div>
-                            {results?.data && results.data.length > 0 && (
-                                <div>
-                                    <ResultTable
-                                        module={module}
-                                        results={results.data}
-                                        columnSelection={columnSelection}
-                                    />
-                                </div>
-                            )}
+                            {!isLoadingResults &&
+                                results?.data &&
+                                results.data.length > 0 && (
+                                    <div>
+                                        <ResultTable
+                                            module={module}
+                                            results={results.data}
+                                            columnSelection={columnSelection}
+                                        />
+                                    </div>
+                                )}
                         </div>
                         {/* </div> */}
-                        {/* <Pagination
-                            currentPageOneBased={pageOneBased}
-                            numEntriesTotal={numEntriesTotal}
-                            pageSize={pageSize}
-                            numPagesTotal={numPagesTotal}
-                        /> */}
+                        {!isLoadingResults && (
+                            <Pagination
+                                moduleId={moduleId}
+                                jobId={jobId}
+                                currentPageOneBased={pageOneBased}
+                                numEntriesTotal={numEntriesTotal}
+                                pageSize={pageSize}
+                                numPagesTotal={numPagesTotal}
+                                className="mx-auto position-absolute start-50 translate-middle-x"
+                            />
+                        )}
                     </div>
                 </div>
             </div>

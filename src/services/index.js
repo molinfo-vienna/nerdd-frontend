@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import hash from "object-hash"
+import { normalizeModule } from "./normalize"
 import recursiveSnakeToCamelCase from "./recursiveSnakeToCamelCase"
 import websocketQuery from "./websocketQuery"
 
@@ -12,14 +13,14 @@ export const nerddApi = createApi({
     }),
     endpoints: (builder) => ({
         addJob: builder.mutation({
-            query: ({ moduleName, data }) => {
+            query: ({ moduleId, data }) => {
                 const form = new FormData()
                 for (const key in data) {
                     form.append(key, JSON.stringify(data[key]))
                 }
 
                 return {
-                    url: `/${moduleName}/jobs`,
+                    url: `/${moduleId}/jobs`,
                     method: "POST",
                     body: form,
                 }
@@ -50,8 +51,8 @@ export const nerddApi = createApi({
             transformResponse: recursiveSnakeToCamelCase,
         }),
         deleteJob: builder.mutation({
-            query: ({ moduleName, jobId }) => ({
-                url: `/${moduleName}/jobs/${jobId}`,
+            query: ({ moduleId, jobId }) => ({
+                url: `/${moduleId}/jobs/${jobId}`,
                 method: "DELETE",
             }),
             transformResponse: recursiveSnakeToCamelCase,
@@ -69,18 +70,29 @@ export const nerddApi = createApi({
                 // --> Convert array to object.
                 const modules = {}
                 for (const module of responseCamelCase) {
-                    modules[module.name] = module
+                    modules[module.id] = normalizeModule(module)
                 }
 
                 return modules
             },
         }),
+        getModule: builder.query({
+            query: (moduleId) => {
+                return `/modules/${moduleId}`
+            },
+            transformResponse: (response) => {
+                // convert snake_case to camelCase
+                const moduleCamelCase = recursiveSnakeToCamelCase(response)
+
+                return normalizeModule(moduleCamelCase)
+            },
+        }),
 
         getJobStatus: websocketQuery({
             builder,
-            query: ({ moduleName, jobId }) => `/${moduleName}/jobs/${jobId}`,
-            queryWs: ({ moduleName, jobId }) =>
-                `/websocket/${moduleName}/jobs/${jobId}`,
+            query: ({ moduleId, jobId }) => `/${moduleId}/jobs/${jobId}`,
+            queryWs: ({ moduleId, jobId }) =>
+                `/websocket/${moduleId}/jobs/${jobId}`,
             process: (draft, data) => data,
             transformResponse: recursiveSnakeToCamelCase,
             transformResponseWs: recursiveSnakeToCamelCase,
@@ -88,10 +100,10 @@ export const nerddApi = createApi({
 
         getResults: websocketQuery({
             builder,
-            query: ({ moduleName, jobId, page }) =>
-                `/${moduleName}/jobs/${jobId}/results?page=${page}&incomplete=true`,
-            queryWs: ({ moduleName, jobId, page }) =>
-                `/websocket/${moduleName}/jobs/${jobId}/results?page=${page}`,
+            query: ({ moduleId, jobId, page }) =>
+                `/${moduleId}/jobs/${jobId}/results?page=${page}&return_incomplete=true`,
+            queryWs: ({ moduleId, jobId, page }) =>
+                `/websocket/${moduleId}/jobs/${jobId}/results?page=${page}`,
             process: (draft, data, complete) => {
                 if (complete) {
                     draft.isIncomplete = false
@@ -113,10 +125,12 @@ export const nerddApi = createApi({
                 // return nothing to signal that the draft has been modified
                 return
             },
-            transformResponse: (response) => ({
-                data: response.data,
-                isIncomplete: response.pagination.is_incomplete,
-            }),
+            transformResponse: (response) => {
+                return {
+                    data: response.data,
+                    isIncomplete: response.pagination?.is_incomplete || false,
+                }
+            },
             transformResponseWs: (response) => response,
         }),
     }),
@@ -128,6 +142,7 @@ export const {
     useDeleteSourceMutation,
     useDeleteJobMutation,
     useGetModulesQuery,
+    useGetModuleQuery,
     useGetResultsQuery,
     useGetJobStatusQuery,
 } = nerddApi

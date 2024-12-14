@@ -10,7 +10,7 @@ export default function NavigationBar() {
     const pageId = match?.id || "unknown"
 
     // get the params from the url (we might need them)
-    const params = useParams()
+    const { moduleId } = useParams()
 
     // get the module list to receive the module name
     const modules = useGetModulesQuery().data || {}
@@ -18,56 +18,51 @@ export default function NavigationBar() {
     // configure the breadcrumb elements based on the page
     let breadcrumbElements
     let shortNavigation = false
-    if (pageId === "landing") {
-        breadcrumbElements = []
-        shortNavigation = true
-    } else if (pageId == "createJob") {
-        const { moduleName } = params
-        const module = modules[moduleName]
-        const visibleModuleName = module?.visibleName || moduleName
-        breadcrumbElements = [
-            { name: "Home", url: "/" },
-            { name: visibleModuleName, url: `/${moduleName}` },
-        ]
-    } else if (pageId === "about") {
-        const { moduleName } = params
-        const module = modules[moduleName]
-        const visibleModuleName = module?.visibleName || moduleName
-        breadcrumbElements = [
-            { name: "Home", url: "/" },
-            { name: visibleModuleName, url: `/${moduleName}` },
-            { name: "About", url: `/${moduleName}/about` },
-        ]
-    } else if (pageId === "cite") {
-        const { moduleName } = params
-        const module = modules[moduleName]
-        const visibleModuleName = module?.visibleName || moduleName
-        breadcrumbElements = [
-            { name: "Home", url: "/" },
-            { name: visibleModuleName, url: `/${moduleName}` },
-            { name: "Cite", url: `/${moduleName}/cite` },
-        ]
-    } else if (pageId === "api") {
-        const { moduleName } = params
-        const module = modules[moduleName]
-        const visibleModuleName = module?.visibleName || moduleName
-        breadcrumbElements = [
-            { name: "Home", url: "/" },
-            { name: visibleModuleName, url: `/${moduleName}` },
-            { name: "API", url: `/${moduleName}/api` },
-        ]
-    } else if (pageId === "results") {
-        const { moduleName, jobId } = params
-        const module = modules[moduleName]
-        const visibleModuleName = module?.visibleName || moduleName
-        breadcrumbElements = [
-            { name: "Home", url: "/" },
-            { name: visibleModuleName, url: `/${moduleName}` },
-            { name: "Results", url: `/${moduleName}/${jobId}` },
-        ]
+    if (moduleId !== undefined && moduleId in modules) {
+        const module = modules[moduleId]
+        if (pageId == "createJob") {
+            breadcrumbElements = [
+                { name: "Home", url: "/" },
+                { name: module.visibleName, url: `/${moduleId}` },
+            ]
+        } else if (pageId === "about") {
+            breadcrumbElements = [
+                { name: "Home", url: "/" },
+                { name: module.visibleId, url: `/${moduleId}` },
+                { name: "About", url: `/${moduleId}/about` },
+            ]
+        } else if (pageId === "cite") {
+            breadcrumbElements = [
+                { name: "Home", url: "/" },
+                { name: module.visibleId, url: `/${moduleId}` },
+                { name: "Cite", url: `/${moduleId}/cite` },
+            ]
+        } else if (pageId === "api") {
+            breadcrumbElements = [
+                { name: "Home", url: "/" },
+                { name: module.visibleName, url: `/${moduleId}` },
+                { name: "API", url: `/${moduleId}/api` },
+            ]
+        } else if (pageId === "results") {
+            breadcrumbElements = [
+                { name: "Home", url: "/" },
+                { name: module.visibleName, url: `/${moduleId}` },
+                { name: "Results", url: `/${moduleId}/${jobId}` },
+            ]
+        } else {
+            // unknown page
+            breadcrumbElements = []
+            shortNavigation = true
+        }
     } else {
-        // unknown page
-        breadcrumbElements = [{ name: "Home", url: "/" }]
+        if (pageId === "landing") {
+            breadcrumbElements = []
+            shortNavigation = true
+        } else {
+            // unknown page
+            breadcrumbElements = []
+            shortNavigation = true
+        }
     }
 
     // interlace the breadcrumb elements with slashes in a funcational style

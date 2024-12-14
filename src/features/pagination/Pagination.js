@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import { useGetResultsQuery } from "../../services"
 
 export default function Pagination({
-    moduleName,
+    moduleId,
     jobId,
     currentPageOneBased,
     numEntriesTotal,
@@ -43,12 +43,12 @@ export default function Pagination({
     // -> We can call useGetResultsQuery for each page without running into problems.
     for (const page of allPages) {
         const skip =
-            page.id === undefined ||
+            page.id == undefined ||
             page.id <= 0 ||
             (numPagesTotal !== undefined && page.id > numPagesTotal)
 
         const { data, error, isLoading } = useGetResultsQuery({
-            moduleName,
+            moduleId,
             jobId,
             page: page.id,
             options: { skip },
@@ -140,7 +140,7 @@ export default function Pagination({
 }
 
 Pagination.propTypes = {
-    moduleName: PropTypes.string.isRequired,
+    moduleId: PropTypes.string.isRequired,
     jobId: PropTypes.string.isRequired,
     currentPageOneBased: PropTypes.number.isRequired,
     numPagesTotal: PropTypes.number,

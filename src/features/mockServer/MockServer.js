@@ -38,9 +38,9 @@ export default function MockServer({
 
                     // POST /jobs
                     // (create a job and return the job id)
-                    this.post("/:moduleName/jobs", (schema, request) => {
+                    this.post("/:moduleId/jobs", (schema, request) => {
                         // get correct module
-                        const moduleName = request.params.moduleName
+                        const moduleId = request.params.moduleId
 
                         let entry = request.requestBody.get("job")
 
@@ -78,7 +78,7 @@ export default function MockServer({
                             createJob({
                                 jobId: newJobId,
                                 parameters,
-                                moduleName,
+                                moduleId,
                                 numResults,
                             }),
                         )
@@ -104,25 +104,22 @@ export default function MockServer({
 
                     // DELETE /jobs/:jobId
                     // (delete a job)
-                    this.delete(
-                        "/:moduleName/jobs/:jobId",
-                        (schema, request) => {
-                            const jobId = request.params.jobId
+                    this.delete("/:moduleId/jobs/:jobId", (schema, request) => {
+                        const jobId = request.params.jobId
 
-                            // delete the job
-                            dispatch(
-                                deleteJob({
-                                    jobId: jobId,
-                                }),
-                            )
+                        // delete the job
+                        dispatch(
+                            deleteJob({
+                                jobId: jobId,
+                            }),
+                        )
 
-                            return new Response(204)
-                        },
-                    )
+                        return new Response(204)
+                    })
 
                     // GET /jobs/:jobId
                     // (return the job status)
-                    this.get("/:moduleName/jobs/:jobId", (schema, request) => {
+                    this.get("/:moduleId/jobs/:jobId", (schema, request) => {
                         if (return404) {
                             return new Response(
                                 404,
@@ -133,7 +130,7 @@ export default function MockServer({
                             )
                         }
 
-                        const moduleName = request.params.moduleName
+                        const moduleId = request.params.moduleId
                         const jobId = request.params.jobId
 
                         let jobs = store.getState().debug.jobs
@@ -142,7 +139,7 @@ export default function MockServer({
                             dispatch(
                                 createJob({
                                     jobId,
-                                    moduleName,
+                                    moduleId,
                                     numResults,
                                 }),
                             )
@@ -170,7 +167,7 @@ export default function MockServer({
                     // GET /jobs/:jobId/results
                     // (return results for a job)
                     this.get(
-                        "/:moduleName/jobs/:jobId/results",
+                        "/:moduleId/jobs/:jobId/results",
                         (schema, request) => {
                             if (return404) {
                                 return new Response(
@@ -184,7 +181,7 @@ export default function MockServer({
                                 request.queryParams.incomplete === "true" ||
                                 false
 
-                            const moduleName = request.params.moduleName
+                            const moduleId = request.params.moduleId
                             const jobId = request.params.jobId
                             const pageOneBased =
                                 parseInt(request.queryParams.page) || 1
@@ -199,7 +196,7 @@ export default function MockServer({
                                 dispatch(
                                     createJob({
                                         jobId,
-                                        moduleName,
+                                        moduleId,
                                         numResults,
                                     }),
                                 )
@@ -221,7 +218,7 @@ export default function MockServer({
                                     : undefined,
                             }
 
-                            const moduleConfig = moduleConfigs[job.moduleName]
+                            const moduleConfig = moduleConfigs[job.moduleId]
 
                             const numEntriesProcessed =
                                 job.numEntriesProcessed ?? 0

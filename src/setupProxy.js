@@ -1,10 +1,13 @@
 const { createProxyMiddleware } = require("http-proxy-middleware")
 
+console.log("Proxy setup loaded")
+
 module.exports = function (app) {
     app.use(
         "/api",
         createProxyMiddleware({
             target: "http://localhost:8000",
+            // target: "http://nerdd-backend:8000",
             logLevel: "debug",
             changeOrigin: true,
         }),
@@ -15,6 +18,7 @@ module.exports = function (app) {
     app.use(
         createProxyMiddleware({
             target: "ws://localhost:8000/",
+            // target: "ws://nerdd-backend:8000/",
             changeOrigin: true,
             logLevel: "debug",
             ws: true,

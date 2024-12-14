@@ -14,11 +14,12 @@ export default function TableCell({
         ...props,
     }
 
-    if (resultProperty.type === "image") {
+    if (resultProperty.type === "mol") {
         return (
-            <td {...commonProps}>
-                <img width={350} height={150} src={value} />
-            </td>
+            <td
+                {...commonProps}
+                dangerouslySetInnerHTML={{ __html: value }}
+            ></td>
         )
     } else if (resultProperty.type === "text") {
         if (compressed) {
@@ -59,7 +60,7 @@ export default function TableCell({
         const precision = resultProperty.precision || 2
         return (
             <td {...commonProps}>
-                {value !== undefined ? value.toFixed(precision) : ""}
+                {value != null ? value.toFixed(precision) : ""}
             </td>
         )
     } else if (resultProperty.type === "integer") {

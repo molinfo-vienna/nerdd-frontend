@@ -7,21 +7,19 @@ import Header from "../features/header/Header"
 import Icon from "../features/icon/Icon"
 import TableOfContents from "../features/tableOfContents/TableOfContents"
 import TangleRuntime from "../features/tangleRuntime/TangleRuntime"
-import { useGetModulesQuery } from "../services"
+import { useGetModuleQuery } from "../services"
 import ErrorPage from "./ErrorPage"
 import LoadingPage from "./LoadingPage"
 
 export default function AboutPage() {
     const ref = useRef()
-    const { moduleName } = useParams()
+    const { moduleId } = useParams()
 
-    const { data: modules, error, isLoading } = useGetModulesQuery()
+    const { data: module, error, isLoading } = useGetModuleQuery(moduleId)
 
     if (isLoading) {
         return LoadingPage()
     }
-
-    const module = modules[moduleName]
 
     if (!module) {
         return ErrorPage({ errorMessage: "Module not found" })
@@ -33,19 +31,19 @@ export default function AboutPage() {
                 <Header.Content>
                     <Markdown className="lead">{module.description}</Markdown>
                 </Header.Content>
-                <Header.Card href={`/${moduleName}/about`}>
+                <Header.Card href={`/${moduleId}/about`}>
                     <p className="mb-2">
                         <Icon name="FaBookOpen" size={35} className="me-2" />
                     </p>
                     <span>Documentation</span>
                 </Header.Card>
-                <Header.Card href={`/${moduleName}/api`}>
+                <Header.Card href={`/${moduleId}/api`}>
                     <p className="mb-2">
                         <Icon name="FaPlug" size={35} className="me-2" />
                     </p>
                     <span>Developer API</span>
                 </Header.Card>
-                <Header.Card href={`/${moduleName}/cite`}>
+                <Header.Card href={`/${moduleId}/cite`}>
                     <p className="mb-2">
                         <Icon name="FaBook" size={35} className="me-2" />
                     </p>

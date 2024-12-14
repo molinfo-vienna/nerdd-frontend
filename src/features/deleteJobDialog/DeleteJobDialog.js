@@ -3,12 +3,12 @@ import React from "react"
 import { useNavigate } from "react-router-dom"
 import { useDeleteJobMutation } from "../../services"
 
-export default function DeleteJobDialog({ id, moduleName, jobId }) {
+export default function DeleteJobDialog({ id, moduleId, jobId }) {
     const [deleteJob, {}] = useDeleteJobMutation()
     const navigate = useNavigate()
 
     const handleAccept = () => {
-        deleteJob({ moduleName, jobId }).then((response) => {
+        deleteJob({ moduleId, jobId }).then((response) => {
             navigate("/")
         })
     }
@@ -66,6 +66,6 @@ export default function DeleteJobDialog({ id, moduleName, jobId }) {
 
 DeleteJobDialog.propTypes = {
     id: PropTypes.string.isRequired,
-    moduleName: PropTypes.string.isRequired,
+    moduleId: PropTypes.string.isRequired,
     jobId: PropTypes.string.isRequired,
 }

@@ -13,6 +13,7 @@ export default function LandingPage() {
         return ErrorPage({ errorMessage: "Failed to load modules" })
     }
 
+    // TODO: show a message if there are no modules
     if (isLoading || !modules || Object.keys(modules).length === 0) {
         return LoadingPage()
     }
