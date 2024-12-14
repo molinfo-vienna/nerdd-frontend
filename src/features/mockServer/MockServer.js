@@ -314,8 +314,14 @@ export default function MockServer({
                     // GET /modules
                     // (return all module configs)
                     this.get("/modules", () => {
-                        console.log("got request")
                         return Object.values(moduleConfigs)
+                    })
+
+                    // GET /modules
+                    // (return all module configs)
+                    this.get("/modules/:moduleId/", (schema, request) => {
+                        const moduleId = request.params.moduleId
+                        return moduleConfigs[moduleId]
                     })
 
                     // PUT /sources/

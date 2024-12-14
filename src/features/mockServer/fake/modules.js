@@ -210,6 +210,7 @@ export function generateModuleConfig(i) {
     faker.seed(i)
 
     const task = faker.helpers.arrayElement(taskTypes)
+    const name = faker.lorem.slug(4)
 
     const numPartners = faker.number.int({ min: 1, max: 5 })
     const numContacts = faker.number.int({ min: 1, max: 3 })
@@ -288,8 +289,9 @@ export function generateModuleConfig(i) {
     }
 
     return {
+        id: name,
         rank: faker.number.int({ min: 0, max: 100 }),
-        name: faker.lorem.slug(4),
+        name,
         task,
         visible_name: visibleName,
         description: faker.lorem.paragraphs(2, "\n\n"),
