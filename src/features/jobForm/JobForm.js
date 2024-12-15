@@ -65,58 +65,54 @@ export default function JobForm({ module, onSubmit }) {
     }, [status, valuesToSubmit, onSubmit])
 
     return (
-        <div className="container py-5">
-            <div className="row justify-content-center">
-                <div className="col-sm-6">
-                    <h2 className="mb-5">Start prediction</h2>
-                    <Form
-                        form={formRef.current}
-                        render={({ handleSubmit, values }) => (
-                            <form
-                                className="form-horizontal"
-                                onSubmit={(e) => {
-                                    // don't invoke a normal submit
-                                    e.preventDefault()
-                                    // rather, invoke our own submit function
-                                    handleSubmit(e)
-                                }}
-                            >
-                                <Row>
-                                    <>
-                                        <div className="form-check form-check-inline">
-                                            <Field
-                                                name="inputType"
-                                                id="inputTextOption"
-                                                component="input"
-                                                type="radio"
-                                                className="form-check-input"
-                                                value="text"
-                                                initialValue="text"
-                                            />
-                                            <label
-                                                htmlFor="inputTextOption"
-                                                className="form-check-label"
-                                            >
-                                                Enter text
-                                            </label>
-                                        </div>
-                                        <div className="form-check form-check-inline">
-                                            <Field
-                                                name="inputType"
-                                                id="inputFileOption"
-                                                component="input"
-                                                type="radio"
-                                                className="form-check-input"
-                                                value="file"
-                                            />
-                                            <label
-                                                htmlFor="inputFileOption"
-                                                className="form-check-label"
-                                            >
-                                                Upload file
-                                            </label>
-                                        </div>
-                                        <div className="form-check form-check-inline">
+        <Form
+            form={formRef.current}
+            render={({ handleSubmit, values }) => (
+                <form
+                    className="form-horizontal"
+                    onSubmit={(e) => {
+                        // don't invoke a normal submit
+                        e.preventDefault()
+                        // rather, invoke our own submit function
+                        handleSubmit(e)
+                    }}
+                >
+                    <Row>
+                        <>
+                            <div className="form-check form-check-inline">
+                                <Field
+                                    name="inputType"
+                                    id="inputTextOption"
+                                    component="input"
+                                    type="radio"
+                                    className="form-check-input"
+                                    value="text"
+                                    initialValue="text"
+                                />
+                                <label
+                                    htmlFor="inputTextOption"
+                                    className="form-check-label"
+                                >
+                                    Enter text
+                                </label>
+                            </div>
+                            <div className="form-check form-check-inline">
+                                <Field
+                                    name="inputType"
+                                    id="inputFileOption"
+                                    component="input"
+                                    type="radio"
+                                    className="form-check-input"
+                                    value="file"
+                                />
+                                <label
+                                    htmlFor="inputFileOption"
+                                    className="form-check-label"
+                                >
+                                    Upload file
+                                </label>
+                            </div>
+                            {/* <div className="form-check form-check-inline">
                                             <Field
                                                 name="inputType"
                                                 id="inputDrawOption"
@@ -131,8 +127,8 @@ export default function JobForm({ module, onSubmit }) {
                                             >
                                                 Draw molecule
                                             </label>
-                                        </div>
-                                        <div className="form-check form-check-inline">
+                                        </div> */}
+                            {/* <div className="form-check form-check-inline">
                                             <Field
                                                 name="inputType"
                                                 id="inputExampleOption"
@@ -147,103 +143,93 @@ export default function JobForm({ module, onSubmit }) {
                                             >
                                                 Use example
                                             </label>
-                                        </div>
-                                    </>
-                                </Row>
+                                        </div> */}
+                        </>
+                    </Row>
 
-                                <Row
-                                    helpText="Use any of the formats SMILES, SDF or InChI."
-                                    className={`${values.inputType !== "text" && "d-none"}`}
-                                >
-                                    <Field
-                                        name="input"
-                                        component="textarea"
-                                        className="form-control"
-                                        id="input"
-                                        aria-describedby="inputHelp"
-                                        rows={5}
-                                        placeholder={placeholderSmiles}
-                                        initialValue=""
-                                    />
-                                </Row>
+                    <Row
+                        helpText="Use any of the formats SMILES, SDF or InChI."
+                        className={`${values.inputType !== "text" && "d-none"}`}
+                    >
+                        <Field
+                            name="input"
+                            component="textarea"
+                            className="form-control"
+                            id="input"
+                            aria-describedby="inputHelp"
+                            rows={5}
+                            placeholder={placeholderSmiles}
+                            initialValue=""
+                        />
+                    </Row>
 
-                                <Row
-                                    helpText="Within a file, the format shouldn't change,
+                    <Row
+                        helpText="Within a file, the format shouldn't change,
                                 but different files can have any of the formats
                                 SMILES, SDF or InChI."
-                                    className={`${values.inputType !== "file" && "d-none"}`}
-                                    positionReference={
-                                        fileFieldTooltipPositionReference
-                                    }
+                        className={`${values.inputType !== "file" && "d-none"}`}
+                        positionReference={fileFieldTooltipPositionReference}
+                    >
+                        <FileFieldAndList
+                            name="inputFile"
+                            tooltipPositionReference={
+                                fileFieldTooltipPositionReference
+                            }
+                            className="form-control"
+                            multiple
+                        />
+                    </Row>
+
+                    <Row
+                        className={`${values.inputType !== "draw" && "d-none"}`}
+                    >
+                        <MoleculeEditor name="inputDrawn" />
+                    </Row>
+
+                    {jobParameters.map((jobParameter, i) => (
+                        <Row
+                            key={i}
+                            label={jobParameter.visibleName}
+                            labelFor={jobParameter.name}
+                            helpText={jobParameter.helpText}
+                        >
+                            <JobParameterField jobParameter={jobParameter} />
+                        </Row>
+                    ))}
+
+                    <Row>
+                        <p className="text-center">
+                            {status === "idle" && (
+                                <button
+                                    type="submit"
+                                    className="btn btn-lg btn-primary"
                                 >
-                                    <FileFieldAndList
-                                        name="inputFile"
-                                        tooltipPositionReference={
-                                            fileFieldTooltipPositionReference
-                                        }
-                                        className="form-control"
-                                        multiple
+                                    <Icon
+                                        name="FaPaperPlane"
+                                        size={15}
+                                        className="me-2"
                                     />
-                                </Row>
-
-                                <Row
-                                    className={`${values.inputType !== "draw" && "d-none"}`}
+                                    Submit
+                                </button>
+                            )}
+                            {status === "submitting" && (
+                                <button
+                                    type="submit"
+                                    className="btn btn-lg btn-primary"
+                                    disabled
                                 >
-                                    <MoleculeEditor name="inputDrawn" />
-                                </Row>
-
-                                {jobParameters.map((jobParameter, i) => (
-                                    <Row
-                                        key={i}
-                                        label={jobParameter.visibleName}
-                                        labelFor={jobParameter.name}
-                                        helpText={jobParameter.helpText}
-                                    >
-                                        <JobParameterField
-                                            jobParameter={jobParameter}
-                                        />
-                                    </Row>
-                                ))}
-
-                                <Row>
-                                    <p className="text-center">
-                                        {status === "idle" && (
-                                            <button
-                                                type="submit"
-                                                className="btn btn-lg btn-primary"
-                                            >
-                                                <Icon
-                                                    name="FaPaperPlane"
-                                                    size={15}
-                                                    className="me-2"
-                                                />
-                                                Submit
-                                            </button>
-                                        )}
-                                        {status === "submitting" && (
-                                            <button
-                                                type="submit"
-                                                className="btn btn-lg btn-primary"
-                                                disabled
-                                            >
-                                                <span
-                                                    className="spinner-border spinner-border-sm me-2"
-                                                    aria-hidden="true"
-                                                ></span>
-                                                <span role="status">
-                                                    Loading...
-                                                </span>
-                                            </button>
-                                        )}
-                                    </p>
-                                </Row>
-                            </form>
-                        )}
-                    />
-                </div>
-                <div className="col-sm-4 d-sm-block d-none"></div>
-            </div>
-        </div>
+                                    <span
+                                        className="spinner-border spinner-border-sm me-2"
+                                        aria-hidden="true"
+                                    ></span>
+                                    <span role="status">Loading...</span>
+                                </button>
+                            )}
+                        </p>
+                    </Row>
+                </form>
+            )}
+        />
     )
 }
 

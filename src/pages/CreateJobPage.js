@@ -116,7 +116,15 @@ export default function CreateJobPage() {
             </HeaderOneCard>
 
             <main>
-                <JobForm module={module} onSubmit={onSubmit} />
+                <div className="container py-5">
+                    <div className="row justify-content-center">
+                        <div className="col-sm-6">
+                            <h2 className="mb-5">Start prediction</h2>
+                            <JobForm module={module} onSubmit={onSubmit} />
+                        </div>
+                        <div className="col-sm-4 d-sm-block d-none"></div>
+                    </div>
+                </div>
             </main>
 
             <Footer module={module} />
