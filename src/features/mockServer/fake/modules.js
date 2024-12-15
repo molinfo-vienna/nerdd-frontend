@@ -1,12 +1,13 @@
 import { faker } from "@faker-js/faker"
+import { generateValue } from "./util"
 
 const taskTypes = [
     "molecular_property_prediction",
     "atom_property_prediction",
     "derivative_prediction",
 ]
-const jobDataTypes = ["text", "number", "boolean"]
-const resultDataTypes = ["integer", "float", "text", "boolean"]
+const jobParameterDataTypes = ["string", "int", "float", "bool"]
+const resultDataTypes = ["string", "int", "float", "bool", "mol"]
 
 const logoUrls = Array.from({ length: 9 }).map(
     (_, i) => `/fake/module-logos/${i + 1}.svg`,
@@ -25,31 +26,34 @@ function longPhrase() {
     return `${capitalize(words)}`
 }
 
-export function choice() {
+export function choice(dataType) {
     return {
-        value: faker.lorem.slug(3),
+        value: generateValue(dataType),
         label: phrase(),
     }
 }
 
 export function generateJobParameter() {
-    const type = faker.helpers.arrayElement(jobDataTypes)
+    const type = faker.helpers.arrayElement(jobParameterDataTypes)
     const hasHelpText = faker.datatype.boolean(0.8)
     const isChoices = faker.datatype.boolean()
     const choices = isChoices
         ? Array.from({ length: faker.number.int({ min: 2, max: 5 }) }, () =>
-              choice(),
+              choice(type),
           )
         : undefined
+    const hasDefaultValue = faker.datatype.boolean()
+    const defaultValue = hasDefaultValue ? faker.lorem.slug(3) : undefined
 
     return {
         name: faker.lorem.slug(3),
+        type,
         visible_name: phrase(),
         help_text: hasHelpText
             ? faker.lorem.sentence({ min: 8, max: 30 })
             : undefined,
-        type,
         choices,
+        default: defaultValue,
     }
 }
 
@@ -65,7 +69,7 @@ export function generateResultProperty(group, level) {
               {
                   length: faker.number.int({ min: 2, max: 5 }),
               },
-              () => choice(),
+              () => choice(type),
           )
         : undefined
 
@@ -224,7 +228,7 @@ export function generateModuleConfig(i) {
     // typical result properties
     const nameProperty = {
         name: "name",
-        type: "text",
+        type: "string",
         visible_name: "Name",
         visible: true,
         sortable: true,
@@ -233,7 +237,7 @@ export function generateModuleConfig(i) {
     // add input smiles column
     const inputSmilesProperty = {
         name: "input_smiles",
-        type: "text",
+        type: "string",
         visible_name: "Input SMILES",
         visible: false,
         sortable: true,
@@ -242,7 +246,7 @@ export function generateModuleConfig(i) {
     // add filtered smiles column
     const filteredSmilesProperty = {
         name: "preprocessed_smiles",
-        type: "text",
+        type: "string",
         visible_name: "Processed SMILES",
         visible: false,
         sortable: true,
@@ -251,7 +255,7 @@ export function generateModuleConfig(i) {
     // add image column
     const imageProperty = {
         name: "image",
-        type: "image",
+        type: "mol",
         visible_name: "2D structure",
         visible: true,
         sortable: false,
