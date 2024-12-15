@@ -151,6 +151,7 @@ export default function NavigationBar() {
                                 <Link
                                     to="https://comp3d.univie.ac.at/the-comp3d-team/"
                                     className="nav-link"
+                                    target="_blank"
                                 >
                                     About us
                                 </Link>
