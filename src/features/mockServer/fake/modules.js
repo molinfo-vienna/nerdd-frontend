@@ -36,14 +36,30 @@ export function choice(dataType) {
 export function generateJobParameter() {
     const type = faker.helpers.arrayElement(jobParameterDataTypes)
     const hasHelpText = faker.datatype.boolean(0.8)
-    const isChoices = faker.datatype.boolean()
-    const choices = isChoices
-        ? Array.from({ length: faker.number.int({ min: 2, max: 5 }) }, () =>
-              choice(type),
-          )
-        : undefined
+    const required = faker.datatype.boolean()
+    const isChoices = faker.datatype.boolean() && type !== "bool"
+    let choices = undefined
+    if (isChoices) {
+        choices = Array.from(
+            { length: faker.number.int({ min: 2, max: 8 }) },
+            () => choice(type),
+        )
+
+        // make sure that all choices have unique values
+        const uniqueValues = new Set(choices.map((c) => c.value))
+        choices = Array.from(uniqueValues).map((value) => {
+            return choices.find((c) => c.value === value)
+        })
+    }
     const hasDefaultValue = faker.datatype.boolean()
-    const defaultValue = hasDefaultValue ? faker.lorem.slug(3) : undefined
+    let defaultValue = undefined
+    if (hasDefaultValue) {
+        if (isChoices) {
+            defaultValue = faker.helpers.arrayElement(choices).value
+        } else {
+            defaultValue = generateValue(type)
+        }
+    }
 
     return {
         name: faker.lorem.slug(3),
@@ -52,8 +68,9 @@ export function generateJobParameter() {
         help_text: hasHelpText
             ? faker.lorem.sentence({ min: 8, max: 30 })
             : undefined,
-        choices,
         default: defaultValue,
+        required,
+        choices,
     }
 }
 
