@@ -4,12 +4,14 @@
 // -> the following properties have precedence over the default card properties
 .card.module-card {
     // cards need to have a fixed width so they can be arranged in a grid
-    width: 18rem;
+    min-width: 16rem;
+    max-width: 16rem;
 }
 
 .card.module-card .card-header img {
-    height: 8rem;
     width: 10rem;
+    // make sure that the images have uniform height
+    height: 8rem;
 }
 
 .card.module-card:hover {

@@ -8,8 +8,8 @@ const taskTypes = [
 const jobDataTypes = ["text", "number", "boolean"]
 const resultDataTypes = ["integer", "float", "text", "boolean"]
 
-const logoUrls = Array.from({ length: 14 }).map(
-    (_, i) => `/fake/module-logos/${i + 1}.png`,
+const logoUrls = Array.from({ length: 9 }).map(
+    (_, i) => `/fake/module-logos/${i + 1}.svg`,
 )
 
 function capitalize(string) {
