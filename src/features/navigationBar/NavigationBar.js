@@ -44,6 +44,7 @@ export default function NavigationBar() {
                 { name: "API", url: `/${moduleId}/api` },
             ]
         } else if (pageId === "results") {
+            const { jobId } = useParams()
             breadcrumbElements = [
                 { name: "Home", url: "/" },
                 { name: module.visibleName, url: `/${moduleId}` },
