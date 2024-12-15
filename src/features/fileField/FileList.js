@@ -4,7 +4,7 @@ import FileItem from "./FileItem"
 
 export default function FileList({ files, onClickDelete }) {
     return (
-        <ul className="px-3 py-2 list-unstyled">
+        <ul className="px-3 py-2 list-unstyled w-100">
             {files !== undefined &&
                 files.map((file) => (
                     <FileItem

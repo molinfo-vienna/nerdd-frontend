@@ -38,6 +38,7 @@ export default function FileFieldAndList({
     // update react form field when value in the store changes
     const {
         input: { onChange: onChangeFiles },
+        meta,
     } = useField(name)
 
     useEffect(() => {
@@ -136,14 +137,25 @@ export default function FileFieldAndList({
     }
 
     return (
-        <>
-            <div ref={tooltipPositionReference}>
-                <FileField name={name} onDrop={onDrop} {...props} />
+        <div className="input-group has-validation">
+            <div
+                ref={tooltipPositionReference}
+                className={`w-100 ${meta.touched && meta.error ? "is-invalid" : ""}`}
+            >
+                <FileField
+                    name={name}
+                    onDrop={onDrop}
+                    {...props}
+                    className="form-control"
+                />
             </div>
+            {meta.touched && meta.error && (
+                <div className="invalid-feedback">{meta.error}</div>
+            )}
             {files !== undefined && files.length > 0 && (
                 <FileList files={files} onClickDelete={handleDelete} />
             )}
-        </>
+        </div>
     )
 }
 

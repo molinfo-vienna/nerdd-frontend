@@ -2,6 +2,7 @@ import PropTypes from "prop-types"
 import React from "react"
 import { useDropzone } from "react-dropzone"
 import Icon from "../icon/Icon"
+import "./style.scss"
 
 export default function FileField({ name, onDrop, ...props }) {
     const {
@@ -25,12 +26,7 @@ export default function FileField({ name, onDrop, ...props }) {
     }
 
     const style = {
-        style: {
-            borderStyle: "dashed",
-            outline: "none",
-            transition: "border .24s ease-in-out",
-        },
-        className: `text-center rounded-2 fs-5 border-2 ${borderStyle}`,
+        className: `text-center rounded-2 fs-5 border-2 ${borderStyle} dropzone`,
     }
 
     return (
@@ -41,10 +37,8 @@ export default function FileField({ name, onDrop, ...props }) {
                     <Icon collection="pi" name="PiFileArrowUp" size={48} />
                 </p>
                 <p className="m-0">
-                    <span className="text-primary text-decoration-underline">
-                        Click here
-                    </span>{" "}
-                    to upload files or drag and drop.
+                    <span className="click-here">Click here</span> to upload
+                    files or drag and drop.
                 </p>
             </div>
         </div>
