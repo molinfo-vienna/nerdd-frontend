@@ -329,6 +329,14 @@ export default function MockServer({
                     this.put(
                         "/sources",
                         (schema, request) => {
+                            if (return404) {
+                                return new Response(
+                                    404,
+                                    {},
+                                    { error: "Invalid page" },
+                                )
+                            }
+
                             const file = request.requestBody.get("file")
                             const filename = file.name
 
@@ -365,6 +373,14 @@ export default function MockServer({
                     this.delete(
                         "/sources/:sourceId",
                         (schema, request) => {
+                            if (return404) {
+                                return new Response(
+                                    404,
+                                    {},
+                                    { error: "Invalid page" },
+                                )
+                            }
+
                             const sourceId = request.params.sourceId
 
                             // delete the source
