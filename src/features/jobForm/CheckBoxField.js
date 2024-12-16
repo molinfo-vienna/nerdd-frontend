@@ -7,12 +7,7 @@ export default function CheckBoxField({ input, meta, ...props }) {
     }
     return (
         <div className="form-check">
-            <input
-                {...modifiedProps}
-                {...input}
-                type="checkbox"
-                checked={!!input.value}
-            />
+            <input {...modifiedProps} {...input} type="checkbox" />
             {meta.touched && meta.error && (
                 <div className="invalid-feedback">{meta.error}</div>
             )}

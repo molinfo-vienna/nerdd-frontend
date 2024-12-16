@@ -30,6 +30,7 @@ export default function JobParameterField({ jobParameter }) {
                 initialValue={defaultValue}
                 aria-label={jobParameter.name}
                 component={CheckBoxField}
+                type="checkbox"
             />
         )
     } else {
