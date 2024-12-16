@@ -1,6 +1,6 @@
 import { createForm } from "final-form"
 import PropTypes from "prop-types"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import { Field, Form } from "react-final-form"
 import { moduleType } from "../../types"
 import FileFieldAndList from "../fileField/FileFieldAndList"
@@ -8,6 +8,7 @@ import Icon from "../icon/Icon"
 import MoleculeEditor from "../moleculeEditor/MoleculeEditor"
 import JobParameterField from "./JobParameterField"
 import Row from "./Row"
+import Textarea from "./Textarea"
 
 export default function JobForm({ module, onSubmit }) {
     // create a placeholder for the text input
@@ -21,6 +22,7 @@ export default function JobForm({ module, onSubmit }) {
     // position the tooltip at the center of the *upload zone* (ignoring the list of
     // uploaded files). To do this, we need to get a reference to the upload zone and
     // pass it to the tooltip component.
+    const inputTextFieldTooltipPositionReference = useRef()
     const fileFieldTooltipPositionReference = useRef()
 
     const jobParameters = module.jobParameters ?? []
@@ -29,7 +31,7 @@ export default function JobForm({ module, onSubmit }) {
     // files before submitting the form to server. We do that by
     // 1. Having two modes "idle" and "submitting" (and saving it in a state)
     // 2. When the user clicks on the submit button, we change the state to "submitting"
-    // 3. Keep track of all files with useSelector and check on each change if all
+    // 3. Keep track of all files with useEffect and check on each change if all
     //    files are uploaded.
     const [status, setStatus] = useState("idle")
     const [valuesToSubmit, setValuesToSubmit] = useState(null)
@@ -37,18 +39,6 @@ export default function JobForm({ module, onSubmit }) {
     const onDelayedSubmit = (values) => {
         setStatus("submitting")
     }
-
-    const formApi = createForm({ onSubmit: onDelayedSubmit })
-    useEffect(() => {
-        formApi.subscribe(
-            ({ values }) => {
-                setValuesToSubmit(values)
-            },
-            { values: true },
-        )
-    }, [])
-
-    const formRef = useRef(formApi)
 
     useEffect(() => {
         if (status === "submitting") {
@@ -64,12 +54,61 @@ export default function JobForm({ module, onSubmit }) {
         }
     }, [status, valuesToSubmit, onSubmit])
 
+    //
+    // Validation
+    //
+    const validate = useCallback(
+        (values) => {
+            const errors = {}
+
+            // input
+            if (values.inputType === "text") {
+                if (!values.input || values.input.trim().length === 0) {
+                    errors.input = "Required"
+                }
+            } else if (values.inputType === "file") {
+                if (!values.inputFile || values.inputFile.length === 0) {
+                    errors.inputFile = "Required"
+                }
+            } else if (values.inputType === "draw") {
+                if (!values.inputDrawn || !values.inputDrawn) {
+                    errors.inputDrawn = "Required"
+                }
+            }
+
+            // job parameters
+            for (const jobParameter of jobParameters) {
+                if (jobParameter.required && !values[jobParameter.name]) {
+                    errors[jobParameter.name] = "Required"
+                }
+            }
+
+            return errors
+        },
+        // useCallback can not track arrays, so we have to stringify it
+        [JSON.stringify(jobParameters)],
+    )
+
+    //
+    // create form
+    //
+    const formApi = createForm({ onSubmit: onDelayedSubmit, validate })
+    useEffect(() => {
+        formApi.subscribe(
+            ({ values }) => {
+                setValuesToSubmit(values)
+            },
+            { values: true },
+        )
+    }, [])
+
+    const formRef = useRef(formApi)
+
     return (
         <Form
             form={formRef.current}
-            render={({ handleSubmit, values }) => (
+            render={({ handleSubmit, submitting, values }) => (
                 <form
-                    className="form-horizontal"
                     onSubmit={(e) => {
                         // don't invoke a normal submit
                         e.preventDefault()
@@ -149,17 +188,20 @@ export default function JobForm({ module, onSubmit }) {
 
                     <Row
                         helpText="Use any of the formats SMILES, SDF or InChI."
-                        className={`${values.inputType !== "text" && "d-none"}`}
+                        positionReference={
+                            inputTextFieldTooltipPositionReference
+                        }
+                        className={values.inputType !== "text" ? "d-none" : ""}
                     >
                         <Field
                             name="input"
-                            component="textarea"
-                            className="form-control"
                             id="input"
-                            aria-describedby="inputHelp"
                             rows={5}
-                            placeholder={placeholderSmiles}
+                            // ref={inputTextFieldTooltipPositionReference}
+                            aria-describedby="inputHelp"
                             initialValue=""
+                            placeholder={placeholderSmiles}
+                            component={Textarea}
                         />
                     </Row>
 
@@ -167,7 +209,7 @@ export default function JobForm({ module, onSubmit }) {
                         helpText="Within a file, the format shouldn't change,
                                 but different files can have any of the formats
                                 SMILES, SDF or InChI."
-                        className={`${values.inputType !== "file" && "d-none"}`}
+                        className={values.inputType !== "file" ? "d-none" : ""}
                         positionReference={fileFieldTooltipPositionReference}
                     >
                         <FileFieldAndList
@@ -175,13 +217,12 @@ export default function JobForm({ module, onSubmit }) {
                             tooltipPositionReference={
                                 fileFieldTooltipPositionReference
                             }
-                            className="form-control"
                             multiple
                         />
                     </Row>
 
                     <Row
-                        className={`${values.inputType !== "draw" && "d-none"}`}
+                        className={values.inputType !== "draw" ? "d-none" : ""}
                     >
                         <MoleculeEditor name="inputDrawn" />
                     </Row>
