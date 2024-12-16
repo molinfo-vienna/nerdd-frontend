@@ -12,6 +12,7 @@ import {
     createFileField,
     deleteFile,
     deleteFileField,
+    setErrorMessage,
     setSourceData,
     setStatus,
 } from "./fileFieldSlice"
@@ -77,6 +78,34 @@ export default function FileFieldAndList({
                 // case 1: upload was aborted
                 if (response.error?.name === "AbortError") {
                     return
+                } else if (response.error) {
+                    console.log(response.error)
+
+                    // set status to error
+                    dispatch(
+                        setStatus({
+                            fileFieldName: name,
+                            id,
+                            status: "error",
+                        }),
+                    )
+
+                    // build error message
+                    let errorMessage = "Unknown error"
+                    if (response.error.status === 404) {
+                        errorMessage = "Server not found. Try again later."
+                    }
+
+                    // set error message
+                    dispatch(
+                        setErrorMessage({
+                            fileFieldName: name,
+                            id,
+                            errorMessage,
+                        }),
+                    )
+
+                    return
                 }
 
                 // case 2: upload was successful
@@ -130,7 +159,38 @@ export default function FileFieldAndList({
             const sourceId = file.sourceData.id
 
             deleteSource({ sourceId }).then((response) => {
-                // TODO: handle error
+                if (response.error?.name === "AbortError") {
+                    return
+                } else if (response.error) {
+                    console.log(response.error)
+
+                    // set status to error
+                    dispatch(
+                        setStatus({
+                            fileFieldName: name,
+                            id,
+                            status: "error",
+                        }),
+                    )
+
+                    // build error message
+                    let errorMessage = "Unknown error"
+                    if (response.error.status === 404) {
+                        errorMessage = "Server not found. Try again later."
+                    }
+
+                    // set error message
+                    dispatch(
+                        setErrorMessage({
+                            fileFieldName: name,
+                            id,
+                            errorMessage,
+                        }),
+                    )
+
+                    return
+                }
+
                 dispatch(deleteFile({ fileFieldName: name, id: file.id }))
             })
         }

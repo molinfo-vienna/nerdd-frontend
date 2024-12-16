@@ -333,7 +333,7 @@ export default function MockServer({
                                 return new Response(
                                     404,
                                     {},
-                                    { error: "Invalid page" },
+                                    { detail: "Route /sources not found" },
                                 )
                             }
 
@@ -377,7 +377,7 @@ export default function MockServer({
                                 return new Response(
                                     404,
                                     {},
-                                    { error: "Invalid page" },
+                                    { detail: "Source id not found" },
                                 )
                             }
 

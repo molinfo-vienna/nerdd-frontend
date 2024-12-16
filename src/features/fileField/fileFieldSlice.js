@@ -25,6 +25,11 @@ const fileFieldSlice = createSlice({
             const file = fileField.find((file) => file.id === action.payload.id)
             file.status = action.payload.status
         },
+        setErrorMessage(state, action) {
+            const fileField = state[action.payload.fileFieldName]
+            const file = fileField.find((file) => file.id === action.payload.id)
+            file.errorMessage = action.payload.errorMessage
+        },
         setSourceData(state, action) {
             const fileField = state[action.payload.fileFieldName]
             const file = fileField.find((file) => file.id === action.payload.id)
@@ -50,6 +55,7 @@ export const {
     deleteFileField,
     addPendingFile,
     setStatus,
+    setErrorMessage,
     deleteFile,
     setSourceData,
     setRequest,
