@@ -10,7 +10,7 @@ export default function NavigationBar() {
     const pageId = match?.id || "unknown"
 
     // get the params from the url (we might need them)
-    const { moduleId } = useParams()
+    const { moduleId, jobId } = useParams()
 
     // get the module list to receive the module name
     const modules = useGetModulesQuery().data || {}
@@ -44,7 +44,6 @@ export default function NavigationBar() {
                 { name: "API", url: `/${moduleId}/api` },
             ]
         } else if (pageId === "results") {
-            const { jobId } = useParams()
             breadcrumbElements = [
                 { name: "Home", url: "/" },
                 { name: module.visibleName, url: `/${moduleId}` },
