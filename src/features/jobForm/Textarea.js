@@ -1,6 +1,6 @@
 import React from "react"
 
-export default function Textarea({ input, meta, ...props }) {
+export default function Textarea({ input, meta, positionReference, ...props }) {
     const modifiedProps = {
         ...props,
         className: `form-control ${props.className} ${meta.touched && meta.error ? "is-invalid" : ""}`,
@@ -8,7 +8,11 @@ export default function Textarea({ input, meta, ...props }) {
 
     return (
         <>
-            <textarea {...modifiedProps} {...input}></textarea>
+            <textarea
+                {...modifiedProps}
+                {...input}
+                ref={positionReference}
+            ></textarea>
             {meta.touched && meta.error && (
                 <div className="invalid-feedback">{meta.error}</div>
             )}
