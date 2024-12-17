@@ -3,9 +3,9 @@ import PropTypes from "prop-types"
 import React, { useCallback, useEffect, useRef, useState } from "react"
 import { Field, Form } from "react-final-form"
 import { moduleType } from "../../types"
-import FileFieldAndList from "../fileField/FileFieldAndList"
 import Icon from "../icon/Icon"
 import MoleculeEditor from "../moleculeEditor/MoleculeEditor"
+import FileField from "./FileField"
 import JobParameterField from "./JobParameterField"
 import Row from "./Row"
 import Textarea from "./Textarea"
@@ -114,6 +114,10 @@ export default function JobForm({ module, onSubmit }) {
                         e.preventDefault()
                         // rather, invoke our own submit function
                         handleSubmit(e)
+
+                        // TODO: it is possible to upload files, submit and delete all files
+                        // during the upload phase. In this case, validation was already skipped
+                        // and the form is submitted without any files. We should prevent this.
                     }}
                 >
                     <Row>
@@ -197,7 +201,9 @@ export default function JobForm({ module, onSubmit }) {
                             name="input"
                             id="input"
                             rows={5}
-                            // ref={inputTextFieldTooltipPositionReference}
+                            positionReference={
+                                inputTextFieldTooltipPositionReference
+                            }
                             aria-describedby="inputHelp"
                             initialValue=""
                             placeholder={placeholderSmiles}
@@ -212,9 +218,13 @@ export default function JobForm({ module, onSubmit }) {
                         className={values.inputType !== "file" ? "d-none" : ""}
                         positionReference={fileFieldTooltipPositionReference}
                     >
-                        <FileFieldAndList
+                        <Field
                             name="inputFile"
-                            tooltipPositionReference={
+                            id="inputFile"
+                            initialValue={[]}
+                            component={FileField}
+                            aria-describedby="inputFileHelp"
+                            positionReference={
                                 fileFieldTooltipPositionReference
                             }
                             multiple
@@ -240,7 +250,7 @@ export default function JobForm({ module, onSubmit }) {
 
                     <Row>
                         <p className="text-center">
-                            {status === "idle" && (
+                            {status === "idle" && !submitting && (
                                 <button
                                     type="submit"
                                     className="btn btn-lg btn-primary"
@@ -253,7 +263,7 @@ export default function JobForm({ module, onSubmit }) {
                                     Submit
                                 </button>
                             )}
-                            {status === "submitting" && (
+                            {(status === "submitting" || submitting) && (
                                 <button
                                     type="submit"
                                     className="btn btn-lg btn-primary"
