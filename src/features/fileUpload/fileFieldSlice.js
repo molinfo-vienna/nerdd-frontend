@@ -28,12 +28,16 @@ const fileFieldSlice = createSlice({
         setErrorMessage(state, action) {
             const fileField = state[action.payload.fileFieldName]
             const file = fileField.find((file) => file.id === action.payload.id)
-            file.errorMessage = action.payload.errorMessage
+            if (file !== undefined) {
+                file.errorMessage = action.payload.errorMessage
+            }
         },
         setSourceData(state, action) {
             const fileField = state[action.payload.fileFieldName]
             const file = fileField.find((file) => file.id === action.payload.id)
-            file.sourceData = action.payload.sourceData
+            if (file !== undefined) {
+                file.sourceData = action.payload.sourceData
+            }
         },
         setRequest(state, action) {
             const fileField = state[action.payload.fileFieldName]

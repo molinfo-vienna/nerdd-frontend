@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit"
 import { setupListeners } from "@reduxjs/toolkit/query"
 import debugSliceReducer from "./features/debug/debugSlice"
-import fileFieldSliceReducer from "./features/fileField/fileFieldSlice"
+import fileFieldSliceReducer from "./features/fileUpload/fileFieldSlice"
 import tweakPanelSliceReducer from "./features/tweakPanel/tweakPanelSlice"
 import { nerddApi } from "./services"
 
