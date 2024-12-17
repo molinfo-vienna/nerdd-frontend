@@ -66,10 +66,10 @@ export default function CreateJobPage() {
         })
     }
 
-    // const authorList = module.publication.authors.map(
-    //     (author) => `${author.firstName} ${author.lastName}`,
-    // )
-    // const authorText = authorList.join(", ")
+    const authorList = module.publication.authors.map(
+        (author) => `${author.firstName} ${author.lastName}`,
+    )
+    const authorText = authorList.join(", ")
 
     return (
         <>
@@ -78,14 +78,14 @@ export default function CreateJobPage() {
                     <Markdown className="lead">{module.description}</Markdown>
                 </HeaderOneCard.Content>
                 <HeaderOneCard.CardSection>
-                    {/* <p className="fw-bold mb-2">
+                    <p className="fw-bold mb-2">
                         {module.publication.title}{" "}
                         <span className="fw-normal text-body-secondary">
                             ({module.publication.journal}{" "}
                             {module.publication.year})
                         </span>
                     </p>
-                    <p className="mb-2">{authorText}</p> */}
+                    <p className="mb-2">{authorText}</p>
                 </HeaderOneCard.CardSection>
                 <HeaderOneCard.Icon
                     icon="FaBookOpen"
