@@ -1,0 +1,22 @@
+@import "../../index.scss";
+
+
+.is-invalid .dropzone {
+    border-color: $danger !important;
+}
+
+.dropzone {
+    border-style: dashed;
+    outline: none;
+    transition: border .24s ease-in-out;
+}
+
+.is-invalid .dropzone .click-here {
+    color: $danger;
+}
+
+.dropzone .click-here {
+    color: $primary;
+    text-decoration: underline;
+    cursor: pointer;
+}

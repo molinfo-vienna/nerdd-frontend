@@ -1,27 +1,37 @@
 import React from "react"
 import { Field } from "react-final-form"
 import { jobParameterType } from "../../types"
+import CheckBoxField from "./CheckBoxField"
+import SelectField from "./SelectField"
+import TextField from "./TextField"
 
 export default function JobParameterField({ jobParameter }) {
     if (jobParameter.choices) {
-        const defaultValue =
-            jobParameter.default ?? jobParameter.choices[0].value
+        const defaultValue = jobParameter.default ?? ""
 
         return (
             <Field
                 name={jobParameter.name}
-                component="select"
-                className="form-select"
+                id={jobParameter.name}
+                initialValue={defaultValue}
                 aria-label={jobParameter.name}
                 aria-describedby={`${jobParameter.name}Help`}
+                component={SelectField}
+                choices={jobParameter.choices}
+            />
+        )
+    } else if (jobParameter.type === "bool") {
+        const defaultValue = jobParameter.default ?? false
+
+        return (
+            <Field
+                name={jobParameter.name}
+                id={jobParameter.name}
                 initialValue={defaultValue}
-            >
-                {jobParameter.choices.map(({ label, value }) => (
-                    <option key={value} value={value}>
-                        {label}
-                    </option>
-                ))}
-            </Field>
+                aria-label={jobParameter.name}
+                component={CheckBoxField}
+                type="checkbox"
+            />
         )
     } else {
         const defaultValue = jobParameter.default ?? ""
@@ -29,12 +39,11 @@ export default function JobParameterField({ jobParameter }) {
         return (
             <Field
                 name={jobParameter.name}
-                component="input"
-                className="form-control"
+                initialValue={defaultValue}
                 id={jobParameter.name}
                 aria-label={jobParameter.name}
                 aria-describedby={`${jobParameter.name}Help`}
-                initialValue={defaultValue}
+                component={TextField}
             />
         )
     }

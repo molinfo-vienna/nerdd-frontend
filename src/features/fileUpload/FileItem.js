@@ -30,9 +30,23 @@ export default function FileItem({ file, onClickDelete }) {
                         <Icon name="FaRegCircleCheck" collection="fa" />
                     </span>
                 ) : null}
-                <div className="text-truncate flex-fill ps-2 pe-5">
+                {/* error */}
+                {file.status === "error" ? (
+                    <span className="text-danger">
+                        <Icon name="FaRegCircleXmark" collection="fa" />
+                    </span>
+                ) : null}
+                <div
+                    className={`text-truncate flex-fill ps-2 pe-5 ${file.status === "error" ? "text-danger" : ""}`}
+                >
                     {" "}
                     {file.filename}
+                    {file.errorMessage ? (
+                        <span className="text-danger">
+                            {" "}
+                            - {file.errorMessage}
+                        </span>
+                    ) : null}
                 </div>
                 {/* delete */}
                 {file.status !== "deleting" ? (

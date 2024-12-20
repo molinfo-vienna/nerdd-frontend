@@ -8,6 +8,7 @@ function normalizeJobParameter(jobParameter) {
         visibleName:
             jobParameter.visibleName ||
             _.upperFirst(_.camelCase(jobParameter.name)),
+        required: jobParameter.required || false,
     }
 }
 

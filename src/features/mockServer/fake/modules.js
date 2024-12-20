@@ -1,15 +1,16 @@
 import { faker } from "@faker-js/faker"
+import { generateValue } from "./util"
 
 const taskTypes = [
     "molecular_property_prediction",
     "atom_property_prediction",
     "derivative_prediction",
 ]
-const jobDataTypes = ["text", "number", "boolean"]
-const resultDataTypes = ["integer", "float", "text", "boolean"]
+const jobParameterDataTypes = ["string", "int", "float", "bool"]
+const resultDataTypes = ["string", "int", "float", "bool", "mol"]
 
-const logoUrls = Array.from({ length: 14 }).map(
-    (_, i) => `/fake/module-logos/${i + 1}.png`,
+const logoUrls = Array.from({ length: 9 }).map(
+    (_, i) => `/fake/module-logos/${i + 1}.svg`,
 )
 
 function capitalize(string) {
@@ -25,30 +26,50 @@ function longPhrase() {
     return `${capitalize(words)}`
 }
 
-export function choice() {
+export function choice(dataType) {
     return {
-        value: faker.lorem.slug(3),
+        value: generateValue(dataType),
         label: phrase(),
     }
 }
 
 export function generateJobParameter() {
-    const type = faker.helpers.arrayElement(jobDataTypes)
+    const type = faker.helpers.arrayElement(jobParameterDataTypes)
     const hasHelpText = faker.datatype.boolean(0.8)
-    const isChoices = faker.datatype.boolean()
-    const choices = isChoices
-        ? Array.from({ length: faker.number.int({ min: 2, max: 5 }) }, () =>
-              choice(),
-          )
-        : undefined
+    const required = faker.datatype.boolean()
+    const isChoices = faker.datatype.boolean() && type !== "bool"
+    let choices = undefined
+    if (isChoices) {
+        choices = Array.from(
+            { length: faker.number.int({ min: 2, max: 8 }) },
+            () => choice(type),
+        )
+
+        // make sure that all choices have unique values
+        const uniqueValues = new Set(choices.map((c) => c.value))
+        choices = Array.from(uniqueValues).map((value) => {
+            return choices.find((c) => c.value === value)
+        })
+    }
+    const hasDefaultValue = faker.datatype.boolean()
+    let defaultValue = undefined
+    if (hasDefaultValue) {
+        if (isChoices) {
+            defaultValue = faker.helpers.arrayElement(choices).value
+        } else {
+            defaultValue = generateValue(type)
+        }
+    }
 
     return {
         name: faker.lorem.slug(3),
+        type,
         visible_name: phrase(),
         help_text: hasHelpText
             ? faker.lorem.sentence({ min: 8, max: 30 })
             : undefined,
-        type,
+        default: defaultValue,
+        required,
         choices,
     }
 }
@@ -65,7 +86,7 @@ export function generateResultProperty(group, level) {
               {
                   length: faker.number.int({ min: 2, max: 5 }),
               },
-              () => choice(),
+              () => choice(type),
           )
         : undefined
 
@@ -210,6 +231,7 @@ export function generateModuleConfig(i) {
     faker.seed(i)
 
     const task = faker.helpers.arrayElement(taskTypes)
+    const name = faker.lorem.slug(4)
 
     const numPartners = faker.number.int({ min: 1, max: 5 })
     const numContacts = faker.number.int({ min: 1, max: 3 })
@@ -223,7 +245,7 @@ export function generateModuleConfig(i) {
     // typical result properties
     const nameProperty = {
         name: "name",
-        type: "text",
+        type: "string",
         visible_name: "Name",
         visible: true,
         sortable: true,
@@ -232,7 +254,7 @@ export function generateModuleConfig(i) {
     // add input smiles column
     const inputSmilesProperty = {
         name: "input_smiles",
-        type: "text",
+        type: "string",
         visible_name: "Input SMILES",
         visible: false,
         sortable: true,
@@ -241,7 +263,7 @@ export function generateModuleConfig(i) {
     // add filtered smiles column
     const filteredSmilesProperty = {
         name: "preprocessed_smiles",
-        type: "text",
+        type: "string",
         visible_name: "Processed SMILES",
         visible: false,
         sortable: true,
@@ -250,7 +272,7 @@ export function generateModuleConfig(i) {
     // add image column
     const imageProperty = {
         name: "image",
-        type: "image",
+        type: "mol",
         visible_name: "2D structure",
         visible: true,
         sortable: false,
@@ -288,8 +310,9 @@ export function generateModuleConfig(i) {
     }
 
     return {
+        id: name,
         rank: faker.number.int({ min: 0, max: 100 }),
-        name: faker.lorem.slug(4),
+        name,
         task,
         visible_name: visibleName,
         description: faker.lorem.paragraphs(2, "\n\n"),

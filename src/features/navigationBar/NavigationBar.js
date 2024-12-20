@@ -10,7 +10,7 @@ export default function NavigationBar() {
     const pageId = match?.id || "unknown"
 
     // get the params from the url (we might need them)
-    const { moduleId } = useParams()
+    const { moduleId, jobId } = useParams()
 
     // get the module list to receive the module name
     const modules = useGetModulesQuery().data || {}
@@ -150,6 +150,7 @@ export default function NavigationBar() {
                                 <Link
                                     to="https://comp3d.univie.ac.at/the-comp3d-team/"
                                     className="nav-link"
+                                    target="_blank"
                                 >
                                     About us
                                 </Link>

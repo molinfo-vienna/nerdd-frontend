@@ -337,7 +337,7 @@ export default function ResultsPage() {
                                 )}
                         </div>
                         {/* </div> */}
-                        {!isLoadingResults && (
+                        {!isLoadingResults && results.data.length > 1 && (
                             <Pagination
                                 moduleId={moduleId}
                                 jobId={jobId}

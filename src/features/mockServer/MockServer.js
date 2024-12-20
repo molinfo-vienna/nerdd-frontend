@@ -314,8 +314,14 @@ export default function MockServer({
                     // GET /modules
                     // (return all module configs)
                     this.get("/modules", () => {
-                        console.log("got request")
                         return Object.values(moduleConfigs)
+                    })
+
+                    // GET /modules
+                    // (return all module configs)
+                    this.get("/modules/:moduleId/", (schema, request) => {
+                        const moduleId = request.params.moduleId
+                        return moduleConfigs[moduleId]
                     })
 
                     // PUT /sources/
@@ -323,6 +329,14 @@ export default function MockServer({
                     this.put(
                         "/sources",
                         (schema, request) => {
+                            if (return404) {
+                                return new Response(
+                                    404,
+                                    {},
+                                    { detail: "Route /sources not found" },
+                                )
+                            }
+
                             const file = request.requestBody.get("file")
                             const filename = file.name
 
@@ -359,6 +373,14 @@ export default function MockServer({
                     this.delete(
                         "/sources/:sourceId",
                         (schema, request) => {
+                            if (return404) {
+                                return new Response(
+                                    404,
+                                    {},
+                                    { detail: "Source id not found" },
+                                )
+                            }
+
                             const sourceId = request.params.sourceId
 
                             // delete the source

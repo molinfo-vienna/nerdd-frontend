@@ -1,27 +1,10 @@
 import { faker } from "@faker-js/faker"
-
-export function generateResultPropertyValue(resultProperty) {
-    if (resultProperty.type === "text") {
-        return faker.lorem.words({ min: 10, max: 20 })
-    } else if (resultProperty.type === "string") {
-        return faker.lorem.words({ min: 1, max: 4 })
-    } else if (resultProperty.type === "boolean") {
-        return faker.datatype.boolean()
-    } else if (resultProperty.type === "integer") {
-        return faker.number.int({ min: -100, max: 100 })
-    } else if (resultProperty.type === "float") {
-        return faker.number.float({ min: -100, max: 100 })
-    } else if (resultProperty.type === "image") {
-        return `/fake/molecules/mol_${faker.number.int({ min: 0, max: 11 })}.svg`
-    } else {
-        console.log(resultProperty)
-    }
-}
+import { generateValue } from "./util"
 
 export function generateMolecularPropertyPredictionResult(module, moleculeId) {
     const nameValuePairs = module.result_properties.map((resultProperty) => [
         resultProperty.name,
-        generateResultPropertyValue(resultProperty),
+        generateValue(resultProperty.type),
     ])
 
     const entry = {
