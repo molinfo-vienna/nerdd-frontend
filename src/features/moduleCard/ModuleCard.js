@@ -6,7 +6,7 @@ import "./style.scss"
 export default function ModuleCard({ module }) {
     return (
         <Link
-            to={module.name}
+            to={module.id}
             className="card module-card text-center h-100 mb-3 mx-auto overflow-hidden text-decoration-none"
         >
             {/* border-0: remove separation line between card header and body */}

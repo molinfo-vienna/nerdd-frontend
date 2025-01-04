@@ -53,7 +53,7 @@ export default function LandingPage() {
                 <div className="container-fluid px-xxl-5 pb-5">
                     <div className="row justify-content-center row-cols-auto gx-4 gy-4">
                         {modulesByRank.map((module) => (
-                            <div key={module.name} className="col">
+                            <div key={module.id} className="col">
                                 <ModuleCard module={module} />
                             </div>
                         ))}
