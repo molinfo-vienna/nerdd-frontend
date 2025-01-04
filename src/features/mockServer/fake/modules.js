@@ -227,6 +227,21 @@ function generateDOI() {
     return `10.${registrant}/${suffix}`
 }
 
+function generatePublication() {
+    const numAuthors = faker.number.int({ min: 2, max: 7 })
+
+    return {
+        title: faker.lorem.sentence({ min: 12, max: 22 }),
+        authors: Array.from({ length: numAuthors }, () => ({
+            firstName: faker.person.firstName(),
+            lastName: faker.person.lastName(),
+        })),
+        journal: generateJournal(),
+        year: faker.date.past({ years: 10 }).getFullYear(),
+        doi: generateDOI(),
+    }
+}
+
 export function generateModuleConfig(i) {
     faker.seed(i)
 
@@ -235,7 +250,7 @@ export function generateModuleConfig(i) {
 
     const numPartners = faker.number.int({ min: 1, max: 5 })
     const numContacts = faker.number.int({ min: 1, max: 3 })
-    const numAuthors = faker.number.int({ min: 2, max: 7 })
+    const numPublications = faker.number.int({ min: 1, max: 3 })
     const numJobParameters = faker.number.int({ min: 0, max: 7 })
     const numResultProperties = faker.number.int({ min: 1, max: 20 })
     const visibleName = capitalize(faker.word.words(1))
@@ -327,16 +342,9 @@ export function generateModuleConfig(i) {
         job_parameters: Array.from({ length: numJobParameters }, () =>
             generateJobParameter(),
         ),
-        publication: {
-            title: faker.lorem.sentence({ min: 12, max: 22 }),
-            authors: Array.from({ length: numAuthors }, () => ({
-                firstName: faker.person.firstName(),
-                lastName: faker.person.lastName(),
-            })),
-            journal: generateJournal(),
-            year: faker.date.past({ years: 10 }).getFullYear(),
-            doi: generateDOI(),
-        },
+        publications: Array.from({ length: numPublications }, () =>
+            generatePublication(),
+        ),
         result_properties: [
             ...defaultProperties,
             ...groups.map((g, i) => generateResultProperty(g, levels[i])),
