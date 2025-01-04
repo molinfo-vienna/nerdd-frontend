@@ -1,0 +1,6 @@
+# git
+.git
+.gitignore
+
+# javascript
+node_modules
