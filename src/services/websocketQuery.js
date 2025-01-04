@@ -37,9 +37,12 @@ export default function websocketQuery({
                 ws.onmessage = (event) => {
                     const data = JSON.parse(event.data)
                     const transformedData = transformResponseWs(data)
-                    updateCachedData((draft) =>
-                        process(draft, transformedData, false),
-                    )
+                    updateCachedData((draft) => {
+                        // TODO: messages might get lost here
+                        if (draft != null) {
+                            process(draft, transformedData, false)
+                        }
+                    })
                 }
 
                 ws.onclose = (e) => {
@@ -68,8 +71,6 @@ export default function websocketQuery({
                 // subscription is no longer active. For example, this happens when
                 // the component using this query is unmounted.
                 await cacheEntryRemoved
-
-                console.log("closing websocket connection")
 
                 // perform cleanup steps once the `cacheEntryRemoved` promise resolves
                 if (ws) {
