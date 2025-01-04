@@ -3,10 +3,8 @@ import Markdown from "react-markdown"
 import { useParams } from "react-router-dom"
 import rehypeSlug from "rehype-slug"
 import Footer from "../features/footer/Footer"
-import Header from "../features/header/Header"
-import Icon from "../features/icon/Icon"
+import ModuleHeader from "../features/header/ModuleHeader"
 import TableOfContents from "../features/tableOfContents/TableOfContents"
-import TangleRuntime from "../features/tangleRuntime/TangleRuntime"
 import { useGetModuleQuery } from "../services"
 import ErrorPage from "./ErrorPage"
 import LoadingPage from "./LoadingPage"
@@ -27,7 +25,8 @@ export default function AboutPage() {
 
     return (
         <>
-            <Header module={module}>
+            <ModuleHeader module={module} />
+            {/* <Header module={module}>
                 <Header.Content>
                     <Markdown className="lead">{module.description}</Markdown>
                 </Header.Content>
@@ -60,7 +59,7 @@ export default function AboutPage() {
                         />
                     </span>
                 </Header.Card>
-            </Header>
+            </Header> */}
 
             <div className="container py-5">
                 <div className="row justify-content-center">
