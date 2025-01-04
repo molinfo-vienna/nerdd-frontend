@@ -1,8 +1,7 @@
 import React from "react"
-import Markdown from "react-markdown"
 import { useNavigate, useParams } from "react-router-dom"
 import Footer from "../features/footer/Footer"
-import HeaderOneCard from "../features/header/HeaderOneCard"
+import ModuleHeader from "../features/header/ModuleHeader"
 import JobForm from "../features/jobForm/JobForm"
 import { useAddJobMutation, useGetModuleQuery } from "../services"
 import ErrorPage from "./ErrorPage"
@@ -13,12 +12,14 @@ export default function CreateJobPage() {
 
     const { moduleId } = useParams()
 
-    const { data: module, error, isLoading } = useGetModuleQuery(moduleId)
-
     const [addJob, {}] = useAddJobMutation()
 
+    const { data: module, error, isLoading } = useGetModuleQuery(moduleId)
+
     if (error) {
-        return ErrorPage({ message: "Error fetching modules", error: error })
+        return ErrorPage({
+            error: error,
+        })
     }
 
     if (isLoading) {
@@ -66,54 +67,9 @@ export default function CreateJobPage() {
         })
     }
 
-    const authorList = module.publication.authors.map(
-        (author) => `${author.firstName} ${author.lastName}`,
-    )
-    const authorText = authorList.join(", ")
-
     return (
         <>
-            <HeaderOneCard module={module}>
-                <HeaderOneCard.Content>
-                    <Markdown className="lead">{module.description}</Markdown>
-                </HeaderOneCard.Content>
-                <HeaderOneCard.CardSection>
-                    <p className="fw-bold mb-2">
-                        {module.publication.title}{" "}
-                        <span className="fw-normal text-body-secondary">
-                            ({module.publication.journal}{" "}
-                            {module.publication.year})
-                        </span>
-                    </p>
-                    <p className="mb-2">{authorText}</p>
-                </HeaderOneCard.CardSection>
-                <HeaderOneCard.Icon
-                    icon="FaBookOpen"
-                    caption="Docs"
-                    href={`/${moduleId}/about`}
-                />
-                <HeaderOneCard.Icon
-                    icon="FaPlug"
-                    caption="API"
-                    href={`/${moduleId}/api`}
-                />
-                <HeaderOneCard.Icon
-                    icon="FaBook"
-                    caption="Cite"
-                    href={`/${moduleId}/cite`}
-                />
-                {/* <Header.Card>
-                    <p className="mb-2">
-                        <Icon name="FaClock" size={35} className="me-2" />
-                    </p>
-                    <span className="fs-6">
-                        <TangleRuntime
-                            moleculesPerSecond={2}
-                            initialValue={100}
-                        />
-                    </span>
-                </Header.Card> */}
-            </HeaderOneCard>
+            <ModuleHeader module={module} />
 
             <main>
                 <div className="container py-5">

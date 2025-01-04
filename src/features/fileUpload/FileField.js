@@ -31,7 +31,7 @@ export default function FileField({ name, onDrop, ...props }) {
 
     return (
         <div {...getRootProps(style)}>
-            <input name={name} {...getInputProps()} {...props} />
+            <input name={name} {...getInputProps()} />
             <div className="m-5">
                 <p className="mb-1">
                     <Icon collection="pi" name="PiFileArrowUp" size={48} />
