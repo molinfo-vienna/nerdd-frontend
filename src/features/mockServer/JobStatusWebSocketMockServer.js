@@ -1,6 +1,7 @@
 import { Server as SocketServer } from "mock-socket"
 import PropTypes from "prop-types"
 import { useEffect, useState } from "react"
+import { addOutputFile } from "../debug/debugSlice"
 import recursiveCamelToSnakeCase from "./recursiveCamelToSnakeCase"
 
 export default function JobStatusWebSocketMockServer({ job, pageSize }) {
@@ -18,6 +19,7 @@ export default function JobStatusWebSocketMockServer({ job, pageSize }) {
         numPagesTotal: job.showNumEntriesTotal
             ? Math.ceil(job.numEntriesTotal / pageSize)
             : undefined,
+        outputFiles: [],
     }
 
     // create a socket server
@@ -38,7 +40,7 @@ export default function JobStatusWebSocketMockServer({ job, pageSize }) {
             server.clients().forEach((client) => client.close())
             server.stop()
         }
-    }, [moduleId, job.id])
+    }, [moduleId, job.id, JSON.stringify(jobResponse)])
 
     // send the job status if job (specifically numPagesProcessed) changes
     useEffect(() => {
@@ -50,6 +52,19 @@ export default function JobStatusWebSocketMockServer({ job, pageSize }) {
             })
         }
     }, [socketServer, jobResponse])
+
+    useEffect(() => {
+        // after 5 seconds, add an output file
+        const timeout = setTimeout(() => {
+            addOutputFile({
+                jobId: job.id,
+                format: "sdf",
+                url: "http://some_url.sdf",
+            })
+        }, 5000)
+
+        return () => clearTimeout(timeout)
+    })
 
     return null
 }

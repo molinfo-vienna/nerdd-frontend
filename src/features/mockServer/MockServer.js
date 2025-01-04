@@ -77,8 +77,8 @@ export default function MockServer({
                         dispatch(
                             createJob({
                                 jobId: newJobId,
+                                jobType: moduleId,
                                 parameters,
-                                moduleId,
                                 numResults,
                             }),
                         )
@@ -139,7 +139,7 @@ export default function MockServer({
                             dispatch(
                                 createJob({
                                     jobId,
-                                    moduleId,
+                                    jobType: moduleId,
                                     numResults,
                                 }),
                             )
@@ -196,7 +196,7 @@ export default function MockServer({
                                 dispatch(
                                     createJob({
                                         jobId,
-                                        moduleId,
+                                        jobType: moduleId,
                                         numResults,
                                     }),
                                 )
@@ -218,7 +218,7 @@ export default function MockServer({
                                     : undefined,
                             }
 
-                            const moduleConfig = moduleConfigs[job.moduleId]
+                            const moduleConfig = moduleConfigs[job.jobType]
 
                             const numEntriesProcessed =
                                 job.numEntriesProcessed ?? 0
@@ -321,6 +321,18 @@ export default function MockServer({
                     // (return all module configs)
                     this.get("/modules/:moduleId/", (schema, request) => {
                         const moduleId = request.params.moduleId
+
+                        if (
+                            return404 ||
+                            moduleConfigs[moduleId] === undefined
+                        ) {
+                            return new Response(
+                                404,
+                                {},
+                                { detail: "Module not found" },
+                            )
+                        }
+
                         return moduleConfigs[moduleId]
                     })
 
