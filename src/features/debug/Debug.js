@@ -26,7 +26,7 @@ export default function Debug() {
         // number of results per page
         pageSize: 10,
         // number of results generated per second
-        predictionSpeed: 10,
+        predictionSpeed: 1,
     })
 
     const {

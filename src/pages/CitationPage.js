@@ -1,11 +1,9 @@
 import React from "react"
-import Markdown from "react-markdown"
 import { useParams } from "react-router-dom"
 import Footer from "../features/footer/Footer"
-import Header from "../features/header/Header"
-import Icon from "../features/icon/Icon"
-import TangleRuntime from "../features/tangleRuntime/TangleRuntime"
+import ModuleHeader from "../features/header/ModuleHeader"
 import { useGetModuleQuery } from "../services"
+import ErrorPage from "./ErrorPage"
 import LoadingPage from "./LoadingPage"
 
 export default function CitationPage() {
@@ -13,17 +11,18 @@ export default function CitationPage() {
 
     const { data: module, error, isLoading } = useGetModuleQuery(moduleId)
 
+    if (error) {
+        return ErrorPage({ message: "Error fetching modules", error: error })
+    }
+
     if (isLoading) {
         return LoadingPage()
     }
 
-    if (error || !module) {
-        return <div>Module not found</div>
-    }
-
     return (
         <>
-            <Header module={module}>
+            <ModuleHeader module={module} />
+            {/* <Header module={module}>
                 <Header.Content>
                     <Markdown className="lead">{module.description}</Markdown>
                 </Header.Content>
@@ -56,7 +55,7 @@ export default function CitationPage() {
                         />
                     </span>
                 </Header.Card>
-            </Header>
+            </Header> */}
 
             <div className="container py-5">
                 <div className="row justify-content-center">

@@ -134,6 +134,18 @@ export default function Tooltip({ children, helpText, positionReference }) {
                     </div>
                 </div>
             )}
+            {/* copy of help element above, but for small screens */}
+            <div className="d-flex d-xl-none">
+                <small id="inputFileHelp" className="form-text">
+                    <Markdown>{helpText}</Markdown>
+                    {/*
+                     * The last paragraph of the markdown text will have
+                     * an undesired margin at the bottom. We remove it by
+                     * adding an empty paragraph with negative margin.
+                     */}
+                    <p className="m-n3"></p>
+                </small>
+            </div>
         </div>
     )
 }

@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { CircularProgressbar } from "react-circular-progressbar"
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom"
-import ColumnSelect from "../features/columnSelect/ColumnSelect"
+import ColumnSelectDropdown from "../features/columnSelect/ColumnSelectDropdown"
 import DeleteJobDialog from "../features/deleteJobDialog/DeleteJobDialog"
 import Footer from "../features/footer/Footer"
 import Icon from "../features/icon/Icon"
@@ -13,6 +13,7 @@ import {
     useGetModuleQuery,
     useGetResultsQuery,
 } from "../services"
+import ErrorPage from "./ErrorPage"
 import LoadingPage from "./LoadingPage"
 
 export default function ResultsPage() {
@@ -70,19 +71,18 @@ export default function ResultsPage() {
         isLoading: isLoadingJobStatus,
     } = useGetJobStatusQuery({ moduleId, jobId })
 
-    // console.log("results", results, errorResults, isLoadingResults)
-    // console.log("jobStatus", jobStatus, errorJobStatus, isLoadingJobStatus)
-
     if (errorModule) {
-        return <div>Error fetching modules</div>
+        return ErrorPage({ message: "Error fetching module", error: {} })
     }
 
     if (errorJobStatus) {
-        return <div>Error fetching job status</div>
+        return ErrorPage({
+            errorJobStatus,
+        })
     }
 
     if (errorResults) {
-        return <div>Error fetching results</div>
+        return ErrorPage({ message: "Error fetching results", error: {} })
     }
 
     if (isLoadingModule || isLoadingJobStatus) {
@@ -131,8 +131,27 @@ export default function ResultsPage() {
         setColumnSelection(initialColumnSelection)
     }
 
-    const handleSelectionChange = (newColumnSelection) =>
+    // const handleSelectionChange = (newColumnSelection) =>
+    //     setColumnSelection(newColumnSelection)
+
+    const handleSelectionChange = (group, column, visible) => {
+        const newColumnSelection = columnSelection.map((g) => {
+            if (g.groupName === group) {
+                return {
+                    ...g,
+                    columns: g.columns.map((c) => {
+                        if (c.name === column) {
+                            return { ...c, visible }
+                        }
+                        return c
+                    }),
+                }
+            }
+            return g
+        })
+
         setColumnSelection(newColumnSelection)
+    }
 
     const progressAvailable =
         jobStatus?.numEntriesTotal != null &&
@@ -143,6 +162,8 @@ export default function ResultsPage() {
         : 1
 
     const progressPercent = Math.round(progress * 1000) / 10
+
+    const outputFormats = ["sdf", "csv"]
 
     return (
         <>
@@ -195,13 +216,13 @@ export default function ResultsPage() {
             </HeaderOneCard> */}
             <header className="bg-body-tertiary">
                 <NavigationBar />
-                <section className="container py-5">
+                <section className="container py-4">
                     <div className="row justify-content-center pb-3">
                         <div className="col-sm-4">
                             <div className="d-flex">
                                 <div
-                                    className="mx-2"
-                                    style={{ width: "80px", height: "80px" }}
+                                    className="mx-3"
+                                    style={{ width: "90px", height: "90px" }}
                                 >
                                     <CircularProgressbar
                                         value={
@@ -214,9 +235,14 @@ export default function ResultsPage() {
                                                 ? `${progressPercent}%`
                                                 : ""
                                         }
+                                        styles={{
+                                            text: {
+                                                fontWeight: "bold",
+                                            },
+                                        }}
                                     />
                                 </div>
-                                <div className="d-flex flex-column">
+                                <div className="d-flex flex-column p-2">
                                     <div style={{ height: "50px" }}>
                                         <h1 className="text-primary fw-bold my-auto">
                                             {module.visibleName}
@@ -232,53 +258,140 @@ export default function ResultsPage() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-sm-4 d-flex flex-wrap align-content-center justify-content-center">
-                            <Link
-                                className="text-center text-decoration-none text-reset d-block mx-4"
-                                to={`/${moduleId}/about`}
-                            >
-                                <div className="d-flex flex-column">
-                                    <div style={{ height: "50px" }}>
-                                        <p className="mb-0 text-primary">
-                                            <Icon name="FaBookOpen" size={39} />
-                                        </p>
+                        <div className="col-sm-4">
+                            <div className="btn-group" role="group">
+                                {/* Docs */}
+                                <Link
+                                    className="btn btn-outline-secondary text-center text-decoration-none text-reset d-block"
+                                    to={`/${moduleId}/about`}
+                                    type="button"
+                                >
+                                    <div
+                                        className="d-flex flex-column p-2"
+                                        style={{
+                                            width: "90px",
+                                        }}
+                                    >
+                                        <div style={{ height: "42px" }}>
+                                            <p className="mb-0 text-primary">
+                                                <Icon
+                                                    name="FaBookOpen"
+                                                    size={35}
+                                                />
+                                            </p>
+                                        </div>
+                                        <span className="text-primary">
+                                            Docs
+                                        </span>
                                     </div>
-                                    <span className="text-primary">Docs</span>
-                                </div>
-                            </Link>
+                                </Link>
 
-                            <Link
-                                className="text-center text-decoration-none text-reset d-block mx-4"
-                                to={`/${moduleId}/api`}
-                            >
-                                <div className="d-flex flex-column">
-                                    <div style={{ height: "50px" }}>
-                                        <p className="mb-0 text-primary">
-                                            <Icon name="FaDownload" size={39} />
-                                        </p>
-                                    </div>
-                                    <span className="text-primary">
-                                        Download
-                                    </span>
+                                {/* Columns */}
+                                <div className="btn-group" role="group">
+                                    <Link
+                                        className="btn btn-outline-secondary text-center text-decoration-none text-reset d-block"
+                                        type="button"
+                                        data-bs-toggle="dropdown"
+                                        data-bs-auto-close="outside"
+                                        aria-expanded="false"
+                                    >
+                                        <div
+                                            className="d-flex flex-column p-2"
+                                            style={{
+                                                width: "90px",
+                                            }}
+                                        >
+                                            <div style={{ height: "42px" }}>
+                                                <p className="mb-0 text-primary">
+                                                    <Icon
+                                                        collection="hi2"
+                                                        name="HiMiniViewColumns"
+                                                        size={36}
+                                                    />
+                                                </p>
+                                            </div>
+                                            <span className="text-primary">
+                                                Columns
+                                            </span>
+                                        </div>
+                                    </Link>
+                                    <ColumnSelectDropdown
+                                        columnSelection={columnSelection}
+                                        handleSelectionChange={
+                                            handleSelectionChange
+                                        }
+                                    />
                                 </div>
-                            </Link>
-
-                            <Link
-                                className="text-center text-decoration-none text-reset d-block mx-4"
-                                to="#"
-                                data-bs-toggle="modal"
-                                data-bs-target="#deleteJobModal"
-                                aria-expanded="false"
-                            >
-                                <div className="d-flex flex-column">
-                                    <div style={{ height: "50px" }}>
-                                        <p className="mb-0 text-danger">
-                                            <Icon name="FaTrash" size={39} />
-                                        </p>
+                                {/* Download */}
+                                <div className="btn-group" role="group">
+                                    <Link
+                                        className={`btn btn-outline-secondary text-center text-decoration-none text-reset d-block ${jobStatus.outputFiles.length == 0 ? "disabled" : ""}`}
+                                        type="button"
+                                        data-bs-toggle="dropdown"
+                                        data-bs-auto-close="outside"
+                                    >
+                                        <div
+                                            className="d-flex flex-column p-2"
+                                            style={{
+                                                width: "90px",
+                                            }}
+                                        >
+                                            <div style={{ height: "42px" }}>
+                                                <p className="mb-0 text-primary">
+                                                    <Icon
+                                                        collection="oldFa"
+                                                        name="FaFileDownload"
+                                                        size={33}
+                                                    />
+                                                </p>
+                                            </div>
+                                            <span className="text-primary">
+                                                Download
+                                            </span>
+                                        </div>
+                                    </Link>
+                                    <div className="dropdown-menu dropdown-menu-end p-2">
+                                        {outputFormats.map((format) => (
+                                            <Link
+                                                key={format}
+                                                className={`dropdown-item ${jobStatus.outputFiles.find((f) => f.format == format) === undefined ? "disabled" : ""}`}
+                                            >
+                                                <Icon
+                                                    name="FaFileLines"
+                                                    size={24}
+                                                    className="me-2"
+                                                />
+                                                {format.toUpperCase()}
+                                            </Link>
+                                        ))}
                                     </div>
-                                    <span className="text-danger">Delete</span>
                                 </div>
-                            </Link>
+                                {/* Delete */}
+                                <Link
+                                    className="btn btn-outline-danger text-center text-decoration-none text-reset d-block"
+                                    to="#"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#deleteJobModal"
+                                    aria-expanded="false"
+                                >
+                                    <div
+                                        className="d-flex flex-column p-2"
+                                        style={{
+                                            width: "90px",
+                                        }}
+                                    >
+                                        <div style={{ height: "42px" }}>
+                                            <p className="mb-0">
+                                                <Icon
+                                                    name="FaTrash"
+                                                    size={33}
+                                                />
+                                            </p>
+                                        </div>
+                                        <span>Delete</span>
+                                    </div>
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -303,11 +416,11 @@ export default function ResultsPage() {
                                 numPagesTotal={numPagesTotal}
                                 className="mx-auto position-absolute start-50 translate-middle-x"
                             />
-                            <ColumnSelect
+                            {/* <ColumnSelect
                                 columnSelection={columnSelection}
                                 onSelectionChange={handleSelectionChange}
                                 className="ms-auto"
-                            />
+                            /> */}
                         </div>
                     </div>
                 </div>

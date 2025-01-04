@@ -212,9 +212,9 @@ export default function JobForm({ module, onSubmit }) {
                     </Row>
 
                     <Row
-                        helpText="Within a file, the format shouldn't change,
-                                but different files can have any of the formats
-                                SMILES, SDF or InChI."
+                        helpText="File format can be SMILES, SDF, InChI or compressed archives like
+                        ZIP, TAR, GZ containing other files with molecular representations. 
+                        Multiple files can be uploaded."
                         className={values.inputType !== "file" ? "d-none" : ""}
                         positionReference={fileFieldTooltipPositionReference}
                     >
@@ -249,34 +249,32 @@ export default function JobForm({ module, onSubmit }) {
                     ))}
 
                     <Row>
-                        <p className="text-center">
-                            {status === "idle" && !submitting && (
-                                <button
-                                    type="submit"
-                                    className="btn btn-lg btn-primary"
-                                >
-                                    <Icon
-                                        name="FaPaperPlane"
-                                        size={15}
-                                        className="me-2"
-                                    />
-                                    Submit
-                                </button>
-                            )}
-                            {(status === "submitting" || submitting) && (
-                                <button
-                                    type="submit"
-                                    className="btn btn-lg btn-primary"
-                                    disabled
-                                >
-                                    <span
-                                        className="spinner-border spinner-border-sm me-2"
-                                        aria-hidden="true"
-                                    ></span>
-                                    <span role="status">Loading...</span>
-                                </button>
-                            )}
-                        </p>
+                        {status === "idle" && !submitting && (
+                            <button
+                                type="submit"
+                                className="btn btn-lg btn-primary"
+                            >
+                                <Icon
+                                    name="FaPaperPlane"
+                                    size={15}
+                                    className="me-2"
+                                />
+                                Submit
+                            </button>
+                        )}
+                        {(status === "submitting" || submitting) && (
+                            <button
+                                type="submit"
+                                className="btn btn-lg btn-primary"
+                                disabled
+                            >
+                                <span
+                                    className="spinner-border spinner-border-sm me-2"
+                                    aria-hidden="true"
+                                ></span>
+                                <span role="status">Loading...</span>
+                            </button>
+                        )}
                     </Row>
                 </form>
             )}

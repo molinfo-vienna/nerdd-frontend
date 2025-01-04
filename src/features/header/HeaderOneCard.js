@@ -44,9 +44,16 @@ export default function HeaderOneCard({ module, children, title }) {
                                     </h4>
                                 </div>
                             )}
-                            <div className="card-body d-flex flex-wrap px-4">
-                                {cardSections.map((section, index) => section)}
-                            </div>
+
+                            {cardSections.map((section, index) => (
+                                <div
+                                    className="card-body d-flex flex-wrap px-4"
+                                    key={index}
+                                >
+                                    {section}
+                                </div>
+                            ))}
+
                             <div className="card-footer px-0">
                                 <div className="d-flex flex-wrap">
                                     {icons.map((icon, index) => (

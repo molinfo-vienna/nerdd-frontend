@@ -207,6 +207,23 @@ a.primary-muted-link:focus {
     text-anchor: middle;
 }
 
+// TODO: Bootstrap probably does this already
+.btn-outline-danger p {
+    color: $danger;
+}
+
+.btn-outline-danger span {
+    color: $danger;
+}
+
+.btn-outline-danger:hover p {
+    color: $light;
+}
+
+.btn-outline-danger:hover span {
+    color: $light;
+}
+
 
 @each $breakpoint in map-keys($grid-breakpoints) {
     @include media-breakpoint-up($breakpoint) {

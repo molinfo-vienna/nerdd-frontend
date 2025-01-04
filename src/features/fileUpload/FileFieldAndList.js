@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { useField } from "react-final-form"
 import { useDispatch, useSelector } from "react-redux"
 import { v4 as uuidv4 } from "uuid"
@@ -50,91 +50,94 @@ export default function FileFieldAndList({
 
     const [requests, setRequests] = useState({})
 
-    const onDrop = (acceptedFiles) => {
-        // upload all files to the server
-        acceptedFiles.forEach((file) => {
-            // generate unique id for the file (because filename isn't unique)
-            const id = uuidv4()
+    const onDrop = useCallback(
+        (acceptedFiles) => {
+            // upload all files to the server
+            acceptedFiles.forEach((file) => {
+                // generate unique id for the file (because filename isn't unique)
+                const id = uuidv4()
 
-            // add file as pending
-            dispatch(
-                addPendingFile({
-                    fileFieldName: name,
-                    filename: file.name,
-                    id,
-                }),
-            )
+                // add file as pending
+                dispatch(
+                    addPendingFile({
+                        fileFieldName: name,
+                        filename: file.name,
+                        id,
+                    }),
+                )
 
-            // upload file to the server
-            const request = addSource({ file })
+                // upload file to the server
+                const request = addSource({ file })
 
-            // store request to be able to cancel it
-            setRequests((requests) => ({
-                ...requests,
-                [id]: request,
-            }))
+                // store request to be able to cancel it
+                setRequests((requests) => ({
+                    ...requests,
+                    [id]: request,
+                }))
 
-            request.then((response) => {
-                // case 1: upload was aborted
-                if (response.error?.name === "AbortError") {
-                    return
-                } else if (response.error) {
-                    console.log(response.error)
+                request.then((response) => {
+                    // case 1: upload was aborted
+                    if (response.error?.name === "AbortError") {
+                        return
+                    } else if (response.error) {
+                        console.log(response.error)
 
-                    // set status to error
+                        // set status to error
+                        dispatch(
+                            setStatus({
+                                fileFieldName: name,
+                                id,
+                                status: "error",
+                            }),
+                        )
+
+                        // build error message
+                        let errorMessage = "Unknown error"
+                        if (response.error.status === 404) {
+                            errorMessage = "Server not found. Try again later."
+                        }
+
+                        // set error message
+                        dispatch(
+                            setErrorMessage({
+                                fileFieldName: name,
+                                id,
+                                errorMessage,
+                            }),
+                        )
+
+                        return
+                    }
+
+                    // case 2: upload was successful
+                    // set sourceId for the file
+                    dispatch(
+                        setSourceData({
+                            fileFieldName: name,
+                            id,
+                            sourceData: response.data,
+                        }),
+                    )
+
+                    // set status to success
                     dispatch(
                         setStatus({
                             fileFieldName: name,
                             id,
-                            status: "error",
+                            status: "success",
                         }),
                     )
 
-                    // build error message
-                    let errorMessage = "Unknown error"
-                    if (response.error.status === 404) {
-                        errorMessage = "Server not found. Try again later."
-                    }
-
-                    // set error message
-                    dispatch(
-                        setErrorMessage({
-                            fileFieldName: name,
-                            id,
-                            errorMessage,
-                        }),
-                    )
-
-                    return
-                }
-
-                // case 2: upload was successful
-                // set sourceId for the file
-                dispatch(
-                    setSourceData({
-                        fileFieldName: name,
-                        id,
-                        sourceData: response.data,
-                    }),
-                )
-
-                // set status to success
-                dispatch(
-                    setStatus({
-                        fileFieldName: name,
-                        id,
-                        status: "success",
-                    }),
-                )
-
-                // remove request object from the map
-                setRequests((requests) => {
-                    const { [id]: _, ...newRequests } = requests
-                    return newRequests
+                    // remove request object from the map
+                    setRequests((requests) => {
+                        const { [id]: _, ...newRequests } = requests
+                        return newRequests
+                    })
                 })
             })
-        })
-    }
+        },
+        [name],
+    )
 
     const [deleteSource, {}] = useDeleteSourceMutation()
 

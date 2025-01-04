@@ -14,6 +14,7 @@ export default function JobParameterField({ jobParameter }) {
                 name={jobParameter.name}
                 id={jobParameter.name}
                 initialValue={defaultValue}
+                label={jobParameter.visibleName}
                 aria-label={jobParameter.name}
                 aria-describedby={`${jobParameter.name}Help`}
                 component={SelectField}
@@ -28,6 +29,7 @@ export default function JobParameterField({ jobParameter }) {
                 name={jobParameter.name}
                 id={jobParameter.name}
                 initialValue={defaultValue}
+                label={jobParameter.visibleName}
                 aria-label={jobParameter.name}
                 component={CheckBoxField}
                 type="checkbox"
@@ -40,6 +42,8 @@ export default function JobParameterField({ jobParameter }) {
             <Field
                 name={jobParameter.name}
                 initialValue={defaultValue}
+                placeholder={defaultValue}
+                label={jobParameter.visibleName}
                 id={jobParameter.name}
                 aria-label={jobParameter.name}
                 aria-describedby={`${jobParameter.name}Help`}

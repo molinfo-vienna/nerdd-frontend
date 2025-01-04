@@ -54,21 +54,24 @@ export default function Footer({ module }) {
                                 icon="FaPeopleGroup" // PeopleFill
                                 title="COMP3D Group"
                                 url="https://comp3d.univie.ac.at/the-comp3d-team/"
+                                target="_blank"
                             />
                             <FooterLink
                                 icon="FaLock" // LockFill
                                 title="Privacy Policy"
                                 url="https://dsba.univie.ac.at/en/data-protection-declaration/"
+                                target="_blank"
                             />
                             <FooterLink
                                 icon="FaShield" // ShieldFillCheck
                                 title="Legal Notice"
                                 url="https://pharmazie.univie.ac.at/impressum/"
+                                target="_blank"
                             />
                             <FooterLink
                                 icon="FaEnvelope" // ChatDotsFill
                                 title="Contact"
-                                url="/contact"
+                                url="#"
                             />
                         </ul>
                     </div>
@@ -84,17 +87,17 @@ export default function Footer({ module }) {
                                 <FooterLink
                                     icon="FaBookOpen" // BookFill
                                     title="Documentation"
-                                    url="/docs"
+                                    url="#"
                                 />
                                 <FooterLink
                                     icon="FaPlug" // PlugFill
                                     title="Developer API"
-                                    url="/api"
+                                    url="#"
                                 />
                                 <FooterLink
                                     icon="FaBook" // BookmarksFill
                                     title="How to cite"
-                                    url="/cite"
+                                    url="#"
                                 />
                             </ul>
                         </div>
@@ -111,22 +114,26 @@ export default function Footer({ module }) {
                                 <FooterLink
                                     icon="FaSitemap" // Diagram3Fill
                                     title="Architecture"
-                                    url="/architecture"
+                                    url="https://github.com/molinfo-vienna/nerdd"
+                                    target="_blank"
                                 />
                                 <FooterLink
                                     icon="FaWindowMaximize" // LaptopFill
                                     title="Frontend"
-                                    url="/frontend"
+                                    url="https://github.com/molinfo-vienna/nerdd-frontend"
+                                    target="_blank"
                                 />
                                 <FooterLink
                                     icon="FaDatabase" // DatabaseFill
                                     title="Backend"
-                                    url="/backend"
+                                    url="https://github.com/molinfo-vienna/nerdd-backend"
+                                    target="_blank"
                                 />
                                 <FooterLink
                                     icon="FaGear" // GearFill
                                     title="NERDD Module"
-                                    url="/module"
+                                    url="https://github.com/molinfo-vienna/nerdd-module"
+                                    target="_blank"
                                 />
                             </ul>
                         </div>

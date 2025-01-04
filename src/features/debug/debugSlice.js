@@ -36,7 +36,7 @@ const debugSlice = createSlice({
             }
         },
         createJob(state, action) {
-            const { jobId, parameters, moduleId, numResults } = action.payload
+            const { jobId, jobType, parameters, numResults } = action.payload
 
             return {
                 ...state,
@@ -44,11 +44,27 @@ const debugSlice = createSlice({
                     ...state.jobs,
                     [jobId]: {
                         id: jobId,
-                        moduleId,
+                        jobType,
                         parameters,
                         numEntriesProcessed: 0,
                         numEntriesTotal: numResults,
                         showNumEntriesTotal: false,
+                        outputFiles: [],
+                    },
+                },
+            }
+        },
+        addOutputFile(state, action) {
+            const { jobId, format, url } = action.payload
+            const job = state.jobs[jobId]
+
+            return {
+                ...state,
+                jobs: {
+                    ...state.jobs,
+                    [jobId]: {
+                        ...job,
+                        outputFiles: [...job.outputFiles, { format, url }],
                     },
                 },
             }
@@ -129,6 +145,7 @@ const debugSlice = createSlice({
 export const {
     incrementKey,
     createJob,
+    addOutputFile,
     deleteJob,
     createSource,
     deleteSource,
