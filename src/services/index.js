@@ -94,7 +94,14 @@ export const nerddApi = createApi({
             query: ({ moduleId, jobId }) => `/${moduleId}/jobs/${jobId}`,
             queryWs: ({ moduleId, jobId }) =>
                 `/websocket/${moduleId}/jobs/${jobId}`,
-            process: (draft, data) => data,
+            process: (draft, data, complete) => {
+                if (complete) {
+                    return
+                }
+                // always overwrite the current job status with the retrieved data
+                // (returning a new object is equivalent with a replacement in immer.js)
+                return data
+            },
             transformResponse: recursiveSnakeToCamelCase,
             transformResponseWs: recursiveSnakeToCamelCase,
         }),

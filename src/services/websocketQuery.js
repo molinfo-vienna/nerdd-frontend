@@ -40,7 +40,7 @@ export default function websocketQuery({
                     updateCachedData((draft) => {
                         // TODO: messages might get lost here
                         if (draft != null) {
-                            process(draft, transformedData, false)
+                            return process(draft, transformedData, false)
                         }
                     })
                 }
@@ -48,9 +48,12 @@ export default function websocketQuery({
                 ws.onclose = (e) => {
                     if (e.wasClean) {
                         // signal that the websocket connection was closed
-                        updateCachedData((draft) =>
-                            process(draft, undefined, true),
-                        )
+                        updateCachedData((draft) => {
+                            // TODO: messages might get lost here
+                            if (draft != null) {
+                                return process(draft, undefined, true)
+                            }
+                        })
 
                         // close the websocket connection
                         // (ReconnectingWebSocket won't reconnect in this case)

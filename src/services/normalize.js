@@ -18,6 +18,10 @@ function normalizeResultProperty(resultProperty) {
         visibleName:
             resultProperty.visibleName ||
             _.upperFirst(_.camelCase(resultProperty.name)),
+        // temporary: force problem list to be invisible at the start
+        visible:
+            (resultProperty.visible ?? true) &&
+            resultProperty.name !== "problems",
     }
 }
 
