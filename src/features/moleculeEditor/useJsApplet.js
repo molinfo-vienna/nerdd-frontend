@@ -14,7 +14,7 @@ export default function useJsApplet() {
         }
 
         const script = document.createElement("script")
-        script.src = "/legacyjs/jsme_2017-02-26/jsme/jsme.nocache.js"
+        script.src = "/resources/legacyjs/jsme_2017-02-26/jsme/jsme.nocache.js"
         script.async = true
         document.body.appendChild(script)
 

@@ -10,7 +10,7 @@ export function generateValue(dataType) {
     } else if (dataType === "float") {
         return faker.number.float({ min: -100, max: 100 })
     } else if (dataType === "mol") {
-        return `/fake/molecules/mol_${faker.number.int({ min: 0, max: 11 })}.svg`
+        return `/resources/fake/molecules/mol_${faker.number.int({ min: 0, max: 11 })}.svg`
     } else {
         console.log(dataType)
     }

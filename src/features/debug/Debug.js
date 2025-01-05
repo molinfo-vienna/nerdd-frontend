@@ -9,6 +9,13 @@ import { incrementKey, setNumModules } from "./debugSlice"
 const debugMode = process.env.NODE_ENV === "development"
 
 export default function Debug() {
+    //
+    // render nothing if debug mode is disabled
+    //
+    if (!debugMode) {
+        return null
+    }
+
     const dispatch = useDispatch()
     const moduleConfigs = useSelector((state) => state.debug.moduleConfigs)
     const jobs = useSelector((state) => state.debug.jobs)
@@ -95,13 +102,6 @@ export default function Debug() {
             predictionSpeed: debouncedTweaks.predictionSpeed,
         })
     }, [debouncedTweaks])
-
-    //
-    // render nothing if debug mode is disabled
-    //
-    if (!debugMode) {
-        return null
-    }
 
     return (
         <>

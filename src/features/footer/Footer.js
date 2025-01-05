@@ -10,8 +10,14 @@ export default function Footer({ module }) {
 
     // landing page: show default partners (Vienna, Hamburg)
     const defaultPartners = [
-        { name: "University of Vienna", logo: "/images/logo_vienna.gif" },
-        { name: "University of Hamburg", logo: "/images/logo_hamburg.gif" },
+        {
+            name: "University of Vienna",
+            logo: "/resources/images/logo_vienna.gif",
+        },
+        {
+            name: "University of Hamburg",
+            logo: "/resources/images/logo_hamburg.gif",
+        },
     ]
 
     // module page: show module partners

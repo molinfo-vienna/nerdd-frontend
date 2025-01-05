@@ -10,7 +10,7 @@ const jobParameterDataTypes = ["string", "int", "float", "bool"]
 const resultDataTypes = ["string", "int", "float", "bool", "mol"]
 
 const logoUrls = Array.from({ length: 9 }).map(
-    (_, i) => `/fake/module-logos/${i + 1}.svg`,
+    (_, i) => `/resources/fake/module-logos/${i + 1}.svg`,
 )
 
 function capitalize(string) {
