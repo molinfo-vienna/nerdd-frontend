@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import { CircularProgressbar } from "react-circular-progressbar"
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom"
 import ColumnSelectDropdown from "../features/columnSelect/ColumnSelectDropdown"
 import DeleteJobDialog from "../features/deleteJobDialog/DeleteJobDialog"
@@ -7,6 +6,7 @@ import Footer from "../features/footer/Footer"
 import Icon from "../features/icon/Icon"
 import NavigationBar from "../features/navigationBar/NavigationBar"
 import Pagination from "../features/pagination/Pagination"
+import ProgressBar from "../features/progressBar/ProgressBar"
 import ResultTable from "../features/resultTable/ResultTable"
 import {
     useGetJobStatusQuery,
@@ -153,17 +153,20 @@ export default function ResultsPage() {
         setColumnSelection(newColumnSelection)
     }
 
-    const progressAvailable =
-        jobStatus?.numEntriesTotal != null &&
-        jobStatus?.numEntriesProcessed != null
-
-    const progress = progressAvailable
-        ? jobStatus.numEntriesProcessed / jobStatus.numEntriesTotal
-        : 1
-
-    const progressPercent = Math.round(progress * 1000) / 10
-
     const outputFormats = ["sdf", "csv"]
+
+    const waitingForFirstResult =
+        results?.data?.length === undefined || results.data.length === 0
+
+    let statusText = ""
+    if (
+        jobStatus.numEntriesTotal != null &&
+        jobStatus.numEntriesProcessed != null
+    ) {
+        statusText = "Estimating job size..."
+    } else {
+        statusText = `${jobStatus.numEntriesProcessed} / ${jobStatus.numEntriesTotal} molecules processed`
+    }
 
     return (
         <>
@@ -214,85 +217,147 @@ export default function ResultsPage() {
                 
                 
             </HeaderOneCard> */}
-            <header className="bg-body-tertiary">
-                <NavigationBar />
-                <section className="container py-4">
-                    <div className="row justify-content-center pb-3">
-                        <div className="col-sm-4">
-                            <div className="d-flex">
-                                <div
-                                    className="mx-3"
-                                    style={{ width: "90px", height: "90px" }}
-                                >
-                                    <CircularProgressbar
-                                        value={
-                                            progressAvailable
-                                                ? progressPercent
-                                                : 0
+            <main className="min-vh-100">
+                <header className="bg-body-tertiary">
+                    <NavigationBar />
+                    <section className="container py-4">
+                        <div className="row justify-content-center pb-3">
+                            <div className="col-sm-4">
+                                <div className="d-flex">
+                                    <ProgressBar
+                                        numEntriesProcessed={
+                                            jobStatus.numEntriesProcessed
                                         }
-                                        text={
-                                            progressAvailable
-                                                ? `${progressPercent}%`
-                                                : ""
+                                        numEntriesTotal={
+                                            jobStatus.numEntriesTotal
                                         }
-                                        styles={{
-                                            text: {
-                                                fontWeight: "bold",
-                                            },
-                                        }}
                                     />
-                                </div>
-                                <div className="d-flex flex-column p-2">
-                                    <div style={{ height: "50px" }}>
-                                        <h1 className="text-primary fw-bold my-auto">
-                                            {module.visibleName}
-                                        </h1>
-                                    </div>
-                                    <div style={{ height: "20px" }}>
-                                        <p className="mb-0">
-                                            {progressAvailable
-                                                ? `${jobStatus.numEntriesProcessed} / ${jobStatus.numEntriesTotal} molecules processed`
-                                                : "Estimating job size..."}
-                                        </p>
+                                    <div className="d-flex flex-column p-2">
+                                        <div style={{ height: "50px" }}>
+                                            <h1 className="text-primary fw-bold my-auto">
+                                                {module.visibleName}
+                                            </h1>
+                                        </div>
+                                        <div style={{ height: "20px" }}>
+                                            <p className="mb-0">{statusText}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-sm-4">
-                            <div className="btn-group" role="group">
-                                {/* Docs */}
-                                <Link
-                                    className="btn btn-outline-secondary text-center text-decoration-none text-reset d-block"
-                                    to={`/${moduleId}/about`}
-                                    type="button"
-                                >
-                                    <div
-                                        className="d-flex flex-column p-2"
-                                        style={{
-                                            width: "90px",
-                                        }}
-                                    >
-                                        <div style={{ height: "42px" }}>
-                                            <p className="mb-0 text-primary">
-                                                <Icon
-                                                    name="FaBookOpen"
-                                                    size={35}
-                                                />
-                                            </p>
-                                        </div>
-                                        <span className="text-primary">
-                                            Docs
-                                        </span>
-                                    </div>
-                                </Link>
-
-                                {/* Columns */}
+                            <div className="col-sm-4">
                                 <div className="btn-group" role="group">
+                                    {/* Docs */}
                                     <Link
                                         className="btn btn-outline-secondary text-center text-decoration-none text-reset d-block"
+                                        to={`/${moduleId}/about`}
                                         type="button"
-                                        data-bs-toggle="dropdown"
-                                        data-bs-auto-close="outside"
+                                    >
+                                        <div
+                                            className="d-flex flex-column p-2"
+                                            style={{
+                                                width: "90px",
+                                            }}
+                                        >
+                                            <div style={{ height: "42px" }}>
+                                                <p className="mb-0 text-primary">
+                                                    <Icon
+                                                        name="FaBookOpen"
+                                                        size={35}
+                                                    />
+                                                </p>
+                                            </div>
+                                            <span className="text-primary">
+                                                Docs
+                                            </span>
+                                        </div>
+                                    </Link>
+
+                                    {/* Columns */}
+                                    <div className="btn-group" role="group">
+                                        <Link
+                                            className="btn btn-outline-secondary text-center text-decoration-none text-reset d-block"
+                                            type="button"
+                                            data-bs-toggle="dropdown"
+                                            data-bs-auto-close="outside"
+                                            aria-expanded="false"
+                                        >
+                                            <div
+                                                className="d-flex flex-column p-2"
+                                                style={{
+                                                    width: "90px",
+                                                }}
+                                            >
+                                                <div style={{ height: "42px" }}>
+                                                    <p className="mb-0 text-primary">
+                                                        <Icon
+                                                            collection="hi2"
+                                                            name="HiMiniViewColumns"
+                                                            size={36}
+                                                        />
+                                                    </p>
+                                                </div>
+                                                <span className="text-primary">
+                                                    Columns
+                                                </span>
+                                            </div>
+                                        </Link>
+                                        <ColumnSelectDropdown
+                                            columnSelection={columnSelection}
+                                            handleSelectionChange={
+                                                handleSelectionChange
+                                            }
+                                        />
+                                    </div>
+                                    {/* Download */}
+                                    <div className="btn-group" role="group">
+                                        <Link
+                                            className={`btn btn-outline-secondary text-center text-decoration-none text-reset d-block ${jobStatus.outputFiles.length == 0 ? "disabled" : ""}`}
+                                            type="button"
+                                            data-bs-toggle="dropdown"
+                                            data-bs-auto-close="outside"
+                                        >
+                                            <div
+                                                className="d-flex flex-column p-2"
+                                                style={{
+                                                    width: "90px",
+                                                }}
+                                            >
+                                                <div style={{ height: "42px" }}>
+                                                    <p className="mb-0 text-primary">
+                                                        <Icon
+                                                            collection="oldFa"
+                                                            name="FaFileDownload"
+                                                            size={33}
+                                                        />
+                                                    </p>
+                                                </div>
+                                                <span className="text-primary">
+                                                    Download
+                                                </span>
+                                            </div>
+                                        </Link>
+                                        <div className="dropdown-menu dropdown-menu-end p-2">
+                                            {outputFormats.map((format) => (
+                                                <Link
+                                                    key={format}
+                                                    className={`dropdown-item ${jobStatus.outputFiles.find((f) => f.format == format) === undefined ? "disabled" : ""}`}
+                                                >
+                                                    <Icon
+                                                        name="FaFileLines"
+                                                        size={24}
+                                                        className="me-2"
+                                                    />
+                                                    {format.toUpperCase()}
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    </div>
+                                    {/* Delete */}
+                                    <Link
+                                        className="btn btn-outline-danger text-center text-decoration-none text-reset d-block"
+                                        to="#"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteJobModal"
                                         aria-expanded="false"
                                     >
                                         <div
@@ -302,168 +367,110 @@ export default function ResultsPage() {
                                             }}
                                         >
                                             <div style={{ height: "42px" }}>
-                                                <p className="mb-0 text-primary">
+                                                <p className="mb-0">
                                                     <Icon
-                                                        collection="hi2"
-                                                        name="HiMiniViewColumns"
-                                                        size={36}
-                                                    />
-                                                </p>
-                                            </div>
-                                            <span className="text-primary">
-                                                Columns
-                                            </span>
-                                        </div>
-                                    </Link>
-                                    <ColumnSelectDropdown
-                                        columnSelection={columnSelection}
-                                        handleSelectionChange={
-                                            handleSelectionChange
-                                        }
-                                    />
-                                </div>
-                                {/* Download */}
-                                <div className="btn-group" role="group">
-                                    <Link
-                                        className={`btn btn-outline-secondary text-center text-decoration-none text-reset d-block ${jobStatus.outputFiles.length == 0 ? "disabled" : ""}`}
-                                        type="button"
-                                        data-bs-toggle="dropdown"
-                                        data-bs-auto-close="outside"
-                                    >
-                                        <div
-                                            className="d-flex flex-column p-2"
-                                            style={{
-                                                width: "90px",
-                                            }}
-                                        >
-                                            <div style={{ height: "42px" }}>
-                                                <p className="mb-0 text-primary">
-                                                    <Icon
-                                                        collection="oldFa"
-                                                        name="FaFileDownload"
+                                                        name="FaTrash"
                                                         size={33}
                                                     />
                                                 </p>
                                             </div>
-                                            <span className="text-primary">
-                                                Download
-                                            </span>
+                                            <span>Delete</span>
                                         </div>
                                     </Link>
-                                    <div className="dropdown-menu dropdown-menu-end p-2">
-                                        {outputFormats.map((format) => (
-                                            <Link
-                                                key={format}
-                                                className={`dropdown-item ${jobStatus.outputFiles.find((f) => f.format == format) === undefined ? "disabled" : ""}`}
-                                            >
-                                                <Icon
-                                                    name="FaFileLines"
-                                                    size={24}
-                                                    className="me-2"
-                                                />
-                                                {format.toUpperCase()}
-                                            </Link>
-                                        ))}
-                                    </div>
                                 </div>
-                                {/* Delete */}
-                                <Link
-                                    className="btn btn-outline-danger text-center text-decoration-none text-reset d-block"
-                                    to="#"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#deleteJobModal"
-                                    aria-expanded="false"
-                                >
-                                    <div
-                                        className="d-flex flex-column p-2"
-                                        style={{
-                                            width: "90px",
-                                        }}
-                                    >
-                                        <div style={{ height: "42px" }}>
-                                            <p className="mb-0">
-                                                <Icon
-                                                    name="FaTrash"
-                                                    size={33}
-                                                />
-                                            </p>
-                                        </div>
-                                        <span>Delete</span>
-                                    </div>
-                                </Link>
                             </div>
                         </div>
-                    </div>
-                </section>
-            </header>
+                    </section>
+                </header>
 
-            <DeleteJobDialog
-                id="deleteJobModal"
-                moduleId={moduleId}
-                jobId={jobId}
-            />
+                <DeleteJobDialog
+                    id="deleteJobModal"
+                    moduleId={moduleId}
+                    jobId={jobId}
+                />
 
-            <div className="container py-4">
-                <div className="row justify-content-center">
-                    <div className="col-10">
-                        <div className="d-flex justify-content-between">
-                            <Pagination
-                                moduleId={moduleId}
-                                jobId={jobId}
-                                currentPageOneBased={pageOneBased}
-                                numEntriesTotal={numEntriesTotal}
-                                pageSize={pageSize}
-                                numPagesTotal={numPagesTotal}
-                                className="mx-auto position-absolute start-50 translate-middle-x"
-                            />
-                            {/* <ColumnSelect
+                <div className="container py-4">
+                    {!waitingForFirstResult && (
+                        <>
+                            <div className="row justify-content-center">
+                                <div className="col-auto my-3">
+                                    <Pagination
+                                        moduleId={moduleId}
+                                        jobId={jobId}
+                                        currentPageOneBased={pageOneBased}
+                                        numEntriesTotal={numEntriesTotal}
+                                        pageSize={pageSize}
+                                        numPagesTotal={numPagesTotal}
+                                    />
+                                    {/* <ColumnSelect
                                 columnSelection={columnSelection}
                                 onSelectionChange={handleSelectionChange}
                                 className="ms-auto"
                             /> */}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="container-fluid py-5">
-                <div className="row justify-content-center">
-                    <div className="col-auto">
-                        {/* <div
+                                </div>
+                            </div>
+                            <div className="row justify-content-center">
+                                <div className="col-auto">
+                                    {/* <div
                             className="table-responsive"
                             // style={{
                             //     overflowX: "clip",
                             //     overflowY: "visible",
                             // }}
                         > */}
-                        <div className="mx-auto">
-                            <div className="clearfix"></div>
-                            {!isLoadingResults &&
-                                results?.data &&
-                                results.data.length > 0 && (
-                                    <div>
-                                        <ResultTable
-                                            module={module}
-                                            results={results.data}
-                                            columnSelection={columnSelection}
-                                        />
+                                    <div className="mx-auto">
+                                        <div className="clearfix"></div>
+                                        {!isLoadingResults &&
+                                            results?.data &&
+                                            results.data.length > 0 && (
+                                                <div>
+                                                    <ResultTable
+                                                        module={module}
+                                                        results={results.data}
+                                                        columnSelection={
+                                                            columnSelection
+                                                        }
+                                                    />
+                                                </div>
+                                            )}
                                     </div>
-                                )}
+                                    {/* </div> */}
+                                    {!isLoadingResults &&
+                                        results.data.length > 1 && (
+                                            <Pagination
+                                                moduleId={moduleId}
+                                                jobId={jobId}
+                                                currentPageOneBased={
+                                                    pageOneBased
+                                                }
+                                                numEntriesTotal={
+                                                    numEntriesTotal
+                                                }
+                                                pageSize={pageSize}
+                                                numPagesTotal={numPagesTotal}
+                                                className="mx-auto position-absolute start-50 translate-middle-x"
+                                            />
+                                        )}
+                                </div>
+                            </div>
+                        </>
+                    )}
+
+                    {waitingForFirstResult && (
+                        <div className="row justify-content-center">
+                            <div className="col-md-auto mt-5 pt-5 text-center">
+                                <div
+                                    className="spinner-border"
+                                    role="status"
+                                ></div>
+                                <div className="mt-2">
+                                    <span>Waiting for first result</span>
+                                </div>
+                            </div>
                         </div>
-                        {/* </div> */}
-                        {!isLoadingResults && results.data.length > 1 && (
-                            <Pagination
-                                moduleId={moduleId}
-                                jobId={jobId}
-                                currentPageOneBased={pageOneBased}
-                                numEntriesTotal={numEntriesTotal}
-                                pageSize={pageSize}
-                                numPagesTotal={numPagesTotal}
-                                className="mx-auto position-absolute start-50 translate-middle-x"
-                            />
-                        )}
-                    </div>
+                    )}
                 </div>
-            </div>
+            </main>
             <Footer module={module} />
         </>
     )
