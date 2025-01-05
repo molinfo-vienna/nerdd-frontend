@@ -10,8 +10,8 @@ const statusMap = {
 }
 
 export default function ErrorPage({ error, explanation }) {
-    const status = error?.status || "OMG"
-    const message = error?.data.detail || "An unknown error occurred"
+    const status = error?.status || "000"
+    const message = error?.data?.detail || "An unknown error occurred"
 
     const statusExplanation = statusMap[status] || "Unknown Error"
 
