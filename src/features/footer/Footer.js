@@ -77,7 +77,7 @@ export default function Footer({ module }) {
                             <FooterLink
                                 icon="FaEnvelope" // ChatDotsFill
                                 title="Contact"
-                                url="#"
+                                url="/contact"
                             />
                         </ul>
                     </div>
@@ -93,17 +93,17 @@ export default function Footer({ module }) {
                                 <FooterLink
                                     icon="FaBookOpen" // BookFill
                                     title="Documentation"
-                                    url="#"
+                                    url="/docs"
                                 />
                                 <FooterLink
                                     icon="FaPlug" // PlugFill
                                     title="Developer API"
-                                    url="#"
+                                    url="/developer"
                                 />
                                 <FooterLink
                                     icon="FaBook" // BookmarksFill
                                     title="How to cite"
-                                    url="#"
+                                    url="/cite"
                                 />
                             </ul>
                         </div>

@@ -1,5 +1,6 @@
 import React from "react"
 import Markdown from "react-markdown"
+import { moduleType } from "../../types"
 import HeaderOneCard from "./HeaderOneCard"
 
 export default function ModuleHeader({ module }) {
@@ -31,8 +32,16 @@ export default function ModuleHeader({ module }) {
                 caption="Docs"
                 href={`/${module.id}/about`}
             />
-            <HeaderOneCard.Icon icon="FaPlug" caption="API" href="#" />
-            <HeaderOneCard.Icon icon="FaBook" caption="Cite" href="#" />
+            <HeaderOneCard.Icon
+                icon="FaPlug"
+                caption="API"
+                href={`/${module.id}/api`}
+            />
+            <HeaderOneCard.Icon
+                icon="FaBook"
+                caption="Cite"
+                href={`/${module.id}/cite`}
+            />
             {/* <Header.Card>
         <p className="mb-2">
             <Icon name="FaClock" size={35} className="me-2" />
@@ -46,4 +55,8 @@ export default function ModuleHeader({ module }) {
     </Header.Card> */}
         </HeaderOneCard>
     )
+}
+
+ModuleHeader.propTypes = {
+    module: moduleType.isRequired,
 }

@@ -35,13 +35,13 @@ export default function NavigationBar() {
             breadcrumbElements = [
                 { name: "Home", url: "/" },
                 { name: module.visibleName, url: `/${moduleId}` },
-                { name: "Cite", url: `#` },
+                { name: "Cite", url: `/${moduleId}/cite` },
             ]
         } else if (pageId === "api") {
             breadcrumbElements = [
                 { name: "Home", url: "/" },
                 { name: module.visibleName, url: `/${moduleId}` },
-                { name: "API", url: `#` },
+                { name: "API", url: `/${moduleId}/api` },
             ]
         } else if (pageId === "results") {
             breadcrumbElements = [
@@ -156,12 +156,12 @@ export default function NavigationBar() {
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link to="#" className="nav-link">
+                                <Link to="/developer" className="nav-link">
                                     API
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link to="#" className="nav-link">
+                                <Link to="/contact" className="nav-link">
                                     Contact
                                 </Link>
                             </li>
