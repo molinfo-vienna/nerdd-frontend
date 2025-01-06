@@ -155,18 +155,22 @@ export default function ResultsPage() {
 
     const outputFormats = ["sdf", "csv"]
 
+    const outputFiles = outputFormats.map((format) => {
+        const fileFromStatus = jobStatus.outputFiles.find(
+            (f) => f.format == format,
+        )
+        const status = fileFromStatus === undefined ? "disabled" : ""
+        return {
+            format,
+            status,
+            url: fileFromStatus?.url ?? "",
+        }
+    })
+
     const waitingForFirstResult =
         results?.data?.length === undefined || results.data.length === 0
 
-    let statusText = ""
-    if (
-        jobStatus.numEntriesTotal != null &&
-        jobStatus.numEntriesProcessed != null
-    ) {
-        statusText = "Estimating job size..."
-    } else {
-        statusText = `${jobStatus.numEntriesProcessed} / ${jobStatus.numEntriesTotal} molecules processed`
-    }
+    const statusText = `${jobStatus.numEntriesProcessed ?? 0} / ${jobStatus.numEntriesTotal ?? "?"} molecules processed`
 
     return (
         <>
@@ -337,17 +341,19 @@ export default function ResultsPage() {
                                             </div>
                                         </Link>
                                         <div className="dropdown-menu dropdown-menu-end p-2">
-                                            {outputFormats.map((format) => (
+                                            {outputFiles.map((f, i) => (
                                                 <Link
-                                                    key={format}
-                                                    className={`dropdown-item ${jobStatus.outputFiles.find((f) => f.format == format) === undefined ? "disabled" : ""}`}
+                                                    key={i}
+                                                    className={`dropdown-item ${f.status}`}
+                                                    to={`${f.url}`}
+                                                    target="_blank"
                                                 >
                                                     <Icon
                                                         name="FaFileLines"
                                                         size={24}
                                                         className="me-2"
                                                     />
-                                                    {format.toUpperCase()}
+                                                    {f.format.toUpperCase()}
                                                 </Link>
                                             ))}
                                         </div>
@@ -389,7 +395,7 @@ export default function ResultsPage() {
                     jobId={jobId}
                 />
 
-                <div className="container py-4">
+                <div className="container-fluid py-4">
                     {!waitingForFirstResult && (
                         <>
                             <div className="row justify-content-center">
