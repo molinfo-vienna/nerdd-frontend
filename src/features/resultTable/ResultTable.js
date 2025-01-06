@@ -29,11 +29,11 @@ export default function ResultTable({ module, results, columnSelection }) {
 
     let getId
     if (module.task === "molecular_property_prediction") {
-        getId = (result) => result.id
+        getId = (result) => result.mol_id
     } else if (module.task === "atom_property_prediction") {
-        getId = (result) => `m${result.id}a${result.atom_id}`
-    } else if (module.task === "derivative_prediction") {
-        getId = (result) => `m${result.id}d${result.derivative_id}`
+        getId = (result) => `m${result.mol_id}a${result.atom_id}`
+    } else if (module.task === "derivative_property_prediction") {
+        getId = (result) => `m${result.mol_id}d${result.derivative_id}`
     } else {
         throw new Error(`Unknown task: ${module.task}`)
     }
@@ -55,39 +55,46 @@ export default function ResultTable({ module, results, columnSelection }) {
     )
 
     // group results by molecule id
-    const groupedResults = []
+    let groupedResults = []
     const idMapping = {}
     let getSubId
     if (module.task === "molecular_property_prediction") {
         getSubId = (result) => 0
     } else if (module.task === "atom_property_prediction") {
         getSubId = (result) => result.atom_id
-    } else if (module.task === "derivative_prediction") {
+    } else if (module.task === "derivative_property_prediction") {
         getSubId = (result) => result.derivative_id
     } else {
         throw new Error(`Unknown task: ${module.task}`)
     }
     results.forEach((result) => {
-        const id = result.id
+        const id = result.mol_id
         if (!(id in idMapping)) {
             idMapping[id] = groupedResults.length
-            groupedResults.push({
+            let newEntry = {
                 ...Object.fromEntries(
                     molecularProperties.map((p) => [p.name, result[p.name]]),
                 ),
-                children: [
-                    Object.fromEntries(
-                        otherProperties.map((p) => [p.name, result[p.name]]),
-                    ),
-                ],
-            })
-        } else {
-            const subId = getSubId(result)
-            groupedResults[idMapping[id]].children[subId] = Object.fromEntries(
-                otherProperties.map((p) => [p.name, result[p.name]]),
-            )
+                children: [],
+            }
+            groupedResults.push(newEntry)
         }
+
+        // add atom or derivative properties
+        const subId = getSubId(result)
+        groupedResults[idMapping[id]].children[subId] = Object.fromEntries(
+            otherProperties.map((p) => [p.name, result[p.name]]),
+        )
     })
+
+    // remove undefined children (usually index 0)
+    groupedResults = groupedResults.map((result) => ({
+        ...result,
+        children: result.children.filter((child) => child !== undefined),
+    }))
+
+    // sort groupedResults by molecule id
+    groupedResults.sort((a, b) => a.mol_id - b.mol_id)
 
     tableContent = groupedResults.map((result, i) =>
         result.children.map((child, j) =>
@@ -161,7 +168,7 @@ export default function ResultTable({ module, results, columnSelection }) {
                     </tr>
                 )}
             </thead>
-            <tbody>{tableContent}</tbody>
+            <tbody className="table-group-divider">{tableContent}</tbody>
         </table>
     )
 }
@@ -169,4 +176,5 @@ export default function ResultTable({ module, results, columnSelection }) {
 ResultTable.propTypes = {
     module: moduleType.isRequired,
     results: PropTypes.arrayOf(resultType).isRequired,
+    columnSelection: PropTypes.array,
 }
