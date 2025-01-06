@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import React from "react"
 
 export default function ColumnSelectDropdown({
@@ -56,4 +57,20 @@ export default function ColumnSelectDropdown({
             ))}
         </div>
     )
+}
+
+ColumnSelectDropdown.propTypes = {
+    columnSelection: PropTypes.arrayOf(
+        PropTypes.shape({
+            groupName: PropTypes.string.isRequired,
+            columns: PropTypes.arrayOf(
+                PropTypes.shape({
+                    name: PropTypes.string.isRequired,
+                    label: PropTypes.string.isRequired,
+                    visible: PropTypes.bool.isRequired,
+                }),
+            ).isRequired,
+        }),
+    ).isRequired,
+    handleSelectionChange: PropTypes.func.isRequired,
 }

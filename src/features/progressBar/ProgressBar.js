@@ -1,14 +1,14 @@
+import PropTypes from "prop-types"
 import React from "react"
 import { CircularProgressbar } from "react-circular-progressbar"
 
 export default function ProgressBar({ numEntriesProcessed, numEntriesTotal }) {
-    console.log("update", numEntriesProcessed, numEntriesTotal)
+    const progressAvailable = numEntriesTotal != null
 
-    const progressAvailable =
-        numEntriesProcessed != undefined && numEntriesTotal != undefined
+    const numEntriesProcessedModified = numEntriesProcessed ?? 0
 
     const progress = progressAvailable
-        ? numEntriesProcessed / numEntriesTotal
+        ? numEntriesProcessedModified / numEntriesTotal
         : 1
 
     const progressPercent = Math.round(progress * 1000) / 10
@@ -32,4 +32,9 @@ export default function ProgressBar({ numEntriesProcessed, numEntriesTotal }) {
             />
         </div>
     )
+}
+
+ProgressBar.propTypes = {
+    numEntriesProcessed: PropTypes.number,
+    numEntriesTotal: PropTypes.number,
 }

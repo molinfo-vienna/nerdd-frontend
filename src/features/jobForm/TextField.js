@@ -1,4 +1,6 @@
+import PropTypes from "prop-types"
 import React from "react"
+import { refType } from "../../types"
 
 export default function TextField({
     input,
@@ -26,4 +28,11 @@ export default function TextField({
             )}
         </div>
     )
+}
+
+TextField.propTypes = {
+    input: PropTypes.object.isRequired,
+    meta: PropTypes.object.isRequired,
+    label: PropTypes.string,
+    positionReference: refType,
 }

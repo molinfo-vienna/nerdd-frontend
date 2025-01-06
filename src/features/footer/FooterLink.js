@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import React from "react"
 import { Link } from "react-router-dom"
 import Icon from "../icon/Icon"
@@ -15,4 +16,10 @@ export default function FooterLink({ icon, title, url, ...props }) {
             </Link>
         </li>
     )
+}
+
+FooterLink.propTypes = {
+    icon: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
 }

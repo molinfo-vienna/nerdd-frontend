@@ -13,6 +13,5 @@ export {
     moduleType,
     refType,
     resultPropertyType,
-    resultType
+    resultType,
 }
-
