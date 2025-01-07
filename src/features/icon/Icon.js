@@ -1,33 +1,45 @@
 import PropTypes from "prop-types"
-import React from "react"
-import * as bsIcons from "react-icons/bs"
-import * as oldFaIcons from "react-icons/fa"
-import * as faIcons from "react-icons/fa6"
-import * as hi2Icons from "react-icons/hi2"
-import * as piIcons from "react-icons/pi"
+import React, { lazy, Suspense } from "react"
 
-const collectionMapping = {
-    hi2: hi2Icons,
-    oldFa: oldFaIcons,
-    fa: faIcons,
-    bs: bsIcons,
-    pi: piIcons,
-}
-
-export default function Icon({ collection = "fa", name, ...props }) {
-    const selectedCollection = collectionMapping[collection]
-
-    const IconComponent = selectedCollection[name]
-
-    if (!IconComponent) {
-        console.error(`Icon ${name} not found`)
-        return null
+const loadIcon = (collection, name) => {
+    const handler = (module) => {
+        if (module[name] === undefined) {
+            throw new Error(`Unknown icon name: ${name}`)
+        }
+        return { default: module[name] }
     }
 
-    return <IconComponent {...props} />
+    switch (collection) {
+        case "hi2":
+            return import("react-icons/hi2").then(handler)
+        case "fa":
+            return import("react-icons/fa").then(handler)
+        case "fa6":
+            return import("react-icons/fa6").then(handler)
+        case "bs":
+            return import("react-icons/bs").then(handler)
+        case "pi":
+            return import("react-icons/pi").then(handler)
+        default:
+            return Promise.reject(
+                new Error(`Unknown icon collection: ${collection}`),
+            )
+    }
+}
+
+const Icon = ({ collection = "fa6", name, ...props }) => {
+    const IconComponent = lazy(() => loadIcon(collection, name))
+
+    return (
+        <Suspense fallback={null}>
+            <IconComponent {...props} />
+        </Suspense>
+    )
 }
 
 Icon.propTypes = {
-    collection: PropTypes.oneOf(Object.keys(collectionMapping)),
+    collection: PropTypes.string,
     name: PropTypes.string.isRequired,
 }
+
+export default Icon
