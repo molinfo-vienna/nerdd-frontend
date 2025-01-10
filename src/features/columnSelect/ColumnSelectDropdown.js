@@ -5,6 +5,10 @@ export default function ColumnSelectDropdown({
     columnSelection,
     handleSelectionChange,
 }) {
+    if (columnSelection === undefined) {
+        return
+    }
+
     return (
         <div
             className="dropdown-menu dropdown-menu-end p-3"
@@ -18,6 +22,16 @@ export default function ColumnSelectDropdown({
                             type="checkbox"
                             value=""
                             id={group.groupName}
+                            checked={group.columns
+                                .map((c) => c.visible)
+                                .every(Boolean)}
+                            onChange={(e) =>
+                                handleSelectionChange(
+                                    group.groupName,
+                                    null,
+                                    e.target.checked,
+                                )
+                            }
                         />
                         <label
                             className="form-check-label fw-bold"
@@ -71,6 +85,6 @@ ColumnSelectDropdown.propTypes = {
                 }),
             ).isRequired,
         }),
-    ).isRequired,
+    ),
     handleSelectionChange: PropTypes.func.isRequired,
 }

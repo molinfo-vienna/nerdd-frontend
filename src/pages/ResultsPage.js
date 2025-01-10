@@ -1,9 +1,11 @@
-import React, { useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
+import { FaFileDownload } from "react-icons/fa"
+import { FaBookOpen, FaFileLines, FaTrash } from "react-icons/fa6"
+import { HiMiniViewColumns } from "react-icons/hi2"
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom"
 import ColumnSelectDropdown from "../features/columnSelect/ColumnSelectDropdown"
 import DeleteJobDialog from "../features/deleteJobDialog/DeleteJobDialog"
 import Footer from "../features/footer/Footer"
-import Icon from "../features/icon/Icon"
 import NavigationBar from "../features/navigationBar/NavigationBar"
 import Pagination from "../features/pagination/Pagination"
 import ProgressBar from "../features/progressBar/ProgressBar"
@@ -30,14 +32,11 @@ export default function ResultsPage() {
     const [searchParams, setSearchParams] = useSearchParams()
     const pageOneBased = parseInt(searchParams.get("page")) || 1
 
-    if (pageOneBased <= 0) {
-        navigate(`/${moduleId}/${jobId}`)
-    }
-
-    //
-    // column selection state
-    //
-    const [columnSelection, setColumnSelection] = useState(undefined)
+    useEffect(() => {
+        if (pageOneBased <= 0) {
+            navigate(`/${moduleId}/${jobId}`)
+        }
+    }, [pageOneBased, navigate])
 
     //
     // always scroll to top when page changes
@@ -71,6 +70,66 @@ export default function ResultsPage() {
         isLoading: isLoadingJobStatus,
     } = useGetJobStatusQuery({ moduleId, jobId })
 
+    //
+    // column selection state
+    //
+    const [columnSelection, setColumnSelection] = useState(undefined)
+
+    // initialize column selection
+    useEffect(() => {
+        if (module?.resultProperties !== undefined) {
+            let initialColumnSelection = []
+            module.resultProperties.forEach((resultProperty) => {
+                const { name, visibleName, group, visible } = resultProperty
+
+                const modifiedGroup = group || "General"
+                const column = {
+                    name,
+                    label: visibleName,
+                    visible,
+                }
+
+                // is the group already in the array?
+                let groupIndex = initialColumnSelection.findIndex(
+                    (e) => e.groupName === modifiedGroup,
+                )
+                if (groupIndex === -1) {
+                    // if not, add it
+                    initialColumnSelection.push({
+                        groupName: modifiedGroup,
+                        columns: [column],
+                    })
+                } else {
+                    // if it is, add the column to the group
+                    initialColumnSelection[groupIndex].columns.push(column)
+                }
+            })
+            setColumnSelection(initialColumnSelection)
+        }
+    }, [module, setColumnSelection])
+
+    const handleSelectionChange = useCallback(
+        (group, column, visible) => {
+            const newColumnSelection = columnSelection.map((g) => {
+                if (g.groupName === group) {
+                    return {
+                        ...g,
+                        columns: g.columns.map((c) => {
+                            if (c.name === column || column === null) {
+                                return { ...c, visible }
+                            }
+                            return c
+                        }),
+                    }
+                }
+                return g
+            })
+
+            setColumnSelection(newColumnSelection)
+        },
+        [columnSelection, setColumnSelection],
+    )
+
     if (errorModule) {
         return ErrorPage({ message: "Error fetching module", error: {} })
     }
@@ -89,74 +148,18 @@ export default function ResultsPage() {
         return LoadingPage()
     }
 
-    const numEntriesTotal = jobStatus.numEntriesTotal
-    const pageSize = jobStatus.pageSize
-    const numPagesTotal =
-        numEntriesTotal != null
-            ? Math.ceil(numEntriesTotal / pageSize)
-            : undefined
-
     //
-    // get columns
+    // status
     //
+    const waitingForFirstResult =
+        results?.data === undefined || results.data.length === 0
 
-    // if columnSelection is undefined, initialize it
-    if (columnSelection === undefined && module.resultProperties) {
-        let initialColumnSelection = []
-        module.resultProperties.forEach((resultProperty) => {
-            const { name, visibleName, group, visible } = resultProperty
-
-            const modifiedGroup = group || "General"
-            const column = {
-                name,
-                label: visibleName,
-                visible,
-            }
-
-            // is the group already in the array?
-            let groupIndex = initialColumnSelection.findIndex(
-                (e) => e.groupName === modifiedGroup,
-            )
-            if (groupIndex === -1) {
-                // if not, add it
-                initialColumnSelection.push({
-                    groupName: modifiedGroup,
-                    columns: [column],
-                })
-            } else {
-                // if it is, add the column to the group
-                initialColumnSelection[groupIndex].columns.push(column)
-            }
-        })
-        setColumnSelection(initialColumnSelection)
-    }
-
-    // const handleSelectionChange = (newColumnSelection) =>
-    //     setColumnSelection(newColumnSelection)
-
-    const handleSelectionChange = (group, column, visible) => {
-        const newColumnSelection = columnSelection.map((g) => {
-            if (g.groupName === group) {
-                return {
-                    ...g,
-                    columns: g.columns.map((c) => {
-                        if (c.name === column) {
-                            return { ...c, visible }
-                        }
-                        return c
-                    }),
-                }
-            }
-            return g
-        })
-
-        setColumnSelection(newColumnSelection)
-    }
+    const statusText = `${jobStatus.numEntriesProcessed ?? 0} / ${jobStatus.numEntriesTotal ?? "?"} molecules processed`
 
     const outputFormats = ["sdf", "csv"]
 
-    const outputFiles = outputFormats.map((format) => {
-        const fileFromStatus = jobStatus.outputFiles.find(
+    const outputFileItems = outputFormats.map((format) => {
+        const fileFromStatus = (jobStatus.outputFiles ?? []).find(
             (f) => f.format == format,
         )
         const status = fileFromStatus === undefined ? "disabled" : ""
@@ -167,60 +170,8 @@ export default function ResultsPage() {
         }
     })
 
-    const waitingForFirstResult =
-        results?.data?.length === undefined || results.data.length === 0
-
-    const statusText = `${jobStatus.numEntriesProcessed ?? 0} / ${jobStatus.numEntriesTotal ?? "?"} molecules processed`
-
     return (
         <>
-            {/* <Header module={module}>
-                <Header.Content>
-                    <Markdown className="lead">{module.description}</Markdown>
-                </Header.Content>
-                <Header.Card href={`/${moduleId}/about`}>
-                    <p className="mb-2">
-                        <Icon name="FaBookOpen" size={35} className="me-2" />
-                    </p>
-                    <span>Documentation</span>
-                </Header.Card>
-                <Header.Card href={`/${moduleId}/api`}>
-                    <p className="mb-2">
-                        <Icon name="FaPlug" size={35} className="me-2" />
-                    </p>
-                    <span>Developer API</span>
-                </Header.Card>
-                <Header.Card href={`/${moduleId}/cite`}>
-                    <p className="mb-2">
-                        <Icon name="FaBook" size={35} className="me-2" />
-                    </p>
-                    <span>How to cite</span>
-                </Header.Card>
-                <Header.Card
-                    className="border-danger text-danger"
-                    href="#"
-                    data-bs-toggle="modal"
-                    data-bs-target="#deleteJobModal"
-                    aria-expanded="false"
-                >
-                    <p className="mb-2">
-                        <Icon name="FaTrash" size={35} className="me-2" />
-                    </p>
-                    <span>Delete</span>
-                </Header.Card>
-            </Header> */}
-            {/* <HeaderOneCard module={module} title="Job parameters">
-                <HeaderOneCard.Content>
-                    <Markdown className="lead">{module.description}</Markdown>
-                    <h4>
-                        {progressAvailable
-                            ? `${progressPercent}%`
-                            : "Estimating job size..."}
-                    </h4>
-                </HeaderOneCard.Content>
-                
-                
-            </HeaderOneCard> */}
             <main className="min-vh-100">
                 <header className="bg-body-tertiary">
                     <NavigationBar />
@@ -264,10 +215,7 @@ export default function ResultsPage() {
                                         >
                                             <div style={{ height: "42px" }}>
                                                 <p className="mb-0 text-primary">
-                                                    <Icon
-                                                        name="FaBookOpen"
-                                                        size={35}
-                                                    />
+                                                    <FaBookOpen size={35} />
                                                 </p>
                                             </div>
                                             <span className="text-primary">
@@ -293,9 +241,7 @@ export default function ResultsPage() {
                                             >
                                                 <div style={{ height: "42px" }}>
                                                     <p className="mb-0 text-primary">
-                                                        <Icon
-                                                            collection="hi2"
-                                                            name="HiMiniViewColumns"
+                                                        <HiMiniViewColumns
                                                             size={36}
                                                         />
                                                     </p>
@@ -315,7 +261,7 @@ export default function ResultsPage() {
                                     {/* Download */}
                                     <div className="btn-group" role="group">
                                         <Link
-                                            className={`btn btn-outline-secondary text-center text-decoration-none text-reset d-block ${jobStatus.outputFiles.length == 0 ? "disabled" : ""}`}
+                                            className={`btn btn-outline-secondary text-center text-decoration-none text-reset d-block ${jobStatus.outputFiles !== undefined && jobStatus.outputFiles.length == 0 ? "disabled" : ""}`}
                                             type="button"
                                             data-bs-toggle="dropdown"
                                             data-bs-auto-close="outside"
@@ -328,9 +274,7 @@ export default function ResultsPage() {
                                             >
                                                 <div style={{ height: "42px" }}>
                                                     <p className="mb-0 text-primary">
-                                                        <Icon
-                                                            collection="oldFa"
-                                                            name="FaFileDownload"
+                                                        <FaFileDownload
                                                             size={33}
                                                         />
                                                     </p>
@@ -341,21 +285,23 @@ export default function ResultsPage() {
                                             </div>
                                         </Link>
                                         <div className="dropdown-menu dropdown-menu-end p-2">
-                                            {outputFiles.map((f, i) => (
-                                                <Link
-                                                    key={i}
-                                                    className={`dropdown-item ${f.status}`}
-                                                    to={`${f.url}`}
-                                                    target="_blank"
-                                                >
-                                                    <Icon
-                                                        name="FaFileLines"
-                                                        size={24}
-                                                        className="me-2"
-                                                    />
-                                                    {f.format.toUpperCase()}
-                                                </Link>
-                                            ))}
+                                            {outputFileItems.map(
+                                                (item, index) => (
+                                                    <Link
+                                                        key={index}
+                                                        className={`dropdown-item ${item.status}`}
+                                                        to={`${item.url}`}
+                                                        target="_blank"
+                                                        download
+                                                    >
+                                                        <FaFileLines
+                                                            size={24}
+                                                            className="me-2"
+                                                        />
+                                                        {item.format.toUpperCase()}
+                                                    </Link>
+                                                ),
+                                            )}
                                         </div>
                                     </div>
                                     {/* Delete */}
@@ -374,10 +320,7 @@ export default function ResultsPage() {
                                         >
                                             <div style={{ height: "42px" }}>
                                                 <p className="mb-0">
-                                                    <Icon
-                                                        name="FaTrash"
-                                                        size={33}
-                                                    />
+                                                    <FaTrash size={33} />
                                                 </p>
                                             </div>
                                             <span>Delete</span>
@@ -396,34 +339,19 @@ export default function ResultsPage() {
                 />
 
                 <div className="container-fluid py-4">
+                    <div className="row justify-content-center">
+                        <div className="col-auto my-3">
+                            <Pagination
+                                moduleId={moduleId}
+                                jobId={jobId}
+                                currentPageOneBased={pageOneBased}
+                            />
+                        </div>
+                    </div>
                     {!waitingForFirstResult && (
                         <>
                             <div className="row justify-content-center">
-                                <div className="col-auto my-3">
-                                    <Pagination
-                                        moduleId={moduleId}
-                                        jobId={jobId}
-                                        currentPageOneBased={pageOneBased}
-                                        numEntriesTotal={numEntriesTotal}
-                                        pageSize={pageSize}
-                                        numPagesTotal={numPagesTotal}
-                                    />
-                                    {/* <ColumnSelect
-                                columnSelection={columnSelection}
-                                onSelectionChange={handleSelectionChange}
-                                className="ms-auto"
-                            /> */}
-                                </div>
-                            </div>
-                            <div className="row justify-content-center">
                                 <div className="col-auto">
-                                    {/* <div
-                            className="table-responsive"
-                            // style={{
-                            //     overflowX: "clip",
-                            //     overflowY: "visible",
-                            // }}
-                        > */}
                                     <div className="mx-auto">
                                         <div className="clearfix"></div>
                                         {!isLoadingResults &&
@@ -440,7 +368,6 @@ export default function ResultsPage() {
                                                 </div>
                                             )}
                                     </div>
-                                    {/* </div> */}
                                     {!isLoadingResults &&
                                         results.data.length > 1 && (
                                             <Pagination
@@ -449,11 +376,6 @@ export default function ResultsPage() {
                                                 currentPageOneBased={
                                                     pageOneBased
                                                 }
-                                                numEntriesTotal={
-                                                    numEntriesTotal
-                                                }
-                                                pageSize={pageSize}
-                                                numPagesTotal={numPagesTotal}
                                                 className="mx-auto position-absolute start-50 translate-middle-x"
                                             />
                                         )}
