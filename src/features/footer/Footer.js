@@ -1,4 +1,17 @@
 import React from "react"
+import {
+    FaBook,
+    FaBookOpen,
+    FaDatabase,
+    FaEnvelope,
+    FaGear,
+    FaLock,
+    FaPeopleGroup,
+    FaPlug,
+    FaShield,
+    FaSitemap,
+    FaWindowMaximize,
+} from "react-icons/fa6"
 import { Link } from "react-router-dom"
 import { moduleType } from "../../types"
 import FooterLink from "./FooterLink"
@@ -57,25 +70,25 @@ export default function Footer({ module }) {
                         <h5 className="mb-3">About</h5>
                         <ul className="list-unstyled">
                             <FooterLink
-                                icon="FaPeopleGroup" // PeopleFill
+                                Icon={FaPeopleGroup} // PeopleFill
                                 title="COMP3D Group"
                                 url="https://comp3d.univie.ac.at/the-comp3d-team/"
                                 target="_blank"
                             />
                             <FooterLink
-                                icon="FaLock" // LockFill
+                                Icon={FaLock} // LockFill
                                 title="Privacy Policy"
                                 url="https://dsba.univie.ac.at/en/data-protection-declaration/"
                                 target="_blank"
                             />
                             <FooterLink
-                                icon="FaShield" // ShieldFillCheck
+                                Icon={FaShield} // ShieldFillCheck
                                 title="Legal Notice"
                                 url="https://pharmazie.univie.ac.at/impressum/"
                                 target="_blank"
                             />
                             <FooterLink
-                                icon="FaEnvelope" // ChatDotsFill
+                                Icon={FaEnvelope} // ChatDotsFill
                                 title="Contact"
                                 url="/contact"
                             />
@@ -91,17 +104,17 @@ export default function Footer({ module }) {
                             <h5 className="mb-3">Links</h5>
                             <ul className="list-unstyled">
                                 <FooterLink
-                                    icon="FaBookOpen" // BookFill
+                                    Icon={FaBookOpen} // BookFill
                                     title="Documentation"
                                     url="/docs"
                                 />
                                 <FooterLink
-                                    icon="FaPlug" // PlugFill
+                                    Icon={FaPlug} // PlugFill
                                     title="Developer API"
                                     url="/developer"
                                 />
                                 <FooterLink
-                                    icon="FaBook" // BookmarksFill
+                                    Icon={FaBook} // BookmarksFill
                                     title="How to cite"
                                     url="/cite"
                                 />
@@ -118,25 +131,25 @@ export default function Footer({ module }) {
                             <h5 className="mb-3">Code</h5>
                             <ul className="list-unstyled">
                                 <FooterLink
-                                    icon="FaSitemap" // Diagram3Fill
+                                    Icon={FaSitemap} // Diagram3Fill
                                     title="Architecture"
                                     url="https://github.com/molinfo-vienna/nerdd"
                                     target="_blank"
                                 />
                                 <FooterLink
-                                    icon="FaWindowMaximize" // LaptopFill
+                                    Icon={FaWindowMaximize} // LaptopFill
                                     title="Frontend"
                                     url="https://github.com/molinfo-vienna/nerdd-frontend"
                                     target="_blank"
                                 />
                                 <FooterLink
-                                    icon="FaDatabase" // DatabaseFill
+                                    Icon={FaDatabase} // DatabaseFill
                                     title="Backend"
                                     url="https://github.com/molinfo-vienna/nerdd-backend"
                                     target="_blank"
                                 />
                                 <FooterLink
-                                    icon="FaGear" // GearFill
+                                    Icon={FaGear} // GearFill
                                     title="NERDD Module"
                                     url="https://github.com/molinfo-vienna/nerdd-module"
                                     target="_blank"

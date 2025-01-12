@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
 import React from "react"
 import { useDropzone } from "react-dropzone"
-import Icon from "../icon/Icon"
+import { PiFileArrowUp } from "react-icons/pi"
 import "./style.scss"
 
 export default function FileField({ name, onDrop, ...props }) {
@@ -34,7 +34,7 @@ export default function FileField({ name, onDrop, ...props }) {
             <input name={name} {...getInputProps()} />
             <div className="m-5">
                 <p className="mb-1">
-                    <Icon collection="pi" name="PiFileArrowUp" size={48} />
+                    <PiFileArrowUp size={48} />
                 </p>
                 <p className="m-0">
                     <span className="click-here">Click here</span> to upload

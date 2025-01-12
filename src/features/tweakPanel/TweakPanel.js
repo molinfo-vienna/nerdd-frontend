@@ -1,7 +1,7 @@
 import React, { useRef } from "react"
+import { FaGear } from "react-icons/fa6"
 import { useDispatch, useSelector } from "react-redux"
 import { makeButton, useTweaks } from "use-tweaks"
-import Icon from "../icon/Icon"
 import { setCollapse } from "./tweakPanelSlice"
 
 export default function TweakPanel() {
@@ -32,7 +32,7 @@ export default function TweakPanel() {
                 className={`${collapse ? "" : "d-none"} btn position-fixed top-0 end-0 z-3 m-2 text-body-secondary`}
                 onClick={() => dispatch(setCollapse(false))}
             >
-                <Icon name="FaGear" size={20} />
+                <FaGear size={20} />
             </button>
         </>
     )

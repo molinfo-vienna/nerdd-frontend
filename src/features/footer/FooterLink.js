@@ -1,9 +1,8 @@
 import PropTypes from "prop-types"
 import React from "react"
 import { Link } from "react-router-dom"
-import Icon from "../icon/Icon"
 
-export default function FooterLink({ icon, title, url, ...props }) {
+export default function FooterLink({ Icon, title, url, ...props }) {
     return (
         <li className="mb-2">
             <Link
@@ -11,7 +10,7 @@ export default function FooterLink({ icon, title, url, ...props }) {
                 to={url}
                 {...props}
             >
-                <Icon collection="fa" size={18} name={icon} className="me-2" />
+                <Icon size={18} className="me-2" />
                 <span>{title}</span>
             </Link>
         </li>
@@ -19,7 +18,7 @@ export default function FooterLink({ icon, title, url, ...props }) {
 }
 
 FooterLink.propTypes = {
-    icon: PropTypes.string.isRequired,
+    Icon: PropTypes.elementType.isRequired,
     title: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
 }

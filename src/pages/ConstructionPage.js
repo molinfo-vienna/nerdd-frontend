@@ -1,6 +1,6 @@
 import React from "react"
+import { PiBulldozer } from "react-icons/pi"
 import Footer from "../features/footer/Footer"
-import Icon from "../features/icon/Icon"
 import NavigationBar from "../features/navigationBar/NavigationBar"
 
 export default function ConstructionPage() {
@@ -25,11 +25,7 @@ export default function ConstructionPage() {
                                     style={{ width: "120px", height: "120px" }}
                                 >
                                     <p className="mb-0">
-                                        <Icon
-                                            collection="pi"
-                                            name="PiBulldozer"
-                                            size={120}
-                                        />
+                                        <PiBulldozer size={120} />
                                     </p>
                                 </div>
                             </div>

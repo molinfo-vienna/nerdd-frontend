@@ -1,7 +1,7 @@
 import React from "react"
+import { FaBars, FaGithub } from "react-icons/fa6"
 import { Link, useMatches, useParams } from "react-router-dom"
 import { useGetModulesQuery } from "../../services"
-import Icon from "../icon/Icon"
 
 export default function NavigationBar() {
     // figure out which page we are on
@@ -108,7 +108,7 @@ export default function NavigationBar() {
                         aria-expanded="false"
                         aria-label="Toggle navigation"
                     >
-                        <Icon name="FaBars" />
+                        <FaBars />
                     </button>
                     <div
                         className="collapse navbar-collapse flex-grow-0"
@@ -171,7 +171,7 @@ export default function NavigationBar() {
                                     className="nav-link"
                                     target="_blank"
                                 >
-                                    <Icon name="FaGithub" size={25} />
+                                    <FaGithub size={25} />
                                 </Link>
                             </li>
                         </ul>

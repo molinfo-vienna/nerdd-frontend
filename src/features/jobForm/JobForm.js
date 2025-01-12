@@ -2,8 +2,8 @@ import { createForm } from "final-form"
 import PropTypes from "prop-types"
 import React, { useCallback, useEffect, useRef, useState } from "react"
 import { Field, Form } from "react-final-form"
+import { FaPaperPlane } from "react-icons/fa6"
 import { moduleType } from "../../types"
-import Icon from "../icon/Icon"
 import MoleculeEditor from "../moleculeEditor/MoleculeEditor"
 import FileField from "./FileField"
 import JobParameterField from "./JobParameterField"
@@ -254,11 +254,7 @@ export default function JobForm({ module, onSubmit }) {
                                 type="submit"
                                 className="btn btn-lg btn-primary"
                             >
-                                <Icon
-                                    name="FaPaperPlane"
-                                    size={15}
-                                    className="me-2"
-                                />
+                                <FaPaperPlane size={15} className="me-2" />
                                 Submit
                             </button>
                         )}
