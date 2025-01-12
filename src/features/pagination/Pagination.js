@@ -1,17 +1,93 @@
+import { sortedLastIndexBy } from "lodash"
 import PropTypes from "prop-types"
 import React from "react"
 import { Link } from "react-router-dom"
-import { useGetResultsQuery } from "../../services"
+import { useGetJobStatusQuery } from "../../services"
+
+function pageStatus(pageOneBased, pageSize, entriesProcessed) {
+    const pageId = pageOneBased - 1
+    const firstEntry = pageId * pageSize
+    const lastEntry = firstEntry + pageSize - 1
+
+    const index = Math.max(
+        sortedLastIndexBy(
+            entriesProcessed,
+            [lastEntry, undefined],
+            (x) => x[0],
+        ) - 1,
+        0,
+    )
+
+    if (index >= entriesProcessed.length) {
+        return {
+            isLoading: true,
+            isEmpty: true,
+        }
+    }
+
+    const [left, right] = entriesProcessed[index]
+
+    const firstEntryInInterval = left <= firstEntry && firstEntry < right
+    const lastEntryInInterval = left <= lastEntry && lastEntry < right
+
+    if (lastEntryInInterval) {
+        if (firstEntryInInterval) {
+            // there is an interval [left, right] containing first and last entry of the page
+            // --> page is fully processed
+            return {
+                isLoading: false,
+                isEmpty: false,
+            }
+        } else {
+            // the interval [left, right] contains only the last entry of the page
+            // --> page is partially processed
+            return {
+                isLoading: true,
+                isEmpty: false,
+            }
+        }
+    } else {
+        if (firstEntryInInterval) {
+            // there is an interval [left, right] containing only the first entry of the page
+            // --> page is partially processed
+            return {
+                isLoading: true,
+                isEmpty: false,
+            }
+        } else {
+            // there is no interval containing the first or last entry of the page
+            // --> page is not processed
+            return {
+                isLoading: true,
+                isEmpty: true,
+            }
+        }
+    }
+}
 
 export default function Pagination({
     moduleId,
     jobId,
     currentPageOneBased,
-    numEntriesTotal,
-    pageSize,
-    numPagesTotal,
     ...props
 }) {
+    //
+    // get job status
+    //
+    const {
+        data: jobStatus,
+        error: errorJobStatus,
+        isLoading: isLoadingJobStatus,
+    } = useGetJobStatusQuery({ moduleId, jobId })
+
+    if (isLoadingJobStatus || errorJobStatus) {
+        return
+    }
+
+    const pageSize = jobStatus.pageSize
+    const entriesProcessed = jobStatus.entriesProcessed
+    const numPagesTotal = jobStatus.numPagesTotal
+
     //
     // figure out which pages to show
     //
@@ -31,36 +107,10 @@ export default function Pagination({
     // add first and last page
     const allPages = [1, ...pages, numPagesTotal].map((p) => ({
         id: p,
-        isLoading: true,
-        isEmpty: true,
+        ...pageStatus(p, pageSize, entriesProcessed),
         isActive: p === currentPageOneBased,
         ellipses: false,
     }))
-
-    // In React we can't have a different number of hook calls every time a component is
-    // rendered. However, allPages *always& contains exactly 1 + (2 * radius + 1) + 1
-    // = 2 * radius + 3 items.
-    // -> We can call useGetResultsQuery for each page without running into problems.
-    for (const page of allPages) {
-        const skip =
-            page.id == undefined ||
-            page.id <= 0 ||
-            (numPagesTotal !== undefined && page.id > numPagesTotal)
-
-        const { data, error, isLoading } = useGetResultsQuery({
-            moduleId,
-            jobId,
-            page: page.id,
-            options: { skip },
-        })
-
-        if (!skip) {
-            const pageObject = allPages.find((p) => p.id === page.id)
-            pageObject.isLoading = isLoading || data?.isIncomplete || false
-            pageObject.isEmpty =
-                data?.data === undefined || data.data.length === 0
-        }
-    }
 
     // filter invalid pages
     // note: numPagesProcessed might be equal numPagesTotal
@@ -115,8 +165,8 @@ export default function Pagination({
 
                 {pagesWithEllipses.map((p, i) => (
                     <Link
-                        key={i}
-                        className={`page-link ${p.ellipses || p.isEmpty ? "muted-link" : ""} ${p.isActive ? "active" : ""}`}
+                        key={p.id}
+                        className={`page-link ${p.ellipses ? "disabled" : ""} ${p.ellipses || p.isEmpty ? "muted-link" : ""} ${p.isActive ? "active" : ""}`}
                         to={getPageLink(p.id)}
                     >
                         {p.id}
@@ -143,7 +193,4 @@ Pagination.propTypes = {
     moduleId: PropTypes.string.isRequired,
     jobId: PropTypes.string.isRequired,
     currentPageOneBased: PropTypes.number.isRequired,
-    numPagesTotal: PropTypes.number,
-    numEntriesTotal: PropTypes.number,
-    pageSize: PropTypes.number.isRequired,
 }
