@@ -65,7 +65,7 @@ export default function MockServer({
                         }
 
                         // parameters are all entries in body that are not "sources" and "inputs"
-                        const parameters = Object.fromEntries(
+                        const params = Object.fromEntries(
                             Object.entries(body).filter(
                                 ([key, value]) =>
                                     key !== "sources" && key !== "inputs",
@@ -78,7 +78,7 @@ export default function MockServer({
                             createJob({
                                 jobId: newJobId,
                                 jobType: moduleId,
-                                parameters,
+                                params,
                                 numResults,
                             }),
                         )
@@ -88,6 +88,7 @@ export default function MockServer({
 
                         const jobResponse = {
                             ...job,
+                            createdAt: new Date(job.createdAt),
                             pageSize,
                             // censor numEntriesTotal if showNumEntriesTotal is false
                             numEntriesTotal: job.showNumEntriesTotal
@@ -140,6 +141,7 @@ export default function MockServer({
                                 createJob({
                                     jobId,
                                     jobType: moduleId,
+                                    params: {},
                                     numResults,
                                 }),
                             )
@@ -150,6 +152,7 @@ export default function MockServer({
 
                         const jobResponse = {
                             ...job,
+                            createdAt: new Date(job.createdAt),
                             pageSize,
                             // censor numEntriesTotal if showNumEntriesTotal is false
                             numEntriesTotal: job.showNumEntriesTotal
@@ -197,6 +200,7 @@ export default function MockServer({
                                     createJob({
                                         jobId,
                                         jobType: moduleId,
+                                        params: {},
                                         numResults,
                                     }),
                                 )
@@ -207,6 +211,7 @@ export default function MockServer({
 
                             const jobResponse = {
                                 ...job,
+                                createdAt: new Date(job.createdAt),
                                 pageSize,
                                 // censor numEntriesTotal if showNumEntriesTotal is false
                                 numEntriesTotal: job.showNumEntriesTotal

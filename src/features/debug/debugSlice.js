@@ -36,7 +36,7 @@ const debugSlice = createSlice({
             }
         },
         createJob(state, action) {
-            const { jobId, jobType, parameters, numResults } = action.payload
+            const { jobId, jobType, params, numResults } = action.payload
 
             return {
                 ...state,
@@ -45,7 +45,9 @@ const debugSlice = createSlice({
                     [jobId]: {
                         id: jobId,
                         jobType,
-                        parameters,
+                        sourceId: "fake-source-id",
+                        params,
+                        createdAt: Date.now(),
                         numEntriesProcessed: 0,
                         numEntriesTotal: numResults,
                         showNumEntriesTotal: false,

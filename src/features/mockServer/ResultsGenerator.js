@@ -3,7 +3,6 @@ import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { makeButton, useTweaks } from "use-tweaks"
-import { jobType } from "../../types"
 import { addMolecule, setNumEntriesTotal } from "../debug/debugSlice"
 
 export default function ResultsGenerator({ job, predictionSpeed }) {
@@ -50,6 +49,6 @@ export default function ResultsGenerator({ job, predictionSpeed }) {
 }
 
 ResultsGenerator.propTypes = {
-    job: jobType.isRequired,
+    job: PropTypes.object.isRequired,
     predictionSpeed: PropTypes.number.isRequired,
 }
