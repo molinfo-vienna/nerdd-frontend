@@ -131,17 +131,17 @@ export default function ResultsPage() {
     )
 
     if (errorModule) {
-        return ErrorPage({ message: "Error fetching module", error: {} })
+        return ErrorPage({ error: errorModule })
     }
 
     if (errorJobStatus) {
         return ErrorPage({
-            errorJobStatus,
+            error: errorJobStatus,
         })
     }
 
     if (errorResults) {
-        return ErrorPage({ message: "Error fetching results", error: {} })
+        return ErrorPage({ error: errorResults })
     }
 
     if (isLoadingModule || isLoadingJobStatus) {
