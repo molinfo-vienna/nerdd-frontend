@@ -4,7 +4,7 @@ import { generateValue } from "./util"
 const taskTypes = [
     "molecular_property_prediction",
     "atom_property_prediction",
-    "derivative_prediction",
+    "derivative_property_prediction",
 ]
 const jobParameterDataTypes = ["string", "int", "float", "bool"]
 const resultDataTypes = ["string", "int", "float", "bool", "mol"]
