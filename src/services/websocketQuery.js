@@ -25,14 +25,14 @@ export default function websocketQuery({
                 const hostname = window.location.hostname
                 const port = window.location.port
                 const slash = queryPath.startsWith("/") ? "" : "/"
-                const url = `ws://${hostname}:${port}${slash}${queryPath}`
-
-                console.log("opening websocket connection", url)
+                const protocol =
+                    window.location.protocol === "https:" ? "wss" : "ws"
+                const url = `${protocol}://${hostname}:${port}${slash}${queryPath}`
 
                 // create a websocket connection when the cache subscription starts
                 // ReconnectingWebSocket is a drop-in replacement for the native WebSocket API
                 // Main benefit is that it automatically reconnects when the connection is lost.
-                ws = new ReconnectingWebSocket(url, "ws")
+                ws = new ReconnectingWebSocket(url, protocol)
 
                 ws.onmessage = (event) => {
                     const data = JSON.parse(event.data)
