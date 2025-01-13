@@ -1,3 +1,4 @@
+import { sortedIndexBy } from "lodash"
 import PropTypes from "prop-types"
 import React from "react"
 import { moduleType, resultType } from "../../types"
@@ -27,109 +28,76 @@ export default function ResultTable({ module, results, columnSelection }) {
 
     const { firstColumnRow, secondColumnRow } = getColumnRows(resultProperties)
 
-    let getId
+    // the columns describing the result data
+    const actualColumns =
+        secondColumnRow.length > 0 ? secondColumnRow : firstColumnRow
+
+    //
+    // prepare data for arranging it in a table
+    //
+
+    // sort results by molecule id (and atom id or derivative id)
+    // -> construct a comparison function for sorting
+    let subKey
     if (module.task === "molecular_property_prediction") {
-        getId = (result) => result.mol_id
+        subKey = (a) => 0
     } else if (module.task === "atom_property_prediction") {
-        getId = (result) => `m${result.mol_id}a${result.atom_id}`
+        subKey = (a) => a.atom_id
     } else if (module.task === "derivative_property_prediction") {
-        getId = (result) => `m${result.mol_id}d${result.derivative_id}`
+        subKey = (a) => a.derivative_id
     } else {
         throw new Error(`Unknown task: ${module.task}`)
     }
 
-    let tableContent
+    // entries might have multiple child rows (atoms, derivatives)
+    // --> group results by molecule id
+    const resultsGroupedByMolId = results.reduce((acc, result, index) => {
+        // find corresponding mol_id in acc
+        const groupIndex = sortedIndexBy(acc, result, (x) => x.mol_id)
+        const group = acc[groupIndex]
 
-    // find molecular properties
-    let molecularProperties = resultProperties.filter(
-        (resultProperty) =>
-            resultProperty.level === undefined ||
-            resultProperty.level === "molecule",
-    )
-
-    // find other properties (atom or derivative)
-    let otherProperties = resultProperties.filter(
-        (resultProperty) =>
-            resultProperty.level !== undefined &&
-            resultProperty.level !== "molecule",
-    )
-
-    // group results by molecule id
-    let groupedResults = []
-    const idMapping = {}
-    let getSubId
-    if (module.task === "molecular_property_prediction") {
-        getSubId = (result) => 0
-    } else if (module.task === "atom_property_prediction") {
-        getSubId = (result) => result.atom_id
-    } else if (module.task === "derivative_property_prediction") {
-        getSubId = (result) => result.derivative_id
-    } else {
-        throw new Error(`Unknown task: ${module.task}`)
-    }
-    results.forEach((result) => {
-        const id = result.mol_id
-        if (!(id in idMapping)) {
-            idMapping[id] = groupedResults.length
-            let newEntry = {
-                ...Object.fromEntries(
-                    molecularProperties.map((p) => [p.name, result[p.name]]),
-                ),
-                children: [],
-            }
-            groupedResults.push(newEntry)
+        // check if mol_id is in acc
+        if (group === undefined || group.mol_id !== result.mol_id) {
+            // if mol_id is not in acc, add it at the correct index
+            acc.splice(groupIndex, 0, {
+                mol_id: result.mol_id,
+                // the row indices to all entries in the molecule's group
+                children: [result],
+            })
+        } else {
+            // if mol_id is in acc, add the entry to the group
+            // add entry at the correct index (sorted by atom_id or derivative_id)
+            const subIndex = sortedIndexBy(group.children, result, subKey)
+            group.children.splice(subIndex, 0, result)
         }
 
-        // add atom or derivative properties
-        const subId = getSubId(result)
-        groupedResults[idMapping[id]].children[subId] = Object.fromEntries(
-            otherProperties.map((p) => [p.name, result[p.name]]),
-        )
-    })
+        return acc
+    }, [])
 
-    // remove undefined children (usually index 0)
-    groupedResults = groupedResults.map((result) => ({
-        ...result,
-        children: result.children.filter((child) => child !== undefined),
-    }))
-
-    // sort groupedResults by molecule id
-    groupedResults.sort((a, b) => a.mol_id - b.mol_id)
-
-    tableContent = groupedResults.map((result, i) =>
-        result.children.map((child, j) =>
-            j === 0 ? (
-                <tr key={`m${i}c${j}`}>
-                    {molecularProperties.map((resultProperty, i) => (
-                        <TableCell
-                            key={i}
-                            resultProperty={resultProperty}
-                            value={result[resultProperty.name]}
-                            rowSpan={result.children.length}
-                        />
-                    ))}
-                    {otherProperties.map((resultProperty, i) => (
-                        <TableCell
-                            key={molecularProperties.length + i}
-                            resultProperty={resultProperty}
-                            value={child[resultProperty.name]}
-                            compressed
-                        />
-                    ))}
-                </tr>
-            ) : (
-                <tr key={`m${i}c${j}`}>
-                    {otherProperties.map((resultProperty, i) => (
-                        <TableCell
-                            key={molecularProperties.length + i}
-                            resultProperty={resultProperty}
-                            value={child[resultProperty.name]}
-                            compressed
-                        />
-                    ))}
-                </tr>
-            ),
-        ),
+    //
+    // render table
+    //
+    const tableContent = resultsGroupedByMolId.map((group, i) =>
+        group.children.map((result, j) => (
+            <tr key={`m${i}c${j}`}>
+                {actualColumns.map(
+                    (resultProperty, k) =>
+                        (resultProperty.level !== "molecule" || j === 0) && (
+                            <TableCell
+                                key={k}
+                                resultProperty={resultProperty}
+                                value={result[resultProperty.name]}
+                                rowSpan={
+                                    resultProperty.level === "molecule"
+                                        ? group.children.length
+                                        : 1
+                                }
+                                compressed={resultProperty.level !== "molecule"}
+                            />
+                        ),
+                )}
+            </tr>
+        )),
     )
 
     return (
@@ -149,7 +117,13 @@ export default function ResultTable({ module, results, columnSelection }) {
                             rowSpan={column.rowspan}
                             colSpan={column.colspan}
                         >
-                            {column.visibleName}
+                            {column.colspan > 1 ? (
+                                <div className="border-bottom border-primary mx-3 py-2">
+                                    {column.visibleName}
+                                </div>
+                            ) : (
+                                column.visibleName
+                            )}
                         </th>
                     ))}
                 </tr>
