@@ -6,3 +6,11 @@
 .tooltip-text {
     max-width: 300px;
 }
+
+.form-check.form-check-lg {
+    font-size: 2rem;
+}
+
+.form-check.form-check-lg .form-check-label {
+    margin-top: -0.5rem;
+}

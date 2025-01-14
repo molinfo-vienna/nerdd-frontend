@@ -1,9 +1,14 @@
+import PropTypes from "prop-types"
 import React from "react"
 
 export default function ColumnSelectDropdown({
     columnSelection,
     handleSelectionChange,
 }) {
+    if (columnSelection === undefined) {
+        return
+    }
+
     return (
         <div
             className="dropdown-menu dropdown-menu-end p-3"
@@ -17,6 +22,16 @@ export default function ColumnSelectDropdown({
                             type="checkbox"
                             value=""
                             id={group.groupName}
+                            checked={group.columns
+                                .map((c) => c.visible)
+                                .every(Boolean)}
+                            onChange={(e) =>
+                                handleSelectionChange(
+                                    group.groupName,
+                                    null,
+                                    e.target.checked,
+                                )
+                            }
                         />
                         <label
                             className="form-check-label fw-bold"
@@ -56,4 +71,20 @@ export default function ColumnSelectDropdown({
             ))}
         </div>
     )
+}
+
+ColumnSelectDropdown.propTypes = {
+    columnSelection: PropTypes.arrayOf(
+        PropTypes.shape({
+            groupName: PropTypes.string.isRequired,
+            columns: PropTypes.arrayOf(
+                PropTypes.shape({
+                    name: PropTypes.string.isRequired,
+                    label: PropTypes.string.isRequired,
+                    visible: PropTypes.bool.isRequired,
+                }),
+            ).isRequired,
+        }),
+    ),
+    handleSelectionChange: PropTypes.func.isRequired,
 }

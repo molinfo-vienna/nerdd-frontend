@@ -1,6 +1,6 @@
 import PropTypes from "prop-types"
 import React from "react"
-import Icon from "../icon/Icon"
+import { FaRegCircleCheck, FaRegCircleXmark } from "react-icons/fa6"
 
 export default function FileItem({ file, onClickDelete }) {
     return (
@@ -27,13 +27,13 @@ export default function FileItem({ file, onClickDelete }) {
                 {/* success */}
                 {file.status === "success" ? (
                     <span className="text-success">
-                        <Icon name="FaRegCircleCheck" collection="fa" />
+                        <FaRegCircleCheck />
                     </span>
                 ) : null}
                 {/* error */}
                 {file.status === "error" ? (
                     <span className="text-danger">
-                        <Icon name="FaRegCircleXmark" collection="fa" />
+                        <FaRegCircleXmark />
                     </span>
                 ) : null}
                 <div

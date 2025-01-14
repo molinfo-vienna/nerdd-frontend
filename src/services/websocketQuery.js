@@ -25,14 +25,14 @@ export default function websocketQuery({
                 const hostname = window.location.hostname
                 const port = window.location.port
                 const slash = queryPath.startsWith("/") ? "" : "/"
-                const url = `ws://${hostname}:${port}${slash}${queryPath}`
-
-                console.log("opening websocket connection", url)
+                const protocol =
+                    window.location.protocol === "https:" ? "wss" : "ws"
+                const url = `${protocol}://${hostname}:${port}${slash}${queryPath}`
 
                 // create a websocket connection when the cache subscription starts
                 // ReconnectingWebSocket is a drop-in replacement for the native WebSocket API
                 // Main benefit is that it automatically reconnects when the connection is lost.
-                ws = new ReconnectingWebSocket(url, "ws")
+                ws = new ReconnectingWebSocket(url, protocol)
 
                 ws.onmessage = (event) => {
                     const data = JSON.parse(event.data)
@@ -40,7 +40,7 @@ export default function websocketQuery({
                     updateCachedData((draft) => {
                         // TODO: messages might get lost here
                         if (draft != null) {
-                            process(draft, transformedData, false)
+                            return process(draft, transformedData, false)
                         }
                     })
                 }
@@ -48,9 +48,12 @@ export default function websocketQuery({
                 ws.onclose = (e) => {
                     if (e.wasClean) {
                         // signal that the websocket connection was closed
-                        updateCachedData((draft) =>
-                            process(draft, undefined, true),
-                        )
+                        updateCachedData((draft) => {
+                            // TODO: messages might get lost here
+                            if (draft != null) {
+                                return process(draft, undefined, true)
+                            }
+                        })
 
                         // close the websocket connection
                         // (ReconnectingWebSocket won't reconnect in this case)

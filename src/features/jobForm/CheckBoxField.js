@@ -1,15 +1,18 @@
+import PropTypes from "prop-types"
 import React from "react"
+import { refType } from "../../types"
 
 export default function CheckBoxField({
     input,
     meta,
     label,
     positionReference,
+    className,
     ...props
 }) {
     const modifiedProps = {
         ...props,
-        className: `form-check-input ${props.className ?? ""} ${meta.touched && meta.error ? "is-invalid" : ""}`,
+        className: `form-check-input ${className ?? ""} ${meta.touched && meta.error ? "is-invalid" : ""}`,
     }
     return (
         <div className="form-check form-check-lg">
@@ -32,4 +35,12 @@ export default function CheckBoxField({
             )}
         </div>
     )
+}
+
+CheckBoxField.propTypes = {
+    input: PropTypes.object.isRequired,
+    meta: PropTypes.object.isRequired,
+    label: PropTypes.string,
+    positionReference: refType,
+    className: PropTypes.string,
 }

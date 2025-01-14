@@ -1,5 +1,6 @@
+import PropTypes from "prop-types"
 import React from "react"
-import Icon from "../icon/Icon"
+import { BsLayoutThreeColumns } from "react-icons/bs"
 import ColumnSelectDropdown from "./ColumnSelectDropdown"
 
 export default function ColumnSelect({
@@ -13,7 +14,7 @@ export default function ColumnSelect({
                 return {
                     ...g,
                     columns: g.columns.map((c) => {
-                        if (c.name === column) {
+                        if (c.name === column || column === null) {
                             return { ...c, visible }
                         }
                         return c
@@ -26,7 +27,7 @@ export default function ColumnSelect({
         onSelectionChange(newColumnSelection)
     }
 
-    if (!columnSelection) {
+    if (columnSelection === undefined) {
         return null
     }
 
@@ -40,7 +41,7 @@ export default function ColumnSelect({
                     data-bs-auto-close="outside"
                     aria-expanded="false"
                 >
-                    <Icon collection="bs" name="BsLayoutThreeColumns" /> Columns
+                    <BsLayoutThreeColumns /> Columns
                 </button>
                 <ColumnSelectDropdown
                     columnSelection={columnSelection}
@@ -49,4 +50,9 @@ export default function ColumnSelect({
             </div>
         </div>
     )
+}
+
+ColumnSelect.propTypes = {
+    columnSelection: PropTypes.array,
+    onSelectionChange: PropTypes.func,
 }

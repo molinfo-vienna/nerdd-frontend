@@ -54,12 +54,12 @@ export function generateResult(module, i) {
 
     if (module.task === "molecular_property_prediction") {
         return generateMolecularPropertyPredictionResult(module, i)
-    }
-    if (module.task === "atom_property_prediction") {
+    } else if (module.task === "atom_property_prediction") {
         return generateAtomPropertyPredictionResult(module, i)
-    }
-    if (module.task === "derivative_prediction") {
+    } else if (module.task === "derivative_property_prediction") {
         return generateDerivativePredictionResult(module, i)
+    } else {
+        throw new Error(`Unknown task: ${module.task}`)
     }
 }
 

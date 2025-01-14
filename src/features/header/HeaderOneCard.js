@@ -116,6 +116,16 @@ HeaderOneCard.Icon = function HeaderIcon({
 
 HeaderOneCard.propTypes = {
     module: moduleType,
+    children: propTypes.node,
+    title: propTypes.string,
+}
+
+HeaderOneCard.Content.propTypes = {
+    children: propTypes.node,
+}
+
+HeaderOneCard.CardSection.propTypes = {
+    children: propTypes.node,
 }
 
 HeaderOneCard.Icon.propTypes = {

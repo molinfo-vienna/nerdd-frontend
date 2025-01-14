@@ -9,8 +9,10 @@ import {
     useRole,
     useTransitionStyles,
 } from "@floating-ui/react"
+import PropTypes from "prop-types"
 import React, { useEffect, useRef, useState } from "react"
 import Markdown from "react-markdown"
+import { refType } from "../../types"
 import "./style.css"
 
 export default function Tooltip({ children, helpText, positionReference }) {
@@ -148,4 +150,10 @@ export default function Tooltip({ children, helpText, positionReference }) {
             </div>
         </div>
     )
+}
+
+Tooltip.propTypes = {
+    children: PropTypes.node.isRequired,
+    helpText: PropTypes.string,
+    positionReference: refType,
 }

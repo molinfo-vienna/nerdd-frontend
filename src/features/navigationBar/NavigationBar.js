@@ -1,7 +1,7 @@
 import React from "react"
+import { FaBars, FaGithub } from "react-icons/fa6"
 import { Link, useMatches, useParams } from "react-router-dom"
 import { useGetModulesQuery } from "../../services"
-import Icon from "../icon/Icon"
 
 export default function NavigationBar() {
     // figure out which page we are on
@@ -35,13 +35,13 @@ export default function NavigationBar() {
             breadcrumbElements = [
                 { name: "Home", url: "/" },
                 { name: module.visibleName, url: `/${moduleId}` },
-                { name: "Cite", url: `#` },
+                { name: "Cite", url: `/${moduleId}/cite` },
             ]
         } else if (pageId === "api") {
             breadcrumbElements = [
                 { name: "Home", url: "/" },
                 { name: module.visibleName, url: `/${moduleId}` },
-                { name: "API", url: `#` },
+                { name: "API", url: `/${moduleId}/api` },
             ]
         } else if (pageId === "results") {
             breadcrumbElements = [
@@ -108,7 +108,7 @@ export default function NavigationBar() {
                         aria-expanded="false"
                         aria-label="Toggle navigation"
                     >
-                        <Icon name="FaBars" />
+                        <FaBars />
                     </button>
                     <div
                         className="collapse navbar-collapse flex-grow-0"
@@ -156,12 +156,12 @@ export default function NavigationBar() {
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link to="#" className="nav-link">
+                                <Link to="/developer" className="nav-link">
                                     API
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link to="#" className="nav-link">
+                                <Link to="/contact" className="nav-link">
                                     Contact
                                 </Link>
                             </li>
@@ -171,7 +171,7 @@ export default function NavigationBar() {
                                     className="nav-link"
                                     target="_blank"
                                 >
-                                    <Icon name="FaGithub" size={25} />
+                                    <FaGithub size={25} />
                                 </Link>
                             </li>
                         </ul>

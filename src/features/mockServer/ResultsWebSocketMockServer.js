@@ -2,13 +2,12 @@ import { Server as SocketServer } from "mock-socket"
 import PropTypes from "prop-types"
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
-import { jobType } from "../../types"
 import { generateResult } from "./fake"
 import recursiveCamelToSnakeCase from "./recursiveCamelToSnakeCase"
 
 export default function ResultsWebSocketMockServer({ job, pageSize }) {
     const [socketServer, setSocketServer] = useState(null)
-    const moduleId = job.moduleId
+    const moduleId = job.jobType
 
     const module = useSelector((state) => state.debug.moduleConfigs[moduleId])
 
@@ -82,6 +81,6 @@ export default function ResultsWebSocketMockServer({ job, pageSize }) {
 }
 
 ResultsWebSocketMockServer.propTypes = {
-    job: jobType.isRequired,
+    job: PropTypes.object.isRequired,
     pageSize: PropTypes.number.isRequired,
 }

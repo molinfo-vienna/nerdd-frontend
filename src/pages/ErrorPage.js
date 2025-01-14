@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
 import React from "react"
+import { BsExclamationCircle } from "react-icons/bs"
 import Footer from "../features/footer/Footer"
-import Icon from "../features/icon/Icon"
 import NavigationBar from "../features/navigationBar/NavigationBar"
 
 const statusMap = {
@@ -10,10 +10,12 @@ const statusMap = {
 }
 
 export default function ErrorPage({ error, explanation }) {
-    const status = error?.status || "OMG"
-    const message = error?.data.detail || "An unknown error occurred"
+    const status = error?.status || "000"
+    const message = error?.data?.detail || "An unknown error occurred"
 
     const statusExplanation = statusMap[status] || "Unknown Error"
+
+    console.error(status, error)
 
     return (
         <>
@@ -29,11 +31,7 @@ export default function ErrorPage({ error, explanation }) {
                         >
                             <div className="px-4">
                                 <p className="mb-0">
-                                    <Icon
-                                        collection="bs"
-                                        name="BsExclamationCircle"
-                                        size={120}
-                                    />
+                                    <BsExclamationCircle size={120} />
                                 </p>
                             </div>
                             <div>
@@ -56,4 +54,5 @@ export default function ErrorPage({ error, explanation }) {
 ErrorPage.propTypes = {
     message: PropTypes.string.isRequired,
     error: PropTypes.object,
+    explanation: PropTypes.string,
 }

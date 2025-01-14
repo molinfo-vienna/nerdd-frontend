@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import hash from "object-hash"
 import { normalizeModule } from "./normalize"
 import recursiveSnakeToCamelCase from "./recursiveSnakeToCamelCase"
 import websocketQuery from "./websocketQuery"
@@ -94,7 +93,14 @@ export const nerddApi = createApi({
             query: ({ moduleId, jobId }) => `/${moduleId}/jobs/${jobId}`,
             queryWs: ({ moduleId, jobId }) =>
                 `/websocket/${moduleId}/jobs/${jobId}`,
-            process: (draft, data) => data,
+            process: (draft, data, complete) => {
+                if (complete) {
+                    return
+                }
+                // always overwrite the current job status with the retrieved data
+                // (returning a new object is equivalent with a replacement)
+                return data
+            },
             transformResponse: recursiveSnakeToCamelCase,
             transformResponseWs: recursiveSnakeToCamelCase,
         }),
@@ -111,12 +117,9 @@ export const nerddApi = createApi({
                     return
                 }
 
-                // create a hash from data
-                const dataHash = hash(data)
-
                 // check if the data is already in the draft
                 for (const entry of draft.data) {
-                    if (hash(entry) === dataHash) {
+                    if (entry.id == data.id) {
                         return
                     }
                 }

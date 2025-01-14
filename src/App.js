@@ -52,6 +52,21 @@ export default function App() {
                     element: <LandingPage />,
                 },
                 {
+                    path: "/developer",
+                    id: "api_general",
+                    element: <DeveloperPage />,
+                },
+                {
+                    path: "/cite",
+                    id: "cite_general",
+                    element: <CitationPage />,
+                },
+                {
+                    path: "/contact",
+                    id: "contact",
+                    element: <DeveloperPage />,
+                },
+                {
                     path: "/:moduleId",
                     id: "createJob",
                     element: <CreateJobPage />,

@@ -1,4 +1,6 @@
+import PropTypes from "prop-types"
 import React from "react"
+import { refType } from "../../types"
 
 export default function SelectField({
     input,
@@ -6,11 +8,12 @@ export default function SelectField({
     label,
     choices,
     positionReference,
+    className,
     ...props
 }) {
     const modifiedProps = {
         ...props,
-        className: `form-select ${props.className ?? ""} ${meta.touched && meta.error ? "is-invalid" : ""}`,
+        className: `form-select ${className ?? ""} ${meta.touched && meta.error ? "is-invalid" : ""}`,
     }
     return (
         <div className="form-floating mb-3">
@@ -34,4 +37,18 @@ export default function SelectField({
             )}
         </div>
     )
+}
+
+SelectField.propTypes = {
+    input: PropTypes.object.isRequired,
+    meta: PropTypes.object.isRequired,
+    label: PropTypes.string,
+    choices: PropTypes.arrayOf(
+        PropTypes.shape({
+            label: PropTypes.string.isRequired,
+            value: PropTypes.string.isRequired,
+        }),
+    ).isRequired,
+    positionReference: refType,
+    className: PropTypes.string,
 }

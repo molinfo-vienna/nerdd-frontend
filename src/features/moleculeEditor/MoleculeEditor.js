@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import React, { useCallback, useEffect, useId, useState } from "react"
 import { useField } from "react-final-form"
 import useJsApplet from "./useJsApplet"
@@ -49,4 +50,8 @@ export default function MoleculeEditor({ name }) {
     }, [appletInstance, value])
 
     return <div id={containerId} ref={jsmeContainerRef}></div>
+}
+
+MoleculeEditor.propTypes = {
+    name: PropTypes.string.isRequired,
 }

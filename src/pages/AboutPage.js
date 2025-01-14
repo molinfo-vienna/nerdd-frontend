@@ -2,6 +2,7 @@ import React, { useRef } from "react"
 import Markdown from "react-markdown"
 import { useParams } from "react-router-dom"
 import rehypeSlug from "rehype-slug"
+import remarkGfm from "remark-gfm"
 import Footer from "../features/footer/Footer"
 import ModuleHeader from "../features/header/ModuleHeader"
 import TableOfContents from "../features/tableOfContents/TableOfContents"
@@ -21,6 +22,14 @@ export default function AboutPage() {
 
     if (!module) {
         return ErrorPage({ errorMessage: "Module not found" })
+    }
+
+    // apply bootstrap styling to specific markdown elements
+    const components = {
+        // tables: add bootstrap table class
+        table(props) {
+            return <table className="table table-striped" {...props} />
+        },
     }
 
     return (
@@ -65,7 +74,11 @@ export default function AboutPage() {
                 <div className="row justify-content-center">
                     <div className="col-sm-6">
                         <div ref={ref}>
-                            <Markdown rehypePlugins={[rehypeSlug]}>
+                            <Markdown
+                                rehypePlugins={[rehypeSlug]}
+                                remarkPlugins={[remarkGfm]}
+                                components={components}
+                            >
                                 {module.about}
                             </Markdown>
                         </div>

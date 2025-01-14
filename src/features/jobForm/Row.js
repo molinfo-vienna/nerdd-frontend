@@ -9,13 +9,14 @@ export default function Row({
     helpText,
     children,
     positionReference,
+    className,
     ...props
 }) {
     const ref = useRef()
 
     const modifiedProps = {
         ...props,
-        className: `${props.className ?? ""} mb-3`,
+        className: `${className ?? ""} mb-3`,
     }
 
     // we always put the anchor of the tooltip centered w.r.t. the first child
@@ -47,4 +48,5 @@ Row.propTypes = {
     helpText: PropTypes.string,
     children: PropTypes.node,
     positionReference: refType,
+    className: PropTypes.string,
 }

@@ -10,7 +10,7 @@ export default function LandingPage() {
     const { data: modules, error, isLoading } = useGetModulesQuery()
 
     if (error) {
-        return ErrorPage({ errorMessage: "Failed to load modules" })
+        return ErrorPage({ error })
     }
 
     // TODO: show a message if there are no modules
