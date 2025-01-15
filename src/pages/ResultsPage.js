@@ -73,12 +73,12 @@ export default function ResultsPage() {
     //
     // column selection state
     //
-    const [columnSelection, setColumnSelection] = useState(undefined)
+    const [columnSelection, setColumnSelection] = useState([])
 
     // initialize column selection
     useEffect(() => {
+        let initialColumnSelection = []
         if (module?.resultProperties !== undefined) {
-            let initialColumnSelection = []
             module.resultProperties.forEach((resultProperty) => {
                 const { name, visibleName, group, visible } = resultProperty
 
@@ -104,8 +104,8 @@ export default function ResultsPage() {
                     initialColumnSelection[groupIndex].columns.push(column)
                 }
             })
-            setColumnSelection(initialColumnSelection)
         }
+        setColumnSelection(initialColumnSelection)
     }, [module, setColumnSelection])
 
     const handleSelectionChange = useCallback(
@@ -177,8 +177,13 @@ export default function ResultsPage() {
                     <NavigationBar />
                     <section className="container py-4">
                         <div className="row justify-content-center pb-3">
-                            <div className="col-sm-4">
-                                <div className="d-flex">
+                            <div className="col">
+                                {/*
+                                 * We use a flexbox with justify-content-center to center the
+                                 * progress bar, the module name and the action buttons.
+                                 */}
+                                <div className="d-flex justify-content-center">
+                                    {/* Progress bar */}
                                     <ProgressBar
                                         numEntriesProcessed={
                                             jobStatus.numEntriesProcessed
@@ -187,7 +192,8 @@ export default function ResultsPage() {
                                             jobStatus.numEntriesTotal
                                         }
                                     />
-                                    <div className="d-flex flex-column p-2">
+                                    {/* Module name & status*/}
+                                    <div className="d-flex flex-column p-2 me-5">
                                         <div style={{ height: "50px" }}>
                                             <h1 className="text-primary fw-bold my-auto">
                                                 {module.visibleName}
@@ -197,40 +203,127 @@ export default function ResultsPage() {
                                             <p className="mb-0">{statusText}</p>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div className="col-sm-4">
-                                <div className="btn-group" role="group">
-                                    {/* Docs */}
-                                    <Link
-                                        className="btn btn-outline-secondary text-center text-decoration-none text-reset d-block"
-                                        to={`/${moduleId}/about`}
-                                        type="button"
-                                    >
-                                        <div
-                                            className="d-flex flex-column p-2"
-                                            style={{
-                                                width: "90px",
-                                            }}
-                                        >
-                                            <div style={{ height: "42px" }}>
-                                                <p className="mb-0 text-primary">
-                                                    <FaBookOpen size={35} />
-                                                </p>
-                                            </div>
-                                            <span className="text-primary">
-                                                Docs
-                                            </span>
-                                        </div>
-                                    </Link>
-
-                                    {/* Columns */}
+                                    {/* Action buttons */}
                                     <div className="btn-group" role="group">
+                                        {/* Docs */}
                                         <Link
                                             className="btn btn-outline-secondary text-center text-decoration-none text-reset d-block"
+                                            to={`/${moduleId}/about`}
                                             type="button"
-                                            data-bs-toggle="dropdown"
-                                            data-bs-auto-close="outside"
+                                        >
+                                            <div
+                                                className="d-flex flex-column p-2"
+                                                style={{
+                                                    width: "90px",
+                                                }}
+                                            >
+                                                <div style={{ height: "42px" }}>
+                                                    <p className="mb-0 text-primary">
+                                                        <FaBookOpen size={35} />
+                                                    </p>
+                                                </div>
+                                                <span className="text-primary">
+                                                    Docs
+                                                </span>
+                                            </div>
+                                        </Link>
+
+                                        {/* Columns */}
+                                        <div className="btn-group" role="group">
+                                            <Link
+                                                className="btn btn-outline-secondary text-center text-decoration-none text-reset d-block"
+                                                type="button"
+                                                data-bs-toggle="dropdown"
+                                                data-bs-auto-close="outside"
+                                                aria-expanded="false"
+                                            >
+                                                <div
+                                                    className="d-flex flex-column p-2"
+                                                    style={{
+                                                        width: "90px",
+                                                    }}
+                                                >
+                                                    <div
+                                                        style={{
+                                                            height: "42px",
+                                                        }}
+                                                    >
+                                                        <p className="mb-0 text-primary">
+                                                            <HiMiniViewColumns
+                                                                size={36}
+                                                            />
+                                                        </p>
+                                                    </div>
+                                                    <span className="text-primary">
+                                                        Columns
+                                                    </span>
+                                                </div>
+                                            </Link>
+                                            <ColumnSelectDropdown
+                                                columnSelection={
+                                                    columnSelection
+                                                }
+                                                handleSelectionChange={
+                                                    handleSelectionChange
+                                                }
+                                            />
+                                        </div>
+                                        {/* Download */}
+                                        <div className="btn-group" role="group">
+                                            <Link
+                                                className={`btn btn-outline-secondary text-center text-decoration-none text-reset d-block ${jobStatus.outputFiles !== undefined && jobStatus.outputFiles.length == 0 ? "disabled" : ""}`}
+                                                type="button"
+                                                data-bs-toggle="dropdown"
+                                                data-bs-auto-close="outside"
+                                            >
+                                                <div
+                                                    className="d-flex flex-column p-2"
+                                                    style={{
+                                                        width: "90px",
+                                                    }}
+                                                >
+                                                    <div
+                                                        style={{
+                                                            height: "42px",
+                                                        }}
+                                                    >
+                                                        <p className="mb-0 text-primary">
+                                                            <FaFileDownload
+                                                                size={33}
+                                                            />
+                                                        </p>
+                                                    </div>
+                                                    <span className="text-primary">
+                                                        Download
+                                                    </span>
+                                                </div>
+                                            </Link>
+                                            <div className="dropdown-menu dropdown-menu-end p-2">
+                                                {outputFileItems.map(
+                                                    (item, index) => (
+                                                        <Link
+                                                            key={index}
+                                                            className={`dropdown-item ${item.status}`}
+                                                            to={`${item.url}`}
+                                                            target="_blank"
+                                                            download
+                                                        >
+                                                            <FaFileLines
+                                                                size={24}
+                                                                className="me-2"
+                                                            />
+                                                            {item.format.toUpperCase()}
+                                                        </Link>
+                                                    ),
+                                                )}
+                                            </div>
+                                        </div>
+                                        {/* Delete */}
+                                        <Link
+                                            className="btn btn-outline-danger text-center text-decoration-none text-reset d-block"
+                                            to="#"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#deleteJobModal"
                                             aria-expanded="false"
                                         >
                                             <div
@@ -240,92 +333,14 @@ export default function ResultsPage() {
                                                 }}
                                             >
                                                 <div style={{ height: "42px" }}>
-                                                    <p className="mb-0 text-primary">
-                                                        <HiMiniViewColumns
-                                                            size={36}
-                                                        />
+                                                    <p className="mb-0">
+                                                        <FaTrash size={33} />
                                                     </p>
                                                 </div>
-                                                <span className="text-primary">
-                                                    Columns
-                                                </span>
+                                                <span>Delete</span>
                                             </div>
                                         </Link>
-                                        <ColumnSelectDropdown
-                                            columnSelection={columnSelection}
-                                            handleSelectionChange={
-                                                handleSelectionChange
-                                            }
-                                        />
                                     </div>
-                                    {/* Download */}
-                                    <div className="btn-group" role="group">
-                                        <Link
-                                            className={`btn btn-outline-secondary text-center text-decoration-none text-reset d-block ${jobStatus.outputFiles !== undefined && jobStatus.outputFiles.length == 0 ? "disabled" : ""}`}
-                                            type="button"
-                                            data-bs-toggle="dropdown"
-                                            data-bs-auto-close="outside"
-                                        >
-                                            <div
-                                                className="d-flex flex-column p-2"
-                                                style={{
-                                                    width: "90px",
-                                                }}
-                                            >
-                                                <div style={{ height: "42px" }}>
-                                                    <p className="mb-0 text-primary">
-                                                        <FaFileDownload
-                                                            size={33}
-                                                        />
-                                                    </p>
-                                                </div>
-                                                <span className="text-primary">
-                                                    Download
-                                                </span>
-                                            </div>
-                                        </Link>
-                                        <div className="dropdown-menu dropdown-menu-end p-2">
-                                            {outputFileItems.map(
-                                                (item, index) => (
-                                                    <Link
-                                                        key={index}
-                                                        className={`dropdown-item ${item.status}`}
-                                                        to={`${item.url}`}
-                                                        target="_blank"
-                                                        download
-                                                    >
-                                                        <FaFileLines
-                                                            size={24}
-                                                            className="me-2"
-                                                        />
-                                                        {item.format.toUpperCase()}
-                                                    </Link>
-                                                ),
-                                            )}
-                                        </div>
-                                    </div>
-                                    {/* Delete */}
-                                    <Link
-                                        className="btn btn-outline-danger text-center text-decoration-none text-reset d-block"
-                                        to="#"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#deleteJobModal"
-                                        aria-expanded="false"
-                                    >
-                                        <div
-                                            className="d-flex flex-column p-2"
-                                            style={{
-                                                width: "90px",
-                                            }}
-                                        >
-                                            <div style={{ height: "42px" }}>
-                                                <p className="mb-0">
-                                                    <FaTrash size={33} />
-                                                </p>
-                                            </div>
-                                            <span>Delete</span>
-                                        </div>
-                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -360,6 +375,9 @@ export default function ResultsPage() {
                                                 <div>
                                                     <ResultTable
                                                         module={module}
+                                                        pageOneBased={
+                                                            pageOneBased
+                                                        }
                                                         results={results.data}
                                                         columnSelection={
                                                             columnSelection
