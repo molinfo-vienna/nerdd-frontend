@@ -1,7 +1,7 @@
 import React from "react"
 import { FaBars, FaGithub } from "react-icons/fa6"
 import { Link, useMatches, useParams } from "react-router-dom"
-import { useGetModulesQuery } from "../../services"
+import { useGetModuleQuery } from "../../services"
 
 export default function NavigationBar() {
     // figure out which page we are on
@@ -13,13 +13,14 @@ export default function NavigationBar() {
     const { moduleId, jobId } = useParams()
 
     // get the module list to receive the module name
-    const modules = useGetModulesQuery().data || {}
+    const { data: module } = useGetModuleQuery(moduleId, {
+        skip: moduleId === undefined,
+    })
 
     // configure the breadcrumb elements based on the page
     let breadcrumbElements
     let shortNavigation = false
-    if (moduleId !== undefined && moduleId in modules) {
-        const module = modules[moduleId]
+    if (moduleId !== undefined && module !== undefined) {
         if (pageId == "createJob") {
             breadcrumbElements = [
                 { name: "Home", url: "/" },

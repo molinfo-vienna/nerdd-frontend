@@ -7,7 +7,7 @@ export default function ModuleCard({ module }) {
     return (
         <Link
             to={module.id}
-            className="card module-card text-center h-100 mb-3 mx-auto overflow-hidden text-decoration-none"
+            className="card module-card text-center h-100 pt-2 mb-3 mx-auto overflow-hidden text-decoration-none"
         >
             {/* border-0: remove separation line between card header and body */}
             <div className="card-header border-0 pt-4 pb-3">

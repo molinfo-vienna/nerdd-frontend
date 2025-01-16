@@ -6,6 +6,7 @@ export default function getColumnRows(resultProperties) {
 
     const firstColumnRow = []
     const secondColumnRow = []
+    const valueColumns = []
 
     for (const resultProperty of resultProperties) {
         const { group } = resultProperty
@@ -38,6 +39,7 @@ export default function getColumnRows(resultProperties) {
                 colspan: 1,
                 ...resultProperty,
             })
+            valueColumns.push(resultProperty)
         } else {
             // if no group is specified, take the column as it is
             firstColumnRow.push({
@@ -47,8 +49,9 @@ export default function getColumnRows(resultProperties) {
                 rowspan: rowSpan,
                 ...resultProperty,
             })
+            valueColumns.push(resultProperty)
         }
     }
 
-    return { firstColumnRow, secondColumnRow }
+    return { firstColumnRow, secondColumnRow, valueColumns }
 }
