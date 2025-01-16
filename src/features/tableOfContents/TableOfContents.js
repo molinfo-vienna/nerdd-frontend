@@ -46,9 +46,8 @@ export default function TableOfContents({ contentRef }) {
             const id = heading.id
             const text = heading.textContent
 
-            // current level might be much less than the heading level
+            // current level might differ by more than 1 from the heading level, e.g. h2 -> h4
             // this hints at a problem with the markdown file
-            // e.g. h2 -> h4
             // nevertheless, this code should not fail in this case
             // -> use dummy nodes to fill the gap
             if (level > current.level + 1) {
@@ -58,6 +57,7 @@ export default function TableOfContents({ contentRef }) {
                         id: `dummy-${i}`,
                         text: "",
                         children: [],
+                        parent: current,
                     }
                     current.children.push(dummy)
                     current = dummy
