@@ -13,7 +13,9 @@ export default function NavigationBar() {
     const { moduleId, jobId } = useParams()
 
     // get the module list to receive the module name
-    const module = useGetModuleQuery(moduleId).data || {}
+    const { data: module } = useGetModuleQuery(moduleId, {
+        skip: moduleId === undefined,
+    })
 
     // configure the breadcrumb elements based on the page
     let breadcrumbElements
