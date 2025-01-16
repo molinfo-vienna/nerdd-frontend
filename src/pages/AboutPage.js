@@ -21,7 +21,7 @@ export default function AboutPage() {
     }
 
     if (!module) {
-        return ErrorPage({ errorMessage: "Module not found" })
+        return ErrorPage({ error })
     }
 
     // apply bootstrap styling to specific markdown elements

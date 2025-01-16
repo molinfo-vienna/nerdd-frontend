@@ -14,8 +14,17 @@ export default function LandingPage() {
     }
 
     // TODO: show a message if there are no modules
-    if (isLoading || !modules || Object.keys(modules).length === 0) {
+    if (isLoading) {
         return LoadingPage()
+    } else if (modules === undefined || Object.keys(modules).length === 0) {
+        return (
+            <ErrorPage
+                error={{
+                    status: "000",
+                    data: { detail: "Modules are not available." },
+                }}
+            />
+        )
     }
 
     // sort modules alphabetically by name
