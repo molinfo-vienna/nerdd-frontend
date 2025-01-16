@@ -1,7 +1,9 @@
 // Convert object keys from camelCase to snake_case (recursively).
 // Stolen from: https://stackoverflow.com/questions/59769649/recursively-convert-an-object-fields-from-snake-case-to-camelcase
 export default function recursiveCamelToSnakeCase(item) {
-    if (Array.isArray(item)) {
+    if (item === undefined || item === null) {
+        return item
+    } else if (Array.isArray(item)) {
         return item.map((el) => recursiveCamelToSnakeCase(el))
     } else if (typeof item === "function" || item !== Object(item)) {
         return item
