@@ -11,6 +11,7 @@ import AboutPage from "./pages/AboutPage"
 import CitationPage from "./pages/CitationPage"
 import CreateJobPage from "./pages/CreateJobPage"
 import DeveloperPage from "./pages/DeveloperPage"
+import ErrorPage from "./pages/ErrorPage"
 import LandingPage from "./pages/LandingPage"
 import LoadingPage from "./pages/LoadingPage"
 import ResultsPage from "./pages/ResultsPage"
@@ -98,6 +99,18 @@ export default function App() {
                     path: "/loading",
                     id: "loading",
                     element: <LoadingPage />,
+                },
+                {
+                    path: "*",
+                    id: "not_found",
+                    element: (
+                        <ErrorPage
+                            error={{
+                                status: 404,
+                                data: { detail: "Page not found." },
+                            }}
+                        />
+                    ),
                 },
             ],
         },
