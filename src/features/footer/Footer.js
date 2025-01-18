@@ -61,7 +61,8 @@ export default function Footer({ module }) {
                         <ul className="list-unstyled">
                             <li>
                                 <span className="fs-5">
-                                    Next-gen E-Resource for Drug Discovery
+                                    Next-generation E-Resource for Drug
+                                    Discovery
                                 </span>
                             </li>
                         </ul>

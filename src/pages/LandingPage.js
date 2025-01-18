@@ -47,7 +47,7 @@ export default function LandingPage() {
                 {/* px-4: padding on the left and right side for small screens */}
                 <div className="py-5 px-4">
                     <h1 className="text-center fw-bold">
-                        Next-gen E-Resource for Drug Discovery
+                        Next-generation E-Resource for Drug Discovery
                     </h1>
                 </div>
 
