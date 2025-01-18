@@ -4,6 +4,7 @@
     "private": true,
     "dependencies": {
         "@floating-ui/react": "^0.26.19",
+        "@fontsource/cabin": "^5.1.1",
         "@reduxjs/toolkit": "^1.9.7",
         "@shippr/supersocket": "^1.0.6",
         "@testing-library/jest-dom": "^5.17.0",
