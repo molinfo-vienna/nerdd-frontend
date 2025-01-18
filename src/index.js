@@ -6,6 +6,9 @@ import { store } from "./store"
 import "bootstrap/dist/js/bootstrap.bundle"
 import "./index.scss"
 
+// fonts
+import "@fontsource/cabin/700.css"
+
 import reportWebVitals from "./reportWebVitals"
 
 import App from "./App"
