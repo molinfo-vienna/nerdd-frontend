@@ -1,19 +1,25 @@
 import PropTypes from "prop-types"
 import React from "react"
 import { RxCross1 } from "react-icons/rx"
+import Molecule from "./Molecule"
 
 export default function TableCell({
     resultProperty,
     value,
     rowSpan = undefined,
     compressed = false,
+    selectedAtom,
+    highlighted,
+    className = "",
+    onSelectAtom,
+    molId,
     ...props
 }) {
     const commonProps = {
         key: resultProperty.name,
         rowSpan,
         ...props,
-        className: compressed ? "compressed align-middle" : "",
+        className: `${className} ${compressed ? "compressed align-middle" : ""} ${highlighted ? "highlighted" : ""}`,
     }
 
     if (resultProperty.type === "mol") {
@@ -27,11 +33,19 @@ export default function TableCell({
                 </td>
             )
         } else {
+            // if the column is "preprocessed_mol", we add a feature to select atoms
+            const molProps =
+                resultProperty.name === "preprocessed_mol"
+                    ? {
+                          selectedAtom,
+                          onSelectAtom,
+                      }
+                    : {}
+
             return (
-                <td
-                    {...commonProps}
-                    dangerouslySetInnerHTML={{ __html: value }}
-                ></td>
+                <td {...commonProps}>
+                    <Molecule molId={molId} svgValue={value} {...molProps} />
+                </td>
             )
         }
     } else if (resultProperty.type === "text") {
@@ -80,6 +94,17 @@ export default function TableCell({
         return <td {...commonProps}>{value}</td>
     } else if (resultProperty.type === "bool") {
         return <td {...commonProps}>{value ? "Yes" : "No"}</td>
+    } else if (resultProperty.type === "image") {
+        return (
+            <td {...commonProps}>
+                <img
+                    className="object-fit-contain"
+                    src={value}
+                    width={300}
+                    height={180}
+                />
+            </td>
+        )
     } else {
         return <td {...commonProps}>{value}</td>
     }
@@ -90,4 +115,9 @@ TableCell.propTypes = {
     value: PropTypes.any,
     rowSpan: PropTypes.number,
     compressed: PropTypes.bool,
+    selectedAtom: PropTypes.number,
+    highlighted: PropTypes.bool,
+    className: PropTypes.string,
+    onSelectAtom: PropTypes.func,
+    molId: PropTypes.number,
 }

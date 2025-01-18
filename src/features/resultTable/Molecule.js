@@ -15,8 +15,10 @@ export default function Molecule({
         const parseOptions = {
             replace: (domNode) => {
                 if (
+                    domNode !== undefined &&
                     domNode.name === "ellipse" &&
                     domNode.attribs &&
+                    domNode.attribs.class !== undefined &&
                     domNode.attribs.class.startsWith("atom")
                 ) {
                     const updatedAttribs = {
