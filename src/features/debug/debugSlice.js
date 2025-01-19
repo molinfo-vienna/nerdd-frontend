@@ -48,6 +48,7 @@ const debugSlice = createSlice({
                         sourceId: "fake-source-id",
                         params,
                         createdAt: Date.now(),
+                        entriesProcessed: [],
                         numEntriesProcessed: 0,
                         numEntriesTotal: numResults,
                         showNumEntriesTotal: false,
@@ -110,8 +111,10 @@ const debugSlice = createSlice({
         addMolecule(state, action) {
             const jobId = action.payload
             const job = state.jobs[jobId]
-            const numEntriesProcessed = job.numEntriesProcessed
-            const numEntriesTotal = job.numEntriesTotal
+            const numEntriesProcessed = Math.min(
+                job.numEntriesProcessed + 1,
+                job.numEntriesTotal,
+            )
 
             return {
                 ...state,
@@ -119,10 +122,8 @@ const debugSlice = createSlice({
                     ...state.jobs,
                     [jobId]: {
                         ...state.jobs[jobId],
-                        numEntriesProcessed: Math.min(
-                            numEntriesProcessed + 1,
-                            numEntriesTotal,
-                        ),
+                        entriesProcessed: [[0, numEntriesProcessed - 1]],
+                        numEntriesProcessed,
                     },
                 },
             }
