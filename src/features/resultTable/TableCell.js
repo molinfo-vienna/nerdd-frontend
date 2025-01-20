@@ -1,25 +1,32 @@
+import classNames from "classnames"
 import PropTypes from "prop-types"
 import React from "react"
 import { RxCross1 } from "react-icons/rx"
 import Molecule from "./Molecule"
+import ProblemListBadge from "./ProblemListBadge"
+import ProblemListCell from "./ProblemListCell"
 
 export default function TableCell({
+    result,
     resultProperty,
-    value,
     rowSpan = undefined,
-    compressed = false,
     selectedAtom,
     highlighted,
-    className = "",
+    className,
     onSelectAtom,
-    molId,
     ...props
 }) {
+    const value = result[resultProperty.name]
+    const molId = result.mol_id
+
+    const compressed =
+        resultProperty.level !== undefined &&
+        resultProperty.level !== "molecule"
+
     const commonProps = {
-        key: resultProperty.name,
         rowSpan,
         ...props,
-        className: `${className} ${compressed ? "compressed align-middle" : ""} ${highlighted ? "highlighted" : ""}`,
+        className: classNames(className, { compressed, highlighted }),
     }
 
     if (resultProperty.type === "mol") {
@@ -44,11 +51,22 @@ export default function TableCell({
 
             return (
                 <td {...commonProps}>
-                    <Molecule molId={molId} svgValue={value} {...molProps} />
+                    <div className="position-relative">
+                        <Molecule
+                            className="position-relative"
+                            molId={molId}
+                            svgValue={value}
+                            {...molProps}
+                        />
+                        {resultProperty.name === "preprocessed_mol" && (
+                            <ProblemListBadge problems={result.problems} />
+                        )}
+                    </div>
                 </td>
             )
         }
     } else if (resultProperty.type === "text") {
+        // unused at the moment
         if (compressed) {
             return (
                 <td {...commonProps}>
@@ -105,12 +123,15 @@ export default function TableCell({
                 />
             </td>
         )
+    } else if (resultProperty.type === "problem_list") {
+        return ProblemListCell({ problems: value, ...commonProps })
     } else {
         return <td {...commonProps}>{value}</td>
     }
 }
 
 TableCell.propTypes = {
+    result: PropTypes.object.isRequired,
     resultProperty: PropTypes.object.isRequired,
     value: PropTypes.any,
     rowSpan: PropTypes.number,
