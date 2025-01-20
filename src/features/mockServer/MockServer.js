@@ -33,8 +33,9 @@ export default function MockServer({
         if (enabled) {
             const server = createServer({
                 routes() {
-                    this.namespace = ""
-                    this.urlPrefix = "http://localhost:3000/api"
+                    this.namespace = "/api"
+
+                    this.passthrough("http://localhost:3000/resources/**")
 
                     // POST /jobs
                     // (create a job and return the job id)
