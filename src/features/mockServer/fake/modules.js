@@ -292,9 +292,9 @@ export function generateModuleConfig(i) {
         sortable: true,
     }
 
-    // add image column
-    const imageProperty = {
-        name: "image",
+    // add preprocessed mol column
+    const preprocessedMolProperty = {
+        name: "preprocessed_mol",
         type: "mol",
         visible_name: "2D structure",
         visible: true,
@@ -339,7 +339,7 @@ export function generateModuleConfig(i) {
         nameProperty,
         inputSmilesProperty,
         filteredSmilesProperty,
-        imageProperty,
+        preprocessedMolProperty,
         ...groups.map((g, i) => generateResultProperty(g, levels[i])),
         problemsProperty,
     ]
