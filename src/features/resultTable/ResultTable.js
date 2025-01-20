@@ -151,17 +151,13 @@ export default function ResultTable({
                                         j === 0) && (
                                         <TableCell
                                             key={k}
+                                            result={result}
                                             resultProperty={resultProperty}
-                                            value={result[resultProperty.name]}
                                             rowSpan={
                                                 resultProperty.level ===
                                                 "molecule"
                                                     ? group.children.length
                                                     : 1
-                                            }
-                                            compressed={
-                                                resultProperty.level !==
-                                                "molecule"
                                             }
                                             selectedAtom={
                                                 module.task ===
@@ -172,7 +168,6 @@ export default function ResultTable({
                                                     ? selectedAtom.atomId
                                                     : undefined
                                             }
-                                            molId={result.mol_id}
                                             onSelectAtom={
                                                 module.task ===
                                                 "atom_property_prediction"
