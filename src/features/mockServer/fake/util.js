@@ -1,9 +1,17 @@
 import { faker } from "@faker-js/faker"
 
 const problemTypes = [
-    "unknown_error",
-    "incomplete_prediction",
     "kekulization_error",
+    "remove_stereochemistry_failed",
+    "incomplete_prediction_error",
+    "unknown_preprocessing_error",
+    "invalid_elements",
+    "invalid_weight",
+    "unknown",
+    "invalid_smiles",
+    "unknown_prediction_error",
+    // add a problem that the UI has no icon for
+    "this_problem_does_not_exist",
 ]
 
 function generateProblem() {
