@@ -1,6 +1,6 @@
 import parse, { attributesToProps, domToReact } from "html-react-parser"
 import PropTypes from "prop-types"
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 
 export default function Molecule({
     molId,
@@ -10,32 +10,7 @@ export default function Molecule({
 }) {
     const [svg, setSvg] = useState(null)
 
-    //
-    // we dynamically add (and remove) a class to the correct atom when selected
-    //
-    const ref = useCallback(
-        (ref) => {
-            if (
-                ref?.current !== undefined &&
-                selectedAtom !== undefined &&
-                svg !== null
-            ) {
-                const atoms = ref.current.querySelectorAll(
-                    `.atom-${selectedAtom}`,
-                )
-                atoms.forEach((atom) => {
-                    atom.classList.add("selected")
-                })
-
-                return () => {
-                    atoms.forEach((atom) => {
-                        atom.classList.remove("selected")
-                    })
-                }
-            }
-        },
-        [selectedAtom, svg],
-    )
+    const ref = useRef(null)
 
     //
     // to improve performance, we render the SVG only once
@@ -105,6 +80,24 @@ export default function Molecule({
                 })
         }
     }, [molId, onSelectAtom])
+
+    //
+    // we dynamically add (and remove) a class to the correct atom when selected
+    //
+    useEffect(() => {
+        if (ref !== null && selectedAtom !== undefined && svg !== null) {
+            const atoms = ref.current.querySelectorAll(`.atom-${selectedAtom}`)
+            atoms.forEach((atom) => {
+                atom.classList.add("selected")
+            })
+
+            return () => {
+                atoms.forEach((atom) => {
+                    atom.classList.remove("selected")
+                })
+            }
+        }
+    }, [selectedAtom, svg])
 
     return svg
 }
