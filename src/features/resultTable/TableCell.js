@@ -30,41 +30,39 @@ export default function TableCell({
     }
 
     if (resultProperty.type === "mol") {
-        if (value == null) {
-            return (
-                <td {...commonProps}>
-                    <RxCross1
-                        className="p-5 text-body-tertiary"
-                        style={{ width: "300px", height: "180px" }}
-                    />
-                </td>
-            )
-        } else {
-            // if the column is "preprocessed_mol", we add a feature to select atoms
-            const molProps =
-                resultProperty.name === "preprocessed_mol"
-                    ? {
-                          selectedAtom,
-                          onSelectAtom,
-                      }
-                    : {}
-
-            return (
-                <td {...commonProps}>
-                    <div className="position-relative">
+        return (
+            <td {...commonProps}>
+                <div className="position-relative">
+                    {value == null && (
+                        <RxCross1
+                            className="p-5 text-body-tertiary"
+                            style={{ width: "300px", height: "180px" }}
+                        />
+                    )}
+                    {value != null && (
                         <Molecule
                             className="position-relative"
                             molId={molId}
                             svgValue={value}
-                            {...molProps}
+                            // if the column is "preprocessed_mol", we add a feature to select atoms
+                            selectedAtom={
+                                resultProperty.name === "preprocessed_mol"
+                                    ? selectedAtom
+                                    : null
+                            }
+                            onSelectAtom={
+                                resultProperty.name === "preprocessed_mol"
+                                    ? onSelectAtom
+                                    : null
+                            }
                         />
-                        {resultProperty.name === "preprocessed_mol" && (
-                            <ProblemListBadge problems={result.problems} />
-                        )}
-                    </div>
-                </td>
-            )
-        }
+                    )}
+                    {resultProperty.name === "preprocessed_mol" && (
+                        <ProblemListBadge problems={result.problems} />
+                    )}
+                </div>
+            </td>
+        )
     } else if (resultProperty.type === "text") {
         // unused at the moment
         if (compressed) {
