@@ -52,7 +52,6 @@ export default function ErrorPage({ error, explanation }) {
 }
 
 ErrorPage.propTypes = {
-    message: PropTypes.string.isRequired,
     error: PropTypes.object,
     explanation: PropTypes.string,
 }
