@@ -91,7 +91,8 @@ export default function Molecule({
             },
         }
 
-        if (svgValue.startsWith("<svg")) {
+        // TODO: is there a better way to recognize SVGs?
+        if (svgValue.startsWith("<svg") || svgValue.startsWith("<?xml")) {
             const svg = parse(svgValue, parseOptions)
             setSvg(svg)
         } else {
