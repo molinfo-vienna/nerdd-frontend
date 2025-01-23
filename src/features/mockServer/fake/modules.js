@@ -258,6 +258,14 @@ export function generateModuleConfig(i) {
     const groups = generatePropertyGroups(numResultProperties)
 
     // typical result properties
+    const molIdProperty = {
+        name: "mol_id",
+        type: "int",
+        visible_name: "Mol ID",
+        visible: false,
+        sortable: true,
+    }
+
     const nameProperty = {
         name: "name",
         type: "string",
@@ -284,21 +292,23 @@ export function generateModuleConfig(i) {
         sortable: true,
     }
 
-    // add image column
-    const imageProperty = {
-        name: "image",
+    // add preprocessed mol column
+    const preprocessedMolProperty = {
+        name: "preprocessed_mol",
         type: "mol",
         visible_name: "2D structure",
         visible: true,
         sortable: false,
     }
 
-    const defaultProperties = [
-        nameProperty,
-        inputSmilesProperty,
-        filteredSmilesProperty,
-        imageProperty,
-    ]
+    // add image column
+    const problemsProperty = {
+        name: "problems",
+        type: "problem_list",
+        visible_name: "Problems",
+        visible: false,
+        sortable: false,
+    }
 
     // we assign a random portion of the *last* columns to be atom- or
     // derivative-related columns
@@ -324,6 +334,16 @@ export function generateModuleConfig(i) {
         )
     }
 
+    const resultProperties = [
+        molIdProperty,
+        nameProperty,
+        inputSmilesProperty,
+        filteredSmilesProperty,
+        preprocessedMolProperty,
+        ...groups.map((g, i) => generateResultProperty(g, levels[i])),
+        problemsProperty,
+    ]
+
     return {
         id: name,
         rank: faker.number.int({ min: 0, max: 100 }),
@@ -345,10 +365,7 @@ export function generateModuleConfig(i) {
         publications: Array.from({ length: numPublications }, () =>
             generatePublication(),
         ),
-        result_properties: [
-            ...defaultProperties,
-            ...groups.map((g, i) => generateResultProperty(g, levels[i])),
-        ],
+        result_properties: resultProperties,
         about: generateAbout(i),
     }
 }

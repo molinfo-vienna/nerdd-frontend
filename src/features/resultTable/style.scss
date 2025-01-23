@@ -1,27 +1,62 @@
 @import "../../index.scss";
 
-/* thead tr:nth-child(1) th {
-    background: white;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-} */
-
 th {
     font-size: $font-size-sm;
     color: $body-secondary-color !important;
 }
 
-td.compressed svg {
+td .molecule {
+    width: 300px;
+    height: 180px;
+}
+
+td.compressed svg.molecule {
     width: 150px;
     height: 90px;
 }
 
-td.compressed svg:hover {
+td.compressed svg.molecule:hover {
     width: 300px;
     height: 180px;
 }
 
 th.group-divider {
     border: 1px solid black;
+}
+
+svg ellipse.selected {
+    stroke: $primary;
+    stroke-width: 2;
+    fill: transparent;
+    opacity: 1 !important;
+}
+
+td.highlighted {
+    background-color: var(--bs-table-hover-bg);
+}
+
+td img {
+    width: 300px;
+    height: 180px;
+}
+
+td.compressed img {
+    width: 150px;
+    height: 90px;
+}
+
+td.compressed img:hover {
+    width: 300px;
+    height: 180px;
+}
+
+.problem-icon {
+    display: inline-block;
+    min-width: 26px;
+    max-width: 26px;
+    min-height: 26px;
+    max-height: 26px;
+    background: $danger;
+    border-radius: 50%;
+    text-align: center;
 }

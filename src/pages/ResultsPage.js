@@ -58,6 +58,7 @@ export default function ResultsPage() {
         data: results,
         error: errorResults,
         isLoading: isLoadingResults,
+        isFetching: isFetchingResults,
     } = useGetResultsQuery({
         moduleId,
         jobId,
@@ -152,7 +153,10 @@ export default function ResultsPage() {
     // status
     //
     const waitingForFirstResult =
-        results?.data === undefined || results.data.length === 0
+        results?.data === undefined ||
+        results.data.length === 0 ||
+        isFetchingResults ||
+        isLoadingResults
 
     const statusText = `${jobStatus.numEntriesProcessed ?? 0} / ${jobStatus.numEntriesTotal ?? "?"} molecules processed`
 

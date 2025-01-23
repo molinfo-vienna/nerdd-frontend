@@ -1,3 +1,4 @@
+import classNames from "classnames"
 import { sortedLastIndexBy } from "lodash"
 import PropTypes from "prop-types"
 import React from "react"
@@ -152,7 +153,9 @@ export default function Pagination({
         <nav aria-label="Page navigation" {...props}>
             <ul className="pagination">
                 <li
-                    className={`page-item ${currentPageOneBased == 1 ? "disabled" : ""}`}
+                    className={classNames("page-item", {
+                        disabled: currentPageOneBased == 1,
+                    })}
                 >
                     <Link
                         className="page-link"
@@ -166,7 +169,11 @@ export default function Pagination({
                 {pagesWithEllipses.map((p, i) => (
                     <Link
                         key={p.id}
-                        className={`page-link ${p.ellipses ? "disabled" : ""} ${p.ellipses || p.isEmpty ? "muted-link" : ""} ${p.isActive ? "active" : ""}`}
+                        className={classNames("page-link", {
+                            disabled: p.ellipses,
+                            "muted-link": p.ellipses || p.isEmpty,
+                            active: p.isActive,
+                        })}
                         to={getPageLink(p.id)}
                     >
                         {p.id}
@@ -174,7 +181,9 @@ export default function Pagination({
                 ))}
 
                 <li
-                    className={`page-item ${currentPageOneBased == numPagesTotal ? "disabled" : ""}`}
+                    className={classNames("page-item", {
+                        disabled: currentPageOneBased == numPagesTotal,
+                    })}
                 >
                     <Link
                         className="page-link"

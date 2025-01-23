@@ -6,16 +6,15 @@ import recursiveCamelToSnakeCase from "./recursiveCamelToSnakeCase"
 
 export default function JobStatusWebSocketMockServer({ job, pageSize }) {
     const [socketServer, setSocketServer] = useState(null)
-    const moduleId = job.moduleId
+    const moduleId = job.jobType
 
     const jobResponse = {
         ...job,
         pageSize,
-        // censor numEntriesTotal if showNumEntriesTotal is false
+        // do not return numEntriesTotal if showNumEntriesTotal is false
         numEntriesTotal: job.showNumEntriesTotal
             ? job.numEntriesTotal
             : undefined,
-        showNumEntriesTotal: undefined,
         numPagesTotal: job.showNumEntriesTotal
             ? Math.ceil(job.numEntriesTotal / pageSize)
             : undefined,
@@ -40,7 +39,7 @@ export default function JobStatusWebSocketMockServer({ job, pageSize }) {
             server.clients().forEach((client) => client.close())
             server.stop()
         }
-    }, [moduleId, job.id, JSON.stringify(jobResponse)])
+    }, [moduleId, job.id])
 
     // send the job status if job (specifically numPagesProcessed) changes
     useEffect(() => {
@@ -51,7 +50,7 @@ export default function JobStatusWebSocketMockServer({ job, pageSize }) {
                 )
             })
         }
-    }, [socketServer, jobResponse])
+    }, [socketServer, JSON.stringify(jobResponse)])
 
     useEffect(() => {
         // after 5 seconds, add an output file

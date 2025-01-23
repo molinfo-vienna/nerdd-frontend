@@ -1,3 +1,4 @@
+import classNames from "classnames"
 import { sortedIndexBy } from "lodash"
 import PropTypes from "prop-types"
 import React, { useCallback, useMemo, useState } from "react"
@@ -97,7 +98,10 @@ export default function ResultTable({
 
     return (
         <table
-            className={`table text-center table-sm w-auto ${module.task === "molecular_property_prediction" ? "align-middle" : "align-top"}`}
+            className={classNames("table text-center table-sm w-auto", {
+                "align-middle": module.task === "molecular_property_prediction",
+                "align-top": module.task !== "molecular_property_prediction",
+            })}
             style={{
                 overflowX: "visible",
                 overflowY: "visible",
@@ -147,17 +151,13 @@ export default function ResultTable({
                                         j === 0) && (
                                         <TableCell
                                             key={k}
+                                            result={result}
                                             resultProperty={resultProperty}
-                                            value={result[resultProperty.name]}
                                             rowSpan={
                                                 resultProperty.level ===
                                                 "molecule"
                                                     ? group.children.length
                                                     : 1
-                                            }
-                                            compressed={
-                                                resultProperty.level !==
-                                                "molecule"
                                             }
                                             selectedAtom={
                                                 module.task ===
@@ -168,7 +168,6 @@ export default function ResultTable({
                                                     ? selectedAtom.atomId
                                                     : undefined
                                             }
-                                            molId={result.mol_id}
                                             onSelectAtom={
                                                 module.task ===
                                                 "atom_property_prediction"

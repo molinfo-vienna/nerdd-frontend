@@ -1,19 +1,32 @@
+import classNames from "classnames"
 import PropTypes from "prop-types"
 import React from "react"
 import { RxCross1 } from "react-icons/rx"
+import Molecule from "./Molecule"
+import ProblemListBadge from "./ProblemListBadge"
+import ProblemListCell from "./ProblemListCell"
 
 export default function TableCell({
+    result,
     resultProperty,
-    value,
     rowSpan = undefined,
-    compressed = false,
+    selectedAtom,
+    highlighted,
+    className,
+    onSelectAtom,
     ...props
 }) {
+    const value = result[resultProperty.name]
+    const molId = result.mol_id
+
+    const compressed =
+        resultProperty.level !== undefined &&
+        resultProperty.level !== "molecule"
+
     const commonProps = {
-        key: resultProperty.name,
         rowSpan,
         ...props,
-        className: compressed ? "compressed align-middle" : "",
+        className: classNames(className, { compressed, highlighted }),
     }
 
     if (resultProperty.type === "mol") {
@@ -27,14 +40,33 @@ export default function TableCell({
                 </td>
             )
         } else {
+            // if the column is "preprocessed_mol", we add a feature to select atoms
+            const molProps =
+                resultProperty.name === "preprocessed_mol"
+                    ? {
+                          selectedAtom,
+                          onSelectAtom,
+                      }
+                    : {}
+
             return (
-                <td
-                    {...commonProps}
-                    dangerouslySetInnerHTML={{ __html: value }}
-                ></td>
+                <td {...commonProps}>
+                    <div className="position-relative">
+                        <Molecule
+                            className="position-relative"
+                            molId={molId}
+                            svgValue={value}
+                            {...molProps}
+                        />
+                        {resultProperty.name === "preprocessed_mol" && (
+                            <ProblemListBadge problems={result.problems} />
+                        )}
+                    </div>
+                </td>
             )
         }
     } else if (resultProperty.type === "text") {
+        // unused at the moment
         if (compressed) {
             return (
                 <td {...commonProps}>
@@ -80,14 +112,33 @@ export default function TableCell({
         return <td {...commonProps}>{value}</td>
     } else if (resultProperty.type === "bool") {
         return <td {...commonProps}>{value ? "Yes" : "No"}</td>
+    } else if (resultProperty.type === "image") {
+        return (
+            <td {...commonProps}>
+                <img
+                    className="object-fit-contain"
+                    src={value}
+                    width={300}
+                    height={180}
+                />
+            </td>
+        )
+    } else if (resultProperty.type === "problem_list") {
+        return ProblemListCell({ problems: value, ...commonProps })
     } else {
         return <td {...commonProps}>{value}</td>
     }
 }
 
 TableCell.propTypes = {
+    result: PropTypes.object.isRequired,
     resultProperty: PropTypes.object.isRequired,
     value: PropTypes.any,
     rowSpan: PropTypes.number,
     compressed: PropTypes.bool,
+    selectedAtom: PropTypes.number,
+    highlighted: PropTypes.bool,
+    className: PropTypes.string,
+    onSelectAtom: PropTypes.func,
+    molId: PropTypes.number,
 }
