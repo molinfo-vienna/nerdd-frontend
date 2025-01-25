@@ -29,6 +29,10 @@ export default function TableCell({
         className: classNames(className, { compressed, highlighted }),
     }
 
+    if (value == null) {
+        return <td {...commonProps} />
+    }
+
     if (resultProperty.type === "mol") {
         return (
             <td {...commonProps}>
