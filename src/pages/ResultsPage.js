@@ -233,7 +233,10 @@ export default function ResultsPage() {
                                         </Link>
 
                                         {/* Columns */}
-                                        <div className="btn-group" role="group">
+                                        <div
+                                            className="btn-group dropdown-center"
+                                            role="group"
+                                        >
                                             <Link
                                                 className="btn btn-outline-secondary text-center text-decoration-none text-reset d-block"
                                                 type="button"
