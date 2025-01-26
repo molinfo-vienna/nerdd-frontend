@@ -1,4 +1,3 @@
-import classNames from "classnames"
 import { sortedIndexBy } from "lodash"
 import PropTypes from "prop-types"
 import React, { useCallback, useMemo, useState } from "react"
@@ -98,10 +97,7 @@ export default function ResultTable({
 
     return (
         <table
-            className={classNames("table text-center table-sm w-auto", {
-                "align-middle": module.task === "molecular_property_prediction",
-                "align-top": module.task !== "molecular_property_prediction",
-            })}
+            className="table text-center table-sm w-auto align-middle"
             style={{
                 overflowX: "visible",
                 overflowY: "visible",
@@ -151,6 +147,7 @@ export default function ResultTable({
                                         j === 0) && (
                                         <TableCell
                                             key={k}
+                                            module={module}
                                             result={result}
                                             resultProperty={resultProperty}
                                             rowSpan={

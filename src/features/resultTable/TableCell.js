@@ -2,11 +2,13 @@ import classNames from "classnames"
 import PropTypes from "prop-types"
 import React from "react"
 import { RxCross1 } from "react-icons/rx"
+import { moduleType } from "../../types"
 import Molecule from "./Molecule"
 import ProblemListBadge from "./ProblemListBadge"
 import ProblemListCell from "./ProblemListCell"
 
 export default function TableCell({
+    module,
     result,
     resultProperty,
     rowSpan = undefined,
@@ -26,7 +28,16 @@ export default function TableCell({
     const commonProps = {
         rowSpan,
         ...props,
-        className: classNames(className, { compressed, highlighted }),
+        className: classNames(className, {
+            compressed,
+            highlighted,
+            // By default, all cells are aligned vertically at the center. If the module task is
+            // atom or derivative property prediction, we would like to align the molecule-level
+            // cells at the top.
+            "align-top":
+                module.task !== "molecular_property_prediction" &&
+                resultProperty.level === "molecule",
+        }),
     }
 
     if (value == null) {
@@ -133,6 +144,7 @@ export default function TableCell({
 }
 
 TableCell.propTypes = {
+    module: moduleType.isRequired,
     result: PropTypes.object.isRequired,
     resultProperty: PropTypes.object.isRequired,
     value: PropTypes.any,
