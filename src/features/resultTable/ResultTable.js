@@ -82,12 +82,18 @@ export default function ResultTable({
     //
     // handle mouse over event
     //
-    const [selectedAtom, setSelectedAtom] = useState(undefined)
+    const [selectedAtom, setSelectedAtom] = useState({
+        molId: undefined,
+        atomId: undefined,
+    })
 
     const handleAtomSelect = useCallback(
         (e, molId, atomId) => {
             if (e.type == "mouseout") {
-                setSelectedAtom(undefined)
+                setSelectedAtom({
+                    molId: undefined,
+                    atomId: undefined,
+                })
             } else if (e.type == "mouseenter") {
                 setSelectedAtom({ molId, atomId })
             }
@@ -156,29 +162,12 @@ export default function ResultTable({
                                                     ? group.children.length
                                                     : 1
                                             }
-                                            selectedAtom={
-                                                module.task ===
-                                                    "atom_property_prediction" &&
-                                                selectedAtom !== undefined &&
-                                                selectedAtom.molId ===
-                                                    result.mol_id
-                                                    ? selectedAtom.atomId
-                                                    : undefined
-                                            }
+                                            selectedAtom={selectedAtom}
                                             onSelectAtom={
                                                 module.task ===
                                                 "atom_property_prediction"
                                                     ? handleAtomSelect
                                                     : null
-                                            }
-                                            highlighted={
-                                                resultProperty.level ===
-                                                    "atom" &&
-                                                selectedAtom !== undefined &&
-                                                selectedAtom.molId ===
-                                                    result.mol_id &&
-                                                selectedAtom.atomId ===
-                                                    subKey(result)
                                             }
                                             onMouseEnter={(e) =>
                                                 resultProperty.level === "atom"

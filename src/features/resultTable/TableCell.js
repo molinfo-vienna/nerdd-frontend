@@ -13,7 +13,6 @@ export default function TableCell({
     resultProperty,
     rowSpan = undefined,
     selectedAtom,
-    highlighted,
     className,
     onSelectAtom,
     ...props
@@ -30,7 +29,11 @@ export default function TableCell({
         ...props,
         className: classNames(className, {
             compressed,
-            highlighted,
+            highlighted:
+                resultProperty.level === "atom" &&
+                selectedAtom !== undefined &&
+                selectedAtom.molId === result.mol_id &&
+                selectedAtom.atomId === result.atom_id,
             // By default, all cells are aligned vertically at the center. If the module task is
             // atom or derivative property prediction, we would like to align the molecule-level
             // cells at the top.
@@ -61,8 +64,9 @@ export default function TableCell({
                             svgValue={value}
                             // if the column is "preprocessed_mol", we add a feature to select atoms
                             selectedAtom={
-                                resultProperty.name === "preprocessed_mol"
-                                    ? selectedAtom
+                                resultProperty.name === "preprocessed_mol" &&
+                                selectedAtom.molId === molId
+                                    ? selectedAtom.atomId
                                     : null
                             }
                             onSelectAtom={
@@ -150,7 +154,10 @@ TableCell.propTypes = {
     value: PropTypes.any,
     rowSpan: PropTypes.number,
     compressed: PropTypes.bool,
-    selectedAtom: PropTypes.number,
+    selectedAtom: PropTypes.objectOf({
+        molId: PropTypes.number,
+        atomId: PropTypes.number,
+    }),
     highlighted: PropTypes.bool,
     className: PropTypes.string,
     onSelectAtom: PropTypes.func,
