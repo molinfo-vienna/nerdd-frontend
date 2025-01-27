@@ -43,10 +43,6 @@ export default function TableCell({
         }),
     }
 
-    if (value == null) {
-        return <td {...commonProps} />
-    }
-
     if (resultProperty.type === "mol") {
         return (
             <td {...commonProps}>
@@ -118,32 +114,55 @@ export default function TableCell({
         }
     } else if (resultProperty.type === "float") {
         const precision = resultProperty.precision || 2
-        return (
-            <td {...commonProps}>
-                {value != null && typeof value === "number"
-                    ? value.toFixed(precision)
-                    : value}
-            </td>
-        )
+        if (value == null) {
+            return <td {...commonProps}>-</td>
+        } else if (typeof value === "number") {
+            return <td {...commonProps}>{value.toFixed(precision)}</td>
+        } else {
+            return <td {...commonProps}>{value}</td>
+        }
     } else if (resultProperty.type === "int") {
-        return <td {...commonProps}>{value}</td>
+        if (value == null) {
+            return <td {...commonProps}>-</td>
+        } else {
+            return <td {...commonProps}>{value}</td>
+        }
     } else if (resultProperty.type === "bool") {
-        return <td {...commonProps}>{value ? "Yes" : "No"}</td>
+        if (value == null) {
+            return <td {...commonProps}>-</td>
+        } else {
+            return <td {...commonProps}>{value ? "Yes" : "No"}</td>
+        }
     } else if (resultProperty.type === "image") {
-        return (
-            <td {...commonProps}>
-                <img
-                    className="object-fit-contain"
-                    src={value}
-                    width={300}
-                    height={180}
-                />
-            </td>
-        )
+        if (value == null) {
+            return <td {...commonProps}>-</td>
+        } else {
+            return (
+                <td {...commonProps}>
+                    <img
+                        className="object-fit-contain"
+                        src={value}
+                        width={300}
+                        height={180}
+                    />
+                </td>
+            )
+        }
     } else if (resultProperty.type === "problem_list") {
-        return ProblemListCell({ problems: value, ...commonProps })
+        if (value == null) {
+            return <td {...commonProps}>-</td>
+        } else {
+            return ProblemListCell({ problems: value, ...commonProps })
+        }
     } else {
-        return <td {...commonProps}>{value}</td>
+        console.warn(
+            `Unknown result property type: ${resultProperty.type} for ${resultProperty.name}`,
+        )
+        if (value == null) {
+            return <td {...commonProps}>-</td>
+        } else {
+            return <td {...commonProps}>{value}</td>
+        }
     }
 }
 
@@ -154,7 +173,7 @@ TableCell.propTypes = {
     value: PropTypes.any,
     rowSpan: PropTypes.number,
     compressed: PropTypes.bool,
-    selectedAtom: PropTypes.objectOf({
+    selectedAtom: PropTypes.shape({
         molId: PropTypes.number,
         atomId: PropTypes.number,
     }),
