@@ -57,14 +57,14 @@ export default function CreateJobPage() {
             },
         }
 
-        addJob({ moduleId, data }).then((response) => {
-            if (response.error) {
-                console.error(response.error)
-                return
-            }
+        const response = await addJob({ moduleId, data })
 
-            navigate(`/${moduleId}/${response.data.id}`)
-        })
+        if (response.error) {
+            console.error(response.error)
+            return
+        }
+
+        navigate(`/${moduleId}/${response.data.id}`)
     }
 
     return (
