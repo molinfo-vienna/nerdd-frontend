@@ -7,14 +7,12 @@ export default function ProblemListBadge({ problems, ...props }) {
         <div className="position-absolute top-0 end-0" {...props}>
             <div className="mt-1 me-1">
                 {problems.map(([problemType, message], i) => (
-                    <div key={i} className="problem-icon ms-1">
-                        <ProblemIconWithTooltip
-                            problemType={problemType}
-                            size={15}
-                            className="text-white"
-                            tooltip={message}
-                        />
-                    </div>
+                    <ProblemIconWithTooltip
+                        key={i}
+                        problemType={problemType}
+                        size={15}
+                        tooltip={message}
+                    />
                 ))}
             </div>
         </div>

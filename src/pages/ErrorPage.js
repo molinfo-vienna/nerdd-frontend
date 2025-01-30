@@ -10,12 +10,19 @@ const statusMap = {
 }
 
 export default function ErrorPage({ error, explanation }) {
-    const status = error?.status || "000"
+    let status
+    if (error === undefined || error.status === undefined) {
+        status = "000"
+    } else if (error.status === "PARSING_ERROR") {
+        status = error.originalStatus ?? "000"
+    } else {
+        status = error.status
+    }
     const message = error?.data?.detail || "An unknown error occurred"
 
     const statusExplanation = statusMap[status] || "Unknown Error"
 
-    console.error(status, error)
+    console.error(error)
 
     return (
         <>
@@ -24,6 +31,7 @@ export default function ErrorPage({ error, explanation }) {
                 <div className="row justify-content-center">
                     <div className="col-md-auto mt-5 pt-5">
                         <div
+                            // TODO: use classNames
                             // align-items-center: the error message is centered with respect
                             //   to the icon (if there is no explanation text provided, there is
                             //   not enough text and it looks weird).
@@ -52,7 +60,6 @@ export default function ErrorPage({ error, explanation }) {
 }
 
 ErrorPage.propTypes = {
-    message: PropTypes.string.isRequired,
     error: PropTypes.object,
     explanation: PropTypes.string,
 }

@@ -37,21 +37,28 @@ export default function JobForm({ module, onSubmit }) {
     const [valuesToSubmit, setValuesToSubmit] = useState(null)
 
     const onDelayedSubmit = (values) => {
-        setStatus("submitting")
+        setStatus("checking")
     }
 
     useEffect(() => {
-        if (status === "submitting") {
-            // check if all files are uploaded
-            if (
-                valuesToSubmit.inputFile.filter((file) =>
-                    ["pending", "deleting"].includes(file.status),
-                ).length === 0
-            ) {
-                onSubmit(valuesToSubmit)
-                setStatus("idle")
+        async function _submit() {
+            if (status === "checking") {
+                // check if all files are uploaded
+                if (
+                    valuesToSubmit.inputFile.filter((file) =>
+                        ["pending", "deleting"].includes(file.status),
+                    ).length === 0
+                ) {
+                    setStatus("submitting")
+                    try {
+                        await onSubmit(valuesToSubmit)
+                    } finally {
+                        setStatus("idle")
+                    }
+                }
             }
         }
+        _submit()
     }, [status, valuesToSubmit, onSubmit])
 
     //
@@ -85,8 +92,10 @@ export default function JobForm({ module, onSubmit }) {
 
             return errors
         },
-        // useCallback can not track arrays, so we have to stringify it
-        [JSON.stringify(jobParameters)],
+        // we would like to have jobParameters as a dependency, but it is an object
+        // BUT: jobParameters changes if and only if the module changes
+        // --> use module.id as a dependency
+        [module.id],
     )
 
     //
@@ -95,9 +104,9 @@ export default function JobForm({ module, onSubmit }) {
     const formApi = createForm({ onSubmit: onDelayedSubmit, validate })
     useEffect(() => {
         formApi.subscribe(
-            ({ values }) => {
-                setValuesToSubmit(values)
-            },
+            // update local state with the values to submit
+            ({ values }) => setValuesToSubmit(values),
+            // subscribe to all changes in the form
             { values: true },
         )
     }, [])
@@ -258,7 +267,9 @@ export default function JobForm({ module, onSubmit }) {
                                 Submit
                             </button>
                         )}
-                        {(status === "submitting" || submitting) && (
+                        {(status === "submitting" ||
+                            status === "checking" ||
+                            submitting) && (
                             <button
                                 type="submit"
                                 className="btn btn-lg btn-primary"

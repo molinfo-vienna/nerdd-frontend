@@ -14,6 +14,7 @@ import {
 } from "@floating-ui/react"
 import PropTypes from "prop-types"
 import React, { useRef, useState } from "react"
+import { createPortal } from "react-dom"
 import ProblemIcon from "./ProblemIcon"
 
 export default function ProblemIconWithTooltip({
@@ -53,27 +54,36 @@ export default function ProblemIconWithTooltip({
 
     return (
         <>
-            <div ref={refs.setReference} {...getReferenceProps()}>
+            <div
+                ref={refs.setReference}
+                {...getReferenceProps()}
+                className="problem-icon ms-1 text-white"
+            >
                 <ProblemIcon problemType={problemType} {...props} />
             </div>
-            {isOpen && (
-                <div
-                    ref={refs.setFloating}
-                    style={{ ...floatingStyles, zIndex: 1100 }}
-                    className="tooltip bs-tooltip-auto show"
-                    role="tooltip"
-                    {...getFloatingProps()}
-                >
-                    <FloatingArrow
-                        ref={arrowRef}
-                        className="tooltip-arrow"
-                        context={context}
-                    />
-                    <div className="tooltip-inner" role="label">
-                        {tooltip}
-                    </div>
-                </div>
-            )}
+            {isOpen &&
+                createPortal(
+                    <div
+                        ref={refs.setFloating}
+                        style={{
+                            ...floatingStyles,
+                            zIndex: 1100,
+                        }}
+                        className="tooltip bs-tooltip-auto show"
+                        role="tooltip"
+                        {...getFloatingProps()}
+                    >
+                        <FloatingArrow
+                            ref={arrowRef}
+                            className="tooltip-arrow"
+                            context={context}
+                        />
+                        <div className="tooltip-inner" role="label">
+                            {tooltip}
+                        </div>
+                    </div>,
+                    document.body,
+                )}
         </>
     )
 }

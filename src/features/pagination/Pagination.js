@@ -125,7 +125,7 @@ export default function Pagination({
     )
 
     // add "..." between pages
-    const pagesWithEllipses = validPages.reduce((acc, p) => {
+    const pagesWithEllipses = validPages.reduce((acc, p, i) => {
         if (acc.length === 0) {
             return [p]
         }
@@ -141,7 +141,12 @@ export default function Pagination({
         } else {
             return [
                 ...acc,
-                { id: "...", isLoading: false, ellipses: true, isEmpty: true },
+                {
+                    id: `...${i}`,
+                    isLoading: false,
+                    ellipses: true,
+                    isEmpty: true,
+                },
                 p,
             ]
         }
@@ -167,17 +172,18 @@ export default function Pagination({
                 </li>
 
                 {pagesWithEllipses.map((p, i) => (
-                    <Link
-                        key={p.id}
-                        className={classNames("page-link", {
-                            disabled: p.ellipses,
-                            "muted-link": p.ellipses || p.isEmpty,
-                            active: p.isActive,
-                        })}
-                        to={getPageLink(p.id)}
-                    >
-                        {p.id}
-                    </Link>
+                    <li key={p.id} className="page-item">
+                        <Link
+                            className={classNames("page-link", {
+                                disabled: p.ellipses,
+                                "muted-link": p.ellipses || p.isEmpty,
+                                active: p.isActive,
+                            })}
+                            to={getPageLink(p.id)}
+                        >
+                            {p.ellipses ? "..." : p.id}
+                        </Link>
+                    </li>
                 ))}
 
                 <li
