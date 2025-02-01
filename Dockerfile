@@ -31,8 +31,6 @@ FROM nginx:1.27.3-alpine3.20
 # necessary to display the image on Github
 LABEL org.opencontainers.image.source="https://github.com/molinfo-vienna/nerdd-frontend"
 
-COPY site.conf /etc/nginx/conf.d/default.conf
-
 # copy the built React app to Nginx's web server directory
 COPY --from=build /app/build /usr/share/nginx/html
 
