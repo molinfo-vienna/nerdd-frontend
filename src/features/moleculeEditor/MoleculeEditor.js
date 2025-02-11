@@ -16,7 +16,7 @@ export default function MoleculeEditor({ name }) {
 
     const jsmeContainerRef = useCallback(
         (node) => {
-            if (node === null || JSApplet === null) {
+            if (JSApplet == null || containerId == null || node == null) {
                 return
             }
 
@@ -24,7 +24,7 @@ export default function MoleculeEditor({ name }) {
             if (appletInstance === null) {
                 const newAppletInstance = new JSApplet.JSME(
                     containerId,
-                    "746px",
+                    "100%",
                     "340px",
                 )
 
@@ -48,6 +48,14 @@ export default function MoleculeEditor({ name }) {
             }
         }
     }, [appletInstance, value])
+
+    // JSME does not measure the width of the container correctly leading to a tall editor. For
+    // this reason, we need to repaint the editor after it is rendered.
+    if (appletInstance) {
+        setTimeout(() => {
+            appletInstance.repaint()
+        }, 0)
+    }
 
     return <div id={containerId} ref={jsmeContainerRef}></div>
 }
