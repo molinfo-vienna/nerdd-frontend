@@ -164,22 +164,22 @@ export default function JobForm({ module, onSubmit }) {
                                     Upload file
                                 </label>
                             </div>
-                            {/* <div className="form-check form-check-inline">
-                                            <Field
-                                                name="inputType"
-                                                id="inputDrawOption"
-                                                component="input"
-                                                type="radio"
-                                                className="form-check-input"
-                                                value="draw"
-                                            />
-                                            <label
-                                                htmlFor="inputDrawOption"
-                                                className="form-check-label"
-                                            >
-                                                Draw molecule
-                                            </label>
-                                        </div> */}
+                            <div className="form-check form-check-inline">
+                                <Field
+                                    name="inputType"
+                                    id="inputDrawOption"
+                                    component="input"
+                                    type="radio"
+                                    className="form-check-input"
+                                    value="draw"
+                                />
+                                <label
+                                    htmlFor="inputDrawOption"
+                                    className="form-check-label"
+                                >
+                                    Draw molecule
+                                </label>
+                            </div>
                             {/* <div className="form-check form-check-inline">
                                             <Field
                                                 name="inputType"
