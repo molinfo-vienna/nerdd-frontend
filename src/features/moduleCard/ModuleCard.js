@@ -19,7 +19,7 @@ export default function ModuleCard({ module }) {
                 />
             </div>
             <div className="card-body pt-1">
-                <h3 className="card-title fw-bold">{module.visibleName}</h3>
+                <h3 className="card-title">{module.visibleName}</h3>
                 <p className="card-text fs-6">{module.logoCaption}</p>
             </div>
         </Link>
