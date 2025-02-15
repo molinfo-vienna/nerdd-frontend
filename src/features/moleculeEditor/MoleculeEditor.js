@@ -1,13 +1,14 @@
 import PropTypes from "prop-types"
 import React, { useCallback, useEffect, useId, useState } from "react"
-import { useField } from "react-final-form"
 import useJsApplet from "./useJsApplet"
 
-export default function MoleculeEditor({ name }) {
-    const {
-        input: { value, onChange },
-    } = useField(name, { initialValue: "" })
-
+export default function MoleculeEditor({
+    value,
+    onChange,
+    width = "100%",
+    height = "340px",
+    config = {},
+}) {
     const JSApplet = useJsApplet()
     const [appletInstance, setAppletInstance] = useState(null)
 
@@ -24,13 +25,14 @@ export default function MoleculeEditor({ name }) {
             if (appletInstance === null) {
                 const newAppletInstance = new JSApplet.JSME(
                     containerId,
-                    "100%",
-                    "340px",
+                    width,
+                    height,
+                    config,
                 )
 
                 // propagate changes in the structure
                 newAppletInstance.setAfterStructureModifiedCallback(() => {
-                    onChange(newAppletInstance.smiles())
+                    onChange?.(newAppletInstance.smiles())
                 })
 
                 setAppletInstance(newAppletInstance)
@@ -61,5 +63,9 @@ export default function MoleculeEditor({ name }) {
 }
 
 MoleculeEditor.propTypes = {
-    name: PropTypes.string.isRequired,
+    value: PropTypes.string,
+    onChange: PropTypes.func,
+    width: PropTypes.string,
+    height: PropTypes.string,
+    config: PropTypes.object,
 }
