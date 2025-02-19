@@ -38,8 +38,18 @@ export default function LandingPage() {
         return 0
     })
 
+    const developmentVersion = ["localhost", "dev-nerdd.univie.ac.at"].includes(
+        window.location.hostname,
+    )
+
     return (
         <>
+            {developmentVersion && (
+                <div className="text-center bg-danger-subtle px-3 py-2">
+                    This is the development version of NERDD. It could be
+                    unstable and predictions may be deleted at any time.
+                </div>
+            )}
             <NavigationBar />
 
             {/* min-vh-100: content fills screen and scrolling down reveals footer */}

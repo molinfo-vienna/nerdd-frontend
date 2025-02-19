@@ -1,4 +1,7 @@
-FROM node:18-alpine AS build
+#
+# BUILD
+#
+FROM node:23-alpine3.20 AS build
 
 # create directory app as root user 
 # change ownership to user "node" (predifined in "node:alpine" image)
@@ -8,7 +11,7 @@ WORKDIR /app
 # do the rest as user "node"
 USER node
 
-# install dependencies (avoid )
+# install dependencies
 COPY --chown=node:node package.json package-lock.json* ./
 RUN npm ci && npm cache clean --force
 
@@ -19,13 +22,14 @@ COPY --chown=node:node . .
 RUN DISABLE_ESLINT_PLUGIN=true \
     npm run build
 
-# use Nginx as the production server
+
+#
+# RUN SERVER
+#
 FROM nginx:1.27.3-alpine3.20
 
 # necessary to display the image on Github
-LABEL org.opencontainers.image.source="https://github.com/shirte/nerdd"
-
-COPY site.conf /etc/nginx/conf.d/default.conf
+LABEL org.opencontainers.image.source="https://github.com/molinfo-vienna/nerdd-frontend"
 
 # copy the built React app to Nginx's web server directory
 COPY --from=build /app/build /usr/share/nginx/html
