@@ -3,7 +3,6 @@ import { useEffect, useState } from "react"
 
 let instance = null
 const subscribers = new Set()
-let refCount = 0
 
 export default function useJsApplet() {
     // we change the following state if we would like to force a "rerender" of this hook
@@ -11,9 +10,6 @@ export default function useJsApplet() {
     const [, forceRender] = useState({})
 
     useEffect(() => {
-        // update ref count
-        refCount += 1
-
         // add this component to subscribers
         const subscription = () => forceRender({})
         subscribers.add(subscription)
@@ -29,13 +25,6 @@ export default function useJsApplet() {
         // clean up
         return () => {
             subscribers.delete(subscription)
-
-            refCount -= 1
-
-            if (refCount === 0) {
-                instance = null
-                window.jsmeOnLoad = null
-            }
         }
     }, [])
 
