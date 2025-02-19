@@ -134,7 +134,12 @@ export default function NavigationBar() {
                          * use "h-100" on navbar items
                          */}
 
-                        <ul className="navbar-nav">
+                        <ul
+                            className={classNames("navbar-nav", {
+                                "align-items-sm-center": shortNavigation,
+                                "align-items-md-center": !shortNavigation,
+                            })}
+                        >
                             {/* breadcrumb elements */}
                             {breadcrumbElements.map((element, i) =>
                                 element.type === "link" ? (
