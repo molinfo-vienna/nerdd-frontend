@@ -17,8 +17,19 @@ export function generateMolecularPropertyPredictionResult(module, moleculeId) {
 
 export function generateAtomPropertyPredictionResult(module, moleculeId) {
     // generate a single molecular property prediction result (for the molecule)
-    const moleculeProperties = generateMolecularPropertyPredictionResult(
-        module,
+    const moleculeProperties = module.result_properties.filter(
+        (resultProperty) =>
+            resultProperty.level === "molecule" ||
+            resultProperty.level === undefined,
+    )
+
+    const restrictedModule = {
+        ...module,
+        result_properties: moleculeProperties,
+    }
+
+    const moleculeValues = generateMolecularPropertyPredictionResult(
+        restrictedModule,
         moleculeId,
     )[0]
 
@@ -26,16 +37,26 @@ export function generateAtomPropertyPredictionResult(module, moleculeId) {
     const numAtoms = faker.number.int({ min: 1, max: 50 })
 
     return Array.from({ length: numAtoms }, (_, i) => ({
-        ...moleculeProperties,
-        ...generateMolecularPropertyPredictionResult(module, moleculeId)[0],
+        ...generateMolecularPropertyPredictionResult(module, i)[0],
+        ...moleculeValues,
         atom_id: i,
     }))
 }
 
 export function generateDerivativePredictionResult(module, moleculeId) {
     // generate a single molecular property prediction result (for the molecule)
-    const moleculeProperties = generateMolecularPropertyPredictionResult(
-        module,
+    const moleculeProperties = module.result_properties.filter(
+        (resultProperty) =>
+            resultProperty.level === "molecule" ||
+            resultProperty.level === undefined,
+    )
+    const restrictedModule = {
+        ...module,
+        result_properties: moleculeProperties,
+    }
+
+    const moleculeValues = generateMolecularPropertyPredictionResult(
+        restrictedModule,
         moleculeId,
     )[0]
 
@@ -43,8 +64,8 @@ export function generateDerivativePredictionResult(module, moleculeId) {
     const numDerivatives = faker.number.int({ min: 1, max: 30 })
 
     return Array.from({ length: numDerivatives }, (_, i) => ({
-        ...moleculeProperties,
-        ...generateMolecularPropertyPredictionResult(module, moleculeId)[0],
+        ...generateMolecularPropertyPredictionResult(module, i)[0],
+        ...moleculeValues,
         derivative_id: i,
     }))
 }
