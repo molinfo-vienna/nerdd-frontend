@@ -24,6 +24,7 @@ export default function MockServer({
     numResults,
     predictionSpeed,
     jobs,
+    logRequests,
 }) {
     const dispatch = useDispatch()
     const store = useStore()
@@ -415,6 +416,9 @@ export default function MockServer({
                 },
             })
 
+            // disable logging
+            server.logging = logRequests
+
             // we started / stopped a mock server
             // -> invalidate all RTK query caches
             // -> trigger a re-fetch of all queries
@@ -435,7 +439,15 @@ export default function MockServer({
             dispatch(nerddApi.util.resetApiState())
             dispatch(incrementKey())
         }
-    }, [moduleConfigs, numResults, pageSize, dispatch, return404, enabled])
+    }, [
+        moduleConfigs,
+        numResults,
+        pageSize,
+        dispatch,
+        return404,
+        logRequests,
+        enabled,
+    ])
 
     return (
         <>

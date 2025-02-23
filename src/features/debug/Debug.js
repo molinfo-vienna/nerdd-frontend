@@ -25,6 +25,8 @@ export default function Debug() {
         mockServerEnabled: true,
         // whether to return 404 for all requests
         return404: false,
+        // whether to log requests
+        logRequests: false,
 
         // number of modules to generate
         numModules: 8,
@@ -39,6 +41,7 @@ export default function Debug() {
     const {
         mockServerEnabled,
         return404,
+        logRequests,
         numModules,
         numResults,
         pageSize,
@@ -58,6 +61,9 @@ export default function Debug() {
         },
         return404: {
             value: return404,
+        },
+        logRequests: {
+            value: false,
         },
         numModules: {
             value: numModules,
@@ -96,6 +102,7 @@ export default function Debug() {
         setSettings({
             mockServerEnabled: debouncedTweaks.mockServerEnabled,
             return404: debouncedTweaks.return404,
+            logRequests: debouncedTweaks.logRequests,
             numModules: debouncedTweaks.numModules,
             numResults: debouncedTweaks.numResults,
             pageSize: debouncedTweaks.pageSize,
@@ -114,6 +121,7 @@ export default function Debug() {
                 predictionSpeed={predictionSpeed}
                 moduleConfigs={moduleConfigs}
                 jobs={jobs}
+                logRequests={logRequests}
             />
         </>
     )
