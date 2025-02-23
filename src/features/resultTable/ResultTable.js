@@ -4,7 +4,7 @@ import React, { useCallback, useMemo, useState } from "react"
 import { moduleType, resultType } from "../../types"
 import getColumnRows from "./getColumnRows"
 import "./style.scss"
-import TableCell from "./TableCell"
+import TableRowGroup from "./TableRowGroup"
 
 export default function ResultTable({
     module,
@@ -32,8 +32,6 @@ export default function ResultTable({
 
         return getColumnRows(resultProperties)
     }, [module.resultProperties, columnSelection])
-
-    const actualColumns = valueColumns
 
     //
     // prepare data for arranging it in a table
@@ -88,15 +86,11 @@ export default function ResultTable({
     })
 
     const handleAtomSelect = useCallback(
-        (e, molId, atomId) => {
-            if (e.type == "mouseout") {
-                setSelectedAtom({
-                    molId: undefined,
-                    atomId: undefined,
-                })
-            } else if (e.type == "mouseenter") {
-                setSelectedAtom({ molId, atomId })
-            }
+        (molId, atomId) => {
+            setSelectedAtom({
+                molId,
+                atomId,
+            })
         },
         [setSelectedAtom],
     )
@@ -144,55 +138,16 @@ export default function ResultTable({
                 )}
             </thead>
             <tbody className="table-group-divider">
-                {resultsGroupedByMolId.map((group, i) =>
-                    group.children.map((result, j) => (
-                        <tr key={`m${i}c${j}`}>
-                            {actualColumns.map(
-                                (resultProperty, k) =>
-                                    (resultProperty.level !== "molecule" ||
-                                        j === 0) && (
-                                        <TableCell
-                                            key={k}
-                                            module={module}
-                                            result={result}
-                                            resultProperty={resultProperty}
-                                            rowSpan={
-                                                resultProperty.level ===
-                                                "molecule"
-                                                    ? group.children.length
-                                                    : 1
-                                            }
-                                            selectedAtom={selectedAtom}
-                                            onSelectAtom={
-                                                module.task ===
-                                                "atom_property_prediction"
-                                                    ? handleAtomSelect
-                                                    : null
-                                            }
-                                            onMouseEnter={(e) =>
-                                                resultProperty.level === "atom"
-                                                    ? handleAtomSelect(
-                                                          e,
-                                                          result.mol_id,
-                                                          subKey(result),
-                                                      )
-                                                    : null
-                                            }
-                                            onMouseOut={(e) =>
-                                                resultProperty.level === "atom"
-                                                    ? handleAtomSelect(
-                                                          e,
-                                                          result.mol_id,
-                                                          subKey(result),
-                                                      )
-                                                    : null
-                                            }
-                                        />
-                                    ),
-                            )}
-                        </tr>
-                    )),
-                )}
+                {resultsGroupedByMolId.map((group, i) => (
+                    <TableRowGroup
+                        key={i}
+                        group={group}
+                        resultProperties={valueColumns}
+                        selectedAtom={selectedAtom}
+                        onAtomSelect={handleAtomSelect}
+                        module={module}
+                    />
+                ))}
             </tbody>
         </table>
     )

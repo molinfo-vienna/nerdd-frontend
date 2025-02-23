@@ -6,7 +6,7 @@ export default function Molecule({
     molId,
     svgValue,
     selectedAtom,
-    onSelectAtom,
+    onAtomSelect,
 }) {
     const [svg, setSvg] = useState(null)
 
@@ -51,13 +51,13 @@ export default function Molecule({
                         <ellipse
                             {...attributesToProps(updatedAttribs)}
                             onMouseEnter={
-                                onSelectAtom
-                                    ? (e) => onSelectAtom(e, molId, atomId)
+                                onAtomSelect
+                                    ? (e) => onAtomSelect(molId, atomId)
                                     : null
                             }
                             onMouseOut={
-                                onSelectAtom
-                                    ? (e) => onSelectAtom(e, molId, atomId)
+                                onAtomSelect
+                                    ? (e) => onAtomSelect(undefined, undefined)
                                     : null
                             }
                         />
@@ -79,7 +79,7 @@ export default function Molecule({
                     setSvg(svg)
                 })
         }
-    }, [molId, onSelectAtom])
+    }, [molId, onAtomSelect])
 
     //
     // we dynamically add (and remove) a class to the correct atom when selected
@@ -106,5 +106,5 @@ Molecule.propTypes = {
     molId: PropTypes.number.isRequired,
     svgValue: PropTypes.string.isRequired,
     selectedAtom: PropTypes.number,
-    onSelectAtom: PropTypes.func,
+    onAtomSelect: PropTypes.func,
 }
