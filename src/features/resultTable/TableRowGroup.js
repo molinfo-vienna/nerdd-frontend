@@ -1,13 +1,19 @@
-import React from "react"
+import React, { useCallback, useState } from "react"
 import TableCell from "./TableCell"
 
-export default function TableRowGroup({
-    group,
-    resultProperties,
-    selectedAtom,
-    onAtomSelect,
-    module,
-}) {
+export default function TableRowGroup({ group, resultProperties, module }) {
+    //
+    // handle mouse over event
+    //
+    const [selectedAtom, setSelectedAtom] = useState(undefined)
+
+    const handleAtomSelect = useCallback(
+        (atomId) => {
+            setSelectedAtom(atomId)
+        },
+        [setSelectedAtom],
+    )
+
     return group.children.map((result, j) => (
         <tr key={j}>
             {resultProperties.map(
@@ -27,7 +33,7 @@ export default function TableRowGroup({
                             selectedAtom={selectedAtom}
                             onAtomSelect={
                                 module.task === "atom_property_prediction"
-                                    ? onAtomSelect
+                                    ? handleAtomSelect
                                     : null
                             }
                         />

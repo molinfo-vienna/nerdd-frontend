@@ -1,12 +1,12 @@
 import { sortedIndexBy } from "lodash"
 import PropTypes from "prop-types"
-import React, { useCallback, useMemo, useState } from "react"
+import React, { memo, useMemo } from "react"
 import { moduleType, resultType } from "../../types"
 import getColumnRows from "./getColumnRows"
 import "./style.scss"
 import TableRowGroup from "./TableRowGroup"
 
-export default function ResultTable({
+const ResultTable = memo(function ResultTable({
     module,
     pageOneBased,
     results,
@@ -37,22 +37,22 @@ export default function ResultTable({
     // prepare data for arranging it in a table
     //
 
-    // sort results by molecule id (and atom id or derivative id)
-    // -> construct a comparison function for sorting
-    let subKey
-    if (module.task === "molecular_property_prediction") {
-        subKey = (a) => 0
-    } else if (module.task === "atom_property_prediction") {
-        subKey = (a) => a.atom_id
-    } else if (module.task === "derivative_property_prediction") {
-        subKey = (a) => a.derivative_id
-    } else {
-        throw new Error(`Unknown task: ${module.task}`)
-    }
-
     // entries might have multiple child rows (atoms, derivatives)
     // --> group results by molecule id
     const resultsGroupedByMolId = useMemo(() => {
+        // sort results by molecule id (and atom id or derivative id)
+        // -> construct a comparison function for sorting
+        let subKey
+        if (module.task === "molecular_property_prediction") {
+            subKey = (a) => 0
+        } else if (module.task === "atom_property_prediction") {
+            subKey = (a) => a.atom_id
+        } else if (module.task === "derivative_property_prediction") {
+            subKey = (a) => a.derivative_id
+        } else {
+            throw new Error(`Unknown task: ${module.task}`)
+        }
+
         return results.reduce((acc, result, index) => {
             // find corresponding mol_id in acc
             const groupIndex = sortedIndexBy(acc, result, (x) => x.mol_id)
@@ -75,25 +75,7 @@ export default function ResultTable({
 
             return acc
         }, [])
-    }, [pageOneBased, results.length, subKey])
-
-    //
-    // handle mouse over event
-    //
-    const [selectedAtom, setSelectedAtom] = useState({
-        molId: undefined,
-        atomId: undefined,
-    })
-
-    const handleAtomSelect = useCallback(
-        (molId, atomId) => {
-            setSelectedAtom({
-                molId,
-                atomId,
-            })
-        },
-        [setSelectedAtom],
-    )
+    }, [pageOneBased, results.length, module.task])
 
     return (
         <table
@@ -143,15 +125,13 @@ export default function ResultTable({
                         key={i}
                         group={group}
                         resultProperties={valueColumns}
-                        selectedAtom={selectedAtom}
-                        onAtomSelect={handleAtomSelect}
                         module={module}
                     />
                 ))}
             </tbody>
         </table>
     )
-}
+})
 
 ResultTable.propTypes = {
     module: moduleType.isRequired,
@@ -159,3 +139,5 @@ ResultTable.propTypes = {
     results: PropTypes.arrayOf(resultType).isRequired,
     columnSelection: PropTypes.array,
 }
+
+export default ResultTable
