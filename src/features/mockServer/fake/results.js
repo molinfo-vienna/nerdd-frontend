@@ -1,14 +1,15 @@
 import { faker } from "@faker-js/faker"
-import { generateValue } from "./util"
+import { generateResultPropertyValue } from "./util"
 
 export function generateMolecularPropertyPredictionResult(module, moleculeId) {
     const nameValuePairs = module.result_properties.map((resultProperty) => [
         resultProperty.name,
-        generateValue(resultProperty.type),
+        generateResultPropertyValue(resultProperty),
     ])
 
     const entry = {
         id: moleculeId,
+        mol_id: moleculeId,
         ...Object.fromEntries(nameValuePairs),
     }
 
@@ -40,6 +41,7 @@ export function generateAtomPropertyPredictionResult(module, moleculeId) {
         ...generateMolecularPropertyPredictionResult(module, i)[0],
         ...moleculeValues,
         atom_id: i,
+        id: `${moleculeId}_${i}`,
     }))
 }
 
@@ -67,6 +69,7 @@ export function generateDerivativePredictionResult(module, moleculeId) {
         ...generateMolecularPropertyPredictionResult(module, i)[0],
         ...moleculeValues,
         derivative_id: i,
+        id: `${moleculeId}_${i}`,
     }))
 }
 
