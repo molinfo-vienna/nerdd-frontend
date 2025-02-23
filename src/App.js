@@ -6,7 +6,7 @@ import {
     createBrowserRouter,
     useLocation,
 } from "react-router-dom"
-import Debug from "./features/debug/Debug"
+import { DebugProvider } from "./features/debug/DebugContext"
 import AboutPage from "./pages/AboutPage"
 import CitationPage from "./pages/CitationPage"
 import CreateJobPage from "./pages/CreateJobPage"
@@ -34,10 +34,9 @@ function Root() {
     const key = useSelector((state) => state.debug.key)
 
     return (
-        <>
-            <Debug />
+        <DebugProvider>
             <Outlet key={key} />
-        </>
+        </DebugProvider>
     )
 }
 

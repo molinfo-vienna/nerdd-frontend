@@ -4,14 +4,14 @@ import { useDispatch, useSelector } from "react-redux"
 import { makeButton, useTweaks } from "use-tweaks"
 import MockServer from "../mockServer/MockServer"
 import TweakPanel from "../tweakPanel/TweakPanel"
+import { useDebug } from "./DebugContext"
 import { incrementKey, setNumModules } from "./debugSlice"
-
-const debugMode = process.env.NODE_ENV === "development"
 
 export default function Debug() {
     //
     // render nothing if debug mode is disabled
     //
+    const debugMode = useDebug()
     if (!debugMode) {
         return null
     }
