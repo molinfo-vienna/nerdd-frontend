@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { v4 as uuidv4 } from "uuid"
 import { useAddSourceMutation, useDeleteSourceMutation } from "../../services"
 import { refType } from "../../types"
-import FileField from "./FileField"
 import FileList from "./FileList"
+import FileUpload from "./FileUpload"
 import {
     addPendingFile,
     createFileField,
@@ -17,7 +17,7 @@ import {
     setStatus,
 } from "./fileFieldSlice"
 
-export default function FileFieldAndList({
+export default function FileUploadAndList({
     name,
     tooltipPositionReference,
     ...props
@@ -205,7 +205,7 @@ export default function FileFieldAndList({
                 ref={tooltipPositionReference}
                 className={`w-100 ${meta.touched && meta.error ? "is-invalid" : ""}`}
             >
-                <FileField
+                <FileUpload
                     name={name}
                     onDrop={onDrop}
                     {...props}
@@ -222,7 +222,7 @@ export default function FileFieldAndList({
     )
 }
 
-FileFieldAndList.propTypes = {
+FileUploadAndList.propTypes = {
     name: PropTypes.string,
     tooltipPositionReference: refType,
 }
