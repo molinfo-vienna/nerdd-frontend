@@ -1,7 +1,14 @@
+import PropTypes from "prop-types"
 import React, { useCallback, useState } from "react"
+import { moduleType } from "../../types"
 import TableCell from "./TableCell"
 
-export default function TableRowGroup({ group, resultProperties, module }) {
+export default function TableRowGroup({
+    group,
+    resultProperties,
+    module,
+    colorPalettes,
+}) {
     //
     // handle mouse over event
     //
@@ -36,9 +43,17 @@ export default function TableRowGroup({ group, resultProperties, module }) {
                                     ? handleAtomSelect
                                     : null
                             }
+                            colorPalette={colorPalettes[resultProperty.name]}
                         />
                     ),
             )}
         </tr>
     ))
+}
+
+TableRowGroup.propTypes = {
+    group: PropTypes.object.isRequired,
+    resultProperties: PropTypes.array.isRequired,
+    module: moduleType.isRequired,
+    colorPalettes: PropTypes.object.isRequired,
 }
