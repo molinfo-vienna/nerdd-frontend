@@ -62,37 +62,62 @@ $card-border-radius: 0.8em;
 // $body-color: #1D1E2C;
 
 //
-// primary: used for
-// * module cards on landing page (when hovering)
-// * buttons, links, and other elements that denote primary actions
+// Specify bootstrap colors
 //
-$primary: #084887; // polynesian blue
+
+//
+// The variable "blue" is already used as the primary color in bootstrap and we also go with 
+// blue (but a different one). The primary color affects elements like
+// 
+// * submit buttons,
+// * links,
+// * the module cards on the landing page (hover) or
+// * the circular progress bar on the results page.
+// 
+// We tried different colors:
+//
 // $primary: #4a7b9d; // steel blue
 // $primary: #1F2041; // space cadet
 // $primary: #454E9E; // violet blue
 // $primary: #033F63; // indigo dye
-
 // $primary: #1C7C54; // dark spring green
 // $primary: #5e8c61; // sea green
+// 
+$blue: #084887; // polynesian blue
+
+
+//
+// The variable "red" is used for the danger color in bootstrap. The danger color appears in
+// elements like
+// 
+// * the delete button on the results page or
+// * error messages on the job submit form.
+// 
+// We tried different colors:
+//
+// $red: #F58A07; // tangerine
+// $red: #FF9F1C; // orange peel
+// $red: #A44A3F; // chestnut
+// $red: #D66853; // jasper
+//
+$red: #e55934; // cinnabar
+
+//
+// The variable "green" is used for the success color in bootstrap. The success color appears in
+// elements like
+//
+// * the dropzone on the job submit form (when a file is hovered over it) or
+// * potential success messages on the job submit form (not used yet).
+//
+// We tried different colors:
+//
+// $green: #5e8c61; // sea green
+//
+$green: #1C7C54; // dark spring green
 
 
 $secondary: #E6E8E6; // platinum
 // $secondary: #A2BCE0; // powder blue
-
-
-//
-// danger
-//
-$danger: #e55934;
-// $danger: #e55934; // cinnabar
-// $danger: #F58A07; // tangerine
-// $danger: #FF9F1C; // orange peel
-// $danger: #A44A3F; // chestnut
-// $danger: #D66853; // jasper
-
-// $success: #1D1E2C;
-// $info: #1D1E2C;
-// $warning: #1D1E2C;
 
 
 //
@@ -104,12 +129,12 @@ $body-bg: #FFFFFF;
 // body-color
 //
 // $body-color: #3F403F; // onyx
-$body-color: #1D1E2C; // raisin black
+// $body-color: #1D1E2C; // raisin black
 // $body-color: #0B2027; // rich black
 // $body-color: #1E2019; // eerie black
 // $body-color: #2E3138; // gunmetal
 
-$body-emphasis-color: $body-color;
+// $body-emphasis-color: $body-color;
 // $body-tertiary-bg: #1D1E2C;
 // $body-tertiary-color: #E6E8E6;
 
