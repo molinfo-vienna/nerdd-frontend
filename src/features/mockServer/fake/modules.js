@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker"
+import d3Palettes from "../../colorPalettes/d3Palettes"
 import { generateValue } from "./util"
 
 const taskTypes = [
@@ -8,6 +9,10 @@ const taskTypes = [
 ]
 const jobParameterDataTypes = ["string", "int", "float", "bool"]
 const resultDataTypes = ["string", "int", "float", "bool", "mol"]
+
+const fakePaletteNames = Array.from({ length: 5 }).map(() =>
+    faker.music.genre(),
+)
 
 const logoUrls = Array.from({ length: 9 }).map(
     (_, i) => `/resources/fake/module-logos/${i + 1}.svg`,
@@ -36,8 +41,10 @@ export function choice(dataType) {
 export function generateJobParameter() {
     const type = faker.helpers.arrayElement(jobParameterDataTypes)
     const hasHelpText = faker.datatype.boolean(0.8)
-    const required = faker.datatype.boolean()
-    const isChoices = faker.datatype.boolean() && type !== "bool"
+    const required = type !== "bool" && faker.datatype.boolean()
+
+    // choices
+    const isChoices = type !== "bool" && faker.datatype.boolean()
     let choices = undefined
     if (isChoices) {
         choices = Array.from(
@@ -51,6 +58,8 @@ export function generateJobParameter() {
             return choices.find((c) => c.value === value)
         })
     }
+
+    // default value
     const hasDefaultValue = faker.datatype.boolean()
     let defaultValue = undefined
     if (hasDefaultValue) {
@@ -74,13 +83,85 @@ export function generateJobParameter() {
     }
 }
 
+function generateColorPalette(type, choices) {
+    const hasChoices = choices !== undefined
+
+    // color palette
+    const canHaveColorPalette =
+        ["float", "bool", "int"].includes(type) ||
+        (type === "string" && hasChoices)
+    const hasColorPalette = canHaveColorPalette && faker.datatype.boolean(0.9)
+    let colorPalette = undefined
+    if (hasColorPalette) {
+        // type
+        let colorPaletteType = undefined
+        if (["bool", "string"].includes(type) || hasChoices) {
+            colorPaletteType = "categorical"
+        } else {
+            colorPaletteType = faker.helpers.arrayElement([
+                "diverging",
+                "sequential",
+            ])
+        }
+
+        // domain
+        let domain = undefined
+        if (hasChoices) {
+            domain = choices.map((c) => c.value)
+        } else if (type === "int") {
+            domain = [-100, 100]
+        } else if (type === "float") {
+            domain = [-100, 100]
+        } else if (type === "bool") {
+            const definedExplicitly = faker.datatype.boolean()
+            domain = definedExplicitly ? [false, true] : undefined
+        }
+
+        // range
+        let range = undefined
+        const rangeSpecified = faker.datatype.boolean()
+        if (rangeSpecified) {
+            const rangeAsArray = type === "bool" || faker.datatype.boolean()
+            if (rangeAsArray) {
+                const values = type === "bool" ? [false, true] : domain
+                range = values.map(() => faker.internet.color())
+            } else {
+                const paletteNames = [
+                    // valid palettes
+                    ...Object.keys(d3Palettes[colorPaletteType]),
+                    // the nerdd palette
+                    "nerdd",
+                    // add invalid palettes for testing robustness
+                    ...fakePaletteNames,
+                ]
+
+                range = faker.helpers.arrayElement(paletteNames)
+            }
+        }
+
+        // color for unknown values
+        const hasUnknown = faker.datatype.boolean()
+        const unknown = hasUnknown ? faker.internet.color() : undefined
+
+        colorPalette = {
+            type: colorPaletteType,
+            domain,
+            range,
+            unknown,
+        }
+    }
+
+    return colorPalette
+}
+
 export function generateResultProperty(group, level) {
     const visibleName = longPhrase()
     const name = visibleName.replace(/\s/g, "_").toLowerCase()
     const type = faker.helpers.arrayElement(resultDataTypes)
     const visible = faker.datatype.boolean(0.6)
     const sortable = faker.datatype.boolean()
-    const hasChoices = faker.datatype.boolean()
+    const hasChoices =
+        ["float", "int", "string"].includes(type) && faker.datatype.boolean()
     const choices = hasChoices
         ? Array.from(
               {
@@ -94,12 +175,12 @@ export function generateResultProperty(group, level) {
         name,
         visible_name: visibleName,
         type,
-        palette: faker.lorem.slug(3),
         visible,
         sortable,
         group,
         level,
         choices,
+        color_palette: generateColorPalette(type, choices),
     }
 }
 
