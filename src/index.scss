@@ -1,13 +1,41 @@
-// $font-family-base: 'Martel Sans';
-// $font-size-base: 1.1rem;
+//
+// Fonts
+//
 
-// fonts tried
-// x Work Sans
-// x Nobile 
-// x Karma
-// Dosis
-// Domine
-// Overpass
+// If you need to test fonts, download them here like that:
+// @import url('https://fonts.googleapis.com/css?family=Noto+Sans:regular,bold,italic&subset=latin,latin-ext');
+// After settling on a font you should 
+// * search your font on fontsource.org
+// * install it locally via npm install @fontsource/noto-sans
+// * import it in your scss file like this:
+// @import '~@fontsource/noto-sans/400.css';
+
+// load all fonts
+@import "~@fontsource/cabin/500.css";
+@import "~@fontsource/noto-sans/400.css";
+
+// fonts tried for main body text
+// * Martel Sans: weird spacing
+// * Roboto: too thin
+// * Noto Sans: looks good
+$font-family-base: 'Noto Sans';
+$font-size-base: 1.1rem;
+
+// fonts tried for headings h1, h2, h3
+// * Work Sans (all font weights are too thin or too thick)
+// * Nobile (ewwww)
+// * Karma (letters are too thin and serifs somehow don't fit to this site)
+// * Dosis (looks goofy - comic sans vibes)
+// * Domine (again, serifs don't fit)
+// * Vollkorn
+// * Overpass (looks amazing)
+// * Cabin (looks best; it is my final choice)
+h1,
+h2,
+h3 {
+    font-family: 'Cabin';
+    font-weight: 700 !important;
+}
 
 // h4, h5, h6
 // Neuton looks ugly
@@ -124,13 +152,6 @@ $card-cap-bg: $card-bg;
 body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-}
-
-h1,
-h2,
-h3 {
-    font-family: 'Cabin';
-    font-weight: 700;
 }
 
 code {
