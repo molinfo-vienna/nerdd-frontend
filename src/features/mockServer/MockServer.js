@@ -19,12 +19,12 @@ import ResultsWebSocketMockServer from "./ResultsWebSocketMockServer"
 export default function MockServer({
     enabled,
     return404,
+    logRequests,
     moduleConfigs,
     pageSize,
     numResults,
     predictionSpeed,
     jobs,
-    logRequests,
 }) {
     const dispatch = useDispatch()
     const store = useStore()
@@ -471,6 +471,7 @@ export default function MockServer({
 MockServer.propTypes = {
     enabled: PropTypes.bool.isRequired,
     return404: PropTypes.bool.isRequired,
+    logRequests: PropTypes.bool.isRequired,
     moduleConfigs: PropTypes.object.isRequired,
     pageSize: PropTypes.number.isRequired,
     numResults: PropTypes.number.isRequired,
