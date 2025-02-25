@@ -2,6 +2,8 @@ import { sortedIndexBy } from "lodash"
 import PropTypes from "prop-types"
 import React, { memo, useMemo } from "react"
 import { moduleType, resultType } from "../../types"
+import useColorPalettes from "../colorPalettes/useColorPalettes"
+import getColorPalette from "./getColorPalette"
 import getColumnRows from "./getColumnRows"
 import "./style.scss"
 import TableRowGroup from "./TableRowGroup"
@@ -12,26 +14,41 @@ const ResultTable = memo(function ResultTable({
     results,
     columnSelection,
 }) {
-    //
-    // check visibility of columns
-    //
-    const { firstColumnRow, secondColumnRow, valueColumns } = useMemo(() => {
-        const isVisible = (resultProperty) => {
-            const group = resultProperty.group ?? "General"
-            const columnGroup = columnSelection.find(
-                (g) => g.groupName === group,
-            )
-            if (columnGroup === undefined) return true
-            const column = columnGroup.columns.find(
-                (c) => c.name === resultProperty.name,
-            )
-            return column.visible ?? true
-        }
+    const palettes = useColorPalettes()
 
-        const resultProperties = module.resultProperties.filter(isVisible) ?? []
+    //
+    // check visibility and style of columns
+    //
+    const { firstColumnRow, secondColumnRow, valueColumns, colorPalettes } =
+        useMemo(() => {
+            const isVisible = (resultProperty) => {
+                const group = resultProperty.group ?? "General"
+                const columnGroup = columnSelection.find(
+                    (g) => g.groupName === group,
+                )
+                if (columnGroup === undefined) return true
+                const column = columnGroup.columns.find(
+                    (c) => c.name === resultProperty.name,
+                )
+                return column.visible ?? true
+            }
 
-        return getColumnRows(resultProperties)
-    }, [module.resultProperties, columnSelection])
+            const resultProperties =
+                module.resultProperties.filter(isVisible) ?? []
+
+            // get color palettes for each result property
+            const colorPalettes = Object.fromEntries(
+                resultProperties.map((resultProperty) => [
+                    resultProperty.name,
+                    getColorPalette(palettes, resultProperty),
+                ]),
+            )
+
+            return {
+                ...getColumnRows(resultProperties),
+                colorPalettes,
+            }
+        }, [module.resultProperties, columnSelection, palettes])
 
     //
     // prepare data for arranging it in a table
@@ -126,6 +143,7 @@ const ResultTable = memo(function ResultTable({
                         group={group}
                         resultProperties={valueColumns}
                         module={module}
+                        colorPalettes={colorPalettes}
                     />
                 ))}
             </tbody>
