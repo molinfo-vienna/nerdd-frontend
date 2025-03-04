@@ -1,3 +1,16 @@
+## [1.0.2](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.1...v1.0.2) (2025-03-04)
+
+
+### Bug Fixes
+
+* Add a Dockerfile for development (hot reload) ([3fea9a7](https://github.com/molinfo-vienna/nerdd-frontend/commit/3fea9a7d45db5de8797e0573657b1397fd6c9cda))
+* Add docker files to dockerignore ([40129b9](https://github.com/molinfo-vienna/nerdd-frontend/commit/40129b9b14430dfafdf57bcfe6c97385cbf74833))
+* Add option to use example molecule ([99d5ca2](https://github.com/molinfo-vienna/nerdd-frontend/commit/99d5ca2fe031f513fa63e7caf7e30ed545a6a354))
+* Add width, height and depiction mode parameters to MoleculeEditor ([bad788d](https://github.com/molinfo-vienna/nerdd-frontend/commit/bad788d950d22ae9e4f033725e5349907528c963))
+* Implement MoleculeEditorField (react-final-form) ([6fe401d](https://github.com/molinfo-vienna/nerdd-frontend/commit/6fe401ddae12564228713618c162c11857383251))
+* Make JSApplet a proper singleton ([a269f88](https://github.com/molinfo-vienna/nerdd-frontend/commit/a269f88d7d4748ebcbadfb8c330214b0d39c4354))
+* Use Open Sans and Overpass as fonts ([e475d12](https://github.com/molinfo-vienna/nerdd-frontend/commit/e475d12f8ec3d10f4d4fab74419efde34ff20426))
+
 ## [1.0.1](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.0...v1.0.1) (2025-02-25)
 
 
