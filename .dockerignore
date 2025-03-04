@@ -6,4 +6,8 @@
 node_modules
 npm-debug.log
 
+# dockerfiles
+Dockerfile
+Dockerfile.dev
+
 build

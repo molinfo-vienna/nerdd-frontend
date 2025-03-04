@@ -11,15 +11,15 @@
 // @import '~@fontsource/noto-sans/400.css';
 
 // load all fonts
-@import "~@fontsource/cabin/500.css";
-@import "~@fontsource/noto-sans/400.css";
+@import "~@fontsource/overpass/500.css";
+@import "~@fontsource/open-sans/400.css";
 
 // fonts tried for main body text
 // * Martel Sans: weird spacing
 // * Roboto: too thin
 // * Noto Sans: looks good
-$font-family-base: 'Noto Sans';
-$font-size-base: 1.1rem;
+// * Open Sans: insanely beautiful
+$font-family-base: 'Open Sans';
 
 // fonts tried for headings h1, h2, h3
 // * Work Sans (all font weights are too thin or too thick)
@@ -27,29 +27,14 @@ $font-size-base: 1.1rem;
 // * Karma (letters are too thin and serifs somehow don't fit to this site)
 // * Dosis (looks goofy - comic sans vibes)
 // * Domine (again, serifs don't fit)
-// * Vollkorn
+// * Vollkorn (looks ok, but everyone uses it)
+// * Cabin (looks good, but not great)
 // * Overpass (looks amazing)
-// * Cabin (looks best; it is my final choice)
 h1,
 h2,
 h3 {
-    font-family: 'Cabin';
-    font-weight: 700 !important;
+    font-family: 'Overpass';
 }
-
-// h4, h5, h6
-// Neuton looks ugly
-// Martal Sans is sans serif
-// Overpass is too thin
-// Domine (?)
-// Dosis (?)
-
-// Vollkorn
-// Cabin
-// x Cuprum
-
-// $font-family-sans-serif:      
-// $font-family-monospace: 
 
 $enable-negative-margins: true;
 $card-border-radius: 0.8em;
@@ -89,8 +74,6 @@ $primary: #084887; // polynesian blue
 
 // $primary: #1C7C54; // dark spring green
 // $primary: #5e8c61; // sea green
-
-
 
 
 $secondary: #E6E8E6; // platinum

@@ -7,6 +7,7 @@ import { moduleType } from "../../types"
 import MoleculeEditor from "../moleculeEditor/MoleculeEditor"
 import FileField from "./FileField"
 import JobParameterField from "./JobParameterField"
+import MoleculeEditorField from "./MoleculeEditorField"
 import Row from "./Row"
 import Textarea from "./Textarea"
 
@@ -24,6 +25,7 @@ export default function JobForm({ module, onSubmit }) {
     // pass it to the tooltip component.
     const inputTextFieldTooltipPositionReference = useRef()
     const fileFieldTooltipPositionReference = useRef()
+    const inputDrawnTooltipPositionReference = useRef()
 
     const jobParameters = module.jobParameters ?? []
 
@@ -180,22 +182,22 @@ export default function JobForm({ module, onSubmit }) {
                                     Draw molecule
                                 </label>
                             </div>
-                            {/* <div className="form-check form-check-inline">
-                                            <Field
-                                                name="inputType"
-                                                id="inputExampleOption"
-                                                component="input"
-                                                type="radio"
-                                                className="form-check-input"
-                                                value="example"
-                                            />
-                                            <label
-                                                htmlFor="inputExampleOption"
-                                                className="form-check-label"
-                                            >
-                                                Use example
-                                            </label>
-                                        </div> */}
+                            <div className="form-check form-check-inline">
+                                <Field
+                                    name="inputType"
+                                    id="inputExampleOption"
+                                    component="input"
+                                    type="radio"
+                                    className="form-check-input"
+                                    value="example"
+                                />
+                                <label
+                                    htmlFor="inputExampleOption"
+                                    className="form-check-label"
+                                >
+                                    Use example
+                                </label>
+                            </div>
                         </>
                     </Row>
 
@@ -243,7 +245,31 @@ export default function JobForm({ module, onSubmit }) {
                     <Row
                         className={values.inputType !== "draw" ? "d-none" : ""}
                     >
-                        <MoleculeEditor name="inputDrawn" />
+                        <Field
+                            name="inputDrawn"
+                            id="inputDrawn"
+                            initialValue={""}
+                            component={MoleculeEditorField}
+                            aria-describedby="inputDrawnHelp"
+                            positionReference={
+                                inputDrawnTooltipPositionReference
+                            }
+                        />
+                    </Row>
+
+                    <Row
+                        className={
+                            values.inputType !== "example" ? "d-none" : ""
+                        }
+                    >
+                        <MoleculeEditor
+                            value={exampleSmiles}
+                            width="300px"
+                            height="200px"
+                            config={{
+                                options: "depict",
+                            }}
+                        />
                     </Row>
 
                     {jobParameters.map((jobParameter, i) => (

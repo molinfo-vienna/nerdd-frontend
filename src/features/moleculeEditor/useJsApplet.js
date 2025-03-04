@@ -1,22 +1,48 @@
 import { useScript } from "@uidotdev/usehooks"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+
+let instance = null
+const subscribers = new Set()
+let refCount = 0
 
 export default function useJsApplet() {
-    // JSApplet is a global variable that is set by the JSME script. If it already exists, we set
-    // it to the state immediately. Otherwise, it will be null and the following code will set it.
-    const [JSApplet, setJSApplet] = useState(window.JSApplet)
+    // we change the following state if we would like to force a "rerender" of this hook
+    // (-> all components using this hook get the new JSApplet instance)
+    const [, forceRender] = useState({})
 
-    // JSME is loaded asynchronously, so we need to wait for it to be loaded.
-    // Note: we could use useEffect here, but it is fine that the global function jsmeOnLoad is
-    // overwritten every time this script is called.
-    window.jsmeOnLoad = () => {
-        setJSApplet(window.JSApplet)
-    }
+    useEffect(() => {
+        // update ref count
+        refCount += 1
+
+        // add this component to subscribers
+        const subscription = () => forceRender({})
+        subscribers.add(subscription)
+
+        // JSME is loaded asynchronously, so we need to wait for it to be loaded.
+        window.jsmeOnLoad = () => {
+            instance = window.JSApplet
+
+            // notify all components using this singleton
+            subscribers.forEach((notify) => notify())
+        }
+
+        // clean up
+        return () => {
+            subscribers.delete(subscription)
+
+            refCount -= 1
+
+            if (refCount === 0) {
+                instance = null
+                window.jsmeOnLoad = null
+            }
+        }
+    }, [])
 
     // JSME has a broken installation process, so we need to load it manually.
     useScript("/resources/legacyjs/jsme_2017-02-26/jsme/jsme.nocache.js", {
         removeOnUnmount: false,
     })
 
-    return JSApplet
+    return instance
 }
