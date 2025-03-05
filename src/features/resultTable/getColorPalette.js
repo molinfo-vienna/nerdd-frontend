@@ -73,7 +73,9 @@ export default function getColorPalette(palettes, resultProperty) {
         } else if (type === "sequential") {
             colorPalette = d3.scaleSequential(domain, range)
         } else if (type === "categorical") {
-            colorPalette = d3.scaleOrdinal(domain, range)
+            colorPalette = d3
+                .scaleOrdinal(domain, range)
+                .unknown(palettes.colors.neutral)
         }
 
         return colorPalette
