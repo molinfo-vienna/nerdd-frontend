@@ -47,8 +47,35 @@ const ResultTable = memo(function ResultTable({
             const { firstColumnRow, secondColumnRow } =
                 getColumnRows(resultProperties)
 
+            const augmentedResultProperties = resultProperties.map(
+                (resultProperty, i) => {
+                    // check start and end of column block
+                    const previousLevel =
+                        i > 0 ? resultProperties[i - 1].level : "molecule"
+                    const currentLevel = resultProperty.level
+                    const nextLevel =
+                        i < resultProperties.length - 1
+                            ? resultProperties[i + 1]
+                            : "molecule"
+
+                    const startBlock =
+                        previousLevel === "molecule" &&
+                        ["atom", "derivative"].includes(currentLevel)
+
+                    const endBlock =
+                        ["atom", "derivative"].includes(currentLevel) &&
+                        nextLevel === "molecule"
+
+                    return {
+                        ...resultProperty,
+                        startBlock,
+                        endBlock,
+                    }
+                },
+            )
+
             return {
-                resultProperties,
+                resultProperties: augmentedResultProperties,
                 firstColumnRow,
                 secondColumnRow,
                 colorPalettes,
