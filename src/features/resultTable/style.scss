@@ -31,8 +31,32 @@ svg ellipse.selected {
     opacity: 1 !important;
 }
 
+td {
+    // avoid jumping when a colored border is added on hover
+    border-top: 2px solid transparent;
+}
+
+td.start-block {
+    // avoid jumping when a colored border is added on hover
+    border-left: 2px solid transparent;
+}
+
+td.end-block {
+    // avoid jumping when a colored border is added on hover
+    border-right: 2px solid transparent;
+}
+
 td.highlighted {
-    background-color: var(--bs-table-hover-bg);
+    border-top: 2px solid var(--bs-primary);
+    border-bottom: 2px solid var(--bs-primary);
+}
+
+td.highlighted.start-block {
+    border-left: 2px solid var(--bs-primary);
+}
+
+td.highlighted.end-block {
+    border-right: 2px solid var(--bs-primary);
 }
 
 td img {
