@@ -19,7 +19,7 @@ const ResultTable = memo(function ResultTable({
     //
     // check visibility and style of columns
     //
-    const { firstColumnRow, secondColumnRow, valueColumns, colorPalettes } =
+    const { resultProperties, firstColumnRow, secondColumnRow, colorPalettes } =
         useMemo(() => {
             const isVisible = (resultProperty) => {
                 const group = resultProperty.group ?? "General"
@@ -44,8 +44,13 @@ const ResultTable = memo(function ResultTable({
                 ]),
             )
 
+            const { firstColumnRow, secondColumnRow } =
+                getColumnRows(resultProperties)
+
             return {
-                ...getColumnRows(resultProperties),
+                resultProperties,
+                firstColumnRow,
+                secondColumnRow,
                 colorPalettes,
             }
         }, [module.resultProperties, columnSelection, palettes])
@@ -141,7 +146,7 @@ const ResultTable = memo(function ResultTable({
                     <TableRowGroup
                         key={i}
                         group={group}
-                        resultProperties={valueColumns}
+                        resultProperties={resultProperties}
                         module={module}
                         colorPalettes={colorPalettes}
                     />
