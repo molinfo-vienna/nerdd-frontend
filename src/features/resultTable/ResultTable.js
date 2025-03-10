@@ -128,7 +128,7 @@ const ResultTable = memo(function ResultTable({
 
     return (
         <table
-            className="table text-center table-sm w-auto align-middle"
+            className="table text-center table-sm w-auto"
             style={{
                 overflowX: "visible",
                 overflowY: "visible",
