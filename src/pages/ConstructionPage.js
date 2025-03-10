@@ -1,13 +1,11 @@
 import React from "react"
 import { PiBulldozer } from "react-icons/pi"
-import Footer from "../features/footer/Footer"
-import NavigationBar from "../features/navigationBar/NavigationBar"
+import Layout from "./Layout"
 
 export default function ConstructionPage() {
     return (
-        <>
-            <main className="container vh-100">
-                <NavigationBar />
+        <Layout>
+            <div className="container">
                 <div className="row justify-content-center">
                     <div className="col-md-auto mt-5 pt-5">
                         <div
@@ -39,9 +37,7 @@ export default function ConstructionPage() {
                         </div>
                     </div>
                 </div>
-            </main>
-
-            <Footer />
-        </>
+            </div>
+        </Layout>
     )
 }
