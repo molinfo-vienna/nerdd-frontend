@@ -1,8 +1,11 @@
+import classNames from "classnames"
 import React, { useCallback, useEffect, useState } from "react"
 import { FaFileDownload } from "react-icons/fa"
 import { FaBookOpen, FaFileLines, FaTrash } from "react-icons/fa6"
 import { HiMiniViewColumns } from "react-icons/hi2"
+import { IoIosColorPalette } from "react-icons/io"
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom"
+import ColorSelectDropdown from "../features/colorSelect/ColorSelectDropdown"
 import ColumnSelectDropdown from "../features/columnSelect/ColumnSelectDropdown"
 import DeleteJobDialog from "../features/deleteJobDialog/DeleteJobDialog"
 import Pagination from "../features/pagination/Pagination"
@@ -108,7 +111,7 @@ export default function ResultsPage() {
         setColumnSelection(initialColumnSelection)
     }, [module, setColumnSelection])
 
-    const handleSelectionChange = useCallback(
+    const handleColumnSelectionChange = useCallback(
         (group, column, visible) => {
             const newColumnSelection = columnSelection.map((g) => {
                 if (g.groupName === group) {
@@ -128,6 +131,37 @@ export default function ResultsPage() {
             setColumnSelection(newColumnSelection)
         },
         [columnSelection, setColumnSelection],
+    )
+
+    //
+    // color selection state
+    //
+    const [atomColorProperty, setAtomColorProperty] = useState(undefined)
+    const [possibleAtomColorProperties, setPossibleAtomColorProperties] =
+        useState([])
+
+    // initialize color selection
+    useEffect(() => {
+        if (module?.resultProperties !== undefined) {
+            const colorProperties = module.resultProperties.filter(
+                (resultProperty) =>
+                    resultProperty.level === "atom" &&
+                    resultProperty.colorPalette != null,
+            )
+            setPossibleAtomColorProperties(colorProperties)
+            if (colorProperties.length > 0) {
+                setAtomColorProperty(colorProperties[0])
+            } else {
+                setAtomColorProperty(undefined)
+            }
+        }
+    }, [module, setAtomColorProperty, setPossibleAtomColorProperties])
+
+    const handleAtomColorPropertyChange = useCallback(
+        (newAtomColorProperty) => {
+            setAtomColorProperty(newAtomColorProperty)
+        },
+        [setAtomColorProperty],
     )
 
     if (errorModule) {
@@ -264,17 +298,25 @@ export default function ResultsPage() {
                                         <ColumnSelectDropdown
                                             columnSelection={columnSelection}
                                             handleSelectionChange={
-                                                handleSelectionChange
+                                                handleColumnSelectionChange
                                             }
                                         />
                                     </div>
                                     {/* Colors */}
-                                    {/* <div
+                                    <div
                                         className="btn-group dropdown-center"
                                         role="group"
                                     >
                                         <Link
-                                            className="btn btn-outline-secondary text-center text-decoration-none text-reset d-block"
+                                            className={classNames(
+                                                "btn btn-outline-secondary text-center",
+                                                "text-decoration-none text-reset d-block",
+                                                {
+                                                    disabled:
+                                                        possibleAtomColorProperties.length ===
+                                                        0,
+                                                },
+                                            )}
                                             type="button"
                                             data-bs-toggle="dropdown"
                                             data-bs-auto-close="outside"
@@ -302,16 +344,22 @@ export default function ResultsPage() {
                                                 </span>
                                             </div>
                                         </Link>
-                                        <ColumnSelectDropdown
-                                            columnSelection={columnSelection}
-                                            handleSelectionChange={
-                                                handleSelectionChange
+                                        <ColorSelectDropdown
+                                            selectedAtomColorProperty={
+                                                atomColorProperty
+                                            }
+                                            possibleAtomColorProperties={
+                                                possibleAtomColorProperties
+                                            }
+                                            onSelectedAtomColorPropertyChange={
+                                                handleAtomColorPropertyChange
                                             }
                                         />
-                                    </div> */}
+                                    </div>
                                     {/* Download */}
                                     <div className="btn-group" role="group">
                                         <Link
+                                            // TODO: use classNames
                                             className={`btn btn-outline-secondary text-center text-decoration-none text-reset d-block ${jobStatus.outputFiles !== undefined && jobStatus.outputFiles.length == 0 ? "disabled" : ""}`}
                                             type="button"
                                             data-bs-toggle="dropdown"
@@ -420,6 +468,9 @@ export default function ResultsPage() {
                                                     results={results.data}
                                                     columnSelection={
                                                         columnSelection
+                                                    }
+                                                    atomColorProperty={
+                                                        atomColorProperty
                                                     }
                                                 />
                                             </div>
