@@ -2,7 +2,7 @@ import classNames from "classnames"
 import PropTypes from "prop-types"
 import React from "react"
 import { RxCross1 } from "react-icons/rx"
-import { moduleType } from "../../types"
+import { moduleType, resultPropertyType } from "../../types"
 import Molecule from "./Molecule"
 import ProblemListBadge from "./ProblemListBadge"
 import ProblemListCell from "./ProblemListCell"
@@ -11,11 +11,13 @@ export default function TableCell({
     module,
     result,
     resultProperty,
-    rowSpan = undefined,
+    group,
     selectedAtom,
     className,
     onAtomSelect,
     colorPalette,
+    atomColorProperty,
+    atomColorPalette,
     ...props
 }) {
     const value = result[resultProperty.name]
@@ -25,12 +27,9 @@ export default function TableCell({
         resultProperty.level !== undefined &&
         resultProperty.level !== "molecule"
 
-    // color palette
-    let color = colorPalette(value)
-
     const commonProps = {
-        rowSpan,
         ...props,
+        rowSpan: compressed ? 1 : group.children.length,
         className: classNames(className, {
             compressed,
             highlighted:
@@ -45,7 +44,7 @@ export default function TableCell({
                 module.task !== "molecular_property_prediction" &&
                 resultProperty.level === "molecule",
         }),
-        style: { backgroundColor: color },
+        style: { backgroundColor: colorPalette(value) },
         onMouseEnter: (e) =>
             resultProperty.level === "atom"
                 ? onAtomSelect(result.atom_id)
@@ -64,24 +63,29 @@ export default function TableCell({
                             style={{ width: "300px", height: "180px" }}
                         />
                     )}
-                    {value != null && (
-                        <Molecule
-                            className="position-relative"
-                            molId={molId}
-                            svgValue={value}
-                            // if the column is "preprocessed_mol", we add a feature to select atoms
-                            selectedAtom={
-                                resultProperty.name === "preprocessed_mol"
-                                    ? selectedAtom
-                                    : null
-                            }
-                            onAtomSelect={
-                                resultProperty.name === "preprocessed_mol"
-                                    ? onAtomSelect
-                                    : null
-                            }
-                        />
-                    )}
+                    {value != null &&
+                        resultProperty.name === "preprocessed_mol" && (
+                            <Molecule
+                                className="position-relative"
+                                molId={molId}
+                                svgValue={value}
+                                group={group}
+                                // color palette for atoms
+                                atomColorProperty={atomColorProperty}
+                                atomColorPalette={atomColorPalette}
+                                // feature to select atoms
+                                selectedAtom={selectedAtom}
+                                onAtomSelect={onAtomSelect}
+                            />
+                        )}
+                    {value != null &&
+                        resultProperty.name !== "preprocessed_mol" && (
+                            <Molecule
+                                className="position-relative"
+                                molId={molId}
+                                svgValue={value}
+                            />
+                        )}
                     {resultProperty.name === "preprocessed_mol" && (
                         <ProblemListBadge problems={result.problems} />
                     )}
@@ -186,13 +190,12 @@ TableCell.propTypes = {
     module: moduleType.isRequired,
     result: PropTypes.object.isRequired,
     resultProperty: PropTypes.object.isRequired,
-    value: PropTypes.any,
-    rowSpan: PropTypes.number,
+    group: PropTypes.object,
     compressed: PropTypes.bool,
     selectedAtom: PropTypes.number,
-    highlighted: PropTypes.bool,
     className: PropTypes.string,
     onAtomSelect: PropTypes.func,
-    molId: PropTypes.number,
     colorPalette: PropTypes.func,
+    atomColorProperty: resultPropertyType,
+    atomColorPalette: PropTypes.func,
 }
