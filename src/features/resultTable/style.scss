@@ -68,6 +68,16 @@ td.highlighted.end-block {
         inset 0 -2px 0 0 var(--bs-primary);
 }
 
+td.highlighted.start-block.end-block {
+    // use box-shadow instead of border to avoid that text jumps around (due to changing border 
+    // size) when hovering
+    box-shadow:
+        inset 2px 0 0 0 var(--bs-primary),
+        inset -2px 0 0 0 var(--bs-primary),
+        inset 0 2px 0 0 var(--bs-primary),
+        inset 0 -2px 0 0 var(--bs-primary);
+}
+
 td img {
     width: 300px;
     height: 180px;
