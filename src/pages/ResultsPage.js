@@ -128,7 +128,29 @@ export default function ResultsPage() {
                 return g
             })
 
-            setColumnSelection(newColumnSelection)
+            // if no column is selected, select at least "preprocessed_mol"
+            const noColumnSelected = newColumnSelection.every((g) =>
+                g.columns.every((c) => !c.visible),
+            )
+            const effectiveColumnSelection = noColumnSelected
+                ? newColumnSelection.map((g) => {
+                      if (g.groupName === "General") {
+                          return {
+                              ...g,
+                              columns: g.columns.map((c) => {
+                                  if (c.name === "preprocessed_mol") {
+                                      return { ...c, visible: true }
+                                  }
+                                  return c
+                              }),
+                          }
+                      } else {
+                          return g
+                      }
+                  })
+                : newColumnSelection
+
+            setColumnSelection(effectiveColumnSelection)
         },
         [columnSelection, setColumnSelection],
     )
@@ -150,6 +172,7 @@ export default function ResultsPage() {
             )
             setPossibleAtomColorProperties(colorProperties)
             if (colorProperties.length > 0) {
+                // TODO: use palette specified in config
                 setAtomColorProperty(colorProperties[0])
             } else {
                 setAtomColorProperty(undefined)
@@ -267,7 +290,10 @@ export default function ResultsPage() {
                                         role="group"
                                     >
                                         <Link
-                                            className="btn btn-outline-secondary text-center text-decoration-none text-reset d-block"
+                                            className={
+                                                "btn btn-outline-secondary text-center " +
+                                                "text-decoration-none text-reset d-block"
+                                            }
                                             type="button"
                                             data-bs-toggle="dropdown"
                                             data-bs-auto-close="outside"
@@ -357,10 +383,22 @@ export default function ResultsPage() {
                                         />
                                     </div>
                                     {/* Download */}
-                                    <div className="btn-group" role="group">
+                                    <div
+                                        className="btn-group dropdown-center"
+                                        role="group"
+                                    >
                                         <Link
-                                            // TODO: use classNames
-                                            className={`btn btn-outline-secondary text-center text-decoration-none text-reset d-block ${jobStatus.outputFiles !== undefined && jobStatus.outputFiles.length == 0 ? "disabled" : ""}`}
+                                            className={classNames(
+                                                "btn btn-outline-secondary text-center ",
+                                                "text-decoration-none text-reset d-block",
+                                                {
+                                                    disabled:
+                                                        jobStatus.outputFiles ===
+                                                            undefined ||
+                                                        jobStatus.outputFiles
+                                                            .length == 0,
+                                                },
+                                            )}
                                             type="button"
                                             data-bs-toggle="dropdown"
                                             data-bs-auto-close="outside"
@@ -387,13 +425,12 @@ export default function ResultsPage() {
                                                 </span>
                                             </div>
                                         </Link>
-                                        <div className="dropdown-menu dropdown-menu-end p-2">
-                                            {outputFileItems.map(
-                                                (item, index) => (
+                                        <ul className="dropdown-menu">
+                                            {outputFileItems.map((item) => (
+                                                <li key={item.format}>
                                                     <Link
-                                                        key={index}
                                                         className={`dropdown-item ${item.status}`}
-                                                        to={`${item.url}`}
+                                                        to={item.url}
                                                         target="_blank"
                                                         download
                                                     >
@@ -403,9 +440,9 @@ export default function ResultsPage() {
                                                         />
                                                         {item.format.toUpperCase()}
                                                     </Link>
-                                                ),
-                                            )}
-                                        </div>
+                                                </li>
+                                            ))}
+                                        </ul>
                                     </div>
                                     {/* Delete */}
                                     <Link
