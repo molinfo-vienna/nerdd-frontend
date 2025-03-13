@@ -132,13 +132,11 @@ export default function Molecule({
                         <ellipse
                             {...attributesToProps(updatedAttribs)}
                             onMouseEnter={
-                                onAtomSelect
-                                    ? (e) => onAtomSelect(atomId)
-                                    : null
+                                onAtomSelect ? () => onAtomSelect(atomId) : null
                             }
                             onMouseOut={
                                 onAtomSelect
-                                    ? (e) => onAtomSelect(undefined)
+                                    ? () => onAtomSelect(undefined)
                                     : null
                             }
                         />
