@@ -1,3 +1,4 @@
+import classNames from "classnames"
 import React from "react"
 import { FaBars, FaGithub } from "react-icons/fa6"
 import { Link, useMatches, useParams } from "react-router-dom"
@@ -78,7 +79,9 @@ export default function NavigationBar() {
         // -> navbar-expand-sm shows the full navbar even on smaller screens
         // -> navbar-expand-md shows the full navbar on larger screens only
         <header
-            className={`navbar ${shortNavigation ? "navbar-expand-sm" : "navbar-expand-md"}`}
+            className={classNames(
+                `navbar ${shortNavigation ? "navbar-expand-sm" : "navbar-expand-md"}`,
+            )}
         >
             {/*
               * The following div is used to center the navbar.
@@ -87,7 +90,7 @@ export default function NavigationBar() {
               * justify-content-between: space out the navbar items otherwise (on
                     small screens)
             */}
-            <div className="container justify-content-sm-center justify-content-between">
+            <div className="container-fluid justify-content-sm-center justify-content-between">
                 {/*
                  * The following div is used to draw a vertical line below the navbar.
                  * d-flex flex-wrap justify-content-between: compatibility with the
@@ -97,7 +100,17 @@ export default function NavigationBar() {
                  * border-sm-bottom: underline navbar only on larger screens
                  * px-3: make the line slightly wider than the navbar
                  */}
-                <div className="d-flex flex-wrap justify-content-between flex-grow-1 flex-sm-grow-0 border-sm-bottom px-3">
+                <div
+                    className={classNames(
+                        "d-flex flex-wrap justify-content-between flex-grow-1 px-3",
+                        {
+                            "flex-sm-grow-0": shortNavigation,
+                            "flex-md-grow-0": !shortNavigation,
+                            "border-sm-bottom": shortNavigation,
+                            "border-md-bottom": !shortNavigation,
+                        },
+                    )}
+                >
                     <Link className="navbar-brand" to="/">
                         NERDD
                     </Link>
@@ -121,7 +134,12 @@ export default function NavigationBar() {
                          * use "h-100" on navbar items
                          */}
 
-                        <ul className="navbar-nav">
+                        <ul
+                            className={classNames("navbar-nav", {
+                                "align-items-sm-center": shortNavigation,
+                                "align-items-md-center": !shortNavigation,
+                            })}
+                        >
                             {/* breadcrumb elements */}
                             {breadcrumbElements.map((element, i) =>
                                 element.type === "link" ? (
@@ -138,7 +156,13 @@ export default function NavigationBar() {
                                     // collapsed (due to the d-none class)
                                     <li
                                         key={i}
-                                        className="nav-item d-none d-sm-block"
+                                        className={classNames(
+                                            "nav-item d-none",
+                                            {
+                                                "d-sm-block": shortNavigation,
+                                                "d-md-block": !shortNavigation,
+                                            },
+                                        )}
                                     >
                                         <span className="nav-link px-0">/</span>
                                     </li>
@@ -146,7 +170,9 @@ export default function NavigationBar() {
                             )}
                             {/* additional navbar items */}
                             <li
-                                className={`nav-item ${breadcrumbElements.length > 0 ? "ps-3" : ""}`}
+                                className={classNames(`nav-item`, {
+                                    "ps-md-3": breadcrumbElements.length > 0,
+                                })}
                             >
                                 <Link
                                     to="https://comp3d.univie.ac.at/the-comp3d-team/"
