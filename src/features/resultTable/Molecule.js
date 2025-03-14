@@ -79,7 +79,8 @@ export default function Molecule({
                                   )
 
                                   // set the background color of the atom
-                                  const fill = atomColors[atomId]
+                                  const fill =
+                                      atomColors[atomId] ?? "transparent"
 
                                   const updatedAttribs = {
                                       ...ellipse.props,
