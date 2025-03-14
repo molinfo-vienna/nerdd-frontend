@@ -1,3 +1,12 @@
+## [1.0.3](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.2...v1.0.3) (2025-03-14)
+
+
+### Bug Fixes
+
+* Make navigation bar responsive ([078c634](https://github.com/molinfo-vienna/nerdd-frontend/commit/078c634fb0d042a5342c47ee1173301ac459d626))
+* Never delete singleton applet instance ([17a255b](https://github.com/molinfo-vienna/nerdd-frontend/commit/17a255b6d35bec4abbe769da93b2c4079b02fbd9))
+* Vertically center navigation bar entries ([e31a8f7](https://github.com/molinfo-vienna/nerdd-frontend/commit/e31a8f7a089992aea47eaae654a1c4f5968db1c3))
+
 ## [1.0.2](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.1...v1.0.2) (2025-03-04)
 
 
