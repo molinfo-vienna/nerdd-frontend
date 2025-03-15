@@ -43,8 +43,11 @@ export default function TableCell({
             "align-top":
                 module.task !== "molecular_property_prediction" &&
                 resultProperty.level === "molecule",
+            "d-none": !resultProperty.visible,
         }),
-        style: { backgroundColor: colorPalette(value) },
+        style: {
+            backgroundColor: colorPalette(value),
+        },
         onMouseEnter: (e) =>
             resultProperty.level === "atom"
                 ? onAtomSelect(result.atom_id)
