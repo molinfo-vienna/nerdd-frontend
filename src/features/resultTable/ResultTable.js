@@ -15,13 +15,10 @@ const ResultTable = memo(function ResultTable({
     columnSelection,
     atomColorProperty,
 }) {
-    const palettes = useColorPalettes()
-
     //
-    // check visibility and style of columns
+    // compute visibility and style of columns
     //
-    // TODO: move colorPalettes to separate hook
-    const { resultProperties, firstColumnRow, secondColumnRow, colorPalettes } =
+    const { firstColumnRow, secondColumnRow, resultProperties } =
         useMemo(() => {
             const isVisible = (resultProperty) => {
                 const group = resultProperty.group ?? "General"
@@ -35,29 +32,46 @@ const ResultTable = memo(function ResultTable({
                 return column.visible ?? true
             }
 
-            const resultProperties =
-                module.resultProperties.filter(isVisible) ?? []
-
-            // get color palettes for each result property
-            const colorPalettes = Object.fromEntries(
-                module.resultProperties.map((resultProperty) => [
-                    resultProperty.name,
-                    getColorPalette(palettes, resultProperty),
-                ]),
+            const visibleResultProperties = module.resultProperties.filter(
+                (resultProperty) => isVisible(resultProperty),
             )
 
-            const { firstColumnRow, secondColumnRow } =
-                getColumnRows(resultProperties)
+            const { firstColumnRow, secondColumnRow } = getColumnRows(
+                visibleResultProperties,
+            )
 
-            const augmentedResultProperties = resultProperties.map(
-                (resultProperty, i) => {
+            const visibleResultPropertyNames = visibleResultProperties.map(
+                (r) => r.name,
+            )
+
+            const augmentedResultProperties = module.resultProperties.map(
+                (resultProperty) => {
+                    const indexOfCurrentProperty =
+                        visibleResultPropertyNames.indexOf(resultProperty.name)
+
+                    const visiblePredecessor =
+                        indexOfCurrentProperty > 0
+                            ? visibleResultProperties[
+                                  indexOfCurrentProperty - 1
+                              ]
+                            : null
+                    const visibleSuccessor =
+                        indexOfCurrentProperty <
+                        visibleResultPropertyNames.length - 1
+                            ? visibleResultProperties[
+                                  indexOfCurrentProperty + 1
+                              ]
+                            : null
+
                     // check start and end of column block
                     const previousLevel =
-                        i > 0 ? resultProperties[i - 1].level : "molecule"
+                        visiblePredecessor !== null
+                            ? visiblePredecessor.level
+                            : "molecule"
                     const currentLevel = resultProperty.level
                     const nextLevel =
-                        i < resultProperties.length - 1
-                            ? resultProperties[i + 1]
+                        visibleSuccessor !== null
+                            ? visibleSuccessor.level
                             : "molecule"
 
                     const startBlock =
@@ -70,6 +84,7 @@ const ResultTable = memo(function ResultTable({
 
                     return {
                         ...resultProperty,
+                        visible: isVisible(resultProperty),
                         startBlock,
                         endBlock,
                     }
@@ -77,12 +92,26 @@ const ResultTable = memo(function ResultTable({
             )
 
             return {
-                resultProperties: augmentedResultProperties,
                 firstColumnRow,
                 secondColumnRow,
-                colorPalettes,
+                resultProperties: augmentedResultProperties,
             }
-        }, [module.resultProperties, columnSelection, palettes])
+        }, [module.resultProperties, columnSelection])
+
+    //
+    // compute color palettes
+    //
+    const palettes = useColorPalettes()
+
+    // get color palettes for each result property
+    const colorPalettes = useMemo(() => {
+        return Object.fromEntries(
+            module.resultProperties.map((resultProperty) => [
+                resultProperty.name,
+                getColorPalette(palettes, resultProperty),
+            ]),
+        )
+    }, [module, palettes])
 
     //
     // prepare data for arranging it in a table
@@ -179,8 +208,8 @@ const ResultTable = memo(function ResultTable({
                     <TableRowGroup
                         key={group.mol_id}
                         group={group}
-                        resultProperties={resultProperties}
                         module={module}
+                        resultProperties={resultProperties}
                         colorPalettes={colorPalettes}
                         atomColorProperty={atomColorProperty}
                     />

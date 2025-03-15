@@ -6,10 +6,10 @@ import TableCell from "./TableCell"
 
 export default function TableRowGroup({
     group,
-    resultProperties,
     module,
     colorPalettes,
     atomColorProperty,
+    resultProperties,
 }) {
     //
     // handle mouse over event
@@ -66,8 +66,8 @@ export default function TableRowGroup({
 
 TableRowGroup.propTypes = {
     group: PropTypes.object.isRequired,
-    resultProperties: PropTypes.array.isRequired,
     module: moduleType.isRequired,
+    resultProperties: PropTypes.arrayOf(resultPropertyType).isRequired,
     colorPalettes: PropTypes.object.isRequired,
     atomColorProperty: resultPropertyType,
 }
