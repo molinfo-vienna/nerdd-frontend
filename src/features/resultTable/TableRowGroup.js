@@ -7,7 +7,6 @@ import TableCell from "./TableCell"
 export default function TableRowGroup({
     group,
     module,
-    colorPalettes,
     atomColorProperty,
     resultProperties,
 }) {
@@ -22,14 +21,6 @@ export default function TableRowGroup({
         },
         [setSelectedAtom],
     )
-
-    //
-    // atom color palette
-    //
-    const atomColorPalette =
-        atomColorProperty !== undefined
-            ? colorPalettes[atomColorProperty.name]
-            : undefined
 
     return group.children.map((result, j) => (
         <tr key={j}>
@@ -54,9 +45,7 @@ export default function TableRowGroup({
                                     ? handleAtomSelect
                                     : null
                             }
-                            colorPalette={colorPalettes[resultProperty.name]}
                             atomColorProperty={atomColorProperty}
-                            atomColorPalette={atomColorPalette}
                         />
                     ),
             )}
@@ -68,6 +57,5 @@ TableRowGroup.propTypes = {
     group: PropTypes.object.isRequired,
     module: moduleType.isRequired,
     resultProperties: PropTypes.arrayOf(resultPropertyType).isRequired,
-    colorPalettes: PropTypes.object.isRequired,
     atomColorProperty: resultPropertyType,
 }

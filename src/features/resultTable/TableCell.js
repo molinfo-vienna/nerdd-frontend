@@ -15,9 +15,7 @@ export default function TableCell({
     selectedAtom,
     className,
     onAtomSelect,
-    colorPalette,
     atomColorProperty,
-    atomColorPalette,
     ...props
 }) {
     const value = result[resultProperty.name]
@@ -46,7 +44,7 @@ export default function TableCell({
             "d-none": !resultProperty.visible,
         }),
         style: {
-            backgroundColor: colorPalette(value),
+            backgroundColor: resultProperty.colorScale(value),
         },
         onMouseEnter: (e) =>
             resultProperty.level === "atom"
@@ -75,7 +73,6 @@ export default function TableCell({
                                 group={group}
                                 // color palette for atoms
                                 atomColorProperty={atomColorProperty}
-                                atomColorPalette={atomColorPalette}
                                 // feature to select atoms
                                 selectedAtom={selectedAtom}
                                 onAtomSelect={onAtomSelect}
@@ -206,11 +203,8 @@ TableCell.propTypes = {
     result: PropTypes.object.isRequired,
     resultProperty: PropTypes.object.isRequired,
     group: PropTypes.object,
-    compressed: PropTypes.bool,
     selectedAtom: PropTypes.number,
     className: PropTypes.string,
     onAtomSelect: PropTypes.func,
-    colorPalette: PropTypes.func,
     atomColorProperty: resultPropertyType,
-    atomColorPalette: PropTypes.func,
 }

@@ -15,6 +15,8 @@ const ResultTable = memo(function ResultTable({
     columnSelection,
     atomColorProperty,
 }) {
+    const palettes = useColorPalettes()
+
     //
     // compute visibility and style of columns
     //
@@ -87,6 +89,7 @@ const ResultTable = memo(function ResultTable({
                         visible: isVisible(resultProperty),
                         startBlock,
                         endBlock,
+                        colorScale: getColorPalette(palettes, resultProperty),
                     }
                 },
             )
@@ -96,22 +99,7 @@ const ResultTable = memo(function ResultTable({
                 secondColumnRow,
                 resultProperties: augmentedResultProperties,
             }
-        }, [module.resultProperties, columnSelection])
-
-    //
-    // compute color palettes
-    //
-    const palettes = useColorPalettes()
-
-    // get color palettes for each result property
-    const colorPalettes = useMemo(() => {
-        return Object.fromEntries(
-            module.resultProperties.map((resultProperty) => [
-                resultProperty.name,
-                getColorPalette(palettes, resultProperty),
-            ]),
-        )
-    }, [module, palettes])
+        }, [module, columnSelection, palettes])
 
     //
     // prepare data for arranging it in a table
@@ -210,8 +198,9 @@ const ResultTable = memo(function ResultTable({
                         group={group}
                         module={module}
                         resultProperties={resultProperties}
-                        colorPalettes={colorPalettes}
-                        atomColorProperty={atomColorProperty}
+                        atomColorProperty={resultProperties.find(
+                            (r) => r.name === atomColorProperty?.name,
+                        )}
                     />
                 ))}
             </tbody>

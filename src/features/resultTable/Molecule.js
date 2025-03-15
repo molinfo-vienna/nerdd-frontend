@@ -9,7 +9,6 @@ export default function Molecule({
     onAtomSelect,
     group,
     atomColorProperty,
-    atomColorPalette,
 }) {
     const [svg, setSvg] = useState(null)
 
@@ -19,7 +18,7 @@ export default function Molecule({
     // compute atom colors
     //
     const atomColors = useMemo(() => {
-        if (atomColorPalette === undefined) return undefined
+        if (atomColorProperty?.colorScale == null) return undefined
 
         // if a molecule has only one atom entry with atom_id = null, then it is a dummy row
         // signaling an invalid computation -> do not color the atoms
@@ -30,12 +29,12 @@ export default function Molecule({
         for (const result of group.children) {
             const atomId = result.atom_id
             const propertyValue = result[atomColorProperty.name]
-            const color = atomColorPalette(propertyValue)
+            const color = atomColorProperty.colorScale(propertyValue)
             atomColors[atomId] = color
         }
 
         return atomColors
-    }, [group, atomColorPalette])
+    }, [group, atomColorProperty])
 
     //
     // to improve performance, we render the SVG only once
@@ -188,5 +187,4 @@ Molecule.propTypes = {
     onAtomSelect: PropTypes.func,
     group: PropTypes.object,
     atomColorProperty: resultPropertyType,
-    atomColorPalette: PropTypes.func,
 }
