@@ -34,7 +34,7 @@ export default function Molecule({
         }
 
         return atomColors
-    }, [group, atomColorProperty])
+    }, [group, atomColorProperty?.name, atomColorProperty?.colorScale])
 
     //
     // to improve performance, we render the SVG only once
