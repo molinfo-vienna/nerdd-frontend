@@ -23,9 +23,13 @@ export default function JobStatusWebSocketMockServer({ job, pageSize }) {
 
     // create a socket server
     useEffect(() => {
-        const server = new SocketServer(
-            `ws://localhost:3000/websocket/${moduleId}/jobs/${job.id}`,
-        )
+        // Dynamically determine the port from window.location or fallback to 3000
+        const wsProtocol = window.location.protocol === "https:" ? "wss" : "ws"
+        const wsHost = window.location.hostname
+        const wsPort = window.location.port ? `:${window.location.port}` : ""
+        const wsUrl = `${wsProtocol}://${wsHost}${wsPort}/websocket/${moduleId}/jobs/${job.id}`
+
+        const server = new SocketServer(wsUrl)
 
         // initially send the job status once when connecting
         server.on("connection", (socket) => {

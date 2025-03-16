@@ -7,7 +7,7 @@ const DebugContext = createContext(false)
 export const useDebug = () => useContext(DebugContext)
 
 export const DebugProvider = ({ children }) => {
-    const isDebug = process.env.NODE_ENV === "development" // Read from env
+    const isDebug = import.meta.env.MODE === "development" // Updated for Vite
     return (
         <DebugContext.Provider value={isDebug}>
             {isDebug && <Debug />}

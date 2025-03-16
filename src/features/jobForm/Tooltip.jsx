@@ -87,7 +87,7 @@ export default function Tooltip({ children, helpText, positionReference }) {
                     ref={refs.setFloating}
                     style={floatingStyles}
                     // don't show the tooltip on smaller screens
-                    className="d-none d-xl-block"
+                    className="d-none d-lg-block"
                     {...getFloatingProps()}
                 >
                     <div style={styles}>
@@ -128,6 +128,7 @@ export default function Tooltip({ children, helpText, positionReference }) {
                                      * The last paragraph of the markdown text will have
                                      * an undesired margin at the bottom. We remove it by
                                      * adding an empty paragraph with negative margin.
+                                     * TODO: use CSS or markdown parser options instead
                                      */}
                                     <p className="m-n3"></p>
                                 </small>
@@ -137,7 +138,7 @@ export default function Tooltip({ children, helpText, positionReference }) {
                 </div>
             )}
             {/* copy of help element above, but for small screens */}
-            <div className="d-flex d-xl-none">
+            <div className="d-flex d-lg-none">
                 <small id="inputFileHelp" className="form-text">
                     <Markdown>{helpText}</Markdown>
                     {/*
