@@ -2,6 +2,7 @@
     "name": "nerdd-frontend",
     "version": "0.1.0",
     "private": true,
+    "type": "module",
     "dependencies": {
         "@floating-ui/react": "^0.26.19",
         "@fontsource/open-sans": "^5.1.1",
