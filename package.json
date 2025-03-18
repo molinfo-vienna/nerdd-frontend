@@ -7,7 +7,7 @@
         "@floating-ui/react": "^0.26.19",
         "@fontsource/open-sans": "^5.1.1",
         "@fontsource/overpass": "^5.1.2",
-        "@reduxjs/toolkit": "^1.9.7",
+        "@reduxjs/toolkit": "^2.7.0",
         "@testing-library/jest-dom": "^5.17.0",
         "@testing-library/react": "^13.4.0",
         "@testing-library/user-event": "^13.5.0",
