@@ -1,7 +1,7 @@
 import react from "@vitejs/plugin-react"
-import { resolve } from "path"
 import { visualizer } from "rollup-plugin-visualizer"
 import { defineConfig } from "vite"
+import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
     plugins: [
@@ -12,6 +12,7 @@ export default defineConfig({
             gzipSize: true,
             brotliSize: true,
         }),
+        tsconfigPaths(),
     ],
     base: "/",
     server: {
@@ -20,12 +21,5 @@ export default defineConfig({
     },
     build: {
         outDir: "build",
-    },
-    resolve: {
-        alias: {
-            "@": resolve(__dirname, "src"),
-            "~bootstrap": resolve(__dirname, "node_modules/bootstrap"),
-            "~@fontsource": resolve(__dirname, "node_modules/@fontsource"),
-        },
     },
 })
