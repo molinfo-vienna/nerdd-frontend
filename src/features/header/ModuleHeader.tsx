@@ -1,4 +1,3 @@
-import React from "react"
 import { FaBook, FaBookOpen, FaPlug } from "react-icons/fa6"
 import Markdown from "react-markdown"
 import { Link } from "react-router-dom"

@@ -1,4 +1,3 @@
-import React from "react"
 import { PiBulldozer } from "react-icons/pi"
 import Layout from "./Layout"
 

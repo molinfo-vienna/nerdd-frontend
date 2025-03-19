@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import React, { useRef } from "react"
+import { Children, useRef } from "react"
 import { refType } from "../../types"
 import Tooltip from "./Tooltip"
 
@@ -21,7 +21,7 @@ export default function Row({
 
     // we always put the anchor of the tooltip centered w.r.t. the first child
     // the remaining children are rendered, but do not influence the tooltip position
-    const [firstChild, ...restChildren] = React.Children.toArray(children)
+    const [firstChild, ...restChildren] = Children.toArray(children)
 
     return (
         <div {...modifiedProps}>

@@ -1,6 +1,6 @@
 import { createForm } from "final-form"
 import PropTypes from "prop-types"
-import React, { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { Field, Form, FormSpy } from "react-final-form"
 import { FaPaperPlane } from "react-icons/fa6"
 import { moduleType } from "../../types"

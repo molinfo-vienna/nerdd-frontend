@@ -1,4 +1,3 @@
-import React from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import ModuleHeader from "../features/header/ModuleHeader"
 import JobForm from "../features/jobForm/JobForm"

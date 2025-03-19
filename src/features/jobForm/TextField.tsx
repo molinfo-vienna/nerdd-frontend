@@ -1,5 +1,4 @@
 import PropTypes from "prop-types"
-import React from "react"
 import { refType } from "../../types"
 
 export default function TextField({

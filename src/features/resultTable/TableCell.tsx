@@ -1,6 +1,5 @@
 import classNames from "classnames"
 import PropTypes from "prop-types"
-import React from "react"
 import { RxCross1 } from "react-icons/rx"
 import { moduleType, resultPropertyType } from "../../types"
 import Molecule from "./Molecule"

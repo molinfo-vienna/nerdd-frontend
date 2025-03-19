@@ -1,6 +1,5 @@
 import classNames from "classnames"
 import PropTypes from "prop-types"
-import React from "react"
 import ProblemIcon from "./ProblemIcon"
 
 export default function ProblemListCell({ problems, className }) {

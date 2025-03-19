@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import { createContext, React, useContext } from "react"
+import { createContext, useContext } from "react"
 import Debug from "./Debug"
 
 const DebugContext = createContext(false)

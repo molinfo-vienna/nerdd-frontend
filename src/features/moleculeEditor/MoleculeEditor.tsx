@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import React, { useCallback, useEffect, useId, useState } from "react"
+import { useCallback, useEffect, useId, useState } from "react"
 import useJsApplet from "./useJsApplet"
 
 export default function MoleculeEditor({

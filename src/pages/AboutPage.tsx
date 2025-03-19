@@ -1,4 +1,4 @@
-import React, { useRef } from "react"
+import { useRef } from "react"
 import Markdown from "react-markdown"
 import { useParams } from "react-router-dom"
 import rehypeSlug from "rehype-slug"

@@ -1,5 +1,4 @@
 import PropTypes from "prop-types"
-import React from "react"
 import { CircularProgressbar } from "react-circular-progressbar"
 
 export default function ProgressBar({ numEntriesProcessed, numEntriesTotal }) {

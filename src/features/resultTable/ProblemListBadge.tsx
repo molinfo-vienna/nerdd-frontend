@@ -1,5 +1,4 @@
 import PropTypes from "prop-types"
-import React from "react"
 import ProblemIconWithTooltip from "./ProblemIconWithTooltip"
 
 export default function ProblemListBadge({ problems, ...props }) {

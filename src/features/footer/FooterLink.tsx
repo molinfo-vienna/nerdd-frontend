@@ -1,5 +1,4 @@
 import PropTypes from "prop-types"
-import React from "react"
 import { Link } from "react-router-dom"
 
 export default function FooterLink({ Icon, title, url, ...props }) {

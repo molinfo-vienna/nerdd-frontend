@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import React, { Fragment } from "react"
+import { Fragment } from "react"
 
 export default function ColumnSelectDropdown({
     columnSelection,

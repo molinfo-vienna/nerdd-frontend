@@ -13,7 +13,7 @@ import {
     useInteractions,
 } from "@floating-ui/react"
 import PropTypes from "prop-types"
-import React, { useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import ProblemIcon from "./ProblemIcon"
 

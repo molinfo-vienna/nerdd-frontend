@@ -1,4 +1,4 @@
-import React, { useRef } from "react"
+import { useRef } from "react"
 import { FaGear } from "react-icons/fa6"
 import { useDispatch, useSelector } from "react-redux"
 import { makeButton, useTweaks } from "use-tweaks"

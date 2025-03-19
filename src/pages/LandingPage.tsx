@@ -1,4 +1,3 @@
-import React from "react"
 import ModuleCard from "../features/moduleCard/ModuleCard"
 import { useGetModulesQuery } from "../services"
 import ErrorPage from "./ErrorPage"

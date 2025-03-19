@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import React, { lazy, Suspense } from "react"
+import { lazy, Suspense } from "react"
 
 const loadIcon = (collection, name) => {
     const handler = (module) => {

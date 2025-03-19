@@ -1,5 +1,4 @@
 import classNames from "classnames"
-import React from "react"
 import { FaBars, FaGithub } from "react-icons/fa6"
 import { Link, useMatches, useParams } from "react-router-dom"
 import { useGetModuleQuery } from "../../services"

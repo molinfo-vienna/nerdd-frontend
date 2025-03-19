@@ -1,6 +1,6 @@
 import { sortedIndexBy } from "lodash"
 import PropTypes from "prop-types"
-import React, { memo, useMemo } from "react"
+import { memo, useMemo } from "react"
 import { moduleType, resultPropertyType, resultType } from "../../types"
 import useColorPalettes from "../colorPalettes/useColorPalettes"
 import getColorPalette from "./getColorPalette"

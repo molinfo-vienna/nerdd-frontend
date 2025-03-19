@@ -1,5 +1,4 @@
 import PropTypes from "prop-types"
-import React from "react"
 import { FaRegCircleCheck, FaRegCircleXmark } from "react-icons/fa6"
 
 export default function FileItem({ file, onClickDelete }) {

@@ -1,4 +1,4 @@
-import React from "react"
+import { Children } from "react"
 import { Link } from "react-router-dom"
 import { moduleType } from "../../types"
 import NavigationBar from "../navigationBar/NavigationBar"
@@ -6,11 +6,11 @@ import "./style.scss"
 
 export default function Header({ module, children }) {
     // get child having the pseudo type "Content"
-    const content = React.Children.toArray(children).find(
+    const content = Children.toArray(children).find(
         (child) => child.type.name === "HeaderContent",
     )
 
-    const cards = React.Children.toArray(children).filter(
+    const cards = Children.toArray(children).filter(
         (child) => child.type.name === "HeaderCard",
     )
 

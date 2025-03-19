@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import React from "react"
+import { Children } from "react"
 import Footer from "../features/footer/Footer"
 import NavigationBar from "../features/navigationBar/NavigationBar"
 
@@ -9,7 +9,7 @@ export default function Layout({ children }) {
     // )
     const developmentVersion = true
 
-    const childrenArray = React.Children.toArray(children)
+    const childrenArray = Children.toArray(children)
 
     // check if children contains Layout.Header
     const header = childrenArray.find((child) => child.type === Layout.Header)

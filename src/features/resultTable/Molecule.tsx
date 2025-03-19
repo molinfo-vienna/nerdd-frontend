@@ -1,6 +1,6 @@
 import parse, { attributesToProps, domToReact } from "html-react-parser"
 import PropTypes from "prop-types"
-import React, { useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { resultPropertyType } from "../../types"
 
 export default function Molecule({

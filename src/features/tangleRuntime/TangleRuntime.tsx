@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import React, { useState } from "react"
+import { useRef, useState } from "react"
 import Draggable from "react-draggable"
 import "./style.scss"
 
@@ -46,7 +46,7 @@ export default function TangleRuntime({ moleculesPerSecond, initialValue }) {
     //
 
     // reference to the node that is being dragged
-    const nodeRef = React.useRef(null)
+    const nodeRef = useRef(null)
 
     // the initial screen position when starting to drag
     const [initialOffset, setInitialOffset] = useState(null)

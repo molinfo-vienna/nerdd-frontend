@@ -10,7 +10,7 @@ import {
     useTransitionStyles,
 } from "@floating-ui/react"
 import PropTypes from "prop-types"
-import React, { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Markdown from "react-markdown"
 import { refType } from "../../types"
 import "./style.css"

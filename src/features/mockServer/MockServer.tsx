@@ -1,6 +1,6 @@
 import { createServer, Response } from "miragejs"
 import PropTypes from "prop-types"
-import React, { Fragment, useEffect } from "react"
+import { Fragment, useEffect } from "react"
 import { useDispatch, useStore } from "react-redux"
 import { nerddApi } from "../../services"
 import {

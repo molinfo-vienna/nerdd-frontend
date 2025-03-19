@@ -1,7 +1,6 @@
 import classNames from "classnames"
 import { sortedLastIndexBy } from "lodash"
 import PropTypes from "prop-types"
-import React from "react"
 import { Link } from "react-router-dom"
 import { useGetJobStatusQuery } from "../../services"
 

@@ -1,5 +1,4 @@
 import PropTypes from "prop-types"
-import React from "react"
 import { BsExclamationCircle } from "react-icons/bs"
 import Layout from "./Layout"
 

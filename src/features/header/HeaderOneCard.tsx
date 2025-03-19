@@ -1,5 +1,5 @@
 import propTypes from "prop-types"
-import React from "react"
+import { Children } from "react"
 import { Link } from "react-router-dom"
 import { moduleType } from "../../types"
 import Icon from "../icon/Icon"
@@ -8,15 +8,15 @@ import "./style.scss"
 
 export default function HeaderOneCard({ module, children, title }) {
     // get child having the pseudo type "Content"
-    const content = React.Children.toArray(children).find(
+    const content = Children.toArray(children).find(
         (child) => child.type?.name === "HeaderContent",
     )
 
-    const icons = React.Children.toArray(children).filter(
+    const icons = Children.toArray(children).filter(
         (child) => child.type?.name === "HeaderIcon",
     )
 
-    const cardSections = React.Children.toArray(children).filter(
+    const cardSections = Children.toArray(children).filter(
         (child) => child.type?.name === "HeaderCardSection",
     )
 
