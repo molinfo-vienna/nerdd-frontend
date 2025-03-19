@@ -1,10 +1,21 @@
-import { useEffect, useState } from "react"
+import { type RefObject, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import ScrollSpy from "react-scrollspy-navigation"
-import { refType } from "../../types"
 import "./style.scss"
 
-const renderTOC = (toc) => {
+type TOCItem = {
+    level: number;
+    id: string;
+    text: string;
+    children: TOCItem[];
+    parent?: TOCItem | null;
+}
+
+type TableOfContentsProps = {
+    contentRef: RefObject<HTMLElement>;
+}
+
+const renderTOC = (toc: TOCItem[]) => {
     return (
         <ul>
             {toc.map((item, index) =>
@@ -25,8 +36,8 @@ const renderTOC = (toc) => {
     )
 }
 
-export default function TableOfContents({ contentRef }) {
-    const [toc, setToc] = useState(null)
+export default function TableOfContents({ contentRef }: TableOfContentsProps) {
+    const [toc, setToc] = useState<TOCItem | null>(null)
     const navigate = useNavigate()
 
     const offsetTop = 50
@@ -137,8 +148,4 @@ export default function TableOfContents({ contentRef }) {
             </nav>
         </ScrollSpy>
     )
-}
-
-TableOfContents.propTypes = {
-    contentRef: refType.isRequired,
 }

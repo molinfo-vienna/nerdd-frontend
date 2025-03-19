@@ -1,10 +1,21 @@
+import { type Module } from "@/types"
+import { type ComponentType } from "react"
 import { FaBook, FaBookOpen, FaPlug } from "react-icons/fa6"
 import Markdown from "react-markdown"
 import { Link } from "react-router-dom"
-import { moduleType } from "../../types"
 
-export default function ModuleHeader({ module }) {
-    const icons = [
+type ModuleHeaderProps = {
+    module: Module;
+}
+
+type IconItem = {
+    Icon: ComponentType<{ size?: number }>;
+    caption: string;
+    href?: string;
+}
+
+export default function ModuleHeader({ module }: ModuleHeaderProps) {
+    const icons: IconItem[] = [
         {
             Icon: FaBookOpen,
             caption: "Docs",
@@ -45,7 +56,7 @@ export default function ModuleHeader({ module }) {
                                 </div>
                             )} */}
 
-                        {module.publications.map((publication, i) => (
+                        {module.publications?.map((publication, i) => (
                             <div
                                 className="card-body d-flex flex-wrap px-4"
                                 key={i}
@@ -59,26 +70,14 @@ export default function ModuleHeader({ module }) {
                                 </p>
                                 <p className="mb-2">
                                     {publication.authors
-                                        .map(
-                                            (author) =>
+                                        ?.map(
+                                            (author: any) =>
                                                 `${author.firstName} ${author.lastName}`,
                                         )
                                         .join(", ")}
                                 </p>
                             </div>
                         ))}
-
-                        {/* <Header.Card>
-        <p className="mb-2">
-            <Icon name="FaClock" size={35} className="me-2" />
-        </p>
-        <span className="fs-6">
-            <TangleRuntime
-                moleculesPerSecond={2}
-                initialValue={100}
-            />
-        </span>
-    </Header.Card> */}
 
                         <div className="card-footer px-0">
                             <div className="d-flex flex-wrap">
@@ -113,8 +112,4 @@ export default function ModuleHeader({ module }) {
             </div>
         </section>
     )
-}
-
-ModuleHeader.propTypes = {
-    module: moduleType.isRequired,
 }

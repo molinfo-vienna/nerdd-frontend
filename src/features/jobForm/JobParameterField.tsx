@@ -1,10 +1,14 @@
+import { type JobParameter } from "@/types"
 import { Field } from "react-final-form"
-import { jobParameterType } from "../../types"
 import CheckBoxField from "./CheckBoxField"
 import SelectField from "./SelectField"
 import TextField from "./TextField"
 
-export default function JobParameterField({ jobParameter }) {
+type JobParameterFieldProps = {
+    jobParameter: JobParameter;
+}
+
+export default function JobParameterField({ jobParameter }: JobParameterFieldProps) {
     if (jobParameter.choices) {
         const defaultValue = jobParameter.default ?? ""
 
@@ -50,8 +54,4 @@ export default function JobParameterField({ jobParameter }) {
             />
         )
     }
-}
-
-JobParameterField.propTypes = {
-    jobParameter: jobParameterType.isRequired,
 }

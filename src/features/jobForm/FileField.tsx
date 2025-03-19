@@ -1,13 +1,24 @@
-import PropTypes from "prop-types"
-import { refType } from "../../types"
-import FileUploadAndList from "../fileUpload/FileUploadAndList"
+import { type RefObject } from "react";
+import FileUploadAndList from "../fileUpload/FileUploadAndList";
+
+// Define type for the component props
+type FileFieldProps = {
+    input?: {
+        [key: string]: any;
+    };
+    meta?: {
+        [key: string]: any;
+    };
+    positionReference?: RefObject<HTMLElement>;
+    [key: string]: any;
+}
 
 export default function FileField({
     input,
     meta,
     positionReference,
     ...props
-}) {
+}: FileFieldProps) {
     return (
         <FileUploadAndList
             name="inputFile"
@@ -16,10 +27,4 @@ export default function FileField({
             {...props}
         />
     )
-}
-
-FileField.propTypes = {
-    input: PropTypes.object,
-    meta: PropTypes.object,
-    positionReference: refType,
 }

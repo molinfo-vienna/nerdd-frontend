@@ -1,8 +1,16 @@
-import { Link } from "react-router-dom"
-import Icon from "../icon/Icon"
-import "./style.scss"
+import { Link } from "react-router-dom";
+import Icon from "../icon/Icon";
+import "./style.scss";
 
-export default function Button({ href, className, icon, caption, ...props }) {
+interface ButtonProps {
+    href?: string;
+    className?: string;
+    icon?: string;
+    caption?: string;
+    [key: string]: any; // For additional props
+}
+
+export default function Button({ href, className, icon, caption, ...props }: ButtonProps) {
     // merge props with default values
     const mergedProps = {
         className:

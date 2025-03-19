@@ -1,10 +1,36 @@
+import type { Module, ResultProperty } from "@/types"
 import classNames from "classnames"
-import PropTypes from "prop-types"
 import { RxCross1 } from "react-icons/rx"
-import { moduleType, resultPropertyType } from "../../types"
 import Molecule from "./Molecule"
 import ProblemListBadge from "./ProblemListBadge"
 import ProblemListCell from "./ProblemListCell"
+
+type ResultGroup = {
+    children: any[];
+    [key: string]: any;
+}
+
+type TableCellProps = {
+    module: Module;
+    result: Record<string, any>;
+    resultProperty: {
+        name: string;
+        type: string;
+        level?: string;
+        precision?: number;
+        visible?: boolean;
+        startBlock?: boolean;
+        endBlock?: boolean;
+        colorScale: (value: any) => string;
+        [key: string]: any;
+    };
+    group: ResultGroup;
+    selectedAtom?: number;
+    className?: string;
+    onAtomSelect?: (atomId?: number) => void;
+    atomColorProperty?: ResultProperty;
+    [key: string]: any;
+}
 
 export default function TableCell({
     module,
@@ -16,7 +42,7 @@ export default function TableCell({
     onAtomSelect,
     atomColorProperty,
     ...props
-}) {
+}: TableCellProps) {
     const value = result[resultProperty.name]
     const molId = result.mol_id
 
@@ -187,23 +213,14 @@ export default function TableCell({
             backgroundColor: resultProperty.colorScale(value),
         },
         onMouseEnter: (e) =>
-            resultProperty.level === "atom"
+            resultProperty.level === "atom" && onAtomSelect
                 ? onAtomSelect(result.atom_id)
                 : null,
         onMouseOut: (e) =>
-            resultProperty.level === "atom" ? onAtomSelect(undefined) : null,
+            resultProperty.level === "atom" && onAtomSelect
+                ? onAtomSelect(undefined)
+                : null,
     }
 
     return <td {...commonProps}>{cellContent}</td>
-}
-
-TableCell.propTypes = {
-    module: moduleType.isRequired,
-    result: PropTypes.object.isRequired,
-    resultProperty: PropTypes.object.isRequired,
-    group: PropTypes.object,
-    selectedAtom: PropTypes.number,
-    className: PropTypes.string,
-    onAtomSelect: PropTypes.func,
-    atomColorProperty: resultPropertyType,
 }

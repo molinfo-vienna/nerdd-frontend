@@ -1,7 +1,21 @@
-import parse, { attributesToProps, domToReact } from "html-react-parser"
-import PropTypes from "prop-types"
-import { useEffect, useMemo, useRef, useState } from "react"
-import { resultPropertyType } from "../../types"
+import { type ResultProperty } from "@/types";
+import parse, { attributesToProps, domToReact } from "html-react-parser";
+import { useEffect, useMemo, useRef, useState } from "react";
+
+type MoleculeProps = {
+    svgValue: string;
+    selectedAtom?: number;
+    onAtomSelect?: (atomId?: number) => void;
+    group?: {
+        children: Array<{
+            atom_id: number | null;
+            [key: string]: any;
+        }>;
+    };
+    atomColorProperty?: ResultProperty & {
+        colorScale: (value: any) => string;
+    };
+}
 
 export default function Molecule({
     svgValue,
@@ -9,28 +23,30 @@ export default function Molecule({
     onAtomSelect,
     group,
     atomColorProperty,
-}) {
-    const [svg, setSvg] = useState(null)
+}: MoleculeProps) {
+    const [svg, setSvg] = useState<React.ReactElement | null>(null)
 
-    const ref = useRef(null)
+    const ref = useRef<SVGSVGElement>(null)
 
     //
     // compute atom colors
     //
     const atomColors = useMemo(() => {
-        if (atomColorProperty?.colorScale == null) return undefined
+        if (!group || atomColorProperty?.colorScale == null) return undefined
 
         // if a molecule has only one atom entry with atom_id = null, then it is a dummy row
         // signaling an invalid computation -> do not color the atoms
         if (group.children.length === 1 && group.children[0].atom_id == null)
             return undefined
 
-        const atomColors = []
+        const atomColors: Record<number, string> = {}
         for (const result of group.children) {
             const atomId = result.atom_id
-            const propertyValue = result[atomColorProperty.name]
-            const color = atomColorProperty.colorScale(propertyValue)
-            atomColors[atomId] = color
+            if (atomId !== null) {
+                const propertyValue = result[atomColorProperty.name]
+                const color = atomColorProperty.colorScale(propertyValue)
+                atomColors[atomId] = color
+            }
         }
 
         return atomColors
@@ -41,7 +57,7 @@ export default function Molecule({
     //
     useEffect(() => {
         const parseOptions = {
-            replace: (domNode) => {
+            replace: (domNode: any) => {
                 if (domNode === undefined) {
                     return
                 }
@@ -63,12 +79,12 @@ export default function Molecule({
                     const children = domToReact(domNode.children, parseOptions)
 
                     const ellipses = children.filter(
-                        (child) => child.type === "ellipse",
+                        (child: any) => child.type === "ellipse",
                     )
 
                     const ellipseCopies =
                         atomColors !== undefined
-                            ? ellipses.map((ellipse, i) => {
+                            ? ellipses.map((ellipse: any, i: number) => {
                                   // -> extract the atom id from the class name
                                   const atomId = parseInt(
                                       ellipse.props.className.replace(
@@ -101,7 +117,7 @@ export default function Molecule({
                             : []
 
                     const rest = children.filter(
-                        (child) => child.type !== "ellipse",
+                        (child: any) => child.type !== "ellipse",
                     )
 
                     const newChildren = [...ellipseCopies, ...rest, ...ellipses]
@@ -132,12 +148,12 @@ export default function Molecule({
                         <ellipse
                             {...attributesToProps(updatedAttribs)}
                             onMouseEnter={
-                                onAtomSelect ? () => onAtomSelect(atomId) : null
+                                onAtomSelect ? () => onAtomSelect(atomId) : undefined
                             }
                             onMouseOut={
                                 onAtomSelect
                                     ? () => onAtomSelect(undefined)
-                                    : null
+                                    : undefined
                             }
                         />
                     )
@@ -148,23 +164,23 @@ export default function Molecule({
         // TODO: is there a better way to recognize SVGs?
         if (svgValue.startsWith("<svg") || svgValue.startsWith("<?xml")) {
             const svg = parse(svgValue, parseOptions)
-            setSvg(svg)
+            setSvg(svg as React.ReactElement)
         } else {
             // svgValue is a URL pointing to an svg file
             fetch(svgValue)
                 .then((response) => response.text())
                 .then((text) => {
                     const svg = parse(text, parseOptions)
-                    setSvg(svg)
+                    setSvg(svg as React.ReactElement)
                 })
         }
-    }, [onAtomSelect, atomColors])
+    }, [svgValue, onAtomSelect, atomColors])
 
     //
     // we dynamically add (and remove) a class to the correct atom when selected
     //
     useEffect(() => {
-        if (ref !== null && selectedAtom !== undefined && svg !== null) {
+        if (ref.current && selectedAtom !== undefined && svg !== null) {
             const atoms = ref.current.querySelectorAll(`.atom-${selectedAtom}`)
             atoms.forEach((atom) => {
                 atom.classList.add("selected")
@@ -179,12 +195,4 @@ export default function Molecule({
     }, [selectedAtom, svg])
 
     return svg
-}
-
-Molecule.propTypes = {
-    svgValue: PropTypes.string.isRequired,
-    selectedAtom: PropTypes.number,
-    onAtomSelect: PropTypes.func,
-    group: PropTypes.object,
-    atomColorProperty: resultPropertyType,
 }

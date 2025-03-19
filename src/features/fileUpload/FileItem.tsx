@@ -1,7 +1,19 @@
-import PropTypes from "prop-types"
-import { FaRegCircleCheck, FaRegCircleXmark } from "react-icons/fa6"
+import { FaRegCircleCheck, FaRegCircleXmark } from "react-icons/fa6";
 
-export default function FileItem({ file, onClickDelete }) {
+type FileItemType = {
+    id: string;
+    filename: string;
+    status: 'pending' | 'deleting' | 'success' | 'error';
+    errorMessage?: string;
+    sourceData?: any;
+}
+
+type FileItemProps = {
+    file: FileItemType;
+    onClickDelete: (file: FileItemType) => void;
+}
+
+export default function FileItem({ file, onClickDelete }: FileItemProps) {
     return (
         <li key={file.id}>
             <div className="d-flex my-1">
@@ -62,9 +74,4 @@ export default function FileItem({ file, onClickDelete }) {
             </div>
         </li>
     )
-}
-
-FileItem.propTypes = {
-    file: PropTypes.object,
-    onClickDelete: PropTypes.func,
 }

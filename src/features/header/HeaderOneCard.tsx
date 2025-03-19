@@ -1,23 +1,44 @@
-import propTypes from "prop-types"
-import { Children } from "react"
+import { Module } from "@/types"
+import { Children, ReactNode } from "react"
 import { Link } from "react-router-dom"
-import { moduleType } from "../../types"
 import Icon from "../icon/Icon"
 import NavigationBar from "../navigationBar/NavigationBar"
 import "./style.scss"
 
-export default function HeaderOneCard({ module, children, title }) {
+type HeaderOneCardProps = {
+    module: Module;
+    children?: ReactNode;
+    title?: string;
+}
+
+type HeaderContentProps = {
+    children?: ReactNode;
+}
+
+type HeaderCardSectionProps = {
+    children?: ReactNode;
+}
+
+type HeaderIconProps = {
+    href?: string;
+    icon: string;
+    caption: string;
+    className?: string;
+    [key: string]: any;
+}
+
+export default function HeaderOneCard({ module, children, title }: HeaderOneCardProps) {
     // get child having the pseudo type "Content"
     const content = Children.toArray(children).find(
-        (child) => child.type?.name === "HeaderContent",
+        (child: any) => child.type?.name === "HeaderContent",
     )
 
     const icons = Children.toArray(children).filter(
-        (child) => child.type?.name === "HeaderIcon",
+        (child: any) => child.type?.name === "HeaderIcon",
     )
 
     const cardSections = Children.toArray(children).filter(
-        (child) => child.type?.name === "HeaderCardSection",
+        (child: any) => child.type?.name === "HeaderCardSection",
     )
 
     return (
@@ -74,11 +95,11 @@ export default function HeaderOneCard({ module, children, title }) {
     )
 }
 
-HeaderOneCard.Content = function HeaderContent({ children }) {
+HeaderOneCard.Content = function HeaderContent({ children }: HeaderContentProps) {
     return <>{children}</>
 }
 
-HeaderOneCard.CardSection = function HeaderCardSection({ children }) {
+HeaderOneCard.CardSection = function HeaderCardSection({ children }: HeaderCardSectionProps) {
     return <>{children}</>
 }
 
@@ -88,7 +109,7 @@ HeaderOneCard.Icon = function HeaderIcon({
     caption,
     className,
     ...props
-}) {
+}: HeaderIconProps) {
     // merge props with default values
     const mergedProps = {
         className: "text-center my-2 text-primary " + (className ?? ""),
@@ -112,25 +133,4 @@ HeaderOneCard.Icon = function HeaderIcon({
             )}
         </div>
     )
-}
-
-HeaderOneCard.propTypes = {
-    module: moduleType,
-    children: propTypes.node,
-    title: propTypes.string,
-}
-
-HeaderOneCard.Content.propTypes = {
-    children: propTypes.node,
-}
-
-HeaderOneCard.CardSection.propTypes = {
-    children: propTypes.node,
-}
-
-HeaderOneCard.Icon.propTypes = {
-    href: propTypes.string,
-    icon: propTypes.string.isRequired,
-    caption: propTypes.string.isRequired,
-    className: propTypes.string,
 }

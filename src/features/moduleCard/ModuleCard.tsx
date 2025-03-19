@@ -1,8 +1,12 @@
-import { Link } from "react-router-dom"
-import { moduleType } from "../../types"
-import "./style.scss"
+import { type Module } from "@/types";
+import { Link } from "react-router-dom";
+import "./style.scss";
 
-export default function ModuleCard({ module }) {
+type ModuleCardProps = {
+    module: Module;
+}
+
+export default function ModuleCard({ module }: ModuleCardProps) {
     return (
         <Link
             to={module.id}
@@ -23,8 +27,4 @@ export default function ModuleCard({ module }) {
             </div>
         </Link>
     )
-}
-
-ModuleCard.propTypes = {
-    module: moduleType.isRequired,
 }

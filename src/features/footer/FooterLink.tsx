@@ -1,7 +1,14 @@
-import PropTypes from "prop-types"
-import { Link } from "react-router-dom"
+import { type ComponentType } from "react";
+import { Link } from "react-router-dom";
 
-export default function FooterLink({ Icon, title, url, ...props }) {
+type FooterLinkProps = {
+    Icon: ComponentType<{ size?: number; className?: string }>;
+    title: string;
+    url: string;
+    [key: string]: any; // For additional props spread with ...props
+}
+
+export default function FooterLink({ Icon, title, url, ...props }: FooterLinkProps) {
     return (
         <li className="mb-2">
             <Link
@@ -14,10 +21,4 @@ export default function FooterLink({ Icon, title, url, ...props }) {
             </Link>
         </li>
     )
-}
-
-FooterLink.propTypes = {
-    Icon: PropTypes.elementType.isRequired,
-    title: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired,
 }

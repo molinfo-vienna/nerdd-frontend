@@ -12,16 +12,22 @@ import {
     useHover,
     useInteractions,
 } from "@floating-ui/react"
-import PropTypes from "prop-types"
 import { useRef, useState } from "react"
 import { createPortal } from "react-dom"
 import ProblemIcon from "./ProblemIcon"
+
+type ProblemIconWithTooltipProps = {
+    problemType: string;
+    tooltip?: string;
+    size?: number;
+    [key: string]: any;
+}
 
 export default function ProblemIconWithTooltip({
     problemType,
     tooltip,
     ...props
-}) {
+}: ProblemIconWithTooltipProps) {
     const [isOpen, setIsOpen] = useState(false)
 
     const arrowRef = useRef(null)
@@ -86,9 +92,4 @@ export default function ProblemIconWithTooltip({
                 )}
         </>
     )
-}
-
-ProblemIconWithTooltip.propTypes = {
-    problemType: PropTypes.string.isRequired,
-    tooltip: PropTypes.string,
 }

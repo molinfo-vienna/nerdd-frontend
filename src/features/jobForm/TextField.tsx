@@ -1,5 +1,19 @@
-import PropTypes from "prop-types"
-import { refType } from "../../types"
+import { type RefObject } from "react";
+
+type TextFieldProps = {
+    input: {
+        name: string;
+        [key: string]: any;
+    };
+    meta: {
+        touched?: boolean;
+        error?: string;
+        [key: string]: any;
+    };
+    label?: string;
+    positionReference?: RefObject<HTMLElement> | ((instance: HTMLElement | null) => void);
+    [key: string]: any;
+}
 
 export default function TextField({
     input,
@@ -7,7 +21,7 @@ export default function TextField({
     label,
     positionReference,
     ...props
-}) {
+}: TextFieldProps) {
     return (
         <div className="form-floating mb-3">
             <input
@@ -27,11 +41,4 @@ export default function TextField({
             )}
         </div>
     )
-}
-
-TextField.propTypes = {
-    input: PropTypes.object.isRequired,
-    meta: PropTypes.object.isRequired,
-    label: PropTypes.string,
-    positionReference: refType,
 }

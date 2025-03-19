@@ -1,9 +1,16 @@
-import PropTypes from "prop-types"
-import { Children } from "react"
-import Footer from "../features/footer/Footer"
-import NavigationBar from "../features/navigationBar/NavigationBar"
+import { Children, type FC, type ReactNode } from "react";
+import Footer from "../features/footer/Footer";
+import NavigationBar from "../features/navigationBar/NavigationBar";
 
-export default function Layout({ children }) {
+type LayoutProps = {
+    children: ReactNode;
+}
+
+interface LayoutComponent extends FC<LayoutProps> {
+    Header: FC<{ children: ReactNode }>;
+}
+
+const Layout: LayoutComponent = ({ children }) => {
     // const developmentVersion = ["localhost", "dev-nerdd.univie.ac.at"].includes(
     //     window.location.hostname,
     // )
@@ -12,12 +19,12 @@ export default function Layout({ children }) {
     const childrenArray = Children.toArray(children)
 
     // check if children contains Layout.Header
-    const header = childrenArray.find((child) => child.type === Layout.Header)
+    const header = childrenArray.find((child: any) => child.type === Layout.Header)
 
     const hasHeader = header !== undefined
 
     const content = childrenArray.filter(
-        (child) => child.type !== Layout.Header,
+        (child: any) => child.type !== Layout.Header,
     )
 
     return (
@@ -50,10 +57,8 @@ export default function Layout({ children }) {
     )
 }
 
-Layout.Header = function Header({ children }) {
+Layout.Header = function Header({ children }: { children: ReactNode }) {
     return children
 }
 
-Layout.propTypes = {
-    children: PropTypes.node.isRequired,
-}
+export default Layout

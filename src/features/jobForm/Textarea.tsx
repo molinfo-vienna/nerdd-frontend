@@ -1,13 +1,26 @@
-import PropTypes from "prop-types"
-import { refType } from "../../types"
+import { type RefObject } from "react";
+
+type TextareaProps = {
+    input: {
+        [key: string]: any;
+    };
+    meta: {
+        touched?: boolean;
+        error?: string;
+        [key: string]: any;
+    };
+    positionReference?: RefObject<HTMLTextAreaElement> | ((instance: HTMLTextAreaElement | null) => void);
+    className?: string;
+    [key: string]: any;
+}
 
 export default function Textarea({
     input,
     meta,
     positionReference,
-    className,
+    className = "",
     ...props
-}) {
+}: TextareaProps) {
     const modifiedProps = {
         ...props,
         className: `form-control ${className} ${meta.touched && meta.error ? "is-invalid" : ""}`,
@@ -25,11 +38,4 @@ export default function Textarea({
             )}
         </>
     )
-}
-
-Textarea.propTypes = {
-    input: PropTypes.object.isRequired,
-    meta: PropTypes.object.isRequired,
-    positionReference: refType,
-    className: PropTypes.string,
 }

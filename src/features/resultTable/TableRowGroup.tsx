@@ -1,22 +1,32 @@
+import type { Module, ResultProperty } from "@/types"
 import classNames from "classnames"
-import PropTypes from "prop-types"
 import { useCallback, useState } from "react"
-import { moduleType, resultPropertyType } from "../../types"
 import TableCell from "./TableCell"
+
+type Group = {
+  children: any[]
+}
+
+type TableRowGroupProps = {
+  group: Group
+  module: Module
+  atomColorProperty?: ResultProperty
+  resultProperties: ResultProperty[]
+}
 
 export default function TableRowGroup({
     group,
     module,
     atomColorProperty,
     resultProperties,
-}) {
+}: TableRowGroupProps) {
     //
     // handle mouse over event
     //
-    const [selectedAtom, setSelectedAtom] = useState(undefined)
+    const [selectedAtom, setSelectedAtom] = useState<string | number | undefined>(undefined)
 
     const handleAtomSelect = useCallback(
-        (atomId) => {
+        (atomId: string | number) => {
             setSelectedAtom(atomId)
         },
         [setSelectedAtom],
@@ -51,11 +61,4 @@ export default function TableRowGroup({
             )}
         </tr>
     ))
-}
-
-TableRowGroup.propTypes = {
-    group: PropTypes.object.isRequired,
-    module: moduleType.isRequired,
-    resultProperties: PropTypes.arrayOf(resultPropertyType).isRequired,
-    atomColorProperty: resultPropertyType,
 }

@@ -1,13 +1,17 @@
-import PropTypes from "prop-types"
 import { useRef, useState } from "react"
 import Draggable from "react-draggable"
 import "./style.scss"
 
-const clampValue = (value, min, max) => {
+const clampValue = (value: number, min: number, max: number): number => {
     return Math.min(max, Math.max(min, value))
 }
 
-export default function TangleRuntime({ moleculesPerSecond, initialValue }) {
+type TangleRuntimeProps = {
+    moleculesPerSecond: number;
+    initialValue: number;
+}
+
+export default function TangleRuntime({ moleculesPerSecond, initialValue }: TangleRuntimeProps) {
     //
     // parameters
     //
@@ -49,17 +53,17 @@ export default function TangleRuntime({ moleculesPerSecond, initialValue }) {
     const nodeRef = useRef(null)
 
     // the initial screen position when starting to drag
-    const [initialOffset, setInitialOffset] = useState(null)
+    const [initialOffset, setInitialOffset] = useState<{ x: number, y: number } | null>(null)
 
-    const handleDragStart = (e) => {
+    const handleDragStart = (e: any) => {
         setInitialOffset({ x: e.clientX, y: e.clientY })
     }
 
-    const handleDrag = (e) => {
+    const handleDrag = (e: any) => {
         const currentOffset = { x: e.clientX, y: e.clientY }
 
         const distanceInPixels = clampValue(
-            initialPixelOffset + currentOffset.x - initialOffset.x,
+            initialPixelOffset + currentOffset.x - initialOffset!.x,
             -pixelRange,
             pixelRange,
         )
@@ -69,7 +73,7 @@ export default function TangleRuntime({ moleculesPerSecond, initialValue }) {
         }
     }
 
-    const handleDragEnd = (e) => {
+    const handleDragEnd = (e: any) => {
         // update the initial pixel offset
         setInitialPixelOffset(currentPixelOffset)
     }
@@ -141,9 +145,4 @@ export default function TangleRuntime({ moleculesPerSecond, initialValue }) {
             in {processingTimeText}
         </>
     )
-}
-
-TangleRuntime.propTypes = {
-    moleculesPerSecond: PropTypes.number.isRequired,
-    initialValue: PropTypes.number.isRequired,
 }

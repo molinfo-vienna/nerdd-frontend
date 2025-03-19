@@ -1,13 +1,23 @@
-import PropTypes from "prop-types"
-import { BsExclamationCircle } from "react-icons/bs"
-import Layout from "./Layout"
+import { BsExclamationCircle } from "react-icons/bs";
+import Layout from "./Layout";
 
 const statusMap = {
     404: "Not Found",
     500: "Internal Server Error",
 }
 
-export default function ErrorPage({ error, explanation }) {
+type ErrorPageProps = {
+    error?: {
+        status?: string | number;
+        originalStatus?: string | number;
+        data?: {
+            detail?: string;
+        };
+    };
+    explanation?: string;
+}
+
+export default function ErrorPage({ error, explanation }: ErrorPageProps) {
     let status
     if (error === undefined || error.status === undefined) {
         status = "000"
@@ -52,9 +62,4 @@ export default function ErrorPage({ error, explanation }) {
             </div>
         </Layout>
     )
-}
-
-ErrorPage.propTypes = {
-    error: PropTypes.object,
-    explanation: PropTypes.string,
 }

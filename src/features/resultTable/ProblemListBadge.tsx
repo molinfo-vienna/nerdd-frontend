@@ -1,7 +1,11 @@
-import PropTypes from "prop-types"
-import ProblemIconWithTooltip from "./ProblemIconWithTooltip"
+import ProblemIconWithTooltip from "./ProblemIconWithTooltip";
 
-export default function ProblemListBadge({ problems, ...props }) {
+type ProblemListBadgeProps = {
+    problems: Array<[string, string]>;
+    [key: string]: any;
+}
+
+export default function ProblemListBadge({ problems, ...props }: ProblemListBadgeProps) {
     return (
         <div className="position-absolute top-0 end-0" {...props}>
             <div className="mt-1 me-1">
@@ -16,8 +20,4 @@ export default function ProblemListBadge({ problems, ...props }) {
             </div>
         </div>
     )
-}
-
-ProblemListBadge.propTypes = {
-    problems: PropTypes.arrayOf(PropTypes.array).isRequired,
 }

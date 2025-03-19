@@ -1,12 +1,27 @@
-import PropTypes from "prop-types"
-import { Fragment } from "react"
+import { Fragment } from "react";
+
+type Column = {
+  name: string;
+  label: string;
+  visible: boolean;
+}
+
+type ColumnGroup = {
+  groupName: string;
+  columns: Column[];
+}
+
+type ColumnSelectDropdownProps = {
+  columnSelection?: ColumnGroup[];
+  handleSelectionChange: (groupName: string, columnName: string | null, isVisible: boolean) => void;
+}
 
 export default function ColumnSelectDropdown({
     columnSelection,
     handleSelectionChange,
-}) {
+}: ColumnSelectDropdownProps) {
     if (columnSelection === undefined) {
-        return
+        return null;
     }
 
     // compute for each column group if all columns in that group are selected
@@ -103,20 +118,4 @@ export default function ColumnSelectDropdown({
             ))}
         </ul>
     )
-}
-
-ColumnSelectDropdown.propTypes = {
-    columnSelection: PropTypes.arrayOf(
-        PropTypes.shape({
-            groupName: PropTypes.string.isRequired,
-            columns: PropTypes.arrayOf(
-                PropTypes.shape({
-                    name: PropTypes.string.isRequired,
-                    label: PropTypes.string.isRequired,
-                    visible: PropTypes.bool.isRequired,
-                }),
-            ).isRequired,
-        }),
-    ),
-    handleSelectionChange: PropTypes.func.isRequired,
 }

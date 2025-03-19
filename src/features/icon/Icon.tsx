@@ -1,8 +1,13 @@
-import PropTypes from "prop-types"
-import { lazy, Suspense } from "react"
+import { lazy, Suspense } from "react";
 
-const loadIcon = (collection, name) => {
-    const handler = (module) => {
+type IconProps = {
+    collection?: string;
+    name: string;
+    [key: string]: any;
+}
+
+const loadIcon = (collection: string, name: string) => {
+    const handler = (module: Record<string, any>) => {
         if (module[name] === undefined) {
             throw new Error(`Unknown icon name: ${name}`)
         }
@@ -27,7 +32,7 @@ const loadIcon = (collection, name) => {
     }
 }
 
-const Icon = ({ collection = "fa6", name, ...props }) => {
+const Icon = ({ collection = "fa6", name, ...props }: IconProps) => {
     const IconComponent = lazy(() => loadIcon(collection, name))
 
     return (
@@ -35,11 +40,6 @@ const Icon = ({ collection = "fa6", name, ...props }) => {
             <IconComponent {...props} />
         </Suspense>
     )
-}
-
-Icon.propTypes = {
-    collection: PropTypes.string,
-    name: PropTypes.string.isRequired,
 }
 
 export default Icon

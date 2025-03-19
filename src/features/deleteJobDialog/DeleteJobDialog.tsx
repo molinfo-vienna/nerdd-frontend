@@ -1,9 +1,14 @@
-import PropTypes from "prop-types"
-import { useNavigate } from "react-router-dom"
-import { useDeleteJobMutation } from "../../services"
+import { useNavigate } from "react-router-dom";
+import { useDeleteJobMutation } from "../../services";
 
-export default function DeleteJobDialog({ id, moduleId, jobId }) {
-    const [deleteJob, {}] = useDeleteJobMutation()
+type DeleteJobDialogProps = {
+    id: string;
+    moduleId: string;
+    jobId: string;
+}
+
+export default function DeleteJobDialog({ id, moduleId, jobId }: DeleteJobDialogProps) {
+    const [deleteJob] = useDeleteJobMutation()
     const navigate = useNavigate()
 
     const handleAccept = () => {
@@ -15,7 +20,7 @@ export default function DeleteJobDialog({ id, moduleId, jobId }) {
     return (
         <div
             className="modal fade"
-            tabIndex="-1"
+            tabIndex={-1}
             id={id}
             aria-labelledby="deleteJobModalLabel"
             aria-hidden="true"
@@ -61,10 +66,4 @@ export default function DeleteJobDialog({ id, moduleId, jobId }) {
             </div>
         </div>
     )
-}
-
-DeleteJobDialog.propTypes = {
-    id: PropTypes.string.isRequired,
-    moduleId: PropTypes.string.isRequired,
-    jobId: PropTypes.string.isRequired,
 }

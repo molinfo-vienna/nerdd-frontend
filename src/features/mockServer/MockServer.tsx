@@ -1,5 +1,4 @@
 import { createServer, Response } from "miragejs"
-import PropTypes from "prop-types"
 import { Fragment, useEffect } from "react"
 import { useDispatch, useStore } from "react-redux"
 import { nerddApi } from "../../services"
@@ -16,6 +15,17 @@ import recursiveCamelToSnakeCase from "./recursiveCamelToSnakeCase"
 import ResultsGenerator from "./ResultsGenerator"
 import ResultsWebSocketMockServer from "./ResultsWebSocketMockServer"
 
+type MockServerProps = {
+    enabled: boolean;
+    return404: boolean;
+    logRequests: boolean;
+    moduleConfigs: Record<string, any>;
+    pageSize: number;
+    numResults: number;
+    predictionSpeed: number;
+    jobs: Record<string, any>;
+}
+
 export default function MockServer({
     enabled,
     return404,
@@ -25,7 +35,7 @@ export default function MockServer({
     numResults,
     predictionSpeed,
     jobs,
-}) {
+}: MockServerProps) {
     const dispatch = useDispatch()
     const store = useStore()
 
@@ -473,15 +483,4 @@ export default function MockServer({
             ))}
         </>
     )
-}
-
-MockServer.propTypes = {
-    enabled: PropTypes.bool.isRequired,
-    return404: PropTypes.bool.isRequired,
-    logRequests: PropTypes.bool.isRequired,
-    moduleConfigs: PropTypes.object.isRequired,
-    pageSize: PropTypes.number.isRequired,
-    numResults: PropTypes.number.isRequired,
-    predictionSpeed: PropTypes.number.isRequired,
-    jobs: PropTypes.object.isRequired,
 }

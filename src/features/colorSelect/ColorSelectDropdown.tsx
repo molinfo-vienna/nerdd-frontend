@@ -1,11 +1,16 @@
-import PropTypes from "prop-types"
-import { resultPropertyType } from "../../types"
+import type { ResultProperty } from '@/types';
+
+type ColorSelectDropdownProps = {
+    selectedAtomColorProperty?: ResultProperty;
+    possibleAtomColorProperties?: ResultProperty[];
+    onSelectedAtomColorPropertyChange: (property?: ResultProperty) => void;
+}
 
 export default function ColorSelectDropdown({
     selectedAtomColorProperty,
     possibleAtomColorProperties,
     onSelectedAtomColorPropertyChange,
-}) {
+}: ColorSelectDropdownProps) {
     return (
         <ul
             className="dropdown-menu dropdown-menu-end"
@@ -87,10 +92,4 @@ export default function ColorSelectDropdown({
             )}
         </ul>
     )
-}
-
-ColorSelectDropdown.propTypes = {
-    selectedAtomColorProperty: resultPropertyType,
-    possibleAtomColorProperties: PropTypes.arrayOf(resultPropertyType),
-    onSelectedAtomColorPropertyChange: PropTypes.func.isRequired,
 }

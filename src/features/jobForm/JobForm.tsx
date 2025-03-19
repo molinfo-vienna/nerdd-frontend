@@ -1,9 +1,8 @@
-import { createForm } from "final-form"
-import PropTypes from "prop-types"
+import { type Module } from "@/types"
+import { createForm, FormApi } from "final-form"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { Field, Form, FormSpy } from "react-final-form"
 import { FaPaperPlane } from "react-icons/fa6"
-import { moduleType } from "../../types"
 import MoleculeEditor from "../moleculeEditor/MoleculeEditor"
 import FileField from "./FileField"
 import JobParameterField from "./JobParameterField"
@@ -11,7 +10,12 @@ import MoleculeEditorField from "./MoleculeEditorField"
 import Row from "./Row"
 import Textarea from "./Textarea"
 
-export default function JobForm({ module, onSubmit }) {
+type JobFormProps = {
+    module: Module;
+    onSubmit: (values: any) => Promise<any>;
+}
+
+export default function JobForm({ module, onSubmit }: JobFormProps) {
     // create a placeholder for the text input
     // (first few characters of the example SMILES)
     const exampleSmiles = module.exampleSmiles
@@ -23,9 +27,9 @@ export default function JobForm({ module, onSubmit }) {
     // position the tooltip at the center of the *upload zone* (ignoring the list of
     // uploaded files). To do this, we need to get a reference to the upload zone and
     // pass it to the tooltip component.
-    const inputTextFieldTooltipPositionReference = useRef()
-    const fileFieldTooltipPositionReference = useRef()
-    const inputDrawnTooltipPositionReference = useRef()
+    const inputTextFieldTooltipPositionReference = useRef<HTMLTextAreaElement>(null)
+    const fileFieldTooltipPositionReference = useRef<HTMLElement>(null)
+    const inputDrawnTooltipPositionReference = useRef<HTMLElement>(null)
 
     const jobParameters = module.jobParameters ?? []
 
@@ -36,18 +40,18 @@ export default function JobForm({ module, onSubmit }) {
     // 3. Keep track of all files with useEffect and check on each change if all
     //    files are uploaded.
     const [status, setStatus] = useState("idle")
-    const [valuesToSubmit, setValuesToSubmit] = useState(null)
+    const [valuesToSubmit, setValuesToSubmit] = useState<any>(null)
 
-    const onDelayedSubmit = (values) => {
+    const onDelayedSubmit = (values: any) => {
         setStatus("checking")
     }
 
     useEffect(() => {
         async function _submit() {
-            if (status === "checking") {
+            if (status === "checking" && valuesToSubmit) {
                 // check if all files are uploaded
                 if (
-                    valuesToSubmit.inputFile.filter((file) =>
+                    valuesToSubmit.inputFile?.filter((file: any) =>
                         ["pending", "deleting"].includes(file.status),
                     ).length === 0
                 ) {
@@ -67,8 +71,8 @@ export default function JobForm({ module, onSubmit }) {
     // Validation
     //
     const validate = useCallback(
-        (values) => {
-            const errors = {}
+        (values: any) => {
+            const errors: Record<string, string> = {}
 
             // input
             if (values.inputType === "text") {
@@ -113,7 +117,7 @@ export default function JobForm({ module, onSubmit }) {
         )
     }, [])
 
-    const formRef = useRef(formApi)
+    const formRef = useRef<FormApi<any, any>>(formApi)
 
     return (
         <div className="row justify-content-center">
@@ -349,9 +353,4 @@ export default function JobForm({ module, onSubmit }) {
             </div>
         </div>
     )
-}
-
-JobForm.propTypes = {
-    module: moduleType.isRequired,
-    onSubmit: PropTypes.func.isRequired,
 }

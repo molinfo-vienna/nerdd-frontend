@@ -1,12 +1,45 @@
+import type { Module, Result, ResultProperty } from "@/types"
 import { sortedIndexBy } from "lodash"
-import PropTypes from "prop-types"
 import { memo, useMemo } from "react"
-import { moduleType, resultPropertyType, resultType } from "../../types"
 import useColorPalettes from "../colorPalettes/useColorPalettes"
 import getColorPalette from "./getColorPalette"
 import getColumnRows from "./getColumnRows"
 import "./style.scss"
 import TableRowGroup from "./TableRowGroup"
+
+interface AugmentedResultProperty extends ResultProperty {
+    startBlock?: boolean
+    endBlock?: boolean
+    colorScale?: any
+}
+
+interface ColumnItem {
+    name: string
+    visibleName: string
+    rowspan: number
+    colspan: number
+    group?: string
+    visible?: boolean
+    sortable?: boolean
+}
+
+interface ColumnSelection {
+    groupName: string
+    columns: Array<{ name: string; visible?: boolean }>
+}
+
+interface ResultGroup {
+    mol_id: number | string
+    children: Result[]
+}
+
+type ResultTableProps = {
+    module: Module
+    pageOneBased: number
+    results: Result[]
+    columnSelection: ColumnSelection[]
+    atomColorProperty?: ResultProperty
+}
 
 const ResultTable = memo(function ResultTable({
     module,
@@ -14,7 +47,7 @@ const ResultTable = memo(function ResultTable({
     results,
     columnSelection,
     atomColorProperty,
-}) {
+}: ResultTableProps) {
     //
     // compute color palettes once (to improve memoization)
     //
@@ -34,7 +67,7 @@ const ResultTable = memo(function ResultTable({
     //
     const { firstColumnRow, secondColumnRow, resultProperties } =
         useMemo(() => {
-            const isVisible = (resultProperty) => {
+            const isVisible = (resultProperty: ResultProperty): boolean => {
                 const group = resultProperty.group ?? "General"
                 const columnGroup = columnSelection.find(
                     (g) => g.groupName === group,
@@ -43,7 +76,7 @@ const ResultTable = memo(function ResultTable({
                 const column = columnGroup.columns.find(
                     (c) => c.name === resultProperty.name,
                 )
-                return column.visible ?? true
+                return column?.visible ?? true
             }
 
             const visibleResultProperties = module.resultProperties.filter(
@@ -82,7 +115,7 @@ const ResultTable = memo(function ResultTable({
                         visiblePredecessor !== null
                             ? visiblePredecessor.level
                             : "molecule"
-                    const currentLevel = resultProperty.level
+                    const currentLevel = resultProperty.level ?? "molecule"
                     const nextLevel =
                         visibleSuccessor !== null
                             ? visibleSuccessor.level
@@ -109,9 +142,9 @@ const ResultTable = memo(function ResultTable({
             return {
                 firstColumnRow,
                 secondColumnRow,
-                resultProperties: augmentedResultProperties,
+                resultProperties: augmentedResultProperties as AugmentedResultProperty[],
             }
-        }, [module, columnSelection, palettes])
+        }, [module, columnSelection, palettes, propertyPalettes])
 
     //
     // prepare data for arranging it in a table
@@ -122,20 +155,20 @@ const ResultTable = memo(function ResultTable({
     const resultsGroupedByMolId = useMemo(() => {
         // sort results by molecule id (and atom id or derivative id)
         // -> construct a comparison function for sorting
-        let subKey
+        let subKey: (result: Result) => number
         if (module.task === "molecular_property_prediction") {
-            subKey = (a) => 0
+            subKey = (_result) => 0
         } else if (module.task === "atom_property_prediction") {
-            subKey = (a) => a.atom_id
+            subKey = (result) => result.atom_id ?? 0
         } else if (module.task === "derivative_property_prediction") {
-            subKey = (a) => a.derivative_id
+            subKey = (result) => result.derivative_id ?? 0
         } else {
             throw new Error(`Unknown task: ${module.task}`)
         }
 
-        return results.reduce((acc, result, index) => {
+        return results.reduce((acc: ResultGroup[], result) => {
             // find corresponding mol_id in acc
-            const groupIndex = sortedIndexBy(acc, result, (x) => x.mol_id)
+            const groupIndex = sortedIndexBy(acc, result, (x: ResultGroup) => x.mol_id)
             const group = acc[groupIndex]
 
             // check if mol_id is in acc
@@ -155,7 +188,7 @@ const ResultTable = memo(function ResultTable({
 
             return acc
         }, [])
-    }, [pageOneBased, results.length, module.task])
+    }, [pageOneBased, results.length, module.task, results])
 
     return (
         <table
@@ -171,7 +204,7 @@ const ResultTable = memo(function ResultTable({
         >
             <thead className="sticky-top">
                 <tr key="firstRow">
-                    {firstColumnRow.map((column) => (
+                    {firstColumnRow.map((column: ColumnItem) => (
                         <th
                             scope="col"
                             key={column.name}
@@ -190,7 +223,7 @@ const ResultTable = memo(function ResultTable({
                 </tr>
                 {secondColumnRow.length > 0 && (
                     <tr key="secondRow">
-                        {secondColumnRow.map((column) => (
+                        {secondColumnRow.map((column: ColumnItem) => (
                             <th
                                 scope="col"
                                 key={column.name}
@@ -204,7 +237,7 @@ const ResultTable = memo(function ResultTable({
                 )}
             </thead>
             <tbody className="table-group-divider">
-                {resultsGroupedByMolId.map((group) => (
+                {resultsGroupedByMolId.map((group: ResultGroup) => (
                     <TableRowGroup
                         key={group.mol_id}
                         group={group}
@@ -219,13 +252,5 @@ const ResultTable = memo(function ResultTable({
         </table>
     )
 })
-
-ResultTable.propTypes = {
-    module: moduleType.isRequired,
-    pageOneBased: PropTypes.number.isRequired,
-    results: PropTypes.arrayOf(resultType).isRequired,
-    columnSelection: PropTypes.array,
-    atomColorProperty: resultPropertyType,
-}
 
 export default ResultTable

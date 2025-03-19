@@ -1,4 +1,3 @@
-import PropTypes from "prop-types"
 import { FaQuestion } from "react-icons/fa"
 import {
     FaArrowRotateRight,
@@ -23,12 +22,13 @@ const iconMapping = {
 
 const defaultIcon = FaXmark
 
-export default function ProblemIcon({ problemType, ...props }) {
-    const Icon = iconMapping[problemType] ?? defaultIcon
-    return <Icon {...props} />
+type ProblemIconProps = {
+    problemType: string;
+    tooltip?: string;
+    [key: string]: any; // For the rest props
 }
 
-ProblemIcon.propTypes = {
-    problemType: PropTypes.string.isRequired,
-    tooltip: PropTypes.string,
+export default function ProblemIcon({ problemType, ...props }: ProblemIconProps) {
+    const Icon = iconMapping[problemType] ?? defaultIcon
+    return <Icon {...props} />
 }

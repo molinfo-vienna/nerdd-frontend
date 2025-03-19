@@ -1,7 +1,11 @@
-import PropTypes from "prop-types"
-import { CircularProgressbar } from "react-circular-progressbar"
+import { CircularProgressbar } from "react-circular-progressbar";
 
-export default function ProgressBar({ numEntriesProcessed, numEntriesTotal }) {
+type ProgressBarProps = {
+    numEntriesProcessed?: number;
+    numEntriesTotal?: number;
+}
+
+export default function ProgressBar({ numEntriesProcessed, numEntriesTotal }: ProgressBarProps) {
     const progressAvailable = numEntriesTotal != null
 
     const numEntriesProcessedModified = numEntriesProcessed ?? 0
@@ -31,9 +35,4 @@ export default function ProgressBar({ numEntriesProcessed, numEntriesTotal }) {
             />
         </div>
     )
-}
-
-ProgressBar.propTypes = {
-    numEntriesProcessed: PropTypes.number,
-    numEntriesTotal: PropTypes.number,
 }

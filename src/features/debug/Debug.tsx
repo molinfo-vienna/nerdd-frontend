@@ -7,6 +7,16 @@ import TweakPanel from "../tweakPanel/TweakPanel"
 import { useDebug } from "./DebugContext"
 import { incrementKey, setNumModules } from "./debugSlice"
 
+type DebugSettings = {
+    mockServerEnabled: boolean;
+    return404: boolean;
+    logRequests: boolean;
+    numModules: number;
+    numResults: number;
+    pageSize: number;
+    predictionSpeed: number;
+}
+
 export default function Debug() {
     //
     // render nothing if debug mode is disabled
@@ -17,10 +27,10 @@ export default function Debug() {
     }
 
     const dispatch = useDispatch()
-    const moduleConfigs = useSelector((state) => state.debug.moduleConfigs)
-    const jobs = useSelector((state) => state.debug.jobs)
+    const moduleConfigs = useSelector((state: any) => state.debug.moduleConfigs)
+    const jobs = useSelector((state: any) => state.debug.jobs)
 
-    const [settings, setSettings] = useLocalStorage("debug", {
+    const [settings, setSettings] = useLocalStorage<DebugSettings>("debug", {
         // whether the mock server should be used (instead of the real API)
         mockServerEnabled: true,
         // whether to return 404 for all requests
@@ -96,7 +106,8 @@ export default function Debug() {
     })
 
     // don't re-render immediately when receiving an update from the tweak panel
-    const debouncedTweaks = useDebounce(tweaks, 500)
+    // TODO: fix types
+    const debouncedTweaks = useDebounce(tweaks, 500) as unknown as DebugSettings
 
     useEffect(() => {
         setSettings({
@@ -108,7 +119,7 @@ export default function Debug() {
             pageSize: debouncedTweaks.pageSize,
             predictionSpeed: debouncedTweaks.predictionSpeed,
         })
-    }, [debouncedTweaks])
+    }, [debouncedTweaks, setSettings])
 
     return (
         <>

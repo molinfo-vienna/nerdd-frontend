@@ -1,10 +1,9 @@
 import classNames from "classnames"
 import { sortedLastIndexBy } from "lodash"
-import PropTypes from "prop-types"
 import { Link } from "react-router-dom"
 import { useGetJobStatusQuery } from "../../services"
 
-function pageStatus(pageOneBased, pageSize, entriesProcessed) {
+function pageStatus(pageOneBased: number, pageSize: number, entriesProcessed: Array<[number, number]>) {
     const pageId = pageOneBased - 1
     const firstEntry = pageId * pageSize
     const lastEntry = firstEntry + pageSize - 1
@@ -65,12 +64,19 @@ function pageStatus(pageOneBased, pageSize, entriesProcessed) {
     }
 }
 
+type PaginationProps = {
+    moduleId: string;
+    jobId: string;
+    currentPageOneBased: number;
+    [key: string]: any; // For additional props spread with ...props
+}
+
 export default function Pagination({
     moduleId,
     jobId,
     currentPageOneBased,
     ...props
-}) {
+}: PaginationProps) {
     //
     // get job status
     //
@@ -201,10 +207,4 @@ export default function Pagination({
             </ul>
         </nav>
     )
-}
-
-Pagination.propTypes = {
-    moduleId: PropTypes.string.isRequired,
-    jobId: PropTypes.string.isRequired,
-    currentPageOneBased: PropTypes.number.isRequired,
 }

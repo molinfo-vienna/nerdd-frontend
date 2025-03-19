@@ -1,8 +1,12 @@
-import classNames from "classnames"
-import PropTypes from "prop-types"
-import ProblemIcon from "./ProblemIcon"
+import classNames from "classnames";
+import ProblemIcon from "./ProblemIcon";
 
-export default function ProblemListCell({ problems, className }) {
+type ProblemListCellProps = {
+    problems: [string, string][];
+    className?: string;
+}
+
+export default function ProblemListCell({ problems, className }: ProblemListCellProps) {
     return (
         <ul className="list-unstyled problem-list mb-0">
             {problems.map(([problemType, message], i) => (
@@ -24,9 +28,4 @@ export default function ProblemListCell({ problems, className }) {
             ))}
         </ul>
     )
-}
-
-ProblemListCell.propTypes = {
-    problems: PropTypes.arrayOf(PropTypes.array).isRequired,
-    className: PropTypes.string,
 }

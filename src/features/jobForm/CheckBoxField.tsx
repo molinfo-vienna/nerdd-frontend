@@ -1,5 +1,20 @@
-import PropTypes from "prop-types"
-import { refType } from "../../types"
+import { type RefObject } from "react";
+
+type CheckBoxFieldProps = {
+    input: {
+        name: string;
+        [key: string]: any;
+    };
+    meta: {
+        touched?: boolean;
+        error?: string;
+        [key: string]: any;
+    };
+    label?: string;
+    positionReference?: RefObject<HTMLElement> | ((instance: HTMLElement | null) => void);
+    className?: string;
+    [key: string]: any;
+}
 
 export default function CheckBoxField({
     input,
@@ -8,7 +23,7 @@ export default function CheckBoxField({
     positionReference,
     className,
     ...props
-}) {
+}: CheckBoxFieldProps) {
     const modifiedProps = {
         ...props,
         className: `form-check-input ${className ?? ""} ${meta.touched && meta.error ? "is-invalid" : ""}`,
@@ -34,12 +49,4 @@ export default function CheckBoxField({
             )}
         </div>
     )
-}
-
-CheckBoxField.propTypes = {
-    input: PropTypes.object.isRequired,
-    meta: PropTypes.object.isRequired,
-    label: PropTypes.string,
-    positionReference: refType,
-    className: PropTypes.string,
 }

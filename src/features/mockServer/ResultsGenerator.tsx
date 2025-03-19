@@ -1,11 +1,18 @@
-import PropTypes from "prop-types"
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { makeButton, useTweaks } from "use-tweaks"
 import { addMolecule, setNumEntriesTotal } from "../debug/debugSlice"
 
-export default function ResultsGenerator({ job, predictionSpeed }) {
+type ResultsGeneratorProps = {
+    job: {
+        id: string;
+        moduleId: string;
+    };
+    predictionSpeed: number;
+}
+
+export default function ResultsGenerator({ job, predictionSpeed }: ResultsGeneratorProps) {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -46,9 +53,4 @@ export default function ResultsGenerator({ job, predictionSpeed }) {
     }, [dispatch, job.id])
 
     return null
-}
-
-ResultsGenerator.propTypes = {
-    job: PropTypes.object.isRequired,
-    predictionSpeed: PropTypes.number.isRequired,
 }

@@ -1,6 +1,13 @@
-import PropTypes from "prop-types"
-import { useCallback, useEffect, useId, useState } from "react"
-import useJsApplet from "./useJsApplet"
+import { useCallback, useEffect, useId, useState } from "react";
+import useJsApplet from "./useJsApplet";
+
+type MoleculeEditorProps = {
+    value?: string;
+    onChange?: (value: string) => void;
+    width?: string;
+    height?: string;
+    config?: Record<string, any>;
+}
 
 export default function MoleculeEditor({
     value,
@@ -8,15 +15,15 @@ export default function MoleculeEditor({
     width = "100%",
     height = "340px",
     config = {},
-}) {
+}: MoleculeEditorProps) {
     const JSApplet = useJsApplet()
-    const [appletInstance, setAppletInstance] = useState(null)
+    const [appletInstance, setAppletInstance] = useState<any>(null)
 
     // generate id
     const containerId = useId()
 
     const jsmeContainerRef = useCallback(
-        (node) => {
+        (node: HTMLElement | null) => {
             if (JSApplet == null || containerId == null || node == null) {
                 return
             }
@@ -63,12 +70,4 @@ export default function MoleculeEditor({
     }
 
     return <div id={containerId} ref={jsmeContainerRef}></div>
-}
-
-MoleculeEditor.propTypes = {
-    value: PropTypes.string,
-    onChange: PropTypes.func,
-    width: PropTypes.string,
-    height: PropTypes.string,
-    config: PropTypes.object,
 }

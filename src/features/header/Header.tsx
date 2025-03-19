@@ -1,17 +1,33 @@
-import { Children } from "react"
+import { type Module } from "@/types"
+import { Children, type ReactNode } from "react"
 import { Link } from "react-router-dom"
-import { moduleType } from "../../types"
 import NavigationBar from "../navigationBar/NavigationBar"
 import "./style.scss"
 
-export default function Header({ module, children }) {
+type HeaderProps = {
+    module: Module;
+    children?: ReactNode;
+}
+
+type HeaderContentProps = {
+    children?: ReactNode;
+}
+
+type HeaderCardProps = {
+    href?: string;
+    children?: ReactNode;
+    className?: string;
+    [key: string]: any;
+}
+
+export default function Header({ module, children }: HeaderProps) {
     // get child having the pseudo type "Content"
     const content = Children.toArray(children).find(
-        (child) => child.type.name === "HeaderContent",
+        (child: any) => child.type?.name === "HeaderContent",
     )
 
     const cards = Children.toArray(children).filter(
-        (child) => child.type.name === "HeaderCard",
+        (child: any) => child.type?.name === "HeaderCard",
     )
 
     return (
@@ -37,11 +53,11 @@ export default function Header({ module, children }) {
     )
 }
 
-Header.Content = function HeaderContent({ children }) {
+Header.Content = function HeaderContent({ children }: HeaderContentProps) {
     return <>{children}</>
 }
 
-Header.Card = function HeaderCard({ href, children, className, ...props }) {
+Header.Card = function HeaderCard({ href, children, className, ...props }: HeaderCardProps) {
     // merge props with default values
     const mergedProps = {
         className:
@@ -64,8 +80,4 @@ Header.Card = function HeaderCard({ href, children, className, ...props }) {
             )}
         </div>
     )
-}
-
-Header.propTypes = {
-    module: moduleType,
 }

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import { useEffect } from "react"
 import { useSelector } from "react-redux"
 import {
     Outlet,
@@ -45,6 +45,7 @@ export default function App() {
         {
             path: "/",
             element: <Root />,
+            // TODO: use errorElement
             children: [
                 {
                     path: "/",

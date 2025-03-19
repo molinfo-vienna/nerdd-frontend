@@ -1,7 +1,16 @@
-import PropTypes from "prop-types"
-import FileItem from "./FileItem"
+import FileItem from "./FileItem";
 
-export default function FileList({ files, onClickDelete }) {
+type File = {
+    id: string;
+    [key: string]: any;
+}
+
+type FileListProps = {
+    files?: File[];
+    onClickDelete?: (file: File) => void;
+}
+
+export default function FileList({ files, onClickDelete }: FileListProps) {
     return (
         <ul className="px-3 py-2 list-unstyled w-100">
             {files !== undefined &&
@@ -9,14 +18,9 @@ export default function FileList({ files, onClickDelete }) {
                     <FileItem
                         key={file.id}
                         file={file}
-                        onClickDelete={() => onClickDelete(file)}
+                        onClickDelete={() => onClickDelete && onClickDelete(file)}
                     />
                 ))}
         </ul>
     )
-}
-
-FileList.propTypes = {
-    files: PropTypes.array,
-    onClickDelete: PropTypes.func,
 }

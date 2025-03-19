@@ -1,10 +1,8 @@
-import PropTypes from "prop-types"
-import { useCallback, useEffect, useState } from "react"
+import { type RefObject, useCallback, useEffect, useState } from "react"
 import { useField } from "react-final-form"
 import { useDispatch, useSelector } from "react-redux"
 import { v4 as uuidv4 } from "uuid"
 import { useAddSourceMutation, useDeleteSourceMutation } from "../../services"
-import { refType } from "../../types"
 import FileList from "./FileList"
 import FileUpload from "./FileUpload"
 import {
@@ -17,11 +15,27 @@ import {
     setStatus,
 } from "./fileFieldSlice"
 
+type FileUploadAndListProps = {
+    name: string;
+    tooltipPositionReference?: RefObject<HTMLElement>;
+    [key: string]: any; // For additional props spread with ...props
+}
+
+type FileType = {
+    id: string;
+    filename: string;
+    status: string;
+    sourceData?: {
+        id: string;
+        [key: string]: any;
+    };
+}
+
 export default function FileUploadAndList({
     name,
     tooltipPositionReference,
     ...props
-}) {
+}: FileUploadAndListProps) {
     const dispatch = useDispatch()
 
     // create file field in the store (and delete it when component is unmounted)
@@ -34,7 +48,7 @@ export default function FileUploadAndList({
     }, [name])
 
     // get current value from the store
-    const files = useSelector((state) => state.fileField[name])
+    const files = useSelector((state: any) => state.fileField[name])
 
     // update react form field when value in the store changes
     const {
@@ -141,7 +155,7 @@ export default function FileUploadAndList({
 
     const [deleteSource, {}] = useDeleteSourceMutation()
 
-    const handleDelete = (file) => {
+    const handleDelete = (file: FileType) => {
         dispatch(
             setStatus({
                 fileFieldName: name,
@@ -159,7 +173,7 @@ export default function FileUploadAndList({
             // -> delete source on the server
 
             // get sourceId
-            const sourceId = file.sourceData.id
+            const sourceId = file.sourceData?.id
 
             deleteSource({ sourceId }).then((response) => {
                 if (response.error?.name === "AbortError") {
@@ -220,9 +234,4 @@ export default function FileUploadAndList({
             )}
         </div>
     )
-}
-
-FileUploadAndList.propTypes = {
-    name: PropTypes.string,
-    tooltipPositionReference: refType,
 }
