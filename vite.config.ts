@@ -1,7 +1,7 @@
 import react from "@vitejs/plugin-react"
 import { visualizer } from "rollup-plugin-visualizer"
-import { defineConfig } from "vite"
-import tsconfigPaths from 'vite-tsconfig-paths'
+import { defineConfig, type PluginOption } from "vite"
+import tsconfigPaths from "vite-tsconfig-paths"
 
 export default defineConfig({
     plugins: [
@@ -11,12 +11,12 @@ export default defineConfig({
             filename: "build/stats.html",
             gzipSize: true,
             brotliSize: true,
-        }),
+        }) as PluginOption,
         tsconfigPaths(),
     ],
     base: "/",
     server: {
-        port: process.env.PORT || 3000,
+        port: Number(process.env.PORT) || 3000,
         host: true,
     },
     build: {
