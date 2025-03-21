@@ -80,7 +80,7 @@ export default function ResultsPage() {
 
     // initialize column selection
     useEffect(() => {
-        let initialColumnSelection = []
+        const initialColumnSelection = []
         if (module?.resultProperties !== undefined) {
             module.resultProperties.forEach((resultProperty) => {
                 const { name, visibleName, group, visible } = resultProperty
@@ -93,7 +93,7 @@ export default function ResultsPage() {
                 }
 
                 // is the group already in the array?
-                let groupIndex = initialColumnSelection.findIndex(
+                const groupIndex = initialColumnSelection.findIndex(
                     (e) => e.groupName === modifiedGroup,
                 )
                 if (groupIndex === -1) {

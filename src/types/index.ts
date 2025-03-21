@@ -1,10 +1,9 @@
-export type { Job } from './job'
-export type { JobParameter } from './jobParameter'
-export type { JobStatus } from './jobStatus'
-export type { Module } from './module'
-export type { OutputFile } from './outputFile'
-export type { Partner } from './partner'
-export type { Publication } from './publication'
-export type { Result } from './result'
-export type { ResultProperty } from './resultProperty'
-
+export type { Job } from "./job"
+export type { JobParameter } from "./jobParameter"
+export type { JobStatus } from "./jobStatus"
+export type { Module } from "./module"
+export type { OutputFile } from "./outputFile"
+export type { Partner } from "./partner"
+export type { Publication } from "./publication"
+export type { Result } from "./result"
+export type { ResultProperty } from "./resultProperty"

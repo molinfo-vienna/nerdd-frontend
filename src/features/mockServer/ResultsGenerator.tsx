@@ -6,13 +6,16 @@ import { addMolecule, setNumEntriesTotal } from "../debug/debugSlice"
 
 type ResultsGeneratorProps = {
     job: {
-        id: string;
-        moduleId: string;
-    };
-    predictionSpeed: number;
+        id: string
+        moduleId: string
+    }
+    predictionSpeed: number
 }
 
-export default function ResultsGenerator({ job, predictionSpeed }: ResultsGeneratorProps) {
+export default function ResultsGenerator({
+    job,
+    predictionSpeed,
+}: ResultsGeneratorProps) {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 

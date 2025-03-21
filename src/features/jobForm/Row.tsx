@@ -1,13 +1,13 @@
-import { type ReactNode, type RefObject, useRef } from "react";
-import Tooltip from "./Tooltip";
+import { type ReactNode, type RefObject, useRef } from "react"
+import Tooltip from "./Tooltip"
 
 type RowProps = {
-    label?: string;
-    labelFor?: string;
-    helpText?: string;
-    children: ReactNode;
-    positionReference?: RefObject<HTMLElement>;
-    className?: string;
+    label?: string
+    labelFor?: string
+    helpText?: string
+    children: ReactNode
+    positionReference?: RefObject<HTMLElement>
+    className?: string
 }
 
 export default function Row({
@@ -28,7 +28,9 @@ export default function Row({
 
     // we always put the anchor of the tooltip centered w.r.t. the first child
     // the remaining children are rendered, but do not influence the tooltip position
-    const [firstChild, ...restChildren] = Array.isArray(children) ? children : [children]
+    const [firstChild, ...restChildren] = Array.isArray(children)
+        ? children
+        : [children]
 
     return (
         <div {...modifiedProps}>

@@ -1,11 +1,14 @@
-import { CircularProgressbar } from "react-circular-progressbar";
+import { CircularProgressbar } from "react-circular-progressbar"
 
 type ProgressBarProps = {
-    numEntriesProcessed?: number;
-    numEntriesTotal?: number;
+    numEntriesProcessed?: number
+    numEntriesTotal?: number
 }
 
-export default function ProgressBar({ numEntriesProcessed, numEntriesTotal }: ProgressBarProps) {
+export default function ProgressBar({
+    numEntriesProcessed,
+    numEntriesTotal,
+}: ProgressBarProps) {
     const progressAvailable = numEntriesTotal != null
 
     const numEntriesProcessedModified = numEntriesProcessed ?? 0

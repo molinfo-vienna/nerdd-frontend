@@ -5,10 +5,12 @@ import SelectField from "./SelectField"
 import TextField from "./TextField"
 
 type JobParameterFieldProps = {
-    jobParameter: JobParameter;
+    jobParameter: JobParameter
 }
 
-export default function JobParameterField({ jobParameter }: JobParameterFieldProps) {
+export default function JobParameterField({
+    jobParameter,
+}: JobParameterFieldProps) {
     if (jobParameter.choices) {
         const defaultValue = jobParameter.default ?? ""
 

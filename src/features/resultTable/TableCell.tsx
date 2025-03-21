@@ -6,30 +6,30 @@ import ProblemListBadge from "./ProblemListBadge"
 import ProblemListCell from "./ProblemListCell"
 
 type ResultGroup = {
-    children: any[];
-    [key: string]: any;
+    children: any[]
+    [key: string]: any
 }
 
 type TableCellProps = {
-    module: Module;
-    result: Record<string, any>;
+    module: Module
+    result: Record<string, any>
     resultProperty: {
-        name: string;
-        type: string;
-        level?: string;
-        precision?: number;
-        visible?: boolean;
-        startBlock?: boolean;
-        endBlock?: boolean;
-        colorScale: (value: any) => string;
-        [key: string]: any;
-    };
-    group: ResultGroup;
-    selectedAtom?: number;
-    className?: string;
-    onAtomSelect?: (atomId?: number) => void;
-    atomColorProperty?: ResultProperty;
-    [key: string]: any;
+        name: string
+        type: string
+        level?: string
+        precision?: number
+        visible?: boolean
+        startBlock?: boolean
+        endBlock?: boolean
+        colorScale: (value: any) => string
+        [key: string]: any
+    }
+    group: ResultGroup
+    selectedAtom?: number
+    className?: string
+    onAtomSelect?: (atomId?: number) => void
+    atomColorProperty?: ResultProperty
+    [key: string]: any
 }
 
 export default function TableCell({

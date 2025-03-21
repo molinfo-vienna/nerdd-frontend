@@ -1,18 +1,20 @@
-import { type RefObject } from "react";
+import { type RefObject } from "react"
 
 type TextFieldProps = {
     input: {
-        name: string;
-        [key: string]: any;
-    };
+        name: string
+        [key: string]: any
+    }
     meta: {
-        touched?: boolean;
-        error?: string;
-        [key: string]: any;
-    };
-    label?: string;
-    positionReference?: RefObject<HTMLElement> | ((instance: HTMLElement | null) => void);
-    [key: string]: any;
+        touched?: boolean
+        error?: string
+        [key: string]: any
+    }
+    label?: string
+    positionReference?:
+        | RefObject<HTMLElement>
+        | ((instance: HTMLElement | null) => void)
+    [key: string]: any
 }
 
 export default function TextField({

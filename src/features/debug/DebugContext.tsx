@@ -6,7 +6,7 @@ const DebugContext = createContext(false)
 export const useDebug = () => useContext(DebugContext)
 
 type DebugProviderProps = {
-    children: ReactNode;
+    children: ReactNode
 }
 
 export const DebugProvider = ({ children }: DebugProviderProps) => {

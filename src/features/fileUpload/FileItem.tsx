@@ -1,16 +1,16 @@
-import { FaRegCircleCheck, FaRegCircleXmark } from "react-icons/fa6";
+import { FaRegCircleCheck, FaRegCircleXmark } from "react-icons/fa6"
 
 type FileItemType = {
-    id: string;
-    filename: string;
-    status: 'pending' | 'deleting' | 'success' | 'error';
-    errorMessage?: string;
-    sourceData?: any;
+    id: string
+    filename: string
+    status: "pending" | "deleting" | "success" | "error"
+    errorMessage?: string
+    sourceData?: any
 }
 
 type FileItemProps = {
-    file: FileItemType;
-    onClickDelete: (file: FileItemType) => void;
+    file: FileItemType
+    onClickDelete: (file: FileItemType) => void
 }
 
 export default function FileItem({ file, onClickDelete }: FileItemProps) {

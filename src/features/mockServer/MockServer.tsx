@@ -16,14 +16,14 @@ import ResultsGenerator from "./ResultsGenerator"
 import ResultsWebSocketMockServer from "./ResultsWebSocketMockServer"
 
 type MockServerProps = {
-    enabled: boolean;
-    return404: boolean;
-    logRequests: boolean;
-    moduleConfigs: Record<string, any>;
-    pageSize: number;
-    numResults: number;
-    predictionSpeed: number;
-    jobs: Record<string, any>;
+    enabled: boolean
+    return404: boolean
+    logRequests: boolean
+    moduleConfigs: Record<string, any>
+    pageSize: number
+    numResults: number
+    predictionSpeed: number
+    jobs: Record<string, any>
 }
 
 export default function MockServer({
@@ -61,7 +61,7 @@ export default function MockServer({
                         // get correct module
                         const moduleId = request.params.moduleId
 
-                        let entry = request.requestBody.get("job")
+                        const entry = request.requestBody.get("job")
 
                         const body = JSON.parse(entry)
 
@@ -153,7 +153,7 @@ export default function MockServer({
                         const moduleId = request.params.moduleId
                         const jobId = request.params.jobId
 
-                        let jobs = store.getState().debug.jobs
+                        const jobs = store.getState().debug.jobs
                         let job = jobs[jobId]
                         if (job === undefined) {
                             dispatch(

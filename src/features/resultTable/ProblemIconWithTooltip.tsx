@@ -17,10 +17,10 @@ import { createPortal } from "react-dom"
 import ProblemIcon from "./ProblemIcon"
 
 type ProblemIconWithTooltipProps = {
-    problemType: string;
-    tooltip?: string;
-    size?: number;
-    [key: string]: any;
+    problemType: string
+    tooltip?: string
+    size?: number
+    [key: string]: any
 }
 
 export default function ProblemIconWithTooltip({

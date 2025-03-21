@@ -8,13 +8,13 @@ import { useDebug } from "./DebugContext"
 import { incrementKey, setNumModules } from "./debugSlice"
 
 type DebugSettings = {
-    mockServerEnabled: boolean;
-    return404: boolean;
-    logRequests: boolean;
-    numModules: number;
-    numResults: number;
-    pageSize: number;
-    predictionSpeed: number;
+    mockServerEnabled: boolean
+    return404: boolean
+    logRequests: boolean
+    numModules: number
+    numResults: number
+    pageSize: number
+    predictionSpeed: number
 }
 
 export default function Debug() {

@@ -16,19 +16,19 @@ import {
 } from "./fileFieldSlice"
 
 type FileUploadAndListProps = {
-    name: string;
-    tooltipPositionReference?: RefObject<HTMLElement>;
-    [key: string]: any; // For additional props spread with ...props
+    name: string
+    tooltipPositionReference?: RefObject<HTMLElement>
+    [key: string]: any // For additional props spread with ...props
 }
 
 type FileType = {
-    id: string;
-    filename: string;
-    status: string;
+    id: string
+    filename: string
+    status: string
     sourceData?: {
-        id: string;
-        [key: string]: any;
-    };
+        id: string
+        [key: string]: any
+    }
 }
 
 export default function FileUploadAndList({

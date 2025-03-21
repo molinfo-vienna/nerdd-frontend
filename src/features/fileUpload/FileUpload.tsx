@@ -1,14 +1,18 @@
-import { useDropzone } from "react-dropzone";
-import { PiFileArrowUp } from "react-icons/pi";
-import "./style.scss";
+import { useDropzone } from "react-dropzone"
+import { PiFileArrowUp } from "react-icons/pi"
+import "./style.scss"
 
 type FileUploadProps = {
-    name?: string;
-    onDrop?: (acceptedFiles: File[]) => void;
-    [key: string]: any;
+    name?: string
+    onDrop?: (acceptedFiles: File[]) => void
+    [key: string]: any
 }
 
-export default function FileUpload({ name, onDrop, ...props }: FileUploadProps) {
+export default function FileUpload({
+    name,
+    onDrop,
+    ...props
+}: FileUploadProps) {
     const {
         acceptedFiles,
         getRootProps,

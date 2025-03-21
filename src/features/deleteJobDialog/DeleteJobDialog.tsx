@@ -1,13 +1,17 @@
-import { useNavigate } from "react-router-dom";
-import { useDeleteJobMutation } from "../../services";
+import { useNavigate } from "react-router-dom"
+import { useDeleteJobMutation } from "../../services"
 
 type DeleteJobDialogProps = {
-    id: string;
-    moduleId: string;
-    jobId: string;
+    id: string
+    moduleId: string
+    jobId: string
 }
 
-export default function DeleteJobDialog({ id, moduleId, jobId }: DeleteJobDialogProps) {
+export default function DeleteJobDialog({
+    id,
+    moduleId,
+    jobId,
+}: DeleteJobDialogProps) {
     const [deleteJob] = useDeleteJobMutation()
     const navigate = useNavigate()
 

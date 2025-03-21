@@ -1,19 +1,23 @@
-import { Fragment } from "react";
+import { Fragment } from "react"
 
 type Column = {
-  name: string;
-  label: string;
-  visible: boolean;
+    name: string
+    label: string
+    visible: boolean
 }
 
 type ColumnGroup = {
-  groupName: string;
-  columns: Column[];
+    groupName: string
+    columns: Column[]
 }
 
 type ColumnSelectDropdownProps = {
-  columnSelection?: ColumnGroup[];
-  handleSelectionChange: (groupName: string, columnName: string | null, isVisible: boolean) => void;
+    columnSelection?: ColumnGroup[]
+    handleSelectionChange: (
+        groupName: string,
+        columnName: string | null,
+        isVisible: boolean,
+    ) => void
 }
 
 export default function ColumnSelectDropdown({
@@ -21,7 +25,7 @@ export default function ColumnSelectDropdown({
     handleSelectionChange,
 }: ColumnSelectDropdownProps) {
     if (columnSelection === undefined) {
-        return null;
+        return null
     }
 
     // compute for each column group if all columns in that group are selected

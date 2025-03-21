@@ -142,7 +142,8 @@ const ResultTable = memo(function ResultTable({
             return {
                 firstColumnRow,
                 secondColumnRow,
-                resultProperties: augmentedResultProperties as AugmentedResultProperty[],
+                resultProperties:
+                    augmentedResultProperties as AugmentedResultProperty[],
             }
         }, [module, columnSelection, palettes, propertyPalettes])
 
@@ -168,7 +169,11 @@ const ResultTable = memo(function ResultTable({
 
         return results.reduce((acc: ResultGroup[], result) => {
             // find corresponding mol_id in acc
-            const groupIndex = sortedIndexBy(acc, result, (x: ResultGroup) => x.mol_id)
+            const groupIndex = sortedIndexBy(
+                acc,
+                result,
+                (x: ResultGroup) => x.mol_id,
+            )
             const group = acc[groupIndex]
 
             // check if mol_id is in acc

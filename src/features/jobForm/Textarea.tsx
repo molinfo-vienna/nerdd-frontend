@@ -1,17 +1,19 @@
-import { type RefObject } from "react";
+import { type RefObject } from "react"
 
 type TextareaProps = {
     input: {
-        [key: string]: any;
-    };
+        [key: string]: any
+    }
     meta: {
-        touched?: boolean;
-        error?: string;
-        [key: string]: any;
-    };
-    positionReference?: RefObject<HTMLTextAreaElement> | ((instance: HTMLTextAreaElement | null) => void);
-    className?: string;
-    [key: string]: any;
+        touched?: boolean
+        error?: string
+        [key: string]: any
+    }
+    positionReference?:
+        | RefObject<HTMLTextAreaElement>
+        | ((instance: HTMLTextAreaElement | null) => void)
+    className?: string
+    [key: string]: any
 }
 
 export default function Textarea({

@@ -3,7 +3,11 @@ import { sortedLastIndexBy } from "lodash"
 import { Link } from "react-router-dom"
 import { useGetJobStatusQuery } from "../../services"
 
-function pageStatus(pageOneBased: number, pageSize: number, entriesProcessed: Array<[number, number]>) {
+function pageStatus(
+    pageOneBased: number,
+    pageSize: number,
+    entriesProcessed: Array<[number, number]>,
+) {
     const pageId = pageOneBased - 1
     const firstEntry = pageId * pageSize
     const lastEntry = firstEntry + pageSize - 1
@@ -65,10 +69,10 @@ function pageStatus(pageOneBased: number, pageSize: number, entriesProcessed: Ar
 }
 
 type PaginationProps = {
-    moduleId: string;
-    jobId: string;
-    currentPageOneBased: number;
-    [key: string]: any; // For additional props spread with ...props
+    moduleId: string
+    jobId: string
+    currentPageOneBased: number
+    [key: string]: any // For additional props spread with ...props
 }
 
 export default function Pagination({

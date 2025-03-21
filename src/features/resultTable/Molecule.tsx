@@ -1,20 +1,20 @@
-import { type ResultProperty } from "@/types";
-import parse, { attributesToProps, domToReact } from "html-react-parser";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { type ResultProperty } from "@/types"
+import parse, { attributesToProps, domToReact } from "html-react-parser"
+import { useEffect, useMemo, useRef, useState } from "react"
 
 type MoleculeProps = {
-    svgValue: string;
-    selectedAtom?: number;
-    onAtomSelect?: (atomId?: number) => void;
+    svgValue: string
+    selectedAtom?: number
+    onAtomSelect?: (atomId?: number) => void
     group?: {
         children: Array<{
-            atom_id: number | null;
-            [key: string]: any;
-        }>;
-    };
+            atom_id: number | null
+            [key: string]: any
+        }>
+    }
     atomColorProperty?: ResultProperty & {
-        colorScale: (value: any) => string;
-    };
+        colorScale: (value: any) => string
+    }
 }
 
 export default function Molecule({
@@ -148,7 +148,9 @@ export default function Molecule({
                         <ellipse
                             {...attributesToProps(updatedAttribs)}
                             onMouseEnter={
-                                onAtomSelect ? () => onAtomSelect(atomId) : undefined
+                                onAtomSelect
+                                    ? () => onAtomSelect(atomId)
+                                    : undefined
                             }
                             onMouseOut={
                                 onAtomSelect

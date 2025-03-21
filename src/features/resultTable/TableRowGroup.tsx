@@ -4,14 +4,14 @@ import { useCallback, useState } from "react"
 import TableCell from "./TableCell"
 
 type Group = {
-  children: any[]
+    children: any[]
 }
 
 type TableRowGroupProps = {
-  group: Group
-  module: Module
-  atomColorProperty?: ResultProperty
-  resultProperties: ResultProperty[]
+    group: Group
+    module: Module
+    atomColorProperty?: ResultProperty
+    resultProperties: ResultProperty[]
 }
 
 export default function TableRowGroup({
@@ -23,7 +23,9 @@ export default function TableRowGroup({
     //
     // handle mouse over event
     //
-    const [selectedAtom, setSelectedAtom] = useState<string | number | undefined>(undefined)
+    const [selectedAtom, setSelectedAtom] = useState<
+        string | number | undefined
+    >(undefined)
 
     const handleAtomSelect = useCallback(
         (atomId: string | number) => {

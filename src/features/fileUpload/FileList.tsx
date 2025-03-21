@@ -1,13 +1,13 @@
-import FileItem from "./FileItem";
+import FileItem from "./FileItem"
 
 type File = {
-    id: string;
-    [key: string]: any;
+    id: string
+    [key: string]: any
 }
 
 type FileListProps = {
-    files?: File[];
-    onClickDelete?: (file: File) => void;
+    files?: File[]
+    onClickDelete?: (file: File) => void
 }
 
 export default function FileList({ files, onClickDelete }: FileListProps) {
@@ -18,7 +18,9 @@ export default function FileList({ files, onClickDelete }: FileListProps) {
                     <FileItem
                         key={file.id}
                         file={file}
-                        onClickDelete={() => onClickDelete && onClickDelete(file)}
+                        onClickDelete={() =>
+                            onClickDelete && onClickDelete(file)
+                        }
                     />
                 ))}
         </ul>

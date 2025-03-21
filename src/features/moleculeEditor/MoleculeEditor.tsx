@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useId, useState } from "react";
-import useJsApplet from "./useJsApplet";
+import { useCallback, useEffect, useId, useState } from "react"
+import useJsApplet from "./useJsApplet"
 
 type MoleculeEditorProps = {
-    value?: string;
-    onChange?: (value: string) => void;
-    width?: string;
-    height?: string;
-    config?: Record<string, any>;
+    value?: string
+    onChange?: (value: string) => void
+    width?: string
+    height?: string
+    config?: Record<string, any>
 }
 
 export default function MoleculeEditor({

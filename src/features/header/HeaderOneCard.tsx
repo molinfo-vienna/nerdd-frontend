@@ -6,28 +6,32 @@ import NavigationBar from "../navigationBar/NavigationBar"
 import "./style.scss"
 
 type HeaderOneCardProps = {
-    module: Module;
-    children?: ReactNode;
-    title?: string;
+    module: Module
+    children?: ReactNode
+    title?: string
 }
 
 type HeaderContentProps = {
-    children?: ReactNode;
+    children?: ReactNode
 }
 
 type HeaderCardSectionProps = {
-    children?: ReactNode;
+    children?: ReactNode
 }
 
 type HeaderIconProps = {
-    href?: string;
-    icon: string;
-    caption: string;
-    className?: string;
-    [key: string]: any;
+    href?: string
+    icon: string
+    caption: string
+    className?: string
+    [key: string]: any
 }
 
-export default function HeaderOneCard({ module, children, title }: HeaderOneCardProps) {
+export default function HeaderOneCard({
+    module,
+    children,
+    title,
+}: HeaderOneCardProps) {
     // get child having the pseudo type "Content"
     const content = Children.toArray(children).find(
         (child: any) => child.type?.name === "HeaderContent",
@@ -95,11 +99,15 @@ export default function HeaderOneCard({ module, children, title }: HeaderOneCard
     )
 }
 
-HeaderOneCard.Content = function HeaderContent({ children }: HeaderContentProps) {
+HeaderOneCard.Content = function HeaderContent({
+    children,
+}: HeaderContentProps) {
     return <>{children}</>
 }
 
-HeaderOneCard.CardSection = function HeaderCardSection({ children }: HeaderCardSectionProps) {
+HeaderOneCard.CardSection = function HeaderCardSection({
+    children,
+}: HeaderCardSectionProps) {
     return <>{children}</>
 }
 

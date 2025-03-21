@@ -11,8 +11,8 @@ import Row from "./Row"
 import Textarea from "./Textarea"
 
 type JobFormProps = {
-    module: Module;
-    onSubmit: (values: any) => Promise<any>;
+    module: Module
+    onSubmit: (values: any) => Promise<any>
 }
 
 export default function JobForm({ module, onSubmit }: JobFormProps) {
@@ -27,7 +27,8 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
     // position the tooltip at the center of the *upload zone* (ignoring the list of
     // uploaded files). To do this, we need to get a reference to the upload zone and
     // pass it to the tooltip component.
-    const inputTextFieldTooltipPositionReference = useRef<HTMLTextAreaElement>(null)
+    const inputTextFieldTooltipPositionReference =
+        useRef<HTMLTextAreaElement>(null)
     const fileFieldTooltipPositionReference = useRef<HTMLElement>(null)
     const inputDrawnTooltipPositionReference = useRef<HTMLElement>(null)
 
@@ -348,9 +349,7 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
                     )}
                 />
             </div>
-            <div className="col-lg-4 d-lg-block d-none">
-                
-            </div>
+            <div className="col-lg-4 d-lg-block d-none"></div>
         </div>
     )
 }

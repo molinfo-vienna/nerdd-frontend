@@ -1,6 +1,6 @@
 export interface Result {
     // Add specific properties when needed
-    [key: string]: any;
+    [key: string]: any
 }
 
-export default Result;
+export default Result

@@ -4,15 +4,15 @@ import ScrollSpy from "react-scrollspy-navigation"
 import "./style.scss"
 
 type TOCItem = {
-    level: number;
-    id: string;
-    text: string;
-    children: TOCItem[];
-    parent?: TOCItem | null;
+    level: number
+    id: string
+    text: string
+    children: TOCItem[]
+    parent?: TOCItem | null
 }
 
 type TableOfContentsProps = {
-    contentRef: RefObject<HTMLElement>;
+    contentRef: RefObject<HTMLElement>
 }
 
 const renderTOC = (toc: TOCItem[]) => {

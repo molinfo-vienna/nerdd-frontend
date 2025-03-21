@@ -5,19 +5,19 @@ import NavigationBar from "../navigationBar/NavigationBar"
 import "./style.scss"
 
 type HeaderProps = {
-    module: Module;
-    children?: ReactNode;
+    module: Module
+    children?: ReactNode
 }
 
 type HeaderContentProps = {
-    children?: ReactNode;
+    children?: ReactNode
 }
 
 type HeaderCardProps = {
-    href?: string;
-    children?: ReactNode;
-    className?: string;
-    [key: string]: any;
+    href?: string
+    children?: ReactNode
+    className?: string
+    [key: string]: any
 }
 
 export default function Header({ module, children }: HeaderProps) {
@@ -57,7 +57,12 @@ Header.Content = function HeaderContent({ children }: HeaderContentProps) {
     return <>{children}</>
 }
 
-Header.Card = function HeaderCard({ href, children, className, ...props }: HeaderCardProps) {
+Header.Card = function HeaderCard({
+    href,
+    children,
+    className,
+    ...props
+}: HeaderCardProps) {
     // merge props with default values
     const mergedProps = {
         className:

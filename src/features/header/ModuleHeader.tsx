@@ -5,13 +5,13 @@ import Markdown from "react-markdown"
 import { Link } from "react-router-dom"
 
 type ModuleHeaderProps = {
-    module: Module;
+    module: Module
 }
 
 type IconItem = {
-    Icon: ComponentType<{ size?: number }>;
-    caption: string;
-    href?: string;
+    Icon: ComponentType<{ size?: number }>
+    caption: string
+    href?: string
 }
 
 export default function ModuleHeader({ module }: ModuleHeaderProps) {

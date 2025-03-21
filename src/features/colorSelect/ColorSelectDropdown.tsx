@@ -1,9 +1,9 @@
-import type { ResultProperty } from '@/types';
+import type { ResultProperty } from "@/types"
 
 type ColorSelectDropdownProps = {
-    selectedAtomColorProperty?: ResultProperty;
-    possibleAtomColorProperties?: ResultProperty[];
-    onSelectedAtomColorPropertyChange: (property?: ResultProperty) => void;
+    selectedAtomColorProperty?: ResultProperty
+    possibleAtomColorProperties?: ResultProperty[]
+    onSelectedAtomColorPropertyChange: (property?: ResultProperty) => void
 }
 
 export default function ColorSelectDropdown({

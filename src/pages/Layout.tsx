@@ -1,13 +1,13 @@
-import { Children, type FC, type ReactNode } from "react";
-import Footer from "../features/footer/Footer";
-import NavigationBar from "../features/navigationBar/NavigationBar";
+import { Children, type FC, type ReactNode } from "react"
+import Footer from "../features/footer/Footer"
+import NavigationBar from "../features/navigationBar/NavigationBar"
 
 type LayoutProps = {
-    children: ReactNode;
+    children: ReactNode
 }
 
 interface LayoutComponent extends FC<LayoutProps> {
-    Header: FC<{ children: ReactNode }>;
+    Header: FC<{ children: ReactNode }>
 }
 
 const Layout: LayoutComponent = ({ children }) => {
@@ -19,7 +19,9 @@ const Layout: LayoutComponent = ({ children }) => {
     const childrenArray = Children.toArray(children)
 
     // check if children contains Layout.Header
-    const header = childrenArray.find((child: any) => child.type === Layout.Header)
+    const header = childrenArray.find(
+        (child: any) => child.type === Layout.Header,
+    )
 
     const hasHeader = header !== undefined
 

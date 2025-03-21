@@ -5,16 +5,19 @@ import recursiveCamelToSnakeCase from "./recursiveCamelToSnakeCase"
 
 type JobStatusWebSocketMockServerProps = {
     job: {
-        id: string;
-        jobType: string;
-        numEntriesTotal: number;
-        showNumEntriesTotal: boolean;
-        [key: string]: any;
-    };
-    pageSize: number;
+        id: string
+        jobType: string
+        numEntriesTotal: number
+        showNumEntriesTotal: boolean
+        [key: string]: any
+    }
+    pageSize: number
 }
 
-export default function JobStatusWebSocketMockServer({ job, pageSize }: JobStatusWebSocketMockServerProps) {
+export default function JobStatusWebSocketMockServer({
+    job,
+    pageSize,
+}: JobStatusWebSocketMockServerProps) {
     const [socketServer, setSocketServer] = useState<SocketServer | null>(null)
     const moduleId = job.jobType
 

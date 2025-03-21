@@ -1,25 +1,27 @@
-import { type RefObject } from "react";
+import { type RefObject } from "react"
 
 type SelectOption = {
-    label: string;
-    value: string;
+    label: string
+    value: string
 }
 
 type SelectFieldProps = {
     input: {
-        name: string;
-        [key: string]: any;
-    };
+        name: string
+        [key: string]: any
+    }
     meta: {
-        touched?: boolean;
-        error?: string;
-        [key: string]: any;
-    };
-    label?: string;
-    choices: SelectOption[];
-    positionReference?: RefObject<HTMLElement> | ((instance: HTMLElement | null) => void);
-    className?: string;
-    [key: string]: any;
+        touched?: boolean
+        error?: string
+        [key: string]: any
+    }
+    label?: string
+    choices: SelectOption[]
+    positionReference?:
+        | RefObject<HTMLElement>
+        | ((instance: HTMLElement | null) => void)
+    className?: string
+    [key: string]: any
 }
 
 export default function SelectField({

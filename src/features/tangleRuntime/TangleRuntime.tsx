@@ -7,11 +7,14 @@ const clampValue = (value: number, min: number, max: number): number => {
 }
 
 type TangleRuntimeProps = {
-    moleculesPerSecond: number;
-    initialValue: number;
+    moleculesPerSecond: number
+    initialValue: number
 }
 
-export default function TangleRuntime({ moleculesPerSecond, initialValue }: TangleRuntimeProps) {
+export default function TangleRuntime({
+    moleculesPerSecond,
+    initialValue,
+}: TangleRuntimeProps) {
     //
     // parameters
     //
@@ -53,7 +56,10 @@ export default function TangleRuntime({ moleculesPerSecond, initialValue }: Tang
     const nodeRef = useRef(null)
 
     // the initial screen position when starting to drag
-    const [initialOffset, setInitialOffset] = useState<{ x: number, y: number } | null>(null)
+    const [initialOffset, setInitialOffset] = useState<{
+        x: number
+        y: number
+    } | null>(null)
 
     const handleDragStart = (e: any) => {
         setInitialOffset({ x: e.clientX, y: e.clientY })

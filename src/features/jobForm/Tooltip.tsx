@@ -9,17 +9,27 @@ import {
     useRole,
     useTransitionStyles,
 } from "@floating-ui/react"
-import { type ReactNode, type RefObject, useEffect, useRef, useState } from "react"
+import {
+    type ReactNode,
+    type RefObject,
+    useEffect,
+    useRef,
+    useState,
+} from "react"
 import Markdown from "react-markdown"
 import "./style.css"
 
 type TooltipProps = {
-    children: ReactNode;
-    helpText?: string;
-    positionReference: RefObject<HTMLElement>;
+    children: ReactNode
+    helpText?: string
+    positionReference: RefObject<HTMLElement>
 }
 
-export default function Tooltip({ children, helpText, positionReference }: TooltipProps) {
+export default function Tooltip({
+    children,
+    helpText,
+    positionReference,
+}: TooltipProps) {
     const [isOpen, setIsOpen] = useState(false)
 
     const arrowRef = useRef(null)

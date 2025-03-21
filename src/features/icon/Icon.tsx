@@ -1,9 +1,9 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense } from "react"
 
 type IconProps = {
-    collection?: string;
-    name: string;
-    [key: string]: any;
+    collection?: string
+    name: string
+    [key: string]: any
 }
 
 const loadIcon = (collection: string, name: string) => {
