@@ -1,20 +1,11 @@
 import { type RefObject } from "react"
+import { type FieldRenderProps } from "react-final-form"
 
-type TextFieldProps = {
-    input: {
-        name: string
-        [key: string]: any
-    }
-    meta: {
-        touched?: boolean
-        error?: string
-        [key: string]: any
-    }
+type TextFieldProps = FieldRenderProps<string> & {
     label?: string
     positionReference?:
         | RefObject<HTMLElement>
         | ((instance: HTMLElement | null) => void)
-    [key: string]: any
 }
 
 export default function TextField({
@@ -22,7 +13,6 @@ export default function TextField({
     meta,
     label,
     positionReference,
-    ...props
 }: TextFieldProps) {
     return (
         <div className="form-floating mb-3">
@@ -30,7 +20,6 @@ export default function TextField({
                 type="text"
                 className={`form-control ${meta.touched && meta.error && "is-invalid"}`}
                 {...input}
-                {...props}
                 ref={positionReference}
             />
             {label && (

@@ -1,17 +1,8 @@
 import { type RefObject } from "react"
+import { type FieldRenderProps } from "react-final-form"
 import MoleculeEditor from "../moleculeEditor/MoleculeEditor"
 
-type MoleculeEditorFieldProps = {
-    input?: {
-        value?: string
-        onChange?: (value: string) => void
-        [key: string]: any
-    }
-    meta?: {
-        touched?: boolean
-        error?: string
-        [key: string]: any
-    }
+type MoleculeEditorFieldProps = FieldRenderProps<string> & {
     positionReference?:
         | RefObject<HTMLElement>
         | ((instance: HTMLElement | null) => void)

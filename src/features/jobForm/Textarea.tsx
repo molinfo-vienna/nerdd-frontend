@@ -1,19 +1,11 @@
 import { type RefObject } from "react"
+import { type FieldRenderProps } from "react-final-form"
 
-type TextareaProps = {
-    input: {
-        [key: string]: any
-    }
-    meta: {
-        touched?: boolean
-        error?: string
-        [key: string]: any
-    }
+type TextareaProps = FieldRenderProps<string> & {
     positionReference?:
         | RefObject<HTMLTextAreaElement>
         | ((instance: HTMLTextAreaElement | null) => void)
     className?: string
-    [key: string]: any
 }
 
 export default function Textarea({
@@ -21,10 +13,9 @@ export default function Textarea({
     meta,
     positionReference,
     className = "",
-    ...props
 }: TextareaProps) {
+    // TODO: use classNames
     const modifiedProps = {
-        ...props,
         className: `form-control ${className} ${meta.touched && meta.error ? "is-invalid" : ""}`,
     }
 

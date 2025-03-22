@@ -1,21 +1,12 @@
 import { type RefObject } from "react"
+import { type FieldRenderProps } from "react-final-form"
 
-type CheckBoxFieldProps = {
-    input: {
-        name: string
-        [key: string]: any
-    }
-    meta: {
-        touched?: boolean
-        error?: string
-        [key: string]: any
-    }
+type CheckBoxFieldProps = FieldRenderProps<boolean> & {
     label?: string
     positionReference?:
         | RefObject<HTMLElement>
         | ((instance: HTMLElement | null) => void)
     className?: string
-    [key: string]: any
 }
 
 export default function CheckBoxField({
@@ -24,10 +15,9 @@ export default function CheckBoxField({
     label,
     positionReference,
     className,
-    ...props
 }: CheckBoxFieldProps) {
+    // TODO: use classNames
     const modifiedProps = {
-        ...props,
         className: `form-check-input ${className ?? ""} ${meta.touched && meta.error ? "is-invalid" : ""}`,
     }
     return (

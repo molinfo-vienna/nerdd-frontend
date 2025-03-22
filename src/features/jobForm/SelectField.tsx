@@ -1,27 +1,18 @@
 import { type RefObject } from "react"
+import { type FieldRenderProps } from "react-final-form"
 
 type SelectOption = {
     label: string
     value: string
 }
 
-type SelectFieldProps = {
-    input: {
-        name: string
-        [key: string]: any
-    }
-    meta: {
-        touched?: boolean
-        error?: string
-        [key: string]: any
-    }
+type SelectFieldProps = FieldRenderProps<string> & {
     label?: string
     choices: SelectOption[]
     positionReference?:
         | RefObject<HTMLElement>
         | ((instance: HTMLElement | null) => void)
     className?: string
-    [key: string]: any
 }
 
 export default function SelectField({
@@ -31,10 +22,9 @@ export default function SelectField({
     choices,
     positionReference,
     className,
-    ...props
 }: SelectFieldProps) {
+    // TODO: use classNames
     const modifiedProps = {
-        ...props,
         className: `form-select ${className ?? ""} ${meta.touched && meta.error ? "is-invalid" : ""}`,
     }
     return (

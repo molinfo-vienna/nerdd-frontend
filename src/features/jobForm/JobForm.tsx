@@ -304,12 +304,7 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
                             </FormSpy>
 
                             {jobParameters.map((jobParameter, i) => (
-                                <Row
-                                    key={i}
-                                    label={jobParameter.visibleName}
-                                    labelFor={jobParameter.name}
-                                    helpText={jobParameter.helpText}
-                                >
+                                <Row key={i} helpText={jobParameter.helpText}>
                                     <JobParameterField
                                         jobParameter={jobParameter}
                                     />
