@@ -1,15 +1,24 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 
-const initialState = {}
+export interface File {
+    filename: string
+    id: string
+    status: "pending" | "success" | "error" | "deleting"
+    errorMessage?: string
+    sourceId?: string
+    sourceData?: string
+}
+
+const initialState: Record<string, File[]> = {}
 
 const fileFieldSlice = createSlice({
     name: "fileField",
     initialState,
     reducers: {
-        createFileField(state, action) {
+        createFileField(state, action: PayloadAction<string>) {
             state[action.payload] = []
         },
-        deleteFileField(state, action) {
+        deleteFileField(state, action: PayloadAction<string>) {
             delete state[action.payload]
         },
         addPendingFile(state, action) {

@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-const initialState = {
+export interface TweakPanelState {
+    collapse: boolean
+}
+
+const initialState: TweakPanelState = {
     // show / hide the tweaks widget in the top left corner
     collapse: false,
 }

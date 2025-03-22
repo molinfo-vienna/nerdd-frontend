@@ -1,10 +1,17 @@
+import type { Job, Module, Source } from "@/types"
 import { createSlice } from "@reduxjs/toolkit"
 import { generateModuleConfigDict } from "../mockServer/fake/modules"
 
-const initialState = {
+export type DebugState = {
+    key: number
+    moduleConfigs: Record<string, Module>
+    jobs: Record<string, Job>
+    sources: Record<string, Source>
+}
+
+const initialState: DebugState = {
     // increment this key to force re-render of components
     key: 0,
-
     // module configs
     moduleConfigs: generateModuleConfigDict(8),
     // jobs
