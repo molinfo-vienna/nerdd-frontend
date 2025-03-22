@@ -72,14 +72,14 @@ type PaginationProps = {
     moduleId: string
     jobId: string
     currentPageOneBased: number
-    [key: string]: any // For additional props spread with ...props
+    className?: string
 }
 
 export default function Pagination({
     moduleId,
     jobId,
     currentPageOneBased,
-    ...props
+    className,
 }: PaginationProps) {
     //
     // get job status
@@ -164,7 +164,7 @@ export default function Pagination({
     const getPageLink = (page) => `?page=${page}`
 
     return (
-        <nav aria-label="Page navigation" {...props}>
+        <nav aria-label="Page navigation" className={className}>
             <ul className="pagination">
                 <li
                     className={classNames("page-item", {

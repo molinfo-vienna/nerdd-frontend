@@ -2,8 +2,6 @@ import { type ReactNode, type RefObject, useRef } from "react"
 import Tooltip from "./Tooltip"
 
 type RowProps = {
-    label?: string
-    labelFor?: string
     helpText?: string
     children: ReactNode
     positionReference?: RefObject<HTMLElement>
@@ -11,18 +9,15 @@ type RowProps = {
 }
 
 export default function Row({
-    label,
-    labelFor,
     helpText,
     children,
     positionReference,
     className,
-    ...props
 }: RowProps) {
     const ref = useRef<HTMLDivElement>(null)
 
+    // TODO: use classNames
     const modifiedProps = {
-        ...props,
         className: `${className ?? ""} mb-3`,
     }
 

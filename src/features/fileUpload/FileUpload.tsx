@@ -5,14 +5,9 @@ import "./style.scss"
 type FileUploadProps = {
     name?: string
     onDrop?: (acceptedFiles: File[]) => void
-    [key: string]: any
 }
 
-export default function FileUpload({
-    name,
-    onDrop,
-    ...props
-}: FileUploadProps) {
+export default function FileUpload({ name, onDrop }: FileUploadProps) {
     const {
         acceptedFiles,
         getRootProps,

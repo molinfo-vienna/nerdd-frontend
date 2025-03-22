@@ -25,13 +25,15 @@ const defaultIcon = FaXmark
 type ProblemIconProps = {
     problemType: string
     tooltip?: string
-    [key: string]: any // For the rest props
+    size?: number
+    className?: string
 }
 
 export default function ProblemIcon({
     problemType,
-    ...props
+    size,
+    className,
 }: ProblemIconProps) {
     const Icon = iconMapping[problemType] ?? defaultIcon
-    return <Icon {...props} />
+    return <Icon size={size} className={className} />
 }

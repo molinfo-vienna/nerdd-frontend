@@ -5,21 +5,21 @@ type FooterLinkProps = {
     Icon: ComponentType<{ size?: number; className?: string }>
     title: string
     url: string
-    [key: string]: any // For additional props spread with ...props
+    target?: string
 }
 
 export default function FooterLink({
     Icon,
     title,
     url,
-    ...props
+    target = undefined,
 }: FooterLinkProps) {
     return (
         <li className="mb-2">
             <Link
                 className="muted-link d-flex align-items-center"
                 to={url}
-                {...props}
+                target={target}
             >
                 <Icon size={18} className="me-2" />
                 <span>{title}</span>

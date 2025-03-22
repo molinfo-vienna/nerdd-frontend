@@ -41,7 +41,6 @@ export default function TableCell({
     className,
     onAtomSelect,
     atomColorProperty,
-    ...props
 }: TableCellProps) {
     const value = result[resultProperty.name]
     const molId = result.mol_id
@@ -192,7 +191,6 @@ export default function TableCell({
     // render actual table cell
     //
     const commonProps = {
-        ...props,
         rowSpan: compressed ? 1 : group.children.length,
         className: classNames(className, {
             compressed,

@@ -20,13 +20,12 @@ type ProblemIconWithTooltipProps = {
     problemType: string
     tooltip?: string
     size?: number
-    [key: string]: any
 }
 
 export default function ProblemIconWithTooltip({
     problemType,
     tooltip,
-    ...props
+    size,
 }: ProblemIconWithTooltipProps) {
     const [isOpen, setIsOpen] = useState(false)
 
@@ -65,7 +64,7 @@ export default function ProblemIconWithTooltip({
                 {...getReferenceProps()}
                 className="problem-icon ms-1 text-white"
             >
-                <ProblemIcon problemType={problemType} {...props} />
+                <ProblemIcon problemType={problemType} size={size} />
             </div>
             {isOpen &&
                 createPortal(

@@ -1,27 +1,27 @@
+import { type FC } from "react"
 import { Link } from "react-router-dom"
-import Icon from "../icon/Icon"
 import "./style.scss"
 
 interface ButtonProps {
+    Icon: FC<any>
     href?: string
     className?: string
     icon?: string
     caption?: string
-    [key: string]: any // For additional props
 }
 
 export default function Button({
+    Icon,
     href,
     className,
     icon,
     caption,
-    ...props
 }: ButtonProps) {
     // merge props with default values
+    // TODO: use classNames
     const mergedProps = {
         className:
             "header-button text-center m-2 text-primary " + (className ?? ""),
-        ...props,
     }
 
     return (

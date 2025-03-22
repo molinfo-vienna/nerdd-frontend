@@ -18,23 +18,11 @@ import {
 type FileUploadAndListProps = {
     name: string
     tooltipPositionReference?: RefObject<HTMLElement>
-    [key: string]: any // For additional props spread with ...props
-}
-
-type FileType = {
-    id: string
-    filename: string
-    status: string
-    sourceData?: {
-        id: string
-        [key: string]: any
-    }
 }
 
 export default function FileUploadAndList({
     name,
     tooltipPositionReference,
-    ...props
 }: FileUploadAndListProps) {
     const dispatch = useDispatch()
 
@@ -51,6 +39,7 @@ export default function FileUploadAndList({
     const files = useSelector((state: any) => state.fileField[name])
 
     // update react form field when value in the store changes
+    // TODO: use parameters
     const {
         input: { onChange: onChangeFiles },
         meta,
@@ -155,7 +144,7 @@ export default function FileUploadAndList({
 
     const [deleteSource, {}] = useDeleteSourceMutation()
 
-    const handleDelete = (file: FileType) => {
+    const handleDelete = (file: File) => {
         dispatch(
             setStatus({
                 fileFieldName: name,
@@ -222,7 +211,6 @@ export default function FileUploadAndList({
                 <FileUpload
                     name={name}
                     onDrop={onDrop}
-                    {...props}
                     className="form-control"
                 />
             </div>
