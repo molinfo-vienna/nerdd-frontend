@@ -1,9 +1,5 @@
 import FileItem from "./FileItem"
-
-type File = {
-    id: string
-    [key: string]: any
-}
+import { File } from "./fileFieldSlice"
 
 type FileListProps = {
     files?: File[]

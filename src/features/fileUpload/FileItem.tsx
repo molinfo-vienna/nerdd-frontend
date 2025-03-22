@@ -1,15 +1,8 @@
 import { FaRegCircleCheck, FaRegCircleXmark } from "react-icons/fa6"
-
-type FileItemType = {
-    id: string
-    filename: string
-    status: "pending" | "deleting" | "success" | "error"
-    errorMessage?: string
-    sourceData?: any
-}
+import { File } from "./fileFieldSlice"
 
 type FileItemProps = {
-    file: FileItemType
+    file: File
     onClickDelete: (file: FileItemType) => void
 }
 
