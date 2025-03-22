@@ -1,5 +1,6 @@
-import { BsExclamationCircle } from "react-icons/bs";
-import Layout from "./Layout";
+import classNames from "classnames"
+import { BsExclamationCircle } from "react-icons/bs"
+import Layout from "./Layout"
 
 const statusMap = {
     404: "Not Found",
@@ -8,13 +9,13 @@ const statusMap = {
 
 type ErrorPageProps = {
     error?: {
-        status?: string | number;
-        originalStatus?: string | number;
+        status?: string | number
+        originalStatus?: string | number
         data?: {
-            detail?: string;
-        };
-    };
-    explanation?: string;
+            detail?: string
+        }
+    }
+    explanation?: string
 }
 
 export default function ErrorPage({ error, explanation }: ErrorPageProps) {
@@ -30,6 +31,7 @@ export default function ErrorPage({ error, explanation }: ErrorPageProps) {
 
     const statusExplanation = statusMap[status] || "Unknown Error"
 
+    // leave this console.error here for reporting errors
     console.error(error)
 
     return (
@@ -38,11 +40,16 @@ export default function ErrorPage({ error, explanation }: ErrorPageProps) {
                 <div className="row justify-content-center">
                     <div className="col-md-auto mt-5 pt-5">
                         <div
-                            // TODO: use classNames
                             // align-items-center: the error message is centered with respect
                             //   to the icon (if there is no explanation text provided, there is
                             //   not enough text and it looks weird).
-                            className={`d-flex flex-row align-items-center ${explanation ? "" : "align-items-center"}`}
+                            className={classNames(
+                                `d-flex flex-row align-items-center`,
+                                {
+                                    "align-items-center":
+                                        explanation === undefined,
+                                },
+                            )}
                         >
                             <div className="px-4">
                                 <p className="mb-0">
