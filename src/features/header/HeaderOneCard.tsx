@@ -1,7 +1,6 @@
 import { Module } from "@/types"
-import { Children, ReactNode } from "react"
+import { Children, ReactNode, type FC } from "react"
 import { Link } from "react-router-dom"
-import Icon from "../icon/Icon"
 import NavigationBar from "../navigationBar/NavigationBar"
 import "./style.scss"
 
@@ -20,11 +19,10 @@ type HeaderCardSectionProps = {
 }
 
 type HeaderIconProps = {
+    Icon: FC<any>
     href?: string
-    icon: string
     caption: string
     className?: string
-    [key: string]: any
 }
 
 export default function HeaderOneCard({
@@ -112,16 +110,14 @@ HeaderOneCard.CardSection = function HeaderCardSection({
 }
 
 HeaderOneCard.Icon = function HeaderIcon({
+    Icon,
     href,
-    icon,
     caption,
     className,
-    ...props
 }: HeaderIconProps) {
     // merge props with default values
     const mergedProps = {
         className: "text-center my-2 text-primary " + (className ?? ""),
-        ...props,
     }
 
     return (
@@ -132,7 +128,7 @@ HeaderOneCard.Icon = function HeaderIcon({
                     to={href}
                 >
                     <p className="mb-1">
-                        <Icon name={icon} size={35} />
+                        <Icon size={35} />
                     </p>
                     <span>{caption}</span>
                 </Link>

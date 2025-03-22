@@ -17,7 +17,6 @@ type HeaderCardProps = {
     href?: string
     children?: ReactNode
     className?: string
-    [key: string]: any
 }
 
 export default function Header({ module, children }: HeaderProps) {
@@ -61,14 +60,12 @@ Header.Card = function HeaderCard({
     href,
     children,
     className,
-    ...props
 }: HeaderCardProps) {
     // merge props with default values
     const mergedProps = {
         className:
             "card header-card text-center m-2 text-primary " +
             (className ?? ""),
-        ...props,
     }
 
     return (
