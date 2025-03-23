@@ -3,13 +3,9 @@ import ProblemIcon from "./ProblemIcon"
 
 type ProblemListCellProps = {
     problems: [string, string][]
-    className?: string
 }
 
-export default function ProblemListCell({
-    problems,
-    className,
-}: ProblemListCellProps) {
+export default function ProblemListCell({ problems }: ProblemListCellProps) {
     return (
         <ul className="list-unstyled problem-list mb-0">
             {problems.map(([problemType, message], i) => (
