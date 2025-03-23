@@ -5,6 +5,7 @@ type TextareaProps = FieldRenderProps<string> & {
     positionReference?:
         | RefObject<HTMLTextAreaElement>
         | ((instance: HTMLTextAreaElement | null) => void)
+    rows?: number
     className?: string
 }
 
@@ -12,6 +13,7 @@ export default function Textarea({
     input,
     meta,
     positionReference,
+    rows,
     className = "",
 }: TextareaProps) {
     // TODO: use classNames
@@ -22,6 +24,7 @@ export default function Textarea({
     return (
         <>
             <textarea
+                rows={rows}
                 {...modifiedProps}
                 {...input}
                 ref={positionReference}
