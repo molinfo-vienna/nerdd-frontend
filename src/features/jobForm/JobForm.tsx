@@ -1,4 +1,5 @@
 import { type Module } from "@/types"
+import classNames from "classnames"
 import { createForm, FormApi } from "final-form"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { Field, Form, FormSpy } from "react-final-form"
@@ -218,11 +219,10 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
                                             positionReference={
                                                 inputTextFieldTooltipPositionReference
                                             }
-                                            className={
-                                                values.inputType !== "text"
-                                                    ? "d-none"
-                                                    : ""
-                                            }
+                                            className={classNames({
+                                                "d-none":
+                                                    values.inputType !== "text",
+                                            })}
                                         >
                                             <Field
                                                 name="input"
@@ -242,11 +242,10 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
                                             helpText="File format can be SMILES, SDF, InChI or compressed archives like
                         ZIP, TAR, GZ containing other files with molecular representations. 
                         Multiple files can be uploaded."
-                                            className={
-                                                values.inputType !== "file"
-                                                    ? "d-none"
-                                                    : ""
-                                            }
+                                            className={classNames({
+                                                "d-none":
+                                                    values.inputType !== "file",
+                                            })}
                                             positionReference={
                                                 fileFieldTooltipPositionReference
                                             }
@@ -265,11 +264,10 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
                                         </Row>
 
                                         <Row
-                                            className={
-                                                values.inputType !== "draw"
-                                                    ? "d-none"
-                                                    : ""
-                                            }
+                                            className={classNames({
+                                                "d-none":
+                                                    values.inputType !== "draw",
+                                            })}
                                         >
                                             <Field
                                                 name="inputDrawn"
@@ -284,11 +282,11 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
                                         </Row>
 
                                         <Row
-                                            className={
-                                                values.inputType !== "example"
-                                                    ? "d-none"
-                                                    : ""
-                                            }
+                                            className={classNames({
+                                                "d-none":
+                                                    values.inputType !==
+                                                    "example",
+                                            })}
                                         >
                                             <MoleculeEditor
                                                 value={exampleSmiles}

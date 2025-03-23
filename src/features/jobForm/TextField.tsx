@@ -1,3 +1,4 @@
+import classNames from "classnames"
 import { type RefObject } from "react"
 import { type FieldRenderProps } from "react-final-form"
 
@@ -18,7 +19,9 @@ export default function TextField({
         <div className="form-floating mb-3">
             <input
                 type="text"
-                className={`form-control ${meta.touched && meta.error && "is-invalid"}`}
+                className={classNames("form-control", {
+                    "is-invalid": meta.touched && meta.error,
+                })}
                 {...input}
                 ref={positionReference}
             />

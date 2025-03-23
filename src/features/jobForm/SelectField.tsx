@@ -1,3 +1,4 @@
+import classNames from "classnames"
 import { type RefObject } from "react"
 import { type FieldRenderProps } from "react-final-form"
 
@@ -23,13 +24,15 @@ export default function SelectField({
     positionReference,
     className,
 }: SelectFieldProps) {
-    // TODO: use classNames
-    const modifiedProps = {
-        className: `form-select ${className ?? ""} ${meta.touched && meta.error ? "is-invalid" : ""}`,
-    }
     return (
         <div className="form-floating mb-3">
-            <select {...modifiedProps} {...input} ref={positionReference}>
+            <select
+                className={classNames("form-select", className, {
+                    "is-invalid": meta.touched && meta.error,
+                })}
+                {...input}
+                ref={positionReference}
+            >
                 <option disabled value="">
                     Select...
                 </option>

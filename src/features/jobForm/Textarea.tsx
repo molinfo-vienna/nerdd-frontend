@@ -1,3 +1,4 @@
+import classNames from "classnames"
 import { type RefObject } from "react"
 import { type FieldRenderProps } from "react-final-form"
 
@@ -14,18 +15,15 @@ export default function Textarea({
     meta,
     positionReference,
     rows,
-    className = "",
+    className,
 }: TextareaProps) {
-    // TODO: use classNames
-    const modifiedProps = {
-        className: `form-control ${className} ${meta.touched && meta.error ? "is-invalid" : ""}`,
-    }
-
     return (
         <>
             <textarea
                 rows={rows}
-                {...modifiedProps}
+                className={classNames("form-control", className, {
+                    "is-invalid": meta.touched && meta.error,
+                })}
                 {...input}
                 ref={positionReference}
             ></textarea>

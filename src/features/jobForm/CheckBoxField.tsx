@@ -1,3 +1,4 @@
+import classNames from "classnames"
 import { type RefObject } from "react"
 import { type FieldRenderProps } from "react-final-form"
 
@@ -16,14 +17,12 @@ export default function CheckBoxField({
     positionReference,
     className,
 }: CheckBoxFieldProps) {
-    // TODO: use classNames
-    const modifiedProps = {
-        className: `form-check-input ${className ?? ""} ${meta.touched && meta.error ? "is-invalid" : ""}`,
-    }
     return (
         <div className="form-check form-check-lg">
             <input
-                {...modifiedProps}
+                className={classNames("form-check-input", className, {
+                    "is-invalid": meta.touched && meta.error,
+                })}
                 {...input}
                 type="checkbox"
                 ref={positionReference}
