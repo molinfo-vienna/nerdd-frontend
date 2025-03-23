@@ -1,5 +1,6 @@
+import classNames from "classnames"
 import { type RefObject, useCallback, useEffect, useState } from "react"
-import { useField } from "react-final-form"
+import { FieldRenderProps } from "react-final-form"
 import { useDispatch, useSelector } from "react-redux"
 import { v4 as uuidv4 } from "uuid"
 import { useAddSourceMutation, useDeleteSourceMutation } from "../../services"
@@ -15,12 +16,14 @@ import {
     setStatus,
 } from "./fileFieldSlice"
 
-type FileUploadAndListProps = {
+type FileUploadAndListProps = FieldRenderProps<string> & {
     name: string
     tooltipPositionReference?: RefObject<HTMLElement>
 }
 
 export default function FileUploadAndList({
+    input,
+    meta,
     name,
     tooltipPositionReference,
 }: FileUploadAndListProps) {
@@ -38,15 +41,8 @@ export default function FileUploadAndList({
     // get current value from the store
     const files = useSelector((state: any) => state.fileField[name])
 
-    // update react form field when value in the store changes
-    // TODO: use parameters
-    const {
-        input: { onChange: onChangeFiles },
-        meta,
-    } = useField(name)
-
     useEffect(() => {
-        onChangeFiles(files)
+        input.onChange(files)
     }, [files])
 
     const [addSource, {}] = useAddSourceMutation()
@@ -206,7 +202,9 @@ export default function FileUploadAndList({
         <div className="input-group has-validation">
             <div
                 ref={tooltipPositionReference}
-                className={`w-100 ${meta.touched && meta.error ? "is-invalid" : ""}`}
+                className={classNames("w-100", {
+                    "is-invalid": meta.touched && meta.error,
+                })}
             >
                 <FileUpload
                     name={name}

@@ -14,6 +14,8 @@ export default function FileField({
 }: FileFieldProps) {
     return (
         <FileUploadAndList
+            input={input}
+            meta={meta}
             name="inputFile"
             tooltipPositionReference={positionReference}
         />
