@@ -1,6 +1,6 @@
 import _ from "lodash"
 import ReactDOMServer from "react-dom/server"
-import Icon from "../features/icon/Icon"
+import { PiGearLight } from "react-icons/pi"
 
 function normalizeJobParameter(jobParameter) {
     return {
@@ -27,12 +27,7 @@ function normalizeResultProperty(resultProperty) {
 }
 
 export function normalizeModule(module) {
-    const reactElement = Icon({
-        collection: "pi",
-        name: "PiGearLight",
-        stroke: "#084887",
-        fill: "#084887",
-    })
+    const reactElement = PiGearLight
 
     const logo =
         module.logo ||
