@@ -10,9 +10,7 @@ type SelectOption = {
 type SelectFieldProps = FieldRenderProps<string> & {
     label?: string
     choices: SelectOption[]
-    positionReference?:
-        | RefObject<HTMLElement>
-        | ((instance: HTMLElement | null) => void)
+    positionReference?: RefObject<HTMLSelectElement>
     className?: string
 }
 

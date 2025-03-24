@@ -4,9 +4,7 @@ import { type FieldRenderProps } from "react-final-form"
 
 type CheckBoxFieldProps = FieldRenderProps<boolean> & {
     label?: string
-    positionReference?:
-        | RefObject<HTMLElement>
-        | ((instance: HTMLElement | null) => void)
+    positionReference?: RefObject<HTMLInputElement>
     className?: string
 }
 
@@ -17,6 +15,7 @@ export default function CheckBoxField({
     positionReference,
     className,
 }: CheckBoxFieldProps) {
+    console.log(input)
     return (
         <div className="form-check form-check-lg">
             <input

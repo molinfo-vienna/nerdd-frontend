@@ -3,9 +3,7 @@ import { type FieldRenderProps } from "react-final-form"
 import MoleculeEditor from "../moleculeEditor/MoleculeEditor"
 
 type MoleculeEditorFieldProps = FieldRenderProps<string> & {
-    positionReference?:
-        | RefObject<HTMLElement>
-        | ((instance: HTMLElement | null) => void)
+    positionReference?: RefObject<HTMLElement>
 }
 
 export default function MoleculeEditorField({
@@ -13,6 +11,7 @@ export default function MoleculeEditorField({
     meta,
     positionReference,
 }: MoleculeEditorFieldProps) {
+    // TODO: add positionReference
     return MoleculeEditor({
         value: input?.value,
         onChange: input?.onChange,

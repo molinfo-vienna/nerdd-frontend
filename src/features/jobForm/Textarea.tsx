@@ -3,9 +3,7 @@ import { type RefObject } from "react"
 import { type FieldRenderProps } from "react-final-form"
 
 type TextareaProps = FieldRenderProps<string> & {
-    positionReference?:
-        | RefObject<HTMLTextAreaElement>
-        | ((instance: HTMLTextAreaElement | null) => void)
+    positionReference?: RefObject<HTMLTextAreaElement>
     rows?: number
     placeholder?: string
     className?: string

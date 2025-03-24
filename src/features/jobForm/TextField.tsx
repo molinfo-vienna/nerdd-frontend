@@ -5,9 +5,7 @@ import { type FieldRenderProps } from "react-final-form"
 type TextFieldProps = FieldRenderProps<string> & {
     label?: string
     placeholder?: string
-    positionReference?:
-        | RefObject<HTMLElement>
-        | ((instance: HTMLElement | null) => void)
+    positionReference?: RefObject<HTMLInputElement>
 }
 
 export default function TextField({
