@@ -41,6 +41,7 @@
     "scripts": {
         "start": "vite",
         "build": "vite build",
+        "scan": "vite & npx react-scan@latest localhost:3000",
         "preview": "vite preview",
         "test": "vitest run",
         "test:watch": "vitest",
