@@ -7,6 +7,7 @@ type TextareaProps = FieldRenderProps<string> & {
         | RefObject<HTMLTextAreaElement>
         | ((instance: HTMLTextAreaElement | null) => void)
     rows?: number
+    placeholder?: string
     className?: string
 }
 
@@ -15,12 +16,14 @@ export default function Textarea({
     meta,
     positionReference,
     rows,
+    placeholder,
     className,
 }: TextareaProps) {
     return (
         <>
             <textarea
                 rows={rows}
+                placeholder={placeholder}
                 className={classNames("form-control", className, {
                     "is-invalid": meta.touched && meta.error,
                 })}
