@@ -11,7 +11,7 @@ export default function ConstructionPage() {
                             // align-items-center: the error message is centered with respect
                             //   to the icon (if there is no explanation text provided, there is
                             //   not enough text and it looks weird).
-                            className={`d-flex flex-row align-items-center align-items-center`}
+                            className="d-flex flex-row align-items-center align-items-center"
                         >
                             <div
                                 className="position-relative mx-4 rounded-circle border border-4 border-dark"

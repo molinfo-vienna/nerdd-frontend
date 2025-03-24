@@ -1,3 +1,4 @@
+import classNames from "classnames"
 import { useDropzone } from "react-dropzone"
 import { PiFileArrowUp } from "react-icons/pi"
 import "./style.scss"
@@ -17,19 +18,14 @@ export default function FileUpload({ name, onDrop }: FileUploadProps) {
         isDragReject,
     } = useDropzone({ onDrop })
 
-    let borderStyle
-    if (isFocused) {
-        borderStyle = "border-primary"
-    } else if (isDragAccept) {
-        borderStyle = "border-success text-success"
-    } else if (isDragReject) {
-        borderStyle = "border-danger"
-    } else {
-        borderStyle = "border-secondary text-muted"
-    }
-
     const style = {
-        className: `text-center rounded-2 fs-5 border-2 ${borderStyle} dropzone`,
+        className: classNames("text-center rounded-2 fs-5 border-2 dropzone", {
+            "border-primary": isFocused,
+            "border-success text-success": isDragAccept,
+            "border-danger": isDragReject,
+            "border-secondary text-muted":
+                !isFocused && !isDragAccept && !isDragReject,
+        }),
     }
 
     return (

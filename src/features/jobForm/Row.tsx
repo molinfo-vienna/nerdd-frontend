@@ -1,3 +1,4 @@
+import classNames from "classnames"
 import { type ReactNode, type RefObject, useRef } from "react"
 import Tooltip from "./Tooltip"
 
@@ -16,11 +17,6 @@ export default function Row({
 }: RowProps) {
     const ref = useRef<HTMLDivElement>(null)
 
-    // TODO: use classNames
-    const modifiedProps = {
-        className: `${className ?? ""} mb-3`,
-    }
-
     // we always put the anchor of the tooltip centered w.r.t. the first child
     // the remaining children are rendered, but do not influence the tooltip position
     const [firstChild, ...restChildren] = Array.isArray(children)
@@ -28,7 +24,7 @@ export default function Row({
         : [children]
 
     return (
-        <div {...modifiedProps}>
+        <div className={classNames(className, "mb-3")}>
             <Tooltip
                 helpText={helpText}
                 positionReference={

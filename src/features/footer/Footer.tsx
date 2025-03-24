@@ -172,7 +172,7 @@ export default function Footer() {
                         <div className="d-flex flex-wrap justify-content-start">
                             {partners.map((partner, i) => (
                                 <div
-                                    className={`align-self-center text-sm-center`}
+                                    className="align-self-center text-sm-center"
                                     style={{
                                         width: "33%",
                                     }}

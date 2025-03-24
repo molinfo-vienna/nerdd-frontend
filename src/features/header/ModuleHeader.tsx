@@ -1,4 +1,5 @@
 import { type Module } from "@/types"
+import classNames from "classnames"
 import { type ComponentType } from "react"
 import { FaBook, FaBookOpen, FaPlug } from "react-icons/fa6"
 import Markdown from "react-markdown"
@@ -83,7 +84,10 @@ export default function ModuleHeader({ module }: ModuleHeaderProps) {
                             <div className="d-flex flex-wrap">
                                 {icons.map((icon, index) => (
                                     <div
-                                        className={`flex-fill ${index == icons.length - 1 ? "" : "border-right"}`}
+                                        className={classNames("flex-fill", {
+                                            "border-right":
+                                                index !== icons.length - 1,
+                                        })}
                                         key={index}
                                     >
                                         <div className="text-center my-2 text-primary">

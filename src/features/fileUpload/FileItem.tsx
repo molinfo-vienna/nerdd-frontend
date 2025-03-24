@@ -1,3 +1,4 @@
+import classNames from "classnames"
 import { FaRegCircleCheck, FaRegCircleXmark } from "react-icons/fa6"
 import { File } from "./fileFieldSlice"
 
@@ -41,7 +42,9 @@ export default function FileItem({ file, onClickDelete }: FileItemProps) {
                     </span>
                 ) : null}
                 <div
-                    className={`text-truncate flex-fill ps-2 pe-5 ${file.status === "error" ? "text-danger" : ""}`}
+                    className={classNames("text-truncate flex-fill ps-2 pe-5", {
+                        "text-danger": file.status === "error",
+                    })}
                 >
                     {" "}
                     {file.filename}
