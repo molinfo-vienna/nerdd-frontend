@@ -1,7 +1,7 @@
+import { useAppDispatch, useAppSelector } from "@/hooks"
 import classNames from "classnames"
-import { type RefObject, useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState, type RefObject } from "react"
 import { FieldRenderProps } from "react-final-form"
-import { useDispatch, useSelector } from "react-redux"
 import { v4 as uuidv4 } from "uuid"
 import { useAddSourceMutation, useDeleteSourceMutation } from "../../services"
 import FileList from "./FileList"
@@ -14,9 +14,10 @@ import {
     setErrorMessage,
     setSourceData,
     setStatus,
+    type File,
 } from "./fileFieldSlice"
 
-type FileUploadAndListProps = FieldRenderProps<string> & {
+type FileUploadAndListProps = FieldRenderProps<File[]> & {
     name: string
     tooltipPositionReference?: RefObject<HTMLElement>
 }
@@ -27,7 +28,7 @@ export default function FileUploadAndList({
     name,
     tooltipPositionReference,
 }: FileUploadAndListProps) {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     // create file field in the store (and delete it when component is unmounted)
     useEffect(() => {
@@ -39,7 +40,7 @@ export default function FileUploadAndList({
     }, [name])
 
     // get current value from the store
-    const files = useSelector((state: any) => state.fileField[name])
+    const files = useAppSelector((state) => state.fileField[name])
 
     useEffect(() => {
         input.onChange(files)

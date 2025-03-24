@@ -1,5 +1,5 @@
+import { useAppDispatch } from "@/hooks"
 import { useEffect } from "react"
-import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { makeButton, useTweaks } from "use-tweaks"
 import { addMolecule, setNumEntriesTotal } from "../debug/debugSlice"
@@ -16,7 +16,7 @@ export default function ResultsGenerator({
     job,
     predictionSpeed,
 }: ResultsGeneratorProps) {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
     useTweaks("Jobs", {

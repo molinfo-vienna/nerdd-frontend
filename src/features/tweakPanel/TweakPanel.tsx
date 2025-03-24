@@ -1,13 +1,13 @@
+import { useAppDispatch, useAppSelector } from "@/hooks"
 import { useRef } from "react"
 import { FaGear } from "react-icons/fa6"
-import { useDispatch, useSelector } from "react-redux"
 import { makeButton, useTweaks } from "use-tweaks"
 import { setCollapse } from "./tweakPanelSlice"
 
 export default function TweakPanel() {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
-    const collapse = useSelector((state) => state.tweakPanel.collapse)
+    const collapse = useAppSelector((state) => state.tweakPanel.collapse)
 
     const containerRef = useRef()
 

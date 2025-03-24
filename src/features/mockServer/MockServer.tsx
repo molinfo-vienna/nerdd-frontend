@@ -1,6 +1,7 @@
+import { useAppDispatch } from "@/hooks"
 import { createServer, Response } from "miragejs"
 import { Fragment, useEffect } from "react"
-import { useDispatch, useStore } from "react-redux"
+import { useStore } from "react-redux"
 import { nerddApi } from "../../services"
 import {
     createJob,
@@ -36,7 +37,7 @@ export default function MockServer({
     predictionSpeed,
     jobs,
 }: MockServerProps) {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const store = useStore()
 
     // rest server

@@ -1,6 +1,6 @@
+import { useAppDispatch, useAppSelector } from "@/hooks"
 import { useDebounce, useLocalStorage } from "@uidotdev/usehooks"
 import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
 import { makeButton, useTweaks } from "use-tweaks"
 import MockServer from "../mockServer/MockServer"
 import TweakPanel from "../tweakPanel/TweakPanel"
@@ -26,9 +26,9 @@ export default function Debug() {
         return null
     }
 
-    const dispatch = useDispatch()
-    const moduleConfigs = useSelector((state: any) => state.debug.moduleConfigs)
-    const jobs = useSelector((state: any) => state.debug.jobs)
+    const dispatch = useAppDispatch()
+    const moduleConfigs = useAppSelector((state) => state.debug.moduleConfigs)
+    const jobs = useAppSelector((state: any) => state.debug.jobs)
 
     const [settings, setSettings] = useLocalStorage<DebugSettings>("debug", {
         // whether the mock server should be used (instead of the real API)
