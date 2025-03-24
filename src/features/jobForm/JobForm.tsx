@@ -73,7 +73,7 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
     // Validation
     //
     const validate = useCallback(
-        (values: any) => {
+        (values) => {
             const errors: Record<string, string> = {}
 
             // input
@@ -119,7 +119,7 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
         )
     }, [])
 
-    const formRef = useRef<FormApi<any, any>>(formApi)
+    const formRef = useRef<FormApi>(formApi)
 
     return (
         <div className="row justify-content-center">
@@ -253,7 +253,10 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
                                             <Field
                                                 name="inputFile"
                                                 id="inputFile"
-                                                initialValue={[]}
+                                                // do not provide initialValue = []
+                                                // 1. it is not needed
+                                                // 2. a rerender will always create a new array
+                                                //    -> this triggers another rerender
                                                 component={FileField}
                                                 aria-describedby="inputFileHelp"
                                                 positionReference={
