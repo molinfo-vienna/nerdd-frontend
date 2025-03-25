@@ -11,7 +11,7 @@ import Layout from "./Layout"
 import LoadingPage from "./LoadingPage"
 
 export default function AboutPage() {
-    const ref = useRef()
+    const ref = useRef(null)
     const { moduleId } = useParams()
 
     const { data: module, error, isLoading } = useGetModuleQuery(moduleId)

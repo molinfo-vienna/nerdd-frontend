@@ -9,7 +9,7 @@ export default function TweakPanel() {
 
     const collapse = useAppSelector((state) => state.tweakPanel.collapse)
 
-    const containerRef = useRef()
+    const containerRef = useRef(null)
 
     useTweaks(
         "TweakPanel",
