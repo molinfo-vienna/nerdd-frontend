@@ -3,11 +3,11 @@ import { setupListeners } from "@reduxjs/toolkit/query"
 import debugSliceReducer from "./features/debug/debugSlice"
 import fileFieldSliceReducer from "./features/fileUpload/fileFieldSlice"
 import tweakPanelSliceReducer from "./features/tweakPanel/tweakPanelSlice"
-import { nerddApi } from "./services"
+import { baseApi } from "./services"
 
 export const store = configureStore({
     reducer: {
-        [nerddApi.reducerPath]: nerddApi.reducer,
+        [baseApi.reducerPath]: baseApi.reducer,
         debug: debugSliceReducer,
         tweakPanel: tweakPanelSliceReducer,
         fileField: fileFieldSliceReducer,

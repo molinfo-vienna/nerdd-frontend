@@ -2,7 +2,7 @@ import { useAppDispatch } from "@/hooks"
 import { createServer, Response } from "miragejs"
 import { Fragment, useEffect } from "react"
 import { useStore } from "react-redux"
-import { nerddApi } from "../../services"
+import { baseApi } from "../../services"
 import {
     createJob,
     createSource,
@@ -442,7 +442,7 @@ export default function MockServer({
             // -> trigger a re-fetch of all queries
             // also: increment the key to force a re-render of all components
             // reason: UI might have state that should be reset
-            dispatch(nerddApi.util.resetApiState())
+            dispatch(baseApi.util.resetApiState())
             dispatch(incrementKey())
 
             return () => {
@@ -454,7 +454,7 @@ export default function MockServer({
             // -> trigger a re-fetch of all queries
             // also: increment the key to force a re-render of all components
             // reason: UI might have state that should be reset
-            dispatch(nerddApi.util.resetApiState())
+            dispatch(baseApi.util.resetApiState())
             dispatch(incrementKey())
         }
     }, [
