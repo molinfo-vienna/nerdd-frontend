@@ -1,6 +1,6 @@
+import MoleculeEditor from "@/features/moleculeEditor/MoleculeEditor"
 import { type RefObject } from "react"
 import { type FieldRenderProps } from "react-final-form"
-import MoleculeEditor from "../moleculeEditor/MoleculeEditor"
 
 type MoleculeEditorFieldProps = FieldRenderProps<string> & {
     positionReference?: RefObject<HTMLElement>

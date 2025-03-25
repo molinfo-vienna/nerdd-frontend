@@ -1,7 +1,7 @@
+import { useGetModuleQuery } from "@/services"
 import classNames from "classnames"
 import { FaBars, FaGithub } from "react-icons/fa6"
 import { Link, useMatches, useParams } from "react-router-dom"
-import { useGetModuleQuery } from "../../services"
 
 export default function NavigationBar() {
     // figure out which page we are on

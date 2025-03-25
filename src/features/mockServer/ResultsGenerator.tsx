@@ -1,8 +1,8 @@
+import { addMolecule, setNumEntriesTotal } from "@/features/debug/debugSlice"
 import { useAppDispatch } from "@/hooks"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { makeButton, useTweaks } from "use-tweaks"
-import { addMolecule, setNumEntriesTotal } from "../debug/debugSlice"
 
 type ResultsGeneratorProps = {
     job: {

@@ -1,15 +1,15 @@
-import { useAppDispatch } from "@/hooks"
-import { createServer, Response } from "miragejs"
-import { Fragment, useEffect } from "react"
-import { useStore } from "react-redux"
-import { baseApi } from "../../services"
 import {
     createJob,
     createSource,
     deleteJob,
     deleteSource,
     incrementKey,
-} from "../debug/debugSlice"
+} from "@/features/debug/debugSlice"
+import { useAppDispatch } from "@/hooks"
+import { baseApi } from "@/services"
+import { createServer, Response } from "miragejs"
+import { Fragment, useEffect } from "react"
+import { useStore } from "react-redux"
 import { generateResults, jobId, sourceId } from "./fake"
 import JobStatusWebSocketMockServer from "./JobStatusWebSocketMockServer"
 import recursiveCamelToSnakeCase from "./recursiveCamelToSnakeCase"

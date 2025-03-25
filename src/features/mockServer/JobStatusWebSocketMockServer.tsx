@@ -1,6 +1,6 @@
+import { addOutputFile } from "@/features/debug/debugSlice"
 import { Server as SocketServer } from "mock-socket"
 import { useEffect, useState } from "react"
-import { addOutputFile } from "../debug/debugSlice"
 import recursiveCamelToSnakeCase from "./recursiveCamelToSnakeCase"
 
 type JobStatusWebSocketMockServerProps = {

@@ -1,5 +1,5 @@
+import d3Palettes from "@/features/colorPalettes/d3Palettes"
 import { faker } from "@faker-js/faker"
-import d3Palettes from "../../colorPalettes/d3Palettes"
 import { generateValue } from "./util"
 
 const taskTypes = [

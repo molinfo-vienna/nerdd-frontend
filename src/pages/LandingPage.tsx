@@ -1,5 +1,5 @@
-import ModuleCard from "../features/moduleCard/ModuleCard"
-import { useGetModulesQuery } from "../services"
+import ModuleCard from "@/features/moduleCard/ModuleCard"
+import { useGetModulesQuery } from "@/services"
 import ErrorPage from "./ErrorPage"
 import Layout from "./Layout"
 import LoadingPage from "./LoadingPage"

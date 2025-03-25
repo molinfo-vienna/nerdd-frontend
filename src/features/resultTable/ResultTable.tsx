@@ -1,7 +1,7 @@
+import useColorPalettes from "@/features/colorPalettes/useColorPalettes"
 import type { Module, Result, ResultProperty } from "@/types"
 import { sortedIndexBy } from "lodash"
 import { memo, useMemo } from "react"
-import useColorPalettes from "../colorPalettes/useColorPalettes"
 import getColorPalette from "./getColorPalette"
 import getColumnRows from "./getColumnRows"
 import "./style.scss"

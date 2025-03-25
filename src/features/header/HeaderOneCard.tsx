@@ -1,7 +1,7 @@
+import NavigationBar from "@/features/navigationBar/NavigationBar"
 import { Module } from "@/types"
 import { Children, ReactNode, type FC } from "react"
 import { Link } from "react-router-dom"
-import NavigationBar from "../navigationBar/NavigationBar"
 import "./style.scss"
 
 type HeaderOneCardProps = {

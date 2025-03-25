@@ -1,9 +1,9 @@
 import { useAppDispatch, useAppSelector } from "@/hooks"
+import { useAddSourceMutation, useDeleteSourceMutation } from "@/services"
 import classNames from "classnames"
 import { useCallback, useEffect, useState, type RefObject } from "react"
 import { FieldRenderProps } from "react-final-form"
 import { v4 as uuidv4 } from "uuid"
-import { useAddSourceMutation, useDeleteSourceMutation } from "../../services"
 import FileList from "./FileList"
 import FileUpload from "./FileUpload"
 import {

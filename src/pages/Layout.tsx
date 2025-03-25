@@ -1,6 +1,6 @@
+import Footer from "@/features/footer/Footer"
+import NavigationBar from "@/features/navigationBar/NavigationBar"
 import { Children, type FC, type ReactNode } from "react"
-import Footer from "../features/footer/Footer"
-import NavigationBar from "../features/navigationBar/NavigationBar"
 
 type LayoutProps = {
     children: ReactNode

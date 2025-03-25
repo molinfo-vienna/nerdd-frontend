@@ -1,6 +1,6 @@
+import { generateModuleConfigDict } from "@/features/mockServer/fake/modules"
 import type { Job, Module, Source } from "@/types"
 import { createSlice } from "@reduxjs/toolkit"
-import { generateModuleConfigDict } from "../mockServer/fake/modules"
 
 export type DebugState = {
     key: number

@@ -1,3 +1,4 @@
+import { useGetModuleQuery } from "@/services"
 import {
     FaBook,
     FaBookOpen,
@@ -12,7 +13,6 @@ import {
     FaWindowMaximize,
 } from "react-icons/fa6"
 import { Link, useParams } from "react-router-dom"
-import { useGetModuleQuery } from "../../services"
 import FooterLink from "./FooterLink"
 
 export default function Footer() {

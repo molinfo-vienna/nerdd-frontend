@@ -1,9 +1,9 @@
+import MockServer from "@/features/mockServer/MockServer"
+import TweakPanel from "@/features/tweakPanel/TweakPanel"
 import { useAppDispatch, useAppSelector } from "@/hooks"
 import { useDebounce, useLocalStorage } from "@uidotdev/usehooks"
 import { useEffect } from "react"
 import { makeButton, useTweaks } from "use-tweaks"
-import MockServer from "../mockServer/MockServer"
-import TweakPanel from "../tweakPanel/TweakPanel"
 import { useDebug } from "./DebugContext"
 import { incrementKey, setNumModules } from "./debugSlice"
 

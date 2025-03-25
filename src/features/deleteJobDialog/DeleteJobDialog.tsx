@@ -1,5 +1,5 @@
+import { useDeleteJobMutation } from "@/services"
 import { useNavigate } from "react-router-dom"
-import { useDeleteJobMutation } from "../../services"
 
 type DeleteJobDialogProps = {
     id: string
