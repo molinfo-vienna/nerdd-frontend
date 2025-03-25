@@ -1,10 +1,12 @@
+import { Module } from "@/types"
 import { baseApi } from "./base"
 import { normalizeModule } from "./normalize"
 import recursiveSnakeToCamelCase from "./recursiveSnakeToCamelCase"
 
 export const modulesApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        getModules: builder.query({
+        // TODO: return list of modules
+        getModules: builder.query<Record<string, Module>, void>({
             query: () => {
                 return `/modules`
             },
@@ -24,7 +26,7 @@ export const modulesApi = baseApi.injectEndpoints({
                 return modules
             },
         }),
-        getModule: builder.query({
+        getModule: builder.query<Module, string>({
             query: (moduleId) => {
                 return `/modules/${moduleId}`
             },

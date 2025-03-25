@@ -1,10 +1,11 @@
+import { JobStatus } from "@/types"
 import { baseApi } from "./base"
 import recursiveSnakeToCamelCase from "./recursiveSnakeToCamelCase"
 import websocketQuery from "./websocketQuery"
 
 export const jobsApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        addJob: builder.mutation({
+        addJob: builder.mutation<JobStatus, { moduleId: string; data: any }>({
             query: ({ moduleId, data }) => {
                 const form = new FormData()
                 for (const key in data) {

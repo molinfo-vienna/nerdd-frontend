@@ -1,24 +1,61 @@
+import {
+    type BaseQueryArg,
+    type BaseQueryFn,
+    type BaseQueryResult,
+    type EndpointBuilder,
+} from "@reduxjs/toolkit/query"
 import ReconnectingWebSocket from "reconnecting-websocket"
 
-export default function websocketQuery({
+type WebsocketQueryParameters<
+    ResultType,
+    QueryArg,
+    BaseQuery extends BaseQueryFn,
+    RawResultType extends BaseQueryResult<BaseQuery>,
+    TagTypes extends string,
+    ReducerPath extends string,
+> = {
+    builder: EndpointBuilder<BaseQuery, TagTypes, ReducerPath>
+    queryWs: (arg: QueryArg) => BaseQueryArg<BaseQuery>
+    transformResponseWs: (
+        baseQueryReturnValue: RawResultType,
+    ) => ResultType | Promise<ResultType>
+    process: (draft: unknown, data: unknown, complete: boolean) => void
+} & Parameters<EndpointBuilder<BaseQuery, TagTypes, ReducerPath>["query"]>[0]
+
+export default function websocketQuery<
+    ResultType,
+    QueryArg,
+    BaseQuery extends BaseQueryFn,
+    TagTypes extends string,
+    ReducerPath extends string = string,
+    RawResultType extends
+        BaseQueryResult<BaseQuery> = BaseQueryResult<BaseQuery>,
+>({
     builder,
-    query,
     queryWs,
-    transformResponse,
     transformResponseWs,
     process,
-}) {
+    ...definition
+}: WebsocketQueryParameters<
+    ResultType,
+    QueryArg,
+    BaseQuery,
+    RawResultType,
+    TagTypes,
+    ReducerPath
+>) {
     return builder.query({
-        query,
-        transformResponse,
+        ...(definition as unknown as Parameters<
+            EndpointBuilder<BaseQuery, TagTypes, ReducerPath>["query"]
+        >[0]),
         onCacheEntryAdded: async (
-            args,
+            args: QueryArg,
             { updateCachedData, cacheDataLoaded, cacheEntryRemoved },
         ) => {
             // wait for the initial query to resolve before proceeding
             await cacheDataLoaded
 
-            let ws
+            let ws: ReconnectingWebSocket | undefined
             try {
                 // build the websocket URL
                 const queryPath = queryWs(args)
@@ -42,7 +79,9 @@ export default function websocketQuery({
                     updateCachedData((draft) => {
                         // TODO: messages might get lost here
                         if (draft != null) {
-                            return process(draft, transformedData, false)
+                            process(draft, transformedData, false)
+                        } else {
+                            console.error("draft is null")
                         }
                     })
                 }
@@ -53,13 +92,13 @@ export default function websocketQuery({
                         updateCachedData((draft) => {
                             // TODO: messages might get lost here
                             if (draft != null) {
-                                return process(draft, undefined, true)
+                                process(draft, undefined, true)
                             }
                         })
 
                         // close the websocket connection
                         // (ReconnectingWebSocket won't reconnect in this case)
-                        ws.close()
+                        ws?.close()
                     } else {
                         console.error(
                             "WebSocket connection closed unexpectedly",

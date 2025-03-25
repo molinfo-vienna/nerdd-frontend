@@ -1,14 +1,8 @@
-import { fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { baseApi } from "./base"
 import websocketQuery from "./websocketQuery"
 
 // Define a service using a base URL and expected endpoints
 export const resultsApi = baseApi.injectEndpoints({
-    reducerPath: "nerddApi",
-    refetchOnReconnect: true,
-    baseQuery: fetchBaseQuery({
-        baseUrl: `/api`,
-    }),
     endpoints: (builder) => ({
         getResults: websocketQuery({
             builder,
@@ -29,6 +23,7 @@ export const resultsApi = baseApi.injectEndpoints({
                     }
                 }
 
+                // TODO: add debounce
                 draft.data.push(data)
 
                 // return nothing to signal that the draft has been modified
