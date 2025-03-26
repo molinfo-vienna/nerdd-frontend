@@ -465,6 +465,7 @@ export default function MockServer({
         return404,
         logRequests,
         enabled,
+        store,
     ])
 
     return (

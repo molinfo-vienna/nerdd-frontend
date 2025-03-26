@@ -1,6 +1,6 @@
 import { addOutputFile } from "@/features/debug/debugSlice"
 import { Server as SocketServer } from "mock-socket"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import recursiveCamelToSnakeCase from "./recursiveCamelToSnakeCase"
 
 type JobStatusWebSocketMockServerProps = {
@@ -21,18 +21,21 @@ export default function JobStatusWebSocketMockServer({
     const [socketServer, setSocketServer] = useState<SocketServer | null>(null)
     const moduleId = job.jobType
 
-    const jobResponse = {
-        ...job,
-        pageSize,
-        // do not return numEntriesTotal if showNumEntriesTotal is false
-        numEntriesTotal: job.showNumEntriesTotal
-            ? job.numEntriesTotal
-            : undefined,
-        numPagesTotal: job.showNumEntriesTotal
-            ? Math.ceil(job.numEntriesTotal / pageSize)
-            : undefined,
-        outputFiles: [],
-    }
+    const jobResponse = useMemo(
+        () => ({
+            ...job,
+            pageSize,
+            // do not return numEntriesTotal if showNumEntriesTotal is false
+            numEntriesTotal: job.showNumEntriesTotal
+                ? job.numEntriesTotal
+                : undefined,
+            numPagesTotal: job.showNumEntriesTotal
+                ? Math.ceil(job.numEntriesTotal / pageSize)
+                : undefined,
+            outputFiles: [],
+        }),
+        [job, pageSize],
+    )
 
     // create a socket server
     useEffect(() => {
@@ -56,7 +59,7 @@ export default function JobStatusWebSocketMockServer({
             server.clients().forEach((client) => client.close())
             server.stop()
         }
-    }, [moduleId, job.id])
+    }, [moduleId, job.id, jobResponse])
 
     // send the job status if job (specifically numPagesProcessed) changes
     useEffect(() => {
@@ -67,7 +70,7 @@ export default function JobStatusWebSocketMockServer({
                 )
             })
         }
-    }, [socketServer, JSON.stringify(jobResponse)])
+    }, [socketServer, jobResponse])
 
     useEffect(() => {
         // after 5 seconds, add an output file

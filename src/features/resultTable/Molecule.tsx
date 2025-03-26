@@ -50,14 +50,14 @@ export default function Molecule({
         }
 
         return atomColors
-    }, [group, atomColorProperty?.name, atomColorProperty?.colorScale])
+    }, [group, atomColorProperty])
 
     //
     // to improve performance, we render the SVG only once
     //
     useEffect(() => {
         const parseOptions = {
-            replace: (domNode: any) => {
+            replace: (domNode) => {
                 if (domNode === undefined) {
                     return
                 }
@@ -79,12 +79,12 @@ export default function Molecule({
                     const children = domToReact(domNode.children, parseOptions)
 
                     const ellipses = children.filter(
-                        (child: any) => child.type === "ellipse",
+                        (child) => child.type === "ellipse",
                     )
 
                     const ellipseCopies =
                         atomColors !== undefined
-                            ? ellipses.map((ellipse: any, i: number) => {
+                            ? ellipses.map((ellipse, i: number) => {
                                   // -> extract the atom id from the class name
                                   const atomId = parseInt(
                                       ellipse.props.className.replace(
@@ -117,7 +117,7 @@ export default function Molecule({
                             : []
 
                     const rest = children.filter(
-                        (child: any) => child.type !== "ellipse",
+                        (child) => child.type !== "ellipse",
                     )
 
                     const newChildren = [...ellipseCopies, ...rest, ...ellipses]

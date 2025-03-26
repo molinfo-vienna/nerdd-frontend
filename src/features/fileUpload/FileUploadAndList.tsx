@@ -37,14 +37,14 @@ export default function FileUploadAndList({
         return () => {
             dispatch(deleteFileField(name))
         }
-    }, [name])
+    }, [name, dispatch])
 
     // get current value from the store
     const files = useAppSelector((state) => state.fileField[name])
 
     useEffect(() => {
         input.onChange(files)
-    }, [files])
+    }, [files, input])
 
     const [addSource, {}] = useAddSourceMutation()
 
@@ -136,7 +136,7 @@ export default function FileUploadAndList({
                 })
             })
         },
-        [name],
+        [name, addSource, dispatch],
     )
 
     const [deleteSource, {}] = useDeleteSourceMutation()

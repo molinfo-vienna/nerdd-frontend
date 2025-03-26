@@ -1,5 +1,4 @@
 import { useEffect } from "react"
-import { useSelector } from "react-redux"
 import {
     Outlet,
     RouterProvider,
@@ -7,6 +6,7 @@ import {
     useLocation,
 } from "react-router-dom"
 import { DebugProvider } from "./features/debug/DebugContext"
+import { useAppSelector } from "./hooks"
 import AboutPage from "./pages/AboutPage"
 import CitationPage from "./pages/CitationPage"
 import CreateJobPage from "./pages/CreateJobPage"
@@ -27,11 +27,11 @@ function Root() {
         if (hash === "") {
             setTimeout(() => window.scrollTo(0, 0), 0)
         }
-    }, [pathname])
+    }, [pathname, hash])
 
     // this is a hack to force a re-render of all components
     // whenever the key changes, all components are re-rendered
-    const key = useSelector((state) => state.debug.key)
+    const key = useAppSelector((state) => state.debug.key)
 
     return (
         <DebugProvider>

@@ -38,7 +38,7 @@ export default function ResultsPage() {
         if (pageOneBased <= 0) {
             navigate(`/${moduleId}/${jobId}`)
         }
-    }, [pageOneBased, navigate])
+    }, [pageOneBased, navigate, jobId, moduleId])
 
     //
     // always scroll to top when page changes

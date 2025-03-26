@@ -17,7 +17,7 @@ export default function MoleculeEditor({
     config = {},
 }: MoleculeEditorProps) {
     const JSApplet = useJsApplet()
-    const [appletInstance, setAppletInstance] = useState<any>(null)
+    const [appletInstance, setAppletInstance] = useState(null)
 
     // generate id
     const containerId = useId()
@@ -45,7 +45,15 @@ export default function MoleculeEditor({
                 setAppletInstance(newAppletInstance)
             }
         },
-        [JSApplet, containerId],
+        [
+            JSApplet,
+            containerId,
+            appletInstance,
+            width,
+            height,
+            config,
+            onChange,
+        ],
     )
 
     useEffect(() => {

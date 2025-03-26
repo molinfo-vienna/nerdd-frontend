@@ -90,7 +90,7 @@ export default function ResultsWebSocketMockServer({
                 }
             })
         }
-    }, [socketServer, job.numEntriesProcessed])
+    }, [socketServer, job.numEntriesProcessed, module, pageSize])
 
     return null
 }

@@ -15,7 +15,6 @@ export default function CheckBoxField({
     positionReference,
     className,
 }: CheckBoxFieldProps) {
-    console.log(input)
     return (
         <div className="form-check form-check-lg">
             <input

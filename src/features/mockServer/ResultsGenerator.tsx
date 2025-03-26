@@ -38,7 +38,7 @@ export default function ResultsGenerator({
             frequency,
         )
         return () => clearInterval(timer)
-    }, [dispatch, predictionSpeed])
+    }, [dispatch, predictionSpeed, job.id])
 
     // numEntriesTotal is computed in parallel to the prediction
     // -> emulate this by setting it after a delay

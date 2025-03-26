@@ -2,7 +2,7 @@ import MoleculeEditor from "@/features/moleculeEditor/MoleculeEditor"
 import { type Module } from "@/types"
 import classNames from "classnames"
 import { createForm, FormApi } from "final-form"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Field, Form, FormSpy } from "react-final-form"
 import { FaPaperPlane } from "react-icons/fa6"
 import FileField from "./FileField"
@@ -33,8 +33,6 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
     const fileFieldTooltipPositionReference = useRef<HTMLElement>(null)
     const inputDrawnTooltipPositionReference = useRef<HTMLElement>(null)
 
-    const jobParameters = module.jobParameters ?? []
-
     // When the user clicks on the submit button, we have to make sure to upload all
     // files before submitting the form to server. We do that by
     // 1. Having two modes "idle" and "submitting" (and saving it in a state)
@@ -42,18 +40,21 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
     // 3. Keep track of all files with useEffect and check on each change if all
     //    files are uploaded.
     const [status, setStatus] = useState("idle")
-    const [valuesToSubmit, setValuesToSubmit] = useState<any>(null)
+    const [valuesToSubmit, setValuesToSubmit] = useState(null)
 
-    const onDelayedSubmit = (values: any) => {
-        setStatus("checking")
-    }
+    const onDelayedSubmit = useCallback(
+        (values) => {
+            setStatus("checking")
+        },
+        [setStatus],
+    )
 
     useEffect(() => {
         async function _submit() {
             if (status === "checking" && valuesToSubmit) {
                 // check if all files are uploaded
                 if (
-                    valuesToSubmit.inputFile?.filter((file: any) =>
+                    valuesToSubmit.inputFile?.filter((file) =>
                         ["pending", "deleting"].includes(file.status),
                     ).length === 0
                 ) {
@@ -92,7 +93,7 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
             }
 
             // job parameters
-            for (const jobParameter of jobParameters) {
+            for (const jobParameter of module.jobParameters) {
                 if (jobParameter.required && !values[jobParameter.name]) {
                     errors[jobParameter.name] = "Required"
                 }
@@ -100,16 +101,17 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
 
             return errors
         },
-        // we would like to have jobParameters as a dependency, but it is an object
-        // BUT: jobParameters changes if and only if the module changes
-        // --> use module.id as a dependency
-        [module.id],
+        [module],
     )
 
     //
     // create form
     //
-    const formApi = createForm({ onSubmit: onDelayedSubmit, validate })
+    const formApi = useMemo(
+        () => createForm({ onSubmit: onDelayedSubmit, validate }),
+        [onDelayedSubmit, validate],
+    )
+
     useEffect(() => {
         formApi.subscribe(
             // update local state with the values to submit
@@ -117,7 +119,7 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
             // subscribe to all changes in the form
             { values: true },
         )
-    }, [])
+    }, [formApi])
 
     const formRef = useRef<FormApi>(formApi)
 
@@ -129,18 +131,7 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
                 <Form
                     form={formRef.current}
                     render={({ handleSubmit, submitting }) => (
-                        <form
-                            onSubmit={(e) => {
-                                // don't invoke a normal submit
-                                e.preventDefault()
-                                // rather, invoke our own submit function
-                                handleSubmit(e)
-
-                                // TODO: it is possible to upload files, submit and delete all files
-                                // during the upload phase. In this case, validation was already skipped
-                                // and the form is submitted without any files. We should prevent this.
-                            }}
-                        >
+                        <form onSubmit={handleSubmit}>
                             <FormSpy subscription={{ values: true }}>
                                 {({ values }) => (
                                     <>
@@ -304,7 +295,7 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
                                 )}
                             </FormSpy>
 
-                            {jobParameters.map((jobParameter, i) => (
+                            {module.jobParameters.map((jobParameter, i) => (
                                 <Row key={i} helpText={jobParameter.helpText}>
                                     <JobParameterField
                                         jobParameter={jobParameter}

@@ -43,7 +43,6 @@ type ResultTableProps = {
 
 const ResultTable = memo(function ResultTable({
     module,
-    pageOneBased,
     results,
     columnSelection,
     atomColorProperty,
@@ -145,7 +144,7 @@ const ResultTable = memo(function ResultTable({
                 resultProperties:
                     augmentedResultProperties as AugmentedResultProperty[],
             }
-        }, [module, columnSelection, palettes, propertyPalettes])
+        }, [module, columnSelection, propertyPalettes])
 
     //
     // prepare data for arranging it in a table
@@ -193,7 +192,7 @@ const ResultTable = memo(function ResultTable({
 
             return acc
         }, [])
-    }, [pageOneBased, results.length, module.task, results])
+    }, [module.task, results])
 
     return (
         <table
