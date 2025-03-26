@@ -13,10 +13,10 @@ export interface Module {
     exampleSmiles?: string
     description?: string
     task?: string
-    publications?: Publication[]
-    jobParameters?: JobParameter[]
-    resultProperties?: ResultProperty[]
-    partners?: Partner[]
+    publications: Publication[]
+    jobParameters: JobParameter[]
+    resultProperties: ResultProperty[]
+    partners: Partner[]
 }
 
 export default Module

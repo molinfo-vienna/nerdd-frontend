@@ -80,34 +80,38 @@ export default function ResultsPage() {
 
     // initialize column selection
     useEffect(() => {
-        const initialColumnSelection = []
-        if (module?.resultProperties !== undefined) {
-            module.resultProperties.forEach((resultProperty) => {
-                const { name, visibleName, group, visible } = resultProperty
-
-                const modifiedGroup = group || "General"
-                const column = {
-                    name,
-                    label: visibleName,
-                    visible,
-                }
-
-                // is the group already in the array?
-                const groupIndex = initialColumnSelection.findIndex(
-                    (e) => e.groupName === modifiedGroup,
-                )
-                if (groupIndex === -1) {
-                    // if not, add it
-                    initialColumnSelection.push({
-                        groupName: modifiedGroup,
-                        columns: [column],
-                    })
-                } else {
-                    // if it is, add the column to the group
-                    initialColumnSelection[groupIndex].columns.push(column)
-                }
-            })
+        if (module === undefined) {
+            return
         }
+
+        const initialColumnSelection = []
+
+        module.resultProperties.forEach((resultProperty) => {
+            const { name, visibleName, group, visible } = resultProperty
+
+            const modifiedGroup = group || "General"
+            const column = {
+                name,
+                label: visibleName,
+                visible,
+            }
+
+            // is the group already in the array?
+            const groupIndex = initialColumnSelection.findIndex(
+                (e) => e.groupName === modifiedGroup,
+            )
+            if (groupIndex === -1) {
+                // if not, add it
+                initialColumnSelection.push({
+                    groupName: modifiedGroup,
+                    columns: [column],
+                })
+            } else {
+                // if it is, add the column to the group
+                initialColumnSelection[groupIndex].columns.push(column)
+            }
+        })
+
         setColumnSelection(initialColumnSelection)
     }, [module, setColumnSelection])
 
@@ -164,19 +168,21 @@ export default function ResultsPage() {
 
     // initialize color selection
     useEffect(() => {
-        if (module?.resultProperties !== undefined) {
-            const colorProperties = module.resultProperties.filter(
-                (resultProperty) =>
-                    resultProperty.level === "atom" &&
-                    resultProperty.colorPalette != null,
-            )
-            setPossibleAtomColorProperties(colorProperties)
-            if (colorProperties.length > 0) {
-                // TODO: use palette specified in config
-                setAtomColorProperty(colorProperties[0])
-            } else {
-                setAtomColorProperty(undefined)
-            }
+        if (module === undefined) {
+            return
+        }
+
+        const colorProperties = module.resultProperties.filter(
+            (resultProperty) =>
+                resultProperty.level === "atom" &&
+                resultProperty.colorPalette != null,
+        )
+        setPossibleAtomColorProperties(colorProperties)
+        if (colorProperties.length > 0) {
+            // TODO: use palette specified in config
+            setAtomColorProperty(colorProperties[0])
+        } else {
+            setAtomColorProperty(undefined)
         }
     }, [module, setAtomColorProperty, setPossibleAtomColorProperties])
 

@@ -34,9 +34,11 @@ export function normalizeModule(module) {
         "data:image/svg+xml," +
             escape(ReactDOMServer.renderToStaticMarkup(reactElement))
 
-    const jobParameters = module.jobParameters?.map(normalizeJobParameter)
+    const jobParameters = (module.jobParameters || []).map(
+        normalizeJobParameter,
+    )
 
-    const resultProperties = module.resultProperties?.map(
+    const resultProperties = (module.resultProperties || [])?.map(
         normalizeResultProperty,
     )
 
@@ -45,7 +47,9 @@ export function normalizeModule(module) {
         visibleName:
             module.visibleName || _.upperFirst(_.camelCase(module.name)),
         logo,
+        publications: module.publications || [],
         jobParameters,
         resultProperties,
+        partners: module.partners || [],
     }
 }

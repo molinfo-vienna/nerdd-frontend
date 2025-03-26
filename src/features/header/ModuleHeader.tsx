@@ -57,7 +57,7 @@ export default function ModuleHeader({ module }: ModuleHeaderProps) {
                                 </div>
                             )} */}
 
-                        {module.publications?.map((publication, i) => (
+                        {module.publications.map((publication, i) => (
                             <div
                                 className="card-body d-flex flex-wrap px-4"
                                 key={i}
