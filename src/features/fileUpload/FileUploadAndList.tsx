@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from "@/hooks"
+import { useAppDispatch, useAppSelector } from "@/app/hooks"
 import { useAddSourceMutation, useDeleteSourceMutation } from "@/services"
 import classNames from "classnames"
 import { useCallback, useEffect, useState, type RefObject } from "react"
@@ -80,7 +80,7 @@ export default function FileUploadAndList({
                     if (response.error?.name === "AbortError") {
                         return
                     } else if (response.error) {
-                        console.log(response.error)
+                        console.error(response.error)
 
                         // set status to error
                         dispatch(
@@ -165,7 +165,7 @@ export default function FileUploadAndList({
                 if (response.error?.name === "AbortError") {
                     return
                 } else if (response.error) {
-                    console.log(response.error)
+                    console.error(response.error)
 
                     // set status to error
                     dispatch(

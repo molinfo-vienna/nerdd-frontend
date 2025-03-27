@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from "@/hooks"
+import { useAppDispatch, useAppSelector } from "@/app/hooks"
 import { useRef } from "react"
 import { FaGear } from "react-icons/fa6"
 import { makeButton, useTweaks } from "use-tweaks"

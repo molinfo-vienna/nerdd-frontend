@@ -1,11 +1,10 @@
+import { useAppDispatch, useAppSelector } from "@/app/hooks"
 import MockServer from "@/features/mockServer/MockServer"
 import TweakPanel from "@/features/tweakPanel/TweakPanel"
-import { useAppDispatch, useAppSelector } from "@/hooks"
 import { useDebounce, useLocalStorage } from "@uidotdev/usehooks"
 import { useEffect } from "react"
 import { makeButton, useTweaks } from "use-tweaks"
-import { useDebug } from "./DebugContext"
-import { incrementKey, setNumModules } from "./debugSlice"
+import { setNumModules } from "./debugSlice"
 
 type DebugSettings = {
     mockServerEnabled: boolean
@@ -18,17 +17,9 @@ type DebugSettings = {
 }
 
 export default function Debug() {
-    //
-    // render nothing if debug mode is disabled
-    //
-    const debugMode = useDebug()
-    if (!debugMode) {
-        return null
-    }
-
     const dispatch = useAppDispatch()
     const moduleConfigs = useAppSelector((state) => state.debug.moduleConfigs)
-    const jobs = useAppSelector((state: any) => state.debug.jobs)
+    const jobs = useAppSelector((state) => state.debug.jobs)
 
     const [settings, setSettings] = useLocalStorage<DebugSettings>("debug", {
         // whether the mock server should be used (instead of the real API)
@@ -101,7 +92,7 @@ export default function Debug() {
         },
         ...makeButton("Clear local storage", () => {
             localStorage.clear()
-            dispatch(incrementKey())
+            // TODO: refresh
         }),
     })
 
