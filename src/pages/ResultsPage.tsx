@@ -41,13 +41,6 @@ export default function ResultsPage() {
     }, [pageOneBased, navigate, jobId, moduleId])
 
     //
-    // always scroll to top when page changes
-    //
-    // useEffect(() => {
-    //     window.scrollTo(0, 0)
-    // }, [page])
-
-    //
     // fetch data
     //
     const {

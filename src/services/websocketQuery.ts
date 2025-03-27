@@ -79,7 +79,7 @@ export default function websocketQuery<
                     updateCachedData((draft) => {
                         // TODO: messages might get lost here
                         if (draft != null) {
-                            process(draft, transformedData, false)
+                            return process(draft, transformedData, false)
                         } else {
                             console.error("draft is null")
                         }
@@ -92,7 +92,7 @@ export default function websocketQuery<
                         updateCachedData((draft) => {
                             // TODO: messages might get lost here
                             if (draft != null) {
-                                process(draft, undefined, true)
+                                return process(draft, undefined, true)
                             }
                         })
 
