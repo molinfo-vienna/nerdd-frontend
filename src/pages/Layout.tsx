@@ -1,32 +1,40 @@
 import Footer from "@/features/footer/Footer"
 import NavigationBar from "@/features/navigationBar/NavigationBar"
-import { Children, type FC, type ReactNode } from "react"
+import { Children, useEffect, type ReactNode } from "react"
+import { useLocation } from "react-router-dom"
 
 type LayoutProps = {
     children: ReactNode
 }
 
-interface LayoutComponent extends FC<LayoutProps> {
-    Header: FC<{ children: ReactNode }>
-}
-
-const Layout: LayoutComponent = ({ children }) => {
+const Layout = ({ children }: LayoutProps) => {
     // const developmentVersion = ["localhost", "dev-nerdd.univie.ac.at"].includes(
     //     window.location.hostname,
     // )
     const developmentVersion = true
 
-    const childrenArray = Children.toArray(children)
+    //
+    // whenever the route changes, scroll to the top of the page
+    //
+    const { pathname, hash } = useLocation()
 
+    useEffect(() => {
+        // window.scrollTo(0, 0) does not work here, because the browser
+        // scrolls to the top of the page before the new content is rendered
+        // -> use setTimeout to scroll after the new content is rendered
+        if (hash === "") {
+            setTimeout(() => window.scrollTo(0, 0), 0)
+        }
+    }, [pathname, hash])
+
+    //
     // check if children contains Layout.Header
-    const header = childrenArray.find(
-        (child: any) => child.type === Layout.Header,
-    )
-
+    //
+    const childrenArray = Children.toArray(children)
+    const header = childrenArray.find((child) => child.type === Layout.Header)
     const hasHeader = header !== undefined
-
     const content = childrenArray.filter(
-        (child: any) => child.type !== Layout.Header,
+        (child) => child.type !== Layout.Header,
     )
 
     return (
