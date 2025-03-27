@@ -1,9 +1,9 @@
+import debugSliceReducer from "@/features/debug/debugSlice"
+import fileFieldSliceReducer from "@/features/fileUpload/fileFieldSlice"
+import tweakPanelSliceReducer from "@/features/tweakPanel/tweakPanelSlice"
+import { baseApi } from "@/services"
 import { configureStore } from "@reduxjs/toolkit"
 import { setupListeners } from "@reduxjs/toolkit/query"
-import debugSliceReducer from "./features/debug/debugSlice"
-import fileFieldSliceReducer from "./features/fileUpload/fileFieldSlice"
-import tweakPanelSliceReducer from "./features/tweakPanel/tweakPanelSlice"
-import { baseApi } from "./services"
 
 export const store = configureStore({
     reducer: {
@@ -13,7 +13,7 @@ export const store = configureStore({
         fileField: fileFieldSliceReducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(nerddApi.middleware),
+        getDefaultMiddleware().concat(baseApi.middleware),
 })
 
 setupListeners(store.dispatch)
