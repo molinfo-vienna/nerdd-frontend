@@ -1,11 +1,10 @@
+import { useAppDispatch } from "@/app/hooks"
 import {
     createJob,
     createSource,
     deleteJob,
     deleteSource,
-    incrementKey,
 } from "@/features/debug/debugSlice"
-import { useAppDispatch } from "@/hooks"
 import { baseApi } from "@/services"
 import { createServer, Response } from "miragejs"
 import { Fragment, useEffect } from "react"
@@ -440,10 +439,9 @@ export default function MockServer({
             // we started / stopped a mock server
             // -> invalidate all RTK query caches
             // -> trigger a re-fetch of all queries
-            // also: increment the key to force a re-render of all components
-            // reason: UI might have state that should be reset
-            dispatch(baseApi.util.resetApiState())
-            dispatch(incrementKey())
+            setTimeout(() => {
+                dispatch(baseApi.util.resetApiState())
+            }, 0)
 
             return () => {
                 server.shutdown()
@@ -452,10 +450,9 @@ export default function MockServer({
             // we disabled the mock server
             // -> invalidate all RTK query caches
             // -> trigger a re-fetch of all queries
-            // also: increment the key to force a re-render of all components
-            // reason: UI might have state that should be reset
-            dispatch(baseApi.util.resetApiState())
-            dispatch(incrementKey())
+            setTimeout(() => {
+                dispatch(baseApi.util.resetApiState())
+            }, 0)
         }
     }, [
         moduleConfigs,

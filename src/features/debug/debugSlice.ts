@@ -10,8 +10,6 @@ export type DebugState = {
 }
 
 const initialState: DebugState = {
-    // increment this key to force re-render of components
-    key: 0,
     // module configs
     moduleConfigs: generateModuleConfigDict(8),
     // jobs
@@ -24,9 +22,6 @@ const debugSlice = createSlice({
     name: "debug",
     initialState,
     reducers: {
-        incrementKey(state, action) {
-            return { ...state, key: state.key + 1 }
-        },
         setNumModules(state, action) {
             const numModules = action.payload
             let moduleConfigs
@@ -153,7 +148,6 @@ const debugSlice = createSlice({
 })
 
 export const {
-    incrementKey,
     createJob,
     addOutputFile,
     deleteJob,
