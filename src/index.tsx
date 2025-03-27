@@ -1,14 +1,13 @@
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
-import { Provider } from "react-redux"
-import { store } from "./store"
 
 import "bootstrap/dist/js/bootstrap.bundle"
 import "./index.scss"
 
 import reportWebVitals from "./reportWebVitals"
 
-import App from "./App"
+import { Outlet } from "react-router-dom"
+import Providers from "./providers"
 
 const container = document.getElementById("root")
 
@@ -17,12 +16,11 @@ if (!container) {
 }
 
 const root = createRoot(container)
-// TODO: use provider classes
 root.render(
     <StrictMode>
-        <Provider store={store}>
-            <App />
-        </Provider>
+        <Providers>
+            <Outlet />
+        </Providers>
     </StrictMode>,
 )
 
