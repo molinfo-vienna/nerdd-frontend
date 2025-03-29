@@ -1,3 +1,18 @@
+## [1.0.4](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.3...v1.0.4) (2025-03-29)
+
+
+### Bug Fixes
+
+* Add d3 palettes ([277cd48](https://github.com/molinfo-vienna/nerdd-frontend/commit/277cd48864ff5c35092b73e7f1244bda02409ee3))
+* Add prop types to TableRowGroup ([ea83e94](https://github.com/molinfo-vienna/nerdd-frontend/commit/ea83e94d211cd3078cd1d22ab7e98c25f2496dd2))
+* Add type for logRequests in MockServer ([c51a504](https://github.com/molinfo-vienna/nerdd-frontend/commit/c51a504d411a8448ed8438d1d893528bfbded850))
+* Color table cells ([f8c11fe](https://github.com/molinfo-vienna/nerdd-frontend/commit/f8c11fe01b7c8a79bbefc5f70dcc366760227199))
+* Compute color palettes for result properties ([41849c6](https://github.com/molinfo-vienna/nerdd-frontend/commit/41849c6ed4b068549556895923b5eafb5857246f))
+* Extract colors from bootstrap variables in javascript ([9f0267b](https://github.com/molinfo-vienna/nerdd-frontend/commit/9f0267bc953a2cc8e37d7d7ff69e9bf3cb7c4f62))
+* Generate color palette fields in fake data ([b29dea4](https://github.com/molinfo-vienna/nerdd-frontend/commit/b29dea49b8f21d7e702e8b7213876ae8494713ce))
+* Merge website and d3 palettes ([7c6544c](https://github.com/molinfo-vienna/nerdd-frontend/commit/7c6544caa67bcd0cb487c7b7b5b0d3c0b12bb39d))
+* Remove semicolon ([e7a080a](https://github.com/molinfo-vienna/nerdd-frontend/commit/e7a080af2bf030b5c18ea56b33b3b20bdc78590d))
+
 ## [1.0.3](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.2...v1.0.3) (2025-03-14)
 
 
