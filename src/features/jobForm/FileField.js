@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
 import React from "react"
 import { refType } from "../../types"
-import FileFieldAndList from "../fileUpload/FileFieldAndList"
+import FileUploadAndList from "../fileUpload/FileUploadAndList"
 
 export default function FileField({
     input,
@@ -10,7 +10,7 @@ export default function FileField({
     ...props
 }) {
     return (
-        <FileFieldAndList
+        <FileUploadAndList
             name="inputFile"
             tooltipPositionReference={positionReference}
             {...input}

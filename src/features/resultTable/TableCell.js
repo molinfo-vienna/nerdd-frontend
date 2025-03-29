@@ -14,7 +14,8 @@ export default function TableCell({
     rowSpan = undefined,
     selectedAtom,
     className,
-    onSelectAtom,
+    onAtomSelect,
+    colorPalette,
     ...props
 }) {
     const value = result[resultProperty.name]
@@ -24,6 +25,9 @@ export default function TableCell({
         resultProperty.level !== undefined &&
         resultProperty.level !== "molecule"
 
+    // color palette
+    let color = colorPalette(value)
+
     const commonProps = {
         rowSpan,
         ...props,
@@ -31,9 +35,7 @@ export default function TableCell({
             compressed,
             highlighted:
                 resultProperty.level === "atom" &&
-                selectedAtom !== undefined &&
-                selectedAtom.molId === result.mol_id &&
-                selectedAtom.atomId === result.atom_id,
+                selectedAtom === result.atom_id,
             // By default, all cells are aligned vertically at the center. If the module task is
             // atom or derivative property prediction, we would like to align the molecule-level
             // cells at the top.
@@ -41,6 +43,13 @@ export default function TableCell({
                 module.task !== "molecular_property_prediction" &&
                 resultProperty.level === "molecule",
         }),
+        style: { backgroundColor: color },
+        onMouseEnter: (e) =>
+            resultProperty.level === "atom"
+                ? onAtomSelect(result.atom_id)
+                : null,
+        onMouseOut: (e) =>
+            resultProperty.level === "atom" ? onAtomSelect(undefined) : null,
     }
 
     if (resultProperty.type === "mol") {
@@ -60,14 +69,13 @@ export default function TableCell({
                             svgValue={value}
                             // if the column is "preprocessed_mol", we add a feature to select atoms
                             selectedAtom={
-                                resultProperty.name === "preprocessed_mol" &&
-                                selectedAtom.molId === molId
-                                    ? selectedAtom.atomId
+                                resultProperty.name === "preprocessed_mol"
+                                    ? selectedAtom
                                     : null
                             }
-                            onSelectAtom={
+                            onAtomSelect={
                                 resultProperty.name === "preprocessed_mol"
-                                    ? onSelectAtom
+                                    ? onAtomSelect
                                     : null
                             }
                         />
@@ -154,6 +162,12 @@ export default function TableCell({
         } else {
             return ProblemListCell({ problems: value, ...commonProps })
         }
+    } else if (resultProperty.type === "string") {
+        if (value == null) {
+            return <td {...commonProps}>-</td>
+        } else {
+            return <td {...commonProps}>{value}</td>
+        }
     } else {
         console.warn(
             `Unknown result property type: ${resultProperty.type} for ${resultProperty.name}`,
@@ -173,12 +187,10 @@ TableCell.propTypes = {
     value: PropTypes.any,
     rowSpan: PropTypes.number,
     compressed: PropTypes.bool,
-    selectedAtom: PropTypes.shape({
-        molId: PropTypes.number,
-        atomId: PropTypes.number,
-    }),
+    selectedAtom: PropTypes.number,
     highlighted: PropTypes.bool,
     className: PropTypes.string,
-    onSelectAtom: PropTypes.func,
+    onAtomSelect: PropTypes.func,
     molId: PropTypes.number,
+    colorPalette: PropTypes.func,
 }

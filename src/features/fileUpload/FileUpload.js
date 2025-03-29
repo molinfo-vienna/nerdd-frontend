@@ -4,7 +4,7 @@ import { useDropzone } from "react-dropzone"
 import { PiFileArrowUp } from "react-icons/pi"
 import "./style.scss"
 
-export default function FileField({ name, onDrop, ...props }) {
+export default function FileUpload({ name, onDrop, ...props }) {
     const {
         acceptedFiles,
         getRootProps,
@@ -45,7 +45,7 @@ export default function FileField({ name, onDrop, ...props }) {
     )
 }
 
-FileField.propTypes = {
+FileUpload.propTypes = {
     name: PropTypes.string,
     onDrop: PropTypes.func,
 }

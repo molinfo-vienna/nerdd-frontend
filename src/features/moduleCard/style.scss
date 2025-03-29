@@ -6,12 +6,27 @@
     // cards need to have a fixed width so they can be arranged in a grid
     min-width: 16rem;
     max-width: 16rem;
+    transition: border-color 0.4s ease-in-out, background-color 0.4s ease-in-out;
+}
+
+.card.module-card .card-header {
+    transition: background-color 0.4s ease-in-out;
+}
+
+.card.module-card .card-title {
+    transition: color 0.4s ease-in-out;
+}
+
+.card.module-card .card-body {
+    transition: color 0.4s ease-in-out;
 }
 
 .card.module-card .card-header img {
     width: 10rem;
     // make sure that the images have uniform height
     height: 8rem;
+    filter: saturate(80%);
+    transition: filter 0.4s ease-in-out;
 }
 
 .card.module-card:hover {
@@ -21,6 +36,10 @@
     // I tried to make the card grow on hover (below), but I liked the color change more
     // transform: scale(1.05);
     // box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+}
+
+.card.module-card:hover .card-header img {
+    filter: saturate(120%);
 }
 
 .card.module-card:hover .card-header {

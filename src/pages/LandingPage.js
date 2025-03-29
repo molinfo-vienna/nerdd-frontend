@@ -37,12 +37,12 @@ export default function LandingPage() {
         }
         return 0
     })
-/*
+    /*
     const developmentVersion = ["localhost", "dev-nerdd.univie.ac.at"].includes(
         window.location.hostname,
     )
 */
-    const developmentVersion = true;
+    const developmentVersion = true
 
     return (
         <>

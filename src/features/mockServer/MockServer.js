@@ -19,6 +19,7 @@ import ResultsWebSocketMockServer from "./ResultsWebSocketMockServer"
 export default function MockServer({
     enabled,
     return404,
+    logRequests,
     moduleConfigs,
     pageSize,
     numResults,
@@ -415,6 +416,9 @@ export default function MockServer({
                 },
             })
 
+            // disable logging
+            server.logging = logRequests
+
             // we started / stopped a mock server
             // -> invalidate all RTK query caches
             // -> trigger a re-fetch of all queries
@@ -435,7 +439,15 @@ export default function MockServer({
             dispatch(nerddApi.util.resetApiState())
             dispatch(incrementKey())
         }
-    }, [moduleConfigs, numResults, pageSize, dispatch, return404, enabled])
+    }, [
+        moduleConfigs,
+        numResults,
+        pageSize,
+        dispatch,
+        return404,
+        logRequests,
+        enabled,
+    ])
 
     return (
         <>
@@ -459,6 +471,7 @@ export default function MockServer({
 MockServer.propTypes = {
     enabled: PropTypes.bool.isRequired,
     return404: PropTypes.bool.isRequired,
+    logRequests: PropTypes.bool.isRequired,
     moduleConfigs: PropTypes.object.isRequired,
     pageSize: PropTypes.number.isRequired,
     numResults: PropTypes.number.isRequired,

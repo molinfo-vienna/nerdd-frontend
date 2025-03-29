@@ -2,12 +2,7 @@ import parse, { attributesToProps, domToReact } from "html-react-parser"
 import PropTypes from "prop-types"
 import React, { useEffect, useRef, useState } from "react"
 
-export default function Molecule({
-    molId,
-    svgValue,
-    selectedAtom,
-    onSelectAtom,
-}) {
+export default function Molecule({ svgValue, selectedAtom, onAtomSelect }) {
     const [svg, setSvg] = useState(null)
 
     const ref = useRef(null)
@@ -51,13 +46,13 @@ export default function Molecule({
                         <ellipse
                             {...attributesToProps(updatedAttribs)}
                             onMouseEnter={
-                                onSelectAtom
-                                    ? (e) => onSelectAtom(e, molId, atomId)
+                                onAtomSelect
+                                    ? (e) => onAtomSelect(atomId)
                                     : null
                             }
                             onMouseOut={
-                                onSelectAtom
-                                    ? (e) => onSelectAtom(e, molId, atomId)
+                                onAtomSelect
+                                    ? (e) => onAtomSelect(undefined)
                                     : null
                             }
                         />
@@ -79,7 +74,7 @@ export default function Molecule({
                     setSvg(svg)
                 })
         }
-    }, [molId, onSelectAtom])
+    }, [onAtomSelect])
 
     //
     // we dynamically add (and remove) a class to the correct atom when selected
@@ -103,8 +98,7 @@ export default function Molecule({
 }
 
 Molecule.propTypes = {
-    molId: PropTypes.number.isRequired,
     svgValue: PropTypes.string.isRequired,
     selectedAtom: PropTypes.number,
-    onSelectAtom: PropTypes.func,
+    onAtomSelect: PropTypes.func,
 }

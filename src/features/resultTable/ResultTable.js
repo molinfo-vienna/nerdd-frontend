@@ -1,60 +1,75 @@
 import { sortedIndexBy } from "lodash"
 import PropTypes from "prop-types"
-import React, { useCallback, useMemo, useState } from "react"
+import React, { memo, useMemo } from "react"
 import { moduleType, resultType } from "../../types"
+import useColorPalettes from "../colorPalettes/useColorPalettes"
+import getColorPalette from "./getColorPalette"
 import getColumnRows from "./getColumnRows"
 import "./style.scss"
-import TableCell from "./TableCell"
+import TableRowGroup from "./TableRowGroup"
 
-export default function ResultTable({
+const ResultTable = memo(function ResultTable({
     module,
     pageOneBased,
     results,
     columnSelection,
 }) {
+    const palettes = useColorPalettes()
+
     //
-    // check visibility of columns
+    // check visibility and style of columns
     //
-    const { firstColumnRow, secondColumnRow, valueColumns } = useMemo(() => {
-        const isVisible = (resultProperty) => {
-            const group = resultProperty.group ?? "General"
-            const columnGroup = columnSelection.find(
-                (g) => g.groupName === group,
+    const { firstColumnRow, secondColumnRow, valueColumns, colorPalettes } =
+        useMemo(() => {
+            const isVisible = (resultProperty) => {
+                const group = resultProperty.group ?? "General"
+                const columnGroup = columnSelection.find(
+                    (g) => g.groupName === group,
+                )
+                if (columnGroup === undefined) return true
+                const column = columnGroup.columns.find(
+                    (c) => c.name === resultProperty.name,
+                )
+                return column.visible ?? true
+            }
+
+            const resultProperties =
+                module.resultProperties.filter(isVisible) ?? []
+
+            // get color palettes for each result property
+            const colorPalettes = Object.fromEntries(
+                resultProperties.map((resultProperty) => [
+                    resultProperty.name,
+                    getColorPalette(palettes, resultProperty),
+                ]),
             )
-            if (columnGroup === undefined) return true
-            const column = columnGroup.columns.find(
-                (c) => c.name === resultProperty.name,
-            )
-            return column.visible ?? true
-        }
 
-        const resultProperties = module.resultProperties.filter(isVisible) ?? []
-
-        return getColumnRows(resultProperties)
-    }, [module.resultProperties, columnSelection])
-
-    const actualColumns = valueColumns
+            return {
+                ...getColumnRows(resultProperties),
+                colorPalettes,
+            }
+        }, [module.resultProperties, columnSelection, palettes])
 
     //
     // prepare data for arranging it in a table
     //
 
-    // sort results by molecule id (and atom id or derivative id)
-    // -> construct a comparison function for sorting
-    let subKey
-    if (module.task === "molecular_property_prediction") {
-        subKey = (a) => 0
-    } else if (module.task === "atom_property_prediction") {
-        subKey = (a) => a.atom_id
-    } else if (module.task === "derivative_property_prediction") {
-        subKey = (a) => a.derivative_id
-    } else {
-        throw new Error(`Unknown task: ${module.task}`)
-    }
-
     // entries might have multiple child rows (atoms, derivatives)
     // --> group results by molecule id
     const resultsGroupedByMolId = useMemo(() => {
+        // sort results by molecule id (and atom id or derivative id)
+        // -> construct a comparison function for sorting
+        let subKey
+        if (module.task === "molecular_property_prediction") {
+            subKey = (a) => 0
+        } else if (module.task === "atom_property_prediction") {
+            subKey = (a) => a.atom_id
+        } else if (module.task === "derivative_property_prediction") {
+            subKey = (a) => a.derivative_id
+        } else {
+            throw new Error(`Unknown task: ${module.task}`)
+        }
+
         return results.reduce((acc, result, index) => {
             // find corresponding mol_id in acc
             const groupIndex = sortedIndexBy(acc, result, (x) => x.mol_id)
@@ -77,29 +92,7 @@ export default function ResultTable({
 
             return acc
         }, [])
-    }, [pageOneBased, results.length, subKey])
-
-    //
-    // handle mouse over event
-    //
-    const [selectedAtom, setSelectedAtom] = useState({
-        molId: undefined,
-        atomId: undefined,
-    })
-
-    const handleAtomSelect = useCallback(
-        (e, molId, atomId) => {
-            if (e.type == "mouseout") {
-                setSelectedAtom({
-                    molId: undefined,
-                    atomId: undefined,
-                })
-            } else if (e.type == "mouseenter") {
-                setSelectedAtom({ molId, atomId })
-            }
-        },
-        [setSelectedAtom],
-    )
+    }, [pageOneBased, results.length, module.task])
 
     return (
         <table
@@ -144,59 +137,19 @@ export default function ResultTable({
                 )}
             </thead>
             <tbody className="table-group-divider">
-                {resultsGroupedByMolId.map((group, i) =>
-                    group.children.map((result, j) => (
-                        <tr key={`m${i}c${j}`}>
-                            {actualColumns.map(
-                                (resultProperty, k) =>
-                                    (resultProperty.level !== "molecule" ||
-                                        j === 0) && (
-                                        <TableCell
-                                            key={k}
-                                            module={module}
-                                            result={result}
-                                            resultProperty={resultProperty}
-                                            rowSpan={
-                                                resultProperty.level ===
-                                                "molecule"
-                                                    ? group.children.length
-                                                    : 1
-                                            }
-                                            selectedAtom={selectedAtom}
-                                            onSelectAtom={
-                                                module.task ===
-                                                "atom_property_prediction"
-                                                    ? handleAtomSelect
-                                                    : null
-                                            }
-                                            onMouseEnter={(e) =>
-                                                resultProperty.level === "atom"
-                                                    ? handleAtomSelect(
-                                                          e,
-                                                          result.mol_id,
-                                                          subKey(result),
-                                                      )
-                                                    : null
-                                            }
-                                            onMouseOut={(e) =>
-                                                resultProperty.level === "atom"
-                                                    ? handleAtomSelect(
-                                                          e,
-                                                          result.mol_id,
-                                                          subKey(result),
-                                                      )
-                                                    : null
-                                            }
-                                        />
-                                    ),
-                            )}
-                        </tr>
-                    )),
-                )}
+                {resultsGroupedByMolId.map((group, i) => (
+                    <TableRowGroup
+                        key={i}
+                        group={group}
+                        resultProperties={valueColumns}
+                        module={module}
+                        colorPalettes={colorPalettes}
+                    />
+                ))}
             </tbody>
         </table>
     )
-}
+})
 
 ResultTable.propTypes = {
     module: moduleType.isRequired,
@@ -204,3 +157,5 @@ ResultTable.propTypes = {
     results: PropTypes.arrayOf(resultType).isRequired,
     columnSelection: PropTypes.array,
 }
+
+export default ResultTable

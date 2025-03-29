@@ -21,6 +21,14 @@ function generateProblem() {
     ]
 }
 
+export function generateResultPropertyValue(resultProperty) {
+    if (resultProperty.choices !== undefined) {
+        return faker.helpers.arrayElement(resultProperty.choices).value
+    } else {
+        return generateValue(resultProperty.type)
+    }
+}
+
 export function generateValue(dataType) {
     if (dataType === "string") {
         return faker.lorem.words({ min: 1, max: 4 })
