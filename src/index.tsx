@@ -6,7 +6,7 @@ import "./index.scss"
 
 import reportWebVitals from "./reportWebVitals"
 
-import { Outlet } from "react-router-dom"
+import Root from "./app/Root"
 import Providers from "./providers"
 
 const container = document.getElementById("root")
@@ -19,7 +19,7 @@ const root = createRoot(container)
 root.render(
     <StrictMode>
         <Providers>
-            <Outlet />
+            <Root />
         </Providers>
     </StrictMode>,
 )
