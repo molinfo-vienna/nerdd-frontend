@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.4...v1.0.5) (2025-04-02)
+
+
+### Bug Fixes
+
+* Increase transition speed of animations on landing page ([9977f48](https://github.com/molinfo-vienna/nerdd-frontend/commit/9977f4867974e3a7af8bb610e4b73823291a3c16))
+
 ## [1.0.4](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.3...v1.0.4) (2025-03-29)
 
 
