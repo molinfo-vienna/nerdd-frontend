@@ -6,19 +6,19 @@
     // cards need to have a fixed width so they can be arranged in a grid
     min-width: 16rem;
     max-width: 16rem;
-    transition: border-color 0.4s ease-in-out, background-color 0.4s ease-in-out;
+    transition: border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
 }
 
 .card.module-card .card-header {
-    transition: background-color 0.4s ease-in-out;
+    transition: background-color 0.3s ease-in-out;
 }
 
 .card.module-card .card-title {
-    transition: color 0.4s ease-in-out;
+    transition: color 0.3s ease-in-out;
 }
 
 .card.module-card .card-body {
-    transition: color 0.4s ease-in-out;
+    transition: color 0.3s ease-in-out;
 }
 
 .card.module-card .card-header img {
@@ -26,7 +26,7 @@
     // make sure that the images have uniform height
     height: 8rem;
     filter: saturate(80%);
-    transition: filter 0.4s ease-in-out;
+    transition: filter 0.3s ease-in-out;
 }
 
 .card.module-card:hover {
