@@ -13,7 +13,7 @@ export const jobsApi = baseApi.injectEndpoints({
                 }
 
                 return {
-                    url: `/${moduleId}/jobs`,
+                    url: `/${moduleId}/jobs/`,
                     method: "POST",
                     body: form,
                 }
@@ -25,16 +25,16 @@ export const jobsApi = baseApi.injectEndpoints({
         }),
         deleteJob: builder.mutation({
             query: ({ moduleId, jobId }) => ({
-                url: `/${moduleId}/jobs/${jobId}`,
+                url: `/${moduleId}/jobs/${jobId}/`,
                 method: "DELETE",
             }),
             transformResponse: recursiveSnakeToCamelCase,
         }),
         getJobStatus: websocketQuery({
             builder,
-            query: ({ moduleId, jobId }) => `/${moduleId}/jobs/${jobId}`,
+            query: ({ moduleId, jobId }) => `/${moduleId}/jobs/${jobId}/`,
             queryWs: ({ moduleId, jobId }) =>
-                `/websocket/${moduleId}/jobs/${jobId}`,
+                `/websocket/${moduleId}/jobs/${jobId}/`,
             process: (draft, data, complete) => {
                 if (complete) {
                     return

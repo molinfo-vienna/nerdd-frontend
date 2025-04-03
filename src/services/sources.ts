@@ -9,7 +9,7 @@ export const sourcesApi = baseApi.injectEndpoints({
                 body.append("file", file)
 
                 return {
-                    url: `/sources`,
+                    url: `/sources/`,
                     method: "PUT",
                     body,
                 }
@@ -18,7 +18,7 @@ export const sourcesApi = baseApi.injectEndpoints({
         }),
         deleteSource: builder.mutation({
             query: ({ sourceId }) => ({
-                url: `/sources/${sourceId}`,
+                url: `/sources/${sourceId}/`,
                 method: "DELETE",
             }),
             transformResponse: recursiveSnakeToCamelCase,
