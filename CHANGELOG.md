@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.5...v1.0.6) (2025-04-05)
+
+
+### Bug Fixes
+
+* Specify color for unknown values in categorical properties ([480cf01](https://github.com/molinfo-vienna/nerdd-frontend/commit/480cf01e21e9f539fcc02c47c6680b699b4f4d10))
+
 ## [1.0.5](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.4...v1.0.5) (2025-04-02)
 
 
