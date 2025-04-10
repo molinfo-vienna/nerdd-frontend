@@ -36,6 +36,8 @@ export default function TableCell({
             highlighted:
                 resultProperty.level === "atom" &&
                 selectedAtom === result.atom_id,
+            "start-block": resultProperty.startBlock,
+            "end-block": resultProperty.endBlock,
             // By default, all cells are aligned vertically at the center. If the module task is
             // atom or derivative property prediction, we would like to align the molecule-level
             // cells at the top.
