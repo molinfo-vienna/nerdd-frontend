@@ -1,3 +1,11 @@
+## [1.0.8](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.7...v1.0.8) (2025-04-10)
+
+
+### Bug Fixes
+
+* Compute start and end of atom / derivative column blocks ([00f0d16](https://github.com/molinfo-vienna/nerdd-frontend/commit/00f0d16e2bc174d6fbc0e86d6f6830f1b060bbdf))
+* Highlight table cells using borders ([e808386](https://github.com/molinfo-vienna/nerdd-frontend/commit/e808386288ce3452e7c0684a3476370656f008f8))
+
 ## [1.0.7](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.6...v1.0.7) (2025-04-10)
 
 
