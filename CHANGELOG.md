@@ -1,3 +1,10 @@
+## [1.0.7](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.6...v1.0.7) (2025-04-10)
+
+
+### Bug Fixes
+
+* Construct color palette objects correctly ([1936459](https://github.com/molinfo-vienna/nerdd-frontend/commit/19364596df75b544a4aac327a8ccff2d7962ab8e))
+
 ## [1.0.6](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.5...v1.0.6) (2025-04-05)
 
 
