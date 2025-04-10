@@ -1,3 +1,10 @@
+## [1.0.9](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.8...v1.0.9) (2025-04-10)
+
+
+### Bug Fixes
+
+* Update style for table row highlight ([73436ab](https://github.com/molinfo-vienna/nerdd-frontend/commit/73436aba4c2e42a957188756c9c2be3b04d5e675))
+
 ## [1.0.8](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.7...v1.0.8) (2025-04-10)
 
 
