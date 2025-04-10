@@ -33,7 +33,7 @@ export default function getColorPalette(palettes, resultProperty) {
             result = palettes[type][range]
         } else if (
             type === "categorical" &&
-            Object.keys(palettes.d3Interpolators).includes(range)
+            Object.keys(palettes.interpolators).includes(range)
         ) {
             const interpolator = palettes.d3Interpolators[range]
             result = d3.scaleOrdinal(

@@ -6,6 +6,9 @@ export default function useColorPalettes() {
 
     return {
         null: defaultPalettes.null,
+        interpolators: {
+            ...d3Palettes.interpolators,
+        },
         colors: {
             ...(d3Palettes.colors ?? {}),
             ...defaultPalettes.colors,

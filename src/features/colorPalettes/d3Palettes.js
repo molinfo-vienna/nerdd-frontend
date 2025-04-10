@@ -74,6 +74,7 @@ const categoricalPalettes = Object.entries(d3Schemes).reduce(
         acc[key] = d3.scaleOrdinal(value)
         return acc
     },
+    {},
 )
 
 const sequentialPalettes = Object.entries(d3SequentialInterpolators).reduce(
@@ -95,7 +96,7 @@ const divergingPalettes = Object.entries(d3DivergingInterpolators).reduce(
 const d3Palettes = {
     d3SequentialInterpolators,
     d3DivergingInterpolators,
-    d3Interpolators,
+    interpolators: d3Interpolators,
     d3Schemes,
     diverging: {
         ...divergingPalettes,
