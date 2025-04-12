@@ -42,7 +42,7 @@ export default function Layout({ children }) {
                     </header>
                 )}
 
-                <main className="d-flex flex-fill">{content}</main>
+                <main className="d-flex flex-fill flex-column">{content}</main>
             </div>
 
             <Footer />
