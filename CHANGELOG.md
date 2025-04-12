@@ -1,3 +1,10 @@
+## [1.0.10](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.9...v1.0.10) (2025-04-12)
+
+
+### Bug Fixes
+
+* Improve table borders ([0153266](https://github.com/molinfo-vienna/nerdd-frontend/commit/0153266c792023b33654d07412686721bb6888d3))
+
 ## [1.0.9](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.8...v1.0.9) (2025-04-10)
 
 
