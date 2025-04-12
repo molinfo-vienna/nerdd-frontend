@@ -12,11 +12,21 @@ import {
     FaSitemap,
     FaWindowMaximize,
 } from "react-icons/fa6"
-import { Link } from "react-router-dom"
-import { moduleType } from "../../types"
+import { Link, useParams } from "react-router-dom"
+import { useGetModuleQuery } from "../../services"
 import FooterLink from "./FooterLink"
 
-export default function Footer({ module }) {
+export default function Footer() {
+    //
+    // get current module
+    // * e.g. LandingPage is module-independent so moduleId will be undefined
+    // * e.g. CreateJobPage depends on module -> moduleId will be defined
+    //
+    const { moduleId } = useParams()
+    const { data: module } = useGetModuleQuery(moduleId, {
+        skip: moduleId === undefined,
+    })
+
     //
     // decide which partners to show
     //
@@ -189,6 +199,4 @@ export default function Footer({ module }) {
     )
 }
 
-Footer.propTypes = {
-    module: moduleType,
-}
+Footer.propTypes = {}

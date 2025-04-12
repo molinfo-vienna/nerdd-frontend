@@ -3,11 +3,11 @@ import Markdown from "react-markdown"
 import { useParams } from "react-router-dom"
 import rehypeSlug from "rehype-slug"
 import remarkGfm from "remark-gfm"
-import Footer from "../features/footer/Footer"
 import ModuleHeader from "../features/header/ModuleHeader"
 import TableOfContents from "../features/tableOfContents/TableOfContents"
 import { useGetModuleQuery } from "../services"
 import ErrorPage from "./ErrorPage"
+import Layout from "./Layout"
 import LoadingPage from "./LoadingPage"
 
 export default function AboutPage() {
@@ -33,8 +33,10 @@ export default function AboutPage() {
     }
 
     return (
-        <>
-            <ModuleHeader module={module} />
+        <Layout>
+            <Layout.Header>
+                <ModuleHeader module={module} />
+            </Layout.Header>
             {/* <Header module={module}>
                 <Header.Content>
                     <Markdown className="lead">{module.description}</Markdown>
@@ -88,8 +90,6 @@ export default function AboutPage() {
                     </div>
                 </div>
             </div>
-
-            <Footer module={module} />
-        </>
+        </Layout>
     )
 }

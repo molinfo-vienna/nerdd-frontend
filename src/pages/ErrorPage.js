@@ -1,8 +1,7 @@
 import PropTypes from "prop-types"
 import React from "react"
 import { BsExclamationCircle } from "react-icons/bs"
-import Footer from "../features/footer/Footer"
-import NavigationBar from "../features/navigationBar/NavigationBar"
+import Layout from "./Layout"
 
 const statusMap = {
     404: "Not Found",
@@ -25,9 +24,8 @@ export default function ErrorPage({ error, explanation }) {
     console.error(error)
 
     return (
-        <>
-            <main className="container vh-100">
-                <NavigationBar />
+        <Layout>
+            <div className="container">
                 <div className="row justify-content-center">
                     <div className="col-md-auto mt-5 pt-5">
                         <div
@@ -52,10 +50,8 @@ export default function ErrorPage({ error, explanation }) {
                         </div>
                     </div>
                 </div>
-            </main>
-
-            <Footer />
-        </>
+            </div>
+        </Layout>
     )
 }
 

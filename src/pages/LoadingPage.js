@@ -1,21 +1,14 @@
 import React from "react"
-import Footer from "../features/footer/Footer"
-import NavigationBar from "../features/navigationBar/NavigationBar"
+import Layout from "./Layout"
 
 export default function LoadingPage() {
     return (
-        <>
-            <NavigationBar />
-            <main className="container text-center">
-                <div className="row vh-100 align-items-center">
-                    <div className="col">
-                        <div className="spinner-border" role="status">
-                            <span className="visually-hidden">Loading...</span>
-                        </div>
-                    </div>
+        <Layout>
+            <div className="d-flex flex-fill align-items-center justify-content-center">
+                <div className="spinner-border" role="status">
+                    <span className="visually-hidden">Loading...</span>
                 </div>
-            </main>
-            <Footer />
-        </>
+            </div>
+        </Layout>
     )
 }

@@ -1,3 +1,4 @@
+import classNames from "classnames"
 import PropTypes from "prop-types"
 import React, { useCallback, useState } from "react"
 import { moduleType } from "../../types"
@@ -29,6 +30,11 @@ export default function TableRowGroup({
                     (resultProperty.level !== "molecule" || j === 0) && (
                         <TableCell
                             key={k}
+                            className={classNames({
+                                "row-group-end":
+                                    resultProperty.level === "molecule" ||
+                                    j == group.children.length - 1,
+                            })}
                             module={module}
                             result={result}
                             resultProperty={resultProperty}

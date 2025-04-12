@@ -1,10 +1,10 @@
 import React from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import Footer from "../features/footer/Footer"
 import ModuleHeader from "../features/header/ModuleHeader"
 import JobForm from "../features/jobForm/JobForm"
 import { useAddJobMutation, useGetModuleQuery } from "../services"
 import ErrorPage from "./ErrorPage"
+import Layout from "./Layout"
 import LoadingPage from "./LoadingPage"
 
 export default function CreateJobPage() {
@@ -68,22 +68,20 @@ export default function CreateJobPage() {
     }
 
     return (
-        <>
-            <ModuleHeader module={module} />
+        <Layout>
+            <Layout.Header>
+                <ModuleHeader module={module} />
+            </Layout.Header>
 
-            <main>
-                <div className="container py-5">
-                    <div className="row justify-content-center">
-                        <div className="col-sm-6">
-                            <h2 className="mb-5">Start prediction</h2>
-                            <JobForm module={module} onSubmit={onSubmit} />
-                        </div>
-                        <div className="col-sm-4 d-sm-block d-none"></div>
+            <div className="container py-5">
+                <div className="row justify-content-center">
+                    <div className="col-sm-6">
+                        <h2 className="mb-5">Start prediction</h2>
+                        <JobForm module={module} onSubmit={onSubmit} />
                     </div>
+                    <div className="col-sm-4 d-sm-block d-none"></div>
                 </div>
-            </main>
-
-            <Footer module={module} />
-        </>
+            </div>
+        </Layout>
     )
 }
