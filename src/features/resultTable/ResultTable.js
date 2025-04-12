@@ -171,7 +171,7 @@ const ResultTable = memo(function ResultTable({
             <tbody className="table-group-divider">
                 {resultsGroupedByMolId.map((group, i) => (
                     <TableRowGroup
-                        key={i}
+                        key={group.mol_id}
                         group={group}
                         resultProperties={resultProperties}
                         module={module}
