@@ -1,3 +1,10 @@
+## [1.0.12](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.11...v1.0.12) (2025-04-12)
+
+
+### Bug Fixes
+
+* Use flex column flow in Layout content ([2f5e725](https://github.com/molinfo-vienna/nerdd-frontend/commit/2f5e725735d14b046bc75546fa8ceb832d3e6c8a))
+
 ## [1.0.11](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.10...v1.0.11) (2025-04-12)
 
 
