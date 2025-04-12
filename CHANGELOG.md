@@ -1,3 +1,10 @@
+## [1.0.11](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.10...v1.0.11) (2025-04-12)
+
+
+### Bug Fixes
+
+* Cache table groups based on mol ids ([ccad95c](https://github.com/molinfo-vienna/nerdd-frontend/commit/ccad95c898d2ac03d9ac4e8dff22c3d0f7800907))
+
 ## [1.0.10](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.9...v1.0.10) (2025-04-12)
 
 
