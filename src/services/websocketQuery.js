@@ -32,7 +32,9 @@ export default function websocketQuery({
                 // create a websocket connection when the cache subscription starts
                 // ReconnectingWebSocket is a drop-in replacement for the native WebSocket API
                 // Main benefit is that it automatically reconnects when the connection is lost.
-                ws = new ReconnectingWebSocket(url, protocol)
+                ws = new ReconnectingWebSocket(url, protocol, {
+                    maxReconnectionDelay: 30000,
+                })
 
                 ws.onmessage = (event) => {
                     const data = JSON.parse(event.data)
@@ -46,7 +48,7 @@ export default function websocketQuery({
                 }
 
                 ws.onclose = (e) => {
-                    if (e.wasClean) {
+                    if (e.wasClean && e.reason !== "timeout") {
                         // signal that the websocket connection was closed
                         updateCachedData((draft) => {
                             // TODO: messages might get lost here
