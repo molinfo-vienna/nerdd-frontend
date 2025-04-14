@@ -1,3 +1,10 @@
+## [1.0.13](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.12...v1.0.13) (2025-04-14)
+
+
+### Bug Fixes
+
+* Let websocket reconnect if the error reason is 'timeout' ([7cd63f8](https://github.com/molinfo-vienna/nerdd-frontend/commit/7cd63f89afdac5e5f661408c8da33310db1e58f0))
+
 ## [1.0.12](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.11...v1.0.12) (2025-04-12)
 
 
