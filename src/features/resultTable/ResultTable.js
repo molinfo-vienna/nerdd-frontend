@@ -40,7 +40,7 @@ const ResultTable = memo(function ResultTable({
 
             // get color palettes for each result property
             const colorPalettes = Object.fromEntries(
-                resultProperties.map((resultProperty) => [
+                module.resultProperties.map((resultProperty) => [
                     resultProperty.name,
                     getColorPalette(palettes, resultProperty),
                 ]),
@@ -175,7 +175,7 @@ const ResultTable = memo(function ResultTable({
                 )}
             </thead>
             <tbody className="table-group-divider">
-                {resultsGroupedByMolId.map((group, i) => (
+                {resultsGroupedByMolId.map((group) => (
                     <TableRowGroup
                         key={group.mol_id}
                         group={group}

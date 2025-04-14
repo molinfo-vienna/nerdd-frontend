@@ -168,6 +168,18 @@ export default function TableCell({
         } else {
             return ProblemListCell({ problems: value, ...commonProps })
         }
+    } else if (resultProperty.type === "source_list") {
+        if (value == null) {
+            return <td {...commonProps}>-</td>
+        } else {
+            return <td {...commonProps}>{value}</td>
+        }
+    } else if (resultProperty.type === "representation") {
+        if (value == null) {
+            return <td {...commonProps}>-</td>
+        } else {
+            return <td {...commonProps}>{value}</td>
+        }
     } else if (resultProperty.type === "string") {
         if (value == null) {
             return <td {...commonProps}>-</td>

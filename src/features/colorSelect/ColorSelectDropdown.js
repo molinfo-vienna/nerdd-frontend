@@ -30,7 +30,7 @@ export default function ColorSelectDropdown({
                                     className="form-check-input"
                                     type="radio"
                                     value=""
-                                    id={`atom-color-none`}
+                                    id="atom-color-none"
                                     checked={
                                         selectedAtomColorProperty === undefined
                                     }

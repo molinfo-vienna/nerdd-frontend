@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import React from "react"
+import React, { Fragment } from "react"
 
 export default function ColumnSelectDropdown({
     columnSelection,
@@ -9,67 +9,99 @@ export default function ColumnSelectDropdown({
         return
     }
 
+    // compute for each column group if all columns in that group are selected
+    const allSelectedInGroup = columnSelection.map((group) =>
+        group.columns.map((c) => c.visible).every(Boolean),
+    )
+
     return (
-        <div
-            className="dropdown-menu dropdown-menu-end p-3"
-            style={{ zIndex: 1030 }}
-        >
-            {columnSelection.map((group) => (
-                <div className="pb-3" key={group.groupName}>
-                    <div className="form-check dropdown-item">
-                        <input
-                            className="form-check-input"
-                            type="checkbox"
-                            value=""
-                            id={group.groupName}
-                            checked={group.columns
-                                .map((c) => c.visible)
-                                .every(Boolean)}
-                            onChange={(e) =>
+        <ul className="dropdown-menu" style={{ zIndex: 1030 }}>
+            {columnSelection.map((group, i) => (
+                <Fragment key={group.groupName}>
+                    <li>
+                        <a
+                            className="dropdown-item"
+                            onClick={(e) => {
+                                e.preventDefault()
                                 handleSelectionChange(
                                     group.groupName,
                                     null,
-                                    e.target.checked,
+                                    !allSelectedInGroup[i],
                                 )
-                            }
-                        />
-                        <label
-                            className="form-check-label fw-bold"
-                            htmlFor={group.groupName}
+                            }}
                         >
-                            {group.groupName}
-                        </label>
-                    </div>
+                            <div className="form-check">
+                                <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    value=""
+                                    id={group.groupName}
+                                    checked={allSelectedInGroup[i]}
+                                    onChange={() =>
+                                        handleSelectionChange(
+                                            group.groupName,
+                                            null,
+                                            !allSelectedInGroup[i],
+                                        )
+                                    }
+                                />
+                                <label
+                                    className="form-check-label fw-bolder"
+                                    htmlFor={group.groupName}
+                                >
+                                    {group.groupName}
+                                </label>
+                            </div>
+                        </a>
+                    </li>
                     {group.columns.map((column) => (
-                        <div
-                            key={column.name}
-                            className="form-check dropdown-item"
-                        >
-                            <input
-                                className="form-check-input"
-                                type="checkbox"
-                                value=""
-                                id={column.name}
-                                checked={column.visible}
-                                onChange={(e) =>
+                        <li key={`${group.groupName}-${column.name}`}>
+                            <a
+                                className="dropdown-item"
+                                href="#"
+                                onClick={(e) => {
+                                    e.preventDefault()
                                     handleSelectionChange(
                                         group.groupName,
                                         column.name,
-                                        e.target.checked,
+                                        !column.visible,
                                     )
-                                }
-                            />
-                            <label
-                                className="form-check-label d-block"
-                                htmlFor={column.name}
+                                }}
                             >
-                                {column.label}
-                            </label>
-                        </div>
+                                <div className="form-check">
+                                    <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        value=""
+                                        id={`${group.groupName}-${column.name}`}
+                                        checked={column.visible}
+                                        onChange={() =>
+                                            handleSelectionChange(
+                                                group.groupName,
+                                                column.name,
+                                                !column.visible,
+                                            )
+                                        }
+                                    />
+                                    <label
+                                        className="form-check-label d-block"
+                                        htmlFor={`${group.groupName}-${column.name}`}
+                                    >
+                                        {column.label}
+                                    </label>
+                                </div>
+                            </a>
+                        </li>
                     ))}
-                </div>
+                    {/* Add a divider between groups */}
+                    {i < columnSelection.length - 1 && (
+                        <li>
+                            <hr className="dropdown-divider" />
+                        </li>
+                    )}
+                </Fragment>
             ))}
-        </div>
+        </ul>
     )
 }
 
