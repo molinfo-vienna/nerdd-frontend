@@ -1,3 +1,10 @@
+## [1.0.15](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.14...v1.0.15) (2025-04-14)
+
+
+### Bug Fixes
+
+* Highlight cells correctly if column block has only one column ([0b14f1b](https://github.com/molinfo-vienna/nerdd-frontend/commit/0b14f1b1ec7fbf42ba37d60f54b8d2f3b3796809))
+
 ## [1.0.14](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.13...v1.0.14) (2025-04-14)
 
 
