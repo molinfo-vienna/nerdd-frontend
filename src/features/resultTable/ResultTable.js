@@ -1,7 +1,7 @@
 import { sortedIndexBy } from "lodash"
 import PropTypes from "prop-types"
 import React, { memo, useMemo } from "react"
-import { moduleType, resultType } from "../../types"
+import { moduleType, resultPropertyType, resultType } from "../../types"
 import useColorPalettes from "../colorPalettes/useColorPalettes"
 import getColorPalette from "./getColorPalette"
 import getColumnRows from "./getColumnRows"
@@ -13,12 +13,14 @@ const ResultTable = memo(function ResultTable({
     pageOneBased,
     results,
     columnSelection,
+    atomColorProperty,
 }) {
     const palettes = useColorPalettes()
 
     //
     // check visibility and style of columns
     //
+    // TODO: move colorPalettes to separate hook
     const { resultProperties, firstColumnRow, secondColumnRow, colorPalettes } =
         useMemo(() => {
             const isVisible = (resultProperty) => {
@@ -128,7 +130,11 @@ const ResultTable = memo(function ResultTable({
 
     return (
         <table
-            className="table text-center table-sm w-auto"
+            // align-middle: aligns the text vertically in the middle of the cell
+            //     Note: cells might override this alignment and browsers will complain that
+            //           align-middle has no effect
+            className="table text-center table-sm w-auto align-middle"
+            // TODO: put in class
             style={{
                 overflowX: "visible",
                 overflowY: "visible",
@@ -176,6 +182,7 @@ const ResultTable = memo(function ResultTable({
                         resultProperties={resultProperties}
                         module={module}
                         colorPalettes={colorPalettes}
+                        atomColorProperty={atomColorProperty}
                     />
                 ))}
             </tbody>
@@ -188,6 +195,7 @@ ResultTable.propTypes = {
     pageOneBased: PropTypes.number.isRequired,
     results: PropTypes.arrayOf(resultType).isRequired,
     columnSelection: PropTypes.array,
+    atomColorProperty: resultPropertyType,
 }
 
 export default ResultTable

@@ -1,11 +1,41 @@
 import parse, { attributesToProps, domToReact } from "html-react-parser"
 import PropTypes from "prop-types"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useMemo, useRef, useState } from "react"
+import { resultPropertyType } from "../../types"
 
-export default function Molecule({ svgValue, selectedAtom, onAtomSelect }) {
+export default function Molecule({
+    svgValue,
+    selectedAtom,
+    onAtomSelect,
+    group,
+    atomColorProperty,
+    atomColorPalette,
+}) {
     const [svg, setSvg] = useState(null)
 
     const ref = useRef(null)
+
+    //
+    // compute atom colors
+    //
+    const atomColors = useMemo(() => {
+        if (atomColorPalette === undefined) return undefined
+
+        // if a molecule has only one atom entry with atom_id = null, then it is a dummy row
+        // signaling an invalid computation -> do not color the atoms
+        if (group.children.length === 1 && group.children[0].atom_id == null)
+            return undefined
+
+        const atomColors = []
+        for (const result of group.children) {
+            const atomId = result.atom_id
+            const propertyValue = result[atomColorProperty.name]
+            const color = atomColorPalette(propertyValue)
+            atomColors[atomId] = color
+        }
+
+        return atomColors
+    }, [group, atomColorPalette])
 
     //
     // to improve performance, we render the SVG only once
@@ -18,29 +48,85 @@ export default function Molecule({ svgValue, selectedAtom, onAtomSelect }) {
                 }
 
                 if (domNode.name === "svg") {
+                    // TODO: still needed?
                     const updatedAttribs = {
                         ...domNode.attribs,
                         className: "molecule",
                     }
 
+                    // The SVG contains an ellipse with class "atom-x" for each atom in the
+                    // molecule (where x is the atom id). The ellipses for atoms are rendered
+                    // after / on top of anything else.
+                    // -> This makes selection less jittery, because hovering over the ellipses
+                    //    is not interrupted when touching a label / bond.
+                    // BUT: coloring theses ellipses would cover the element labels, etc.
+                    // -> copy the ellipses and put that at the start of the SVG
+                    const children = domToReact(domNode.children, parseOptions)
+
+                    const ellipses = children.filter(
+                        (child) => child.type === "ellipse",
+                    )
+
+                    const ellipseCopies =
+                        atomColors !== undefined
+                            ? ellipses.map((ellipse, i) => {
+                                  // -> extract the atom id from the class name
+                                  const atomId = parseInt(
+                                      ellipse.props.className.replace(
+                                          "atom-",
+                                          "",
+                                      ),
+                                  )
+
+                                  // set the background color of the atom
+                                  const fill = atomColors[atomId]
+
+                                  const updatedAttribs = {
+                                      ...ellipse.props,
+                                      className:
+                                          ellipse.props.className.replace(
+                                              "atom-",
+                                              "color-",
+                                          ),
+                                      style: { fill },
+                                  }
+
+                                  return (
+                                      <ellipse
+                                          key={`copy-${i}`}
+                                          {...updatedAttribs}
+                                      />
+                                  )
+                              })
+                            : []
+
+                    const rest = children.filter(
+                        (child) => child.type !== "ellipse",
+                    )
+
+                    const newChildren = [...ellipseCopies, ...rest, ...ellipses]
+
                     return (
                         <svg ref={ref} {...attributesToProps(updatedAttribs)}>
-                            {domToReact(domNode.children, parseOptions)}
+                            {newChildren}
                         </svg>
                     )
                 } else if (
                     domNode.name === "ellipse" &&
                     domNode.attribs &&
                     domNode.attribs.class !== undefined &&
-                    domNode.attribs.class.startsWith("atom")
+                    domNode.attribs.class.startsWith("atom-")
                 ) {
-                    const updatedAttribs = {
-                        ...domNode.attribs,
-                    }
-
+                    // the SVG contains an ellipse with class "atom-x" for each atom in the molecule
+                    // (x is the atom id)
+                    // -> extract the atom id from the class name
                     const atomId = parseInt(
                         domNode.attribs.class.replace("atom-", ""),
                     )
+
+                    const updatedAttribs = {
+                        ...domNode.attribs,
+                    }
 
                     return (
                         <ellipse
@@ -74,7 +160,7 @@ export default function Molecule({ svgValue, selectedAtom, onAtomSelect }) {
                     setSvg(svg)
                 })
         }
-    }, [onAtomSelect])
+    }, [onAtomSelect, atomColors])
 
     //
     // we dynamically add (and remove) a class to the correct atom when selected
@@ -101,4 +187,7 @@ Molecule.propTypes = {
     svgValue: PropTypes.string.isRequired,
     selectedAtom: PropTypes.number,
     onAtomSelect: PropTypes.func,
+    group: PropTypes.object,
+    atomColorProperty: resultPropertyType,
+    atomColorPalette: PropTypes.func,
 }

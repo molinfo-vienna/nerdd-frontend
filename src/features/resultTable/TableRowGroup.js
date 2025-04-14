@@ -1,7 +1,7 @@
 import classNames from "classnames"
 import PropTypes from "prop-types"
 import React, { useCallback, useState } from "react"
-import { moduleType } from "../../types"
+import { moduleType, resultPropertyType } from "../../types"
 import TableCell from "./TableCell"
 
 export default function TableRowGroup({
@@ -9,6 +9,7 @@ export default function TableRowGroup({
     resultProperties,
     module,
     colorPalettes,
+    atomColorProperty,
 }) {
     //
     // handle mouse over event
@@ -21,6 +22,14 @@ export default function TableRowGroup({
         },
         [setSelectedAtom],
     )
+
+    //
+    // atom color palette
+    //
+    const atomColorPalette =
+        atomColorProperty !== undefined
+            ? colorPalettes[atomColorProperty.name]
+            : undefined
 
     return group.children.map((result, j) => (
         <tr key={j}>
@@ -38,11 +47,7 @@ export default function TableRowGroup({
                             module={module}
                             result={result}
                             resultProperty={resultProperty}
-                            rowSpan={
-                                resultProperty.level === "molecule"
-                                    ? group.children.length
-                                    : 1
-                            }
+                            group={group}
                             selectedAtom={selectedAtom}
                             onAtomSelect={
                                 module.task === "atom_property_prediction"
@@ -50,6 +55,8 @@ export default function TableRowGroup({
                                     : null
                             }
                             colorPalette={colorPalettes[resultProperty.name]}
+                            atomColorProperty={atomColorProperty}
+                            atomColorPalette={atomColorPalette}
                         />
                     ),
             )}
@@ -62,4 +69,5 @@ TableRowGroup.propTypes = {
     resultProperties: PropTypes.array.isRequired,
     module: moduleType.isRequired,
     colorPalettes: PropTypes.object.isRequired,
+    atomColorProperty: resultPropertyType,
 }
