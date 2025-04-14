@@ -1,3 +1,12 @@
+## [1.0.16](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.15...v1.0.16) (2025-04-14)
+
+
+### Bug Fixes
+
+* Color atoms even if color property is hidden ([31e1f20](https://github.com/molinfo-vienna/nerdd-frontend/commit/31e1f208f9df77b38e8706a66d776a50bbf4d2fd))
+* Show one column if all columns are deselected ([773b5dc](https://github.com/molinfo-vienna/nerdd-frontend/commit/773b5dcc84065d8bd2b5505c0ed59f6bc9bbb4ce))
+* Use <ul> in ColumnSelectDropdown ([dad613a](https://github.com/molinfo-vienna/nerdd-frontend/commit/dad613abf05eae2b93214b66e42c9bd6126d051b))
+
 ## [1.0.15](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.14...v1.0.15) (2025-04-14)
 
 
