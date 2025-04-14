@@ -1,3 +1,12 @@
+## [1.0.14](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.13...v1.0.14) (2025-04-14)
+
+
+### Bug Fixes
+
+* Add color selection feature to ResultPage ([e8ad457](https://github.com/molinfo-vienna/nerdd-frontend/commit/e8ad4579313fd1058512d994971222558047e6fe))
+* Color atoms in Molecule component ([a163c30](https://github.com/molinfo-vienna/nerdd-frontend/commit/a163c30b803838899ec4197e4def28e9f3928cf5))
+* Forward atomColorPalette to Molecule component ([79b8a9f](https://github.com/molinfo-vienna/nerdd-frontend/commit/79b8a9fe47f5a772afd05912528a109300575cd3))
+
 ## [1.0.13](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.12...v1.0.13) (2025-04-14)
 
 
