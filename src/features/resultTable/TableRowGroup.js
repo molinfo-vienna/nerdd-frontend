@@ -6,10 +6,9 @@ import TableCell from "./TableCell"
 
 export default function TableRowGroup({
     group,
-    resultProperties,
     module,
-    colorPalettes,
     atomColorProperty,
+    resultProperties,
 }) {
     //
     // handle mouse over event
@@ -22,14 +21,6 @@ export default function TableRowGroup({
         },
         [setSelectedAtom],
     )
-
-    //
-    // atom color palette
-    //
-    const atomColorPalette =
-        atomColorProperty !== undefined
-            ? colorPalettes[atomColorProperty.name]
-            : undefined
 
     return group.children.map((result, j) => (
         <tr key={j}>
@@ -54,9 +45,7 @@ export default function TableRowGroup({
                                     ? handleAtomSelect
                                     : null
                             }
-                            colorPalette={colorPalettes[resultProperty.name]}
                             atomColorProperty={atomColorProperty}
-                            atomColorPalette={atomColorPalette}
                         />
                     ),
             )}
@@ -66,8 +55,7 @@ export default function TableRowGroup({
 
 TableRowGroup.propTypes = {
     group: PropTypes.object.isRequired,
-    resultProperties: PropTypes.array.isRequired,
     module: moduleType.isRequired,
-    colorPalettes: PropTypes.object.isRequired,
+    resultProperties: PropTypes.arrayOf(resultPropertyType).isRequired,
     atomColorProperty: resultPropertyType,
 }

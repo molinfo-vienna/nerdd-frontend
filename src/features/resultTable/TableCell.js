@@ -15,18 +15,157 @@ export default function TableCell({
     selectedAtom,
     className,
     onAtomSelect,
-    colorPalette,
     atomColorProperty,
-    atomColorPalette,
     ...props
 }) {
     const value = result[resultProperty.name]
     const molId = result.mol_id
 
+    // compressed: cell is smaller when it refers to an atom / derivative entry
     const compressed =
         resultProperty.level !== undefined &&
         resultProperty.level !== "molecule"
 
+    //
+    // figure out content to render
+    //
+    let cellContent
+    if (resultProperty.type === "mol") {
+        cellContent = (
+            <div className="position-relative">
+                {value == null && (
+                    <RxCross1
+                        className="p-5 text-body-tertiary"
+                        style={{ width: "300px", height: "180px" }}
+                    />
+                )}
+                {value != null &&
+                    resultProperty.name === "preprocessed_mol" && (
+                        <Molecule
+                            className="position-relative"
+                            molId={molId}
+                            svgValue={value}
+                            group={group}
+                            // color palette for atoms
+                            atomColorProperty={atomColorProperty}
+                            // feature to select atoms
+                            selectedAtom={selectedAtom}
+                            onAtomSelect={onAtomSelect}
+                        />
+                    )}
+                {value != null &&
+                    resultProperty.name !== "preprocessed_mol" && (
+                        <Molecule
+                            className="position-relative"
+                            molId={molId}
+                            svgValue={value}
+                        />
+                    )}
+                {resultProperty.name === "preprocessed_mol" && (
+                    <ProblemListBadge problems={result.problems} />
+                )}
+            </div>
+        )
+    } else if (resultProperty.type === "text") {
+        // unused at the moment
+        if (compressed) {
+            cellContent = (
+                <div
+                    style={{
+                        maxWidth: "300px",
+                        height: "25px",
+                        overflow: "hidden",
+                        position: "relative",
+                    }}
+                >
+                    <div
+                        style={{
+                            position: "absolute",
+                            width: "280px",
+                            height: "100%",
+                            overflowX: "hidden",
+                            overflowY: "scroll",
+                        }}
+                    >
+                        {value}
+                    </div>
+                </div>
+            )
+        } else {
+            cellContent = value
+        }
+    } else if (resultProperty.type === "float") {
+        const precision = resultProperty.precision || 2
+        if (value == null) {
+            cellContent = "-"
+        } else if (typeof value === "number") {
+            cellContent = value.toFixed(precision)
+        } else {
+            cellContent = value
+        }
+    } else if (resultProperty.type === "int") {
+        if (value == null) {
+            cellContent = "-"
+        } else {
+            cellContent = value
+        }
+    } else if (resultProperty.type === "bool") {
+        if (value == null) {
+            cellContent = "-"
+        } else {
+            cellContent = value ? "Yes" : "No"
+        }
+    } else if (resultProperty.type === "image") {
+        if (value == null) {
+            cellContent = "-"
+        } else {
+            cellContent = (
+                <img
+                    className="object-fit-contain"
+                    src={value}
+                    width={300}
+                    height={180}
+                />
+            )
+        }
+    } else if (resultProperty.type === "problem_list") {
+        if (value == null) {
+            cellContent = "-"
+        } else {
+            cellContent = ProblemListCell({ problems: value })
+        }
+    } else if (resultProperty.type === "source_list") {
+        if (value == null) {
+            cellContent = "-"
+        } else {
+            cellContent = value
+        }
+    } else if (resultProperty.type === "representation") {
+        if (value == null) {
+            cellContent = "-"
+        } else {
+            cellContent = value
+        }
+    } else if (resultProperty.type === "string") {
+        if (value == null) {
+            cellContent = "-"
+        } else {
+            cellContent = value
+        }
+    } else {
+        console.warn(
+            `Unknown result property type: ${resultProperty.type} for ${resultProperty.name}`,
+        )
+        if (value == null) {
+            cellContent = "-"
+        } else {
+            cellContent = value
+        }
+    }
+
+    //
+    // render actual table cell
+    //
     const commonProps = {
         ...props,
         rowSpan: compressed ? 1 : group.children.length,
@@ -43,8 +182,11 @@ export default function TableCell({
             "align-top":
                 module.task !== "molecular_property_prediction" &&
                 resultProperty.level === "molecule",
+            "d-none": !resultProperty.visible,
         }),
-        style: { backgroundColor: colorPalette(value) },
+        style: {
+            backgroundColor: resultProperty.colorScale(value),
+        },
         onMouseEnter: (e) =>
             resultProperty.level === "atom"
                 ? onAtomSelect(result.atom_id)
@@ -53,149 +195,7 @@ export default function TableCell({
             resultProperty.level === "atom" ? onAtomSelect(undefined) : null,
     }
 
-    if (resultProperty.type === "mol") {
-        return (
-            <td {...commonProps}>
-                <div className="position-relative">
-                    {value == null && (
-                        <RxCross1
-                            className="p-5 text-body-tertiary"
-                            style={{ width: "300px", height: "180px" }}
-                        />
-                    )}
-                    {value != null &&
-                        resultProperty.name === "preprocessed_mol" && (
-                            <Molecule
-                                className="position-relative"
-                                molId={molId}
-                                svgValue={value}
-                                group={group}
-                                // color palette for atoms
-                                atomColorProperty={atomColorProperty}
-                                atomColorPalette={atomColorPalette}
-                                // feature to select atoms
-                                selectedAtom={selectedAtom}
-                                onAtomSelect={onAtomSelect}
-                            />
-                        )}
-                    {value != null &&
-                        resultProperty.name !== "preprocessed_mol" && (
-                            <Molecule
-                                className="position-relative"
-                                molId={molId}
-                                svgValue={value}
-                            />
-                        )}
-                    {resultProperty.name === "preprocessed_mol" && (
-                        <ProblemListBadge problems={result.problems} />
-                    )}
-                </div>
-            </td>
-        )
-    } else if (resultProperty.type === "text") {
-        // unused at the moment
-        if (compressed) {
-            return (
-                <td {...commonProps}>
-                    <div
-                        style={{
-                            maxWidth: "300px",
-                            height: "25px",
-                            overflow: "hidden",
-                            position: "relative",
-                        }}
-                    >
-                        <div
-                            style={{
-                                position: "absolute",
-                                width: "280px",
-                                height: "100%",
-                                overflowX: "hidden",
-                                overflowY: "scroll",
-                            }}
-                        >
-                            {value}
-                        </div>
-                    </div>
-                </td>
-            )
-        } else {
-            return (
-                <td {...commonProps} style={{ maxWidth: "300px" }}>
-                    {value}
-                </td>
-            )
-        }
-    } else if (resultProperty.type === "float") {
-        const precision = resultProperty.precision || 2
-        if (value == null) {
-            return <td {...commonProps}>-</td>
-        } else if (typeof value === "number") {
-            return <td {...commonProps}>{value.toFixed(precision)}</td>
-        } else {
-            return <td {...commonProps}>{value}</td>
-        }
-    } else if (resultProperty.type === "int") {
-        if (value == null) {
-            return <td {...commonProps}>-</td>
-        } else {
-            return <td {...commonProps}>{value}</td>
-        }
-    } else if (resultProperty.type === "bool") {
-        if (value == null) {
-            return <td {...commonProps}>-</td>
-        } else {
-            return <td {...commonProps}>{value ? "Yes" : "No"}</td>
-        }
-    } else if (resultProperty.type === "image") {
-        if (value == null) {
-            return <td {...commonProps}>-</td>
-        } else {
-            return (
-                <td {...commonProps}>
-                    <img
-                        className="object-fit-contain"
-                        src={value}
-                        width={300}
-                        height={180}
-                    />
-                </td>
-            )
-        }
-    } else if (resultProperty.type === "problem_list") {
-        if (value == null) {
-            return <td {...commonProps}>-</td>
-        } else {
-            return ProblemListCell({ problems: value, ...commonProps })
-        }
-    } else if (resultProperty.type === "source_list") {
-        if (value == null) {
-            return <td {...commonProps}>-</td>
-        } else {
-            return <td {...commonProps}>{value}</td>
-        }
-    } else if (resultProperty.type === "representation") {
-        if (value == null) {
-            return <td {...commonProps}>-</td>
-        } else {
-            return <td {...commonProps}>{value}</td>
-        }
-    } else if (resultProperty.type === "string") {
-        if (value == null) {
-            return <td {...commonProps}>-</td>
-        } else {
-            return <td {...commonProps}>{value}</td>
-        }
-    } else {
-        console.warn(
-            `Unknown result property type: ${resultProperty.type} for ${resultProperty.name}`,
-        )
-        if (value == null) {
-            return <td {...commonProps}>-</td>
-        } else {
-            return <td {...commonProps}>{value}</td>
-        }
-    }
+    return <td {...commonProps}>{cellContent}</td>
 }
 
 TableCell.propTypes = {
@@ -203,11 +203,8 @@ TableCell.propTypes = {
     result: PropTypes.object.isRequired,
     resultProperty: PropTypes.object.isRequired,
     group: PropTypes.object,
-    compressed: PropTypes.bool,
     selectedAtom: PropTypes.number,
     className: PropTypes.string,
     onAtomSelect: PropTypes.func,
-    colorPalette: PropTypes.func,
     atomColorProperty: resultPropertyType,
-    atomColorPalette: PropTypes.func,
 }
