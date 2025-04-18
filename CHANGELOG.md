@@ -1,3 +1,14 @@
+## [1.0.17](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.16...v1.0.17) (2025-04-18)
+
+
+### Bug Fixes
+
+* Avoid refetching molecule images ([a3a9bd0](https://github.com/molinfo-vienna/nerdd-frontend/commit/a3a9bd095982bf29e4504b7e371047b30eaf027a))
+* Prerender all table cells and hide unselected ([5ed7fc6](https://github.com/molinfo-vienna/nerdd-frontend/commit/5ed7fc6e1773899970977e6d90b5fbd5a790b4c1))
+* Put color palettes into result property objects ([621a3c0](https://github.com/molinfo-vienna/nerdd-frontend/commit/621a3c0431bd0598a24868c767a505fca0dd2d78))
+* Put visibility flag into result property objects ([8d4db90](https://github.com/molinfo-vienna/nerdd-frontend/commit/8d4db90f669a97c90a2f9dc758dddf87570d1c66))
+* Use transparent colors as fallback ([3335481](https://github.com/molinfo-vienna/nerdd-frontend/commit/333548157bf6e3b9eb878390835c585fecb7b917))
+
 ## [1.0.16](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.15...v1.0.16) (2025-04-14)
 
 
