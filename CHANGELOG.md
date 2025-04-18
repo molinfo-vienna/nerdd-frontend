@@ -1,3 +1,10 @@
+## [1.0.18](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.17...v1.0.18) (2025-04-18)
+
+
+### Bug Fixes
+
+* Remove labels from SMILES before passing to JSME ([354ddf3](https://github.com/molinfo-vienna/nerdd-frontend/commit/354ddf3478f1fb78adebf2aa9cb0a13b9d026b99))
+
 ## [1.0.17](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.16...v1.0.17) (2025-04-18)
 
 
