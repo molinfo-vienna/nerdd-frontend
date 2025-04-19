@@ -11,5 +11,4 @@ RUN npm install
 COPY . .
 
 # run the app in developer mode with hot reload
-ENTRYPOINT PORT=80 \
-    npm start
+ENTRYPOINT ["sh", "-c", "PORT=80 npm start"]

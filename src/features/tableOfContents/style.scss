@@ -1,8 +1,6 @@
 @use "sass:map";
 @import "../../index.scss";
 
-@debug $spacers;
-
 .toc {
     // make the table of contents stick to top of the screen
     position: sticky;

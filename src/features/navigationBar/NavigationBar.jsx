@@ -129,9 +129,7 @@ export default function NavigationBar() {
                         id="navbarNavDropdown"
                     >
                         {/*
-                         * We vertically align the navbar items in two steps:
-                         * use classes "d-lg-flex align-items-center" on the navbar
-                         * use "h-100" on navbar items
+                         * align-items-*-center: vertically align navbar entries
                          */}
 
                         <ul

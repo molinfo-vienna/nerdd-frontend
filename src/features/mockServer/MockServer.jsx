@@ -36,7 +36,14 @@ export default function MockServer({
                 routes() {
                     this.namespace = "/api"
 
-                    this.passthrough("http://localhost:3000/resources/**")
+                    // Dynamically passthrough absolute URLs with the current port (for Vite)
+                    const port = window.location.port
+                    const hostname = window.location.hostname
+                    if (port) {
+                        this.passthrough(
+                            `http://${hostname}:${port}/resources/**`,
+                        )
+                    }
 
                     // POST /jobs
                     // (create a job and return the job id)
