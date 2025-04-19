@@ -1,3 +1,11 @@
+## [1.0.19](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.18...v1.0.19) (2025-04-19)
+
+
+### Bug Fixes
+
+* Migrate project to vite ([78d1a74](https://github.com/molinfo-vienna/nerdd-frontend/commit/78d1a74a5684642a6074fdbae387b435ec9eb659))
+* Use jsx extension for files with JSX markup ([24925c6](https://github.com/molinfo-vienna/nerdd-frontend/commit/24925c6bdd9993e0485575772b9bcb5aee8fb840))
+
 ## [1.0.18](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.17...v1.0.18) (2025-04-18)
 
 
