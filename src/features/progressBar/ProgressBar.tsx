@@ -1,4 +1,5 @@
 import { CircularProgressbar } from "react-circular-progressbar"
+import "./style.css"
 
 type ProgressBarProps = {
     numEntriesProcessed?: number
