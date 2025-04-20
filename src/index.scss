@@ -3,12 +3,12 @@
 //
 
 // If you need to test fonts, download them here like that:
-// @import url('https://fonts.googleapis.com/css?family=Noto+Sans:regular,bold,italic&subset=latin,latin-ext');
+// @import url('https://fonts.googleapis.com/css?family=Open+Sans:regular,bold,italic&subset=latin,latin-ext');
 // After settling on a font you should 
 // * search your font on fontsource.org
-// * install it locally via npm install @fontsource/noto-sans
+// * install it locally via npm install @fontsource/<font-name>
 // * import it in your scss file like this:
-// @import '~@fontsource/noto-sans/400.css';
+// @import "@fontsource/<font-name>/400.css";
 
 // load all fonts
 @import "@fontsource/overpass/500.css";
@@ -17,9 +17,14 @@
 // fonts tried for main body text
 // * Martel Sans: weird spacing
 // * Roboto: too thin
+// * Nunito Sans: too playful
+// * Lato: too small (don't want to change font-size-base)
 // * Noto Sans: looks good
 // * Open Sans: insanely beautiful
-$font-family-base: 'Open Sans';
+$font-family-sans-serif: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+// $font-size-base: 1.1rem;
 
 // fonts tried for headings h1, h2, h3
 // * Work Sans (all font weights are too thin or too thick)
