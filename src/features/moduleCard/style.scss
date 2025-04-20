@@ -1,55 +1,63 @@
 @import "../../index.scss";
 
+$speed-in: 0.1s;
+$speed-out: 1s;
+
 // note: we use .card.module-card to make this rule more specific
 // -> the following properties have precedence over the default card properties
 .card.module-card {
     // cards need to have a fixed width so they can be arranged in a grid
     min-width: 16rem;
     max-width: 16rem;
-    transition: border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
-}
+    transition:
+        border-color $speed-out ease-out,
+        background-color $speed-out ease-out,
+        color $speed-out ease-out;
 
-.card.module-card .card-header {
-    transition: background-color 0.3s ease-in-out;
-}
+    .card-header {
+        background-color: transparent;
+    }
 
-.card.module-card .card-title {
-    transition: color 0.3s ease-in-out;
-}
+    img {
+        width: 10rem;
+        // make sure that the images have uniform height
+        height: 8rem;
+        filter: saturate(80%);
+        transition: filter $speed-out ease-out;
+    }
 
-.card.module-card .card-body {
-    transition: color 0.3s ease-in-out;
-}
+    .card-title {
+        transition: inherit;
+    }
 
-.card.module-card .card-header img {
-    width: 10rem;
-    // make sure that the images have uniform height
-    height: 8rem;
-    filter: saturate(80%);
-    transition: filter 0.3s ease-in-out;
-}
+    .card-body {
+        transition: inherit;
+    }
 
-.card.module-card:hover {
-    background-color: $body-tertiary-bg;
-    border-color: $primary;
+    /*
+    * Hover effects
+    * - change background color
+    * - change border color
+    * - change image saturation
+    * - change header background color
+    * - change title and body text color
+    */
+    &:hover {
+        background-color: $body-tertiary-bg;
+        border-color: $primary;
+        color: $primary;
+        transition:
+            border-color $speed-in ease-in,
+            background-color $speed-in ease-in,
+            color $speed-in ease-in;
 
-    // I tried to make the card grow on hover (below), but I liked the color change more
-    // transform: scale(1.05);
-    // box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
-}
+        // I tried to make the card grow on hover (below), but I liked the color change more.
+        // transform: scale(1.05);
+        // box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
 
-.card.module-card:hover .card-header img {
-    filter: saturate(120%);
-}
-
-.card.module-card:hover .card-header {
-    background-color: $body-tertiary-bg;
-}
-
-.card.module-card:hover .card-title {
-    color: $primary;
-}
-
-.card.module-card:hover .card-body {
-    color: $primary;
+        img {
+            filter: saturate(130%);
+            transition: filter $speed-in ease-in;
+        }
+    }
 }
