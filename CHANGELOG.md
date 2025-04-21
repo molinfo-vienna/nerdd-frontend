@@ -1,3 +1,14 @@
+## [1.0.20](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.19...v1.0.20) (2025-04-21)
+
+
+### Bug Fixes
+
+* Add vite bundle analyzer ([ebb6d6d](https://github.com/molinfo-vienna/nerdd-frontend/commit/ebb6d6de9d77c8aac400e50d6d9635824fc67489))
+* Add vitest config ([b3a4f87](https://github.com/molinfo-vienna/nerdd-frontend/commit/b3a4f87abb8c3e9a24959550069984f52e5a6b69))
+* Remove react-scripts ([f092b49](https://github.com/molinfo-vienna/nerdd-frontend/commit/f092b497d5d06978a52d4e65f3b7a987f9501d96))
+* Run npm audit fix ([c796ab6](https://github.com/molinfo-vienna/nerdd-frontend/commit/c796ab693fb9f4954231ef9a086cead52b417605))
+* Update reduxjs/toolkit ([061092f](https://github.com/molinfo-vienna/nerdd-frontend/commit/061092f7492602f80f7729702b8695f263927218))
+
 ## [1.0.19](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.18...v1.0.19) (2025-04-19)
 
 
