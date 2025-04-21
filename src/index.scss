@@ -104,8 +104,12 @@ $blue: #084887; // polynesian blue
 // $red: #FF9F1C; // orange peel
 // $red: #A44A3F; // chestnut
 // $red: #D66853; // jasper
+// $red: #e55934; // cinnabar
 //
-$red: #e55934; // cinnabar
+// Cinnabar (#e55934) was a promising candidate, but Bootstrap computes a dark foreground color
+// for it and we prefer a light text color on danger elements.
+//
+$red: #c54a28; // some strong red
 
 //
 // The variable "green" is used for the success color in bootstrap. The success color appears in
@@ -200,23 +204,6 @@ a.primary-muted-link:hover,
 a.primary-muted-link:focus {
     color: $primary;
     text-decoration: underline;
-}
-
-// TODO: Bootstrap probably does this already
-.btn-outline-danger p {
-    color: $danger;
-}
-
-.btn-outline-danger span {
-    color: $danger;
-}
-
-.btn-outline-danger:hover p {
-    color: $light;
-}
-
-.btn-outline-danger:hover span {
-    color: $light;
 }
 
 
