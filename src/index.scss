@@ -192,6 +192,13 @@ a.muted-link:focus {
 }
 
 /*
+ * Additional font size (used in header of result table)
+ */
+.fs-7 {
+    font-size: $font-size-sm;
+}
+
+/*
  * A primary muted link is a link that is styled like *primary* regular text, but will 
  * look like a link when hovered.
  */

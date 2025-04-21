@@ -206,7 +206,7 @@ const ResultTable = memo(function ResultTable({
                 overflowY: "visible",
             }}
         >
-            <thead className="sticky-top">
+            <thead className="sticky-top fs-7">
                 <tr key="firstRow">
                     {firstColumnRow.map((column: ColumnItem) => (
                         <th
