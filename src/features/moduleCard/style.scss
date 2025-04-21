@@ -1,5 +1,3 @@
-@import "../../index.scss";
-
 $speed-in: 0.1s;
 $speed-out: 1s;
 
@@ -43,9 +41,9 @@ $speed-out: 1s;
     * - change title and body text color
     */
     &:hover {
-        background-color: $body-tertiary-bg;
-        border-color: $primary;
-        color: $primary;
+        background-color: var(--bs-tertiary-bg);
+        border-color: var(--bs-primary);
+        color: var(--bs-primary);
         transition:
             border-color $speed-in ease-in,
             background-color $speed-in ease-in,
