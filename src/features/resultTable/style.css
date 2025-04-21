@@ -85,14 +85,10 @@ td.highlighted.start-block.end-block {
 }
 
 .problem-icon {
-    display: inline-block;
     min-width: 26px;
     max-width: 26px;
     min-height: 26px;
     max-height: 26px;
-    background: var(--bs-danger);
-    border-radius: 50%;
-    text-align: center;
 }
 
 svg ellipse.selected {

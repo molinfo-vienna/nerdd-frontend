@@ -4,7 +4,7 @@ import { sortedIndexBy } from "lodash"
 import { memo, useMemo } from "react"
 import getColorPalette from "./getColorPalette"
 import getColumnRows from "./getColumnRows"
-import "./style.scss"
+import "./style.css"
 import TableRowGroup from "./TableRowGroup"
 
 interface AugmentedResultProperty extends ResultProperty {
