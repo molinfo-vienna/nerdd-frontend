@@ -12,7 +12,7 @@ export default function ProblemListBadge({ problems }: ProblemListBadgeProps) {
                     <ProblemIconWithTooltip
                         key={i}
                         problemType={problemType}
-                        size={15}
+                        size={14}
                         tooltip={message}
                     />
                 ))}
