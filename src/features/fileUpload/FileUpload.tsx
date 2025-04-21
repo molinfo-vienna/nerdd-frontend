@@ -1,7 +1,7 @@
 import classNames from "classnames"
 import { useDropzone } from "react-dropzone"
 import { PiFileArrowUp } from "react-icons/pi"
-import "./style.scss"
+import "./style.css"
 
 type FileUploadProps = {
     name?: string
