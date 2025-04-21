@@ -2,7 +2,7 @@ import NavigationBar from "@/features/navigationBar/NavigationBar"
 import { type Module } from "@/types"
 import { Children, type ReactNode } from "react"
 import { Link } from "react-router-dom"
-import "./style.scss"
+import "./style.css"
 
 type HeaderProps = {
     module: Module
