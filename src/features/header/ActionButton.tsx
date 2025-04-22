@@ -66,15 +66,16 @@ export default function ActionButton({
             aria-expanded={hasDropdown ? "false" : undefined}
         >
             <div
-                className={classNames("vstack p-2")}
+                className={classNames(
+                    "d-flex flex-column justify-content-end py-2",
+                )}
                 style={{
                     width: "90px",
+                    height: "90px",
                 }}
             >
-                <div style={{ height: "42px" }}>
-                    <span className="mb-0">{icon}</span>
-                </div>
-                <span>{label}</span>
+                <span className="mb-2">{icon}</span>
+                <span className="mb-1">{label}</span>
             </div>
         </Link>
     )
