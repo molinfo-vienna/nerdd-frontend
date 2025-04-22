@@ -1,40 +1,13 @@
 /*
- * Molecule depictions and images
+ * Table header 
  */
-td .molecule {
-    width: 300px;
-    height: 180px;
-}
-
-td.compressed svg.molecule {
-    width: 150px;
-    height: 90px;
-}
-
-td.compressed svg.molecule:hover {
-    width: 300px;
-    height: 180px;
-}
-
-td img {
-    width: 300px;
-    height: 180px;
-}
-
-td.compressed img {
-    width: 150px;
-    height: 90px;
-}
-
-td.compressed img:hover {
-    width: 300px;
-    height: 180px;
-}
-
-
-
-th.group-divider {
-    border: 1px solid black;
+thead {
+    /* 
+     * The table header moves when scrolling down the page. However, the border bottom gets lost,
+     * because, technically, it is not the bottom border of the head but the top bottom of the 
+     * table body. For that reason, we use box-shadow on thead to make the border always visible. 
+     */
+    box-shadow: 0 calc(var(--bs-border-width)) 0 0 var(--bs-border-color);
 }
 
 /*
@@ -45,7 +18,8 @@ th.group-divider {
  * are highlighted, the box-shadows are combined to create a continuous highlight.
  */
 .table td {
-    /* do not draw borders
+    /* 
+     * do not draw borders
      * Note: we used .table td as the selector to avoid being overridden by bootstrap
      * (e.g. .table > * > *)
      */
@@ -83,6 +57,46 @@ td.highlighted.start-block.end-block {
         inset 0 2px 0 0 var(--bs-primary),
         inset 0 -2px 0 0 var(--bs-primary);
 }
+
+/*
+ * Molecule depictions and images
+ */
+td .molecule {
+    width: 300px;
+    height: 180px;
+}
+
+td.compressed svg.molecule {
+    width: 150px;
+    height: 90px;
+}
+
+td.compressed svg.molecule:hover {
+    width: 300px;
+    height: 180px;
+}
+
+td img {
+    width: 300px;
+    height: 180px;
+}
+
+td.compressed img {
+    width: 150px;
+    height: 90px;
+}
+
+td.compressed img:hover {
+    width: 300px;
+    height: 180px;
+}
+
+/*
+ * Problem icons
+ *
+ * The problem icons are used to indicate problems with the molecule and are displayed in the top 
+ * right corner of the cell.
+ */
 
 .problem-icon {
     min-width: 26px;
