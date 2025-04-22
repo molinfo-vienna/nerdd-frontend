@@ -1,5 +1,5 @@
 import { ResultProperty } from "@/types"
-import { IoIosColorPalette } from "react-icons/io"
+import { FaPalette } from "react-icons/fa6"
 import ColorSelectDropdown from "../colorSelect/ColorSelectDropdown"
 import ActionButton from "./ActionButton"
 
@@ -20,7 +20,7 @@ export default function ColorSelectActionButton({
             disabled={possibleAtomColorProperties.length === 0}
         >
             <ActionButton.Icon>
-                <IoIosColorPalette size={36} />
+                <FaPalette size={34} />
             </ActionButton.Icon>
 
             <ActionButton.Dropdown>
