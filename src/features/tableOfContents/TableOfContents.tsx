@@ -23,12 +23,26 @@ const renderTOC = (toc: TOCItem[]) => {
                 // them. For this reason, the following fragment looks redundant.
                 item.children && item.children.length > 0 ? (
                     <li key={index}>
-                        <a href={`#${item.id}`}>{item.text}</a>
+                        {/*
+                         * Note: Creating a separate component for the link doesn't work,
+                         * because react-scrollspy can't handle components containing the links.
+                         */}
+                        <a
+                            className="text-decoration-none text-body-secondary"
+                            href={`#${item.id}`}
+                        >
+                            {item.text}
+                        </a>
                         {renderTOC(item.children)}
                     </li>
                 ) : (
                     <li key={index}>
-                        <a href={`#${item.id}`}>{item.text}</a>
+                        <a
+                            className="text-decoration-none text-body-secondary"
+                            href={`#${item.id}`}
+                        >
+                            {item.text}
+                        </a>
                     </li>
                 ),
             )}
@@ -49,8 +63,14 @@ export default function TableOfContents({ contentRef }: TableOfContentsProps) {
         const headings = content.querySelectorAll("h1, h2, h3, h4, h5, h6")
 
         // create a tree structure from the headings
-        const toc = { level: 0, parent: null, children: [] }
-        let current = toc
+        const toc: TOCItem = {
+            id: "toc",
+            text: "",
+            level: 0,
+            parent: null,
+            children: [],
+        }
+        let current: TOCItem | null = toc
 
         for (const heading of headings) {
             const level = parseInt(heading.tagName.slice(1))
