@@ -1,7 +1,7 @@
 import MoleculeEditor from "@/features/moleculeEditor/MoleculeEditor"
 import { type Module } from "@/types"
 import classNames from "classnames"
-import { createForm, FormApi } from "final-form"
+import { createForm, FORM_ERROR, FormApi } from "final-form"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Field, Form, FormSpy } from "react-final-form"
 import { FaPaperPlane } from "react-icons/fa6"
@@ -34,41 +34,13 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
     const inputDrawnTooltipPositionReference = useRef<HTMLElement>(null)
 
     // When the user clicks on the submit button, we have to make sure to upload all
-    // files before submitting the form to server. We do that by
-    // 1. Having two modes "idle" and "submitting" (and saving it in a state)
-    // 2. When the user clicks on the submit button, we change the state to "submitting"
-    // 3. Keep track of all files with useEffect and check on each change if all
-    //    files are uploaded.
-    const [status, setStatus] = useState("idle")
-    const [valuesToSubmit, setValuesToSubmit] = useState(null)
-
-    const onDelayedSubmit = useCallback(
-        (values) => {
-            setStatus("checking")
-        },
-        [setStatus],
-    )
-
-    useEffect(() => {
-        async function _submit() {
-            if (status === "checking" && valuesToSubmit) {
-                // check if all files are uploaded
-                if (
-                    valuesToSubmit.inputFile?.filter((file) =>
-                        ["pending", "deleting"].includes(file.status),
-                    ).length === 0
-                ) {
-                    setStatus("submitting")
-                    try {
-                        await onSubmit(valuesToSubmit)
-                    } finally {
-                        setStatus("idle")
-                    }
-                }
-            }
-        }
-        _submit()
-    }, [status, valuesToSubmit, onSubmit])
+    // files before submitting the form to server. For that we introduce two state variables:
+    // * formPending indicates whether files are still being uploaded (formPending)
+    // * submitRequested indicates whether the user has clicked the submit button
+    // Below we have code that submits the form only when formPending is false and submitRequested
+    // is true.
+    const [formPending, setFormPending] = useState(false)
+    const [submitRequested, setSubmitRequested] = useState(false)
 
     //
     // Validation
@@ -99,27 +71,51 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
                 }
             }
 
+            // wait for file uploads to finish
+            if (
+                // all files uploaded?
+                values.inputFile?.filter((file) =>
+                    ["pending", "deleting"].includes(file.status),
+                ).length > 0
+            ) {
+                // We are setting an error on a pseudo field that doesn't exist in the form.
+                // This will not be displayed in the form, but it keeps the form from getting
+                // submitted.
+                errors[FORM_ERROR] = "Waiting for file uploads to finish..."
+
+                // indicate that form is not ready
+                setFormPending(true)
+            } else {
+                // form is ready to submit
+                setFormPending(false)
+            }
+
             return errors
         },
-        [module],
+        [module, setFormPending],
     )
 
     //
     // create form
     //
     const formApi = useMemo(
-        () => createForm({ onSubmit: onDelayedSubmit, validate }),
-        [onDelayedSubmit, validate],
+        () => createForm({ onSubmit, validate }),
+        [onSubmit, validate],
     )
 
+    const handleDelayedSubmit = useCallback(() => {
+        setSubmitRequested(true)
+    }, [setSubmitRequested])
+
     useEffect(() => {
-        formApi.subscribe(
-            // update local state with the values to submit
-            ({ values }) => setValuesToSubmit(values),
-            // subscribe to all changes in the form
-            { values: true },
-        )
-    }, [formApi])
+        if (!formPending && submitRequested) {
+            try {
+                formApi.submit()
+            } finally {
+                setSubmitRequested(false)
+            }
+        }
+    }, [formPending, formApi, submitRequested, setSubmitRequested])
 
     const formRef = useRef<FormApi>(formApi)
 
@@ -130,8 +126,13 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
 
                 <Form
                     form={formRef.current}
-                    render={({ handleSubmit, submitting }) => (
-                        <form onSubmit={handleSubmit}>
+                    render={({
+                        handleSubmit,
+                        submitting,
+                        errors,
+                        submitError,
+                    }) => (
+                        <form onSubmit={handleSubmit} noValidate>
                             <FormSpy subscription={{ values: true }}>
                                 {({ values }) => (
                                     <>
@@ -304,33 +305,44 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
                             ))}
 
                             <Row>
-                                {status === "idle" && !submitting && (
-                                    <button
-                                        type="submit"
-                                        className="btn btn-lg btn-primary"
-                                    >
-                                        <FaPaperPlane
-                                            size={15}
-                                            className="me-2"
-                                        />
-                                        Submit
-                                    </button>
-                                )}
-                                {(status === "submitting" ||
-                                    status === "checking" ||
-                                    submitting) && (
-                                    <button
-                                        type="submit"
-                                        className="btn btn-lg btn-primary"
-                                        disabled
-                                    >
-                                        <span
-                                            className="spinner-border spinner-border-sm me-2"
-                                            aria-hidden="true"
-                                        ></span>
-                                        <span role="status">Loading...</span>
-                                    </button>
-                                )}
+                                <div className="d-flex align-items-center">
+                                    {!submitRequested && !submitting && (
+                                        <button
+                                            className="btn btn-lg btn-primary text-nowrap"
+                                            onClick={handleDelayedSubmit}
+                                        >
+                                            <FaPaperPlane
+                                                size={15}
+                                                className="me-2"
+                                            />
+                                            Submit
+                                        </button>
+                                    )}
+                                    {(submitRequested || submitting) && (
+                                        <button
+                                            className="btn btn-lg btn-primary text-nowrap"
+                                            disabled
+                                        >
+                                            <span
+                                                className="spinner-border spinner-border-sm me-2"
+                                                aria-hidden="true"
+                                            ></span>
+                                            <span role="status">
+                                                Loading...
+                                            </span>
+                                        </button>
+                                    )}
+                                    {submitRequested && errors[FORM_ERROR] && (
+                                        <div className="ms-3 text-body-secondary">
+                                            {errors[FORM_ERROR]}
+                                        </div>
+                                    )}
+                                    {!errors[FORM_ERROR] && submitError && (
+                                        <div className="ms-3 text-danger">
+                                            {submitError}
+                                        </div>
+                                    )}
+                                </div>
                             </Row>
                         </form>
                     )}
