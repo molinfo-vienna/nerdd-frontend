@@ -55,6 +55,8 @@ export default function CreateJobPage() {
                 inputs,
                 // a list of sources (files) to be used for the job
                 sources,
+                // extra parameter to indicate that this job is submitted from the web UI
+                origin: "frontend",
                 // all job parameters
                 ...jobParams,
             },
