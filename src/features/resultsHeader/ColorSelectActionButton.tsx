@@ -1,6 +1,6 @@
 import { ResultProperty } from "@/types"
 import { FaPalette } from "react-icons/fa6"
-import ColorSelectDropdown from "../colorSelect/ColorSelectDropdown"
+import ColorSelectDropdown from "./ColorSelectDropdown"
 import ActionButton from "./ActionButton"
 
 type ColorSelectActionButtonProps = {

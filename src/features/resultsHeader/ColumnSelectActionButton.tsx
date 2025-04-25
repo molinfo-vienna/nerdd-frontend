@@ -1,5 +1,5 @@
 import { HiMiniViewColumns } from "react-icons/hi2"
-import ColumnSelectDropdown from "../columnSelect/ColumnSelectDropdown"
+import ColumnSelectDropdown from "./ColumnSelectDropdown"
 import ActionButton from "./ActionButton"
 
 export default function ColumnSelectActionButton({
