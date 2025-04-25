@@ -20,7 +20,7 @@ export default function ColorSelectActionButton({
             disabled={possibleAtomColorProperties.length === 0}
         >
             <ActionButton.Icon>
-                <FaPalette size={34} />
+                <FaPalette />
             </ActionButton.Icon>
 
             <ActionButton.Dropdown>

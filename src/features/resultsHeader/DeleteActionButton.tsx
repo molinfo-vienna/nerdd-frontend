@@ -14,7 +14,7 @@ export default function DeleteActionButton({
     return (
         <ActionButton label="Delete" style="danger" modalId="deleteJobModal">
             <ActionButton.Icon>
-                <FaTrash size={32} />
+                <FaTrash />
             </ActionButton.Icon>
             <ActionButton.Modal>
                 <DeleteJobDialog
