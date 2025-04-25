@@ -47,7 +47,7 @@ export default function ActionButton({
     const buttonFragment = (
         <Link
             className={classNames(
-                "btn text-center text-decoration-none d-inline-block",
+                "btn text-center text-decoration-none d-flex flex-column justify-content-end p-3 align-items-center",
                 {
                     // z-1 is necessary for styled buttons to keep their colored border visible
                     // when hovering neighbor elements
@@ -65,18 +65,24 @@ export default function ActionButton({
             data-bs-auto-close={hasDropdown ? "outside" : undefined}
             aria-expanded={hasDropdown ? "false" : undefined}
         >
-            <div
-                className={classNames(
-                    "d-flex flex-column justify-content-end py-2",
-                )}
-                style={{
-                    width: "90px",
-                    height: "90px",
-                }}
+            <span
+                className="mb-sm-2 fs-2 align-bottom lh-1 text-center"
+                // 35px is the width to fit 5 icons in a row on a small screen
+                // this width gets irrelevant on larger screens, because the icon is centered
+                style={{ minWidth: "35px" }}
             >
-                <span className="mb-2">{icon}</span>
-                <span className="mb-1">{label}</span>
-            </div>
+                {icon}
+            </span>
+
+            {/* Button label */}
+            <span
+                // d-none: hide label on very small screens
+                // d-sm-inline: show label on small screens and larger
+                className="d-none d-sm-inline"
+                style={{ width: "90px" }}
+            >
+                {label}
+            </span>
         </Link>
     )
 
