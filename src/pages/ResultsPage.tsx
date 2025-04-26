@@ -1,3 +1,4 @@
+import { useAppDispatch, useAppSelector } from "@/app/hooks"
 import Pagination from "@/features/pagination/Pagination"
 import ColorSelectActionButton from "@/features/resultsHeader/ColorSelectActionButton"
 import ColumnSelectActionButton from "@/features/resultsHeader/ColumnSelectActionButton"
@@ -7,11 +8,23 @@ import DownloadActionButton from "@/features/resultsHeader/DownloadActionButton"
 import ResultsHeader from "@/features/resultsHeader/ResultsHeader"
 import ResultTable from "@/features/resultTable/ResultTable"
 import {
+    selectAtomColorProperty,
+    selectAugmentedResultPropertyGroups,
+    selectColumnRows,
+    selectPossibleAtomColorProperties,
+    selectVisibleResultProperties,
+    setAtomColorProperty,
+    setGroupVisibility,
+    setResultProperties,
+    setResultPropertyVisibility,
+} from "@/features/resultTable/resultTableSlice"
+import {
     useGetJobStatusQuery,
     useGetModuleQuery,
     useGetResultsQuery,
 } from "@/services"
-import { useCallback, useEffect, useState } from "react"
+import { ResultProperty } from "@/types"
+import { useCallback, useEffect } from "react"
 import { useNavigate, useParams, useSearchParams } from "react-router-dom"
 import ErrorPage from "./ErrorPage"
 import Layout from "./Layout"
@@ -19,6 +32,22 @@ import LoadingPage from "./LoadingPage"
 
 export default function ResultsPage() {
     const navigate = useNavigate()
+    const dispatch = useAppDispatch()
+
+    //
+    // get state
+    //
+    const visibleResultProperties = useAppSelector(
+        selectVisibleResultProperties,
+    )
+    const augmentedResultPropertyGroups = useAppSelector(
+        selectAugmentedResultPropertyGroups,
+    )
+    const atomColorProperty = useAppSelector(selectAtomColorProperty)
+    const { firstColumnRow, secondColumnRow } = useAppSelector(selectColumnRows)
+    const possibleAtomColorProperties = useAppSelector(
+        selectPossibleAtomColorProperties,
+    )
 
     //
     // get parameters from url
@@ -64,125 +93,47 @@ export default function ResultsPage() {
     } = useGetJobStatusQuery({ moduleId, jobId })
 
     //
-    // column selection state
+    // initialize state
     //
-    const [columnSelection, setColumnSelection] = useState([])
-
-    // initialize column selection
     useEffect(() => {
         if (module === undefined) {
             return
         }
 
-        const initialColumnSelection = []
+        dispatch(setResultProperties(module.resultProperties))
+    }, [module, dispatch])
 
-        module.resultProperties.forEach((resultProperty) => {
-            const { name, visibleName, group, visible } = resultProperty
-
-            const modifiedGroup = group || "General"
-            const column = {
-                name,
-                label: visibleName,
-                visible,
-            }
-
-            // is the group already in the array?
-            const groupIndex = initialColumnSelection.findIndex(
-                (e) => e.groupName === modifiedGroup,
+    const handleColumnToggle = useCallback(
+        (propertyName: string, visible: boolean) => {
+            dispatch(
+                setResultPropertyVisibility({
+                    propertyName,
+                    visible,
+                }),
             )
-            if (groupIndex === -1) {
-                // if not, add it
-                initialColumnSelection.push({
-                    groupName: modifiedGroup,
-                    columns: [column],
-                })
-            } else {
-                // if it is, add the column to the group
-                initialColumnSelection[groupIndex].columns.push(column)
-            }
-        })
-
-        setColumnSelection(initialColumnSelection)
-    }, [module, setColumnSelection])
-
-    const handleColumnSelectionChange = useCallback(
-        (group, column, visible) => {
-            const newColumnSelection = columnSelection.map((g) => {
-                if (g.groupName === group) {
-                    return {
-                        ...g,
-                        columns: g.columns.map((c) => {
-                            if (c.name === column || column === null) {
-                                return { ...c, visible }
-                            }
-                            return c
-                        }),
-                    }
-                }
-                return g
-            })
-
-            // if no column is selected, select at least "preprocessed_mol"
-            const noColumnSelected = newColumnSelection.every((g) =>
-                g.columns.every((c) => !c.visible),
-            )
-            const effectiveColumnSelection = noColumnSelected
-                ? newColumnSelection.map((g) => {
-                      if (g.groupName === "General") {
-                          return {
-                              ...g,
-                              columns: g.columns.map((c) => {
-                                  if (c.name === "preprocessed_mol") {
-                                      return { ...c, visible: true }
-                                  }
-                                  return c
-                              }),
-                          }
-                      } else {
-                          return g
-                      }
-                  })
-                : newColumnSelection
-
-            setColumnSelection(effectiveColumnSelection)
         },
-        [columnSelection, setColumnSelection],
+        [dispatch],
+    )
+    const handleGroupToggle = useCallback(
+        (groupName: string, visible: boolean) => {
+            dispatch(setGroupVisibility({ groupName, visible }))
+        },
+        [dispatch],
     )
 
     //
-    // color selection state
+    // atom color selection state
     //
-    const [atomColorProperty, setAtomColorProperty] = useState(undefined)
-    const [possibleAtomColorProperties, setPossibleAtomColorProperties] =
-        useState([])
-
-    // initialize color selection
-    useEffect(() => {
-        if (module === undefined) {
-            return
-        }
-
-        const colorProperties = module.resultProperties.filter(
-            (resultProperty) =>
-                resultProperty.level === "atom" &&
-                resultProperty.colorPalette != null,
-        )
-        setPossibleAtomColorProperties(colorProperties)
-        if (colorProperties.length > 0) {
-            // TODO: use palette specified in config
-            setAtomColorProperty(colorProperties[0])
-        } else {
-            setAtomColorProperty(undefined)
-        }
-    }, [module, setAtomColorProperty, setPossibleAtomColorProperties])
-
     const handleAtomColorPropertyChange = useCallback(
-        (newAtomColorProperty) => {
-            setAtomColorProperty(newAtomColorProperty)
+        (newAtomColorProperty: ResultProperty | undefined) => {
+            dispatch(setAtomColorProperty(newAtomColorProperty))
         },
-        [setAtomColorProperty],
+        [dispatch],
     )
 
+    //
+    // error handling
+    //
     if (errorModule) {
         return ErrorPage({ error: errorModule })
     }
@@ -213,16 +164,12 @@ export default function ResultsPage() {
     return (
         <Layout>
             <Layout.Header>
-                <ResultsHeader
-                    module={module}
-                    jobStatus={jobStatus}
-                    columnSelection={columnSelection}
-                    onColumnSelectionChange={handleColumnSelectionChange}
-                >
+                <ResultsHeader module={module} jobStatus={jobStatus}>
                     <DocsActionButton moduleId={moduleId} />
                     <ColumnSelectActionButton
-                        columnSelection={columnSelection}
-                        onColumnSelectionChange={handleColumnSelectionChange}
+                        resultPropertyGroups={augmentedResultPropertyGroups}
+                        onColumnToggle={handleColumnToggle}
+                        onGroupToggle={handleGroupToggle}
                     />
                     <ColorSelectActionButton
                         atomColorProperty={atomColorProperty}
@@ -260,10 +207,15 @@ export default function ResultsPage() {
                                             <div>
                                                 <ResultTable
                                                     module={module}
-                                                    pageOneBased={pageOneBased}
                                                     results={results.data}
-                                                    columnSelection={
-                                                        columnSelection
+                                                    firstColumnRow={
+                                                        firstColumnRow
+                                                    }
+                                                    secondColumnRow={
+                                                        secondColumnRow
+                                                    }
+                                                    resultProperties={
+                                                        visibleResultProperties
                                                     }
                                                     atomColorProperty={
                                                         atomColorProperty
