@@ -1,4 +1,4 @@
-import { type ResultProperty } from "@/types"
+import { ResultProperty } from "@/types"
 import parse, { attributesToProps, domToReact } from "html-react-parser"
 import { useEffect, useMemo, useRef, useState } from "react"
 
@@ -6,15 +6,9 @@ type MoleculeProps = {
     svgValue: string
     selectedAtom?: number
     onAtomSelect?: (atomId?: number) => void
-    group?: {
-        children: Array<{
-            atom_id: number | null
-            [key: string]: any
-        }>
-    }
-    atomColorProperty?: ResultProperty & {
-        colorScale: (value: any) => string
-    }
+    group?: any
+    atomColorProperty?: ResultProperty
+    propertyPalettes: Record<string, any>
 }
 
 export default function Molecule({
@@ -23,6 +17,7 @@ export default function Molecule({
     onAtomSelect,
     group,
     atomColorProperty,
+    propertyPalettes,
 }: MoleculeProps) {
     const [svg, setSvg] = useState<React.ReactElement | null>(null)
 
@@ -32,7 +27,10 @@ export default function Molecule({
     // compute atom colors
     //
     const atomColors = useMemo(() => {
-        if (!group || atomColorProperty?.colorScale == null) return undefined
+        if (!group || atomColorProperty == null) return undefined
+
+        const colorScale = propertyPalettes[atomColorProperty?.name]
+        if (colorScale == null) return undefined
 
         // if a molecule has only one atom entry with atom_id = null, then it is a dummy row
         // signaling an invalid computation -> do not color the atoms
@@ -44,13 +42,13 @@ export default function Molecule({
             const atomId = result.atom_id
             if (atomId !== null) {
                 const propertyValue = result[atomColorProperty.name]
-                const color = atomColorProperty.colorScale(propertyValue)
+                const color = colorScale(propertyValue)
                 atomColors[atomId] = color
             }
         }
 
         return atomColors
-    }, [group, atomColorProperty])
+    }, [group, atomColorProperty, propertyPalettes])
 
     //
     // to improve performance, we render the SVG only once

@@ -1,35 +1,21 @@
-import type { Module, ResultProperty } from "@/types"
+import type { Module } from "@/types"
 import classNames from "classnames"
 import { RxCross1 } from "react-icons/rx"
 import Molecule from "./Molecule"
 import ProblemListBadge from "./ProblemListBadge"
 import ProblemListCell from "./ProblemListCell"
-
-type ResultGroup = {
-    children: any[]
-    [key: string]: any
-}
+import { type AugmentedResultProperty } from "./resultTableSlice"
 
 type TableCellProps = {
     module: Module
     result: Record<string, any>
-    resultProperty: {
-        name: string
-        type: string
-        level?: string
-        precision?: number
-        visible?: boolean
-        startBlock?: boolean
-        endBlock?: boolean
-        colorScale: (value: any) => string
-        [key: string]: any
-    }
+    resultProperty: AugmentedResultProperty
     group: ResultGroup
     selectedAtom?: number
     className?: string
     onAtomSelect?: (atomId?: number) => void
-    atomColorProperty?: ResultProperty
-    [key: string]: any
+    atomColorProperty?: AugmentedResultProperty
+    propertyPalettes: Record<string, any>
 }
 
 export default function TableCell({
@@ -41,6 +27,7 @@ export default function TableCell({
     className,
     onAtomSelect,
     atomColorProperty,
+    propertyPalettes,
 }: TableCellProps) {
     const value = result[resultProperty.name]
     const molId = result.mol_id
@@ -66,12 +53,13 @@ export default function TableCell({
                 {value != null &&
                     resultProperty.name === "preprocessed_mol" && (
                         <Molecule
-                            className="position-relative"
+                            //className="position-relative"
                             molId={molId}
                             svgValue={value}
                             group={group}
                             // color palette for atoms
                             atomColorProperty={atomColorProperty}
+                            propertyPalettes={propertyPalettes}
                             // feature to select atoms
                             selectedAtom={selectedAtom}
                             onAtomSelect={onAtomSelect}
@@ -80,7 +68,7 @@ export default function TableCell({
                 {value != null &&
                     resultProperty.name !== "preprocessed_mol" && (
                         <Molecule
-                            className="position-relative"
+                            //className="position-relative"
                             molId={molId}
                             svgValue={value}
                         />
@@ -208,7 +196,7 @@ export default function TableCell({
             "d-none": !resultProperty.visible,
         }),
         style: {
-            backgroundColor: resultProperty.colorScale(value),
+            backgroundColor: propertyPalettes[resultProperty.name](value),
         },
         onMouseEnter: (e) =>
             resultProperty.level === "atom" && onAtomSelect

@@ -2,6 +2,7 @@ import type { Module, ResultProperty } from "@/types"
 import classNames from "classnames"
 import { useCallback, useState } from "react"
 import TableCell from "./TableCell"
+import { AugmentedResultProperty } from "./resultTableSlice"
 
 type Group = {
     children: any[]
@@ -11,7 +12,8 @@ type TableRowGroupProps = {
     group: Group
     module: Module
     atomColorProperty?: ResultProperty
-    resultProperties: ResultProperty[]
+    resultProperties: AugmentedResultProperty[]
+    propertyPalettes: Record<string, any>
 }
 
 export default function TableRowGroup({
@@ -19,16 +21,17 @@ export default function TableRowGroup({
     module,
     atomColorProperty,
     resultProperties,
+    propertyPalettes,
 }: TableRowGroupProps) {
     //
     // handle mouse over event
     //
-    const [selectedAtom, setSelectedAtom] = useState<
-        string | number | undefined
-    >(undefined)
+    const [selectedAtom, setSelectedAtom] = useState<number | undefined>(
+        undefined,
+    )
 
     const handleAtomSelect = useCallback(
-        (atomId: string | number) => {
+        (atomId: number) => {
             setSelectedAtom(atomId)
         },
         [setSelectedAtom],
@@ -37,6 +40,7 @@ export default function TableRowGroup({
     return group.children.map((result, j) => (
         <tr key={j}>
             {resultProperties.map(
+                // TODO: use name instead of k
                 (resultProperty, k) =>
                     // Render the molecule properties only for the first row of the group.
                     (resultProperty.level !== "molecule" || j === 0) && (
@@ -58,6 +62,7 @@ export default function TableRowGroup({
                                     : null
                             }
                             atomColorProperty={atomColorProperty}
+                            propertyPalettes={propertyPalettes}
                         />
                     ),
             )}
