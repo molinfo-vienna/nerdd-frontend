@@ -1,51 +1,29 @@
 import { Fragment } from "react"
-
-type Column = {
-    name: string
-    label: string
-    visible: boolean
-}
-
-type ColumnGroup = {
-    groupName: string
-    columns: Column[]
-}
+import { AugmentedResultPropertyGroup } from "../resultTable/resultTableSlice"
 
 type ColumnSelectDropdownProps = {
-    columnSelection?: ColumnGroup[]
-    handleSelectionChange: (
-        groupName: string,
-        columnName: string | null,
-        isVisible: boolean,
-    ) => void
+    resultPropertyGroups: AugmentedResultPropertyGroup[]
+    onColumnToggle: (columnName: string, isSelected: boolean) => void
+    onGroupToggle: (groupName: string, isSelected: boolean) => void
 }
 
 export default function ColumnSelectDropdown({
-    columnSelection,
-    handleSelectionChange,
+    resultPropertyGroups,
+    onColumnToggle,
+    onGroupToggle,
 }: ColumnSelectDropdownProps) {
-    if (columnSelection === undefined) {
-        return null
-    }
-
-    // compute for each column group if all columns in that group are selected
-    const allSelectedInGroup = columnSelection.map((group) =>
-        group.columns.map((c) => c.visible).every(Boolean),
-    )
-
     return (
         <ul className="dropdown-menu" style={{ zIndex: 1030 }}>
-            {columnSelection.map((group, i) => (
+            {resultPropertyGroups.map((group, i) => (
                 <Fragment key={group.groupName}>
                     <li>
                         <a
                             className="dropdown-item"
                             onClick={(e) => {
                                 e.preventDefault()
-                                handleSelectionChange(
+                                onGroupToggle(
                                     group.groupName,
-                                    null,
-                                    !allSelectedInGroup[i],
+                                    !group.allSelected,
                                 )
                             }}
                         >
@@ -55,12 +33,11 @@ export default function ColumnSelectDropdown({
                                     type="checkbox"
                                     value=""
                                     id={group.groupName}
-                                    checked={allSelectedInGroup[i]}
+                                    checked={group.allSelected}
                                     onChange={() =>
-                                        handleSelectionChange(
+                                        onGroupToggle(
                                             group.groupName,
-                                            null,
-                                            !allSelectedInGroup[i],
+                                            !group.allSelected,
                                         )
                                     }
                                 />
@@ -73,17 +50,16 @@ export default function ColumnSelectDropdown({
                             </div>
                         </a>
                     </li>
-                    {group.columns.map((column) => (
-                        <li key={`${group.groupName}-${column.name}`}>
+                    {group.resultProperties.map((property) => (
+                        <li key={`${group.groupName}-${property.name}`}>
                             <a
                                 className="dropdown-item"
                                 href="#"
                                 onClick={(e) => {
                                     e.preventDefault()
-                                    handleSelectionChange(
-                                        group.groupName,
-                                        column.name,
-                                        !column.visible,
+                                    onColumnToggle(
+                                        property.name,
+                                        !property.visible,
                                     )
                                 }}
                             >
@@ -92,28 +68,27 @@ export default function ColumnSelectDropdown({
                                         className="form-check-input"
                                         type="checkbox"
                                         value=""
-                                        id={`${group.groupName}-${column.name}`}
-                                        checked={column.visible}
+                                        id={`${group.groupName}-${property.name}`}
+                                        checked={property.visible}
                                         onChange={() =>
-                                            handleSelectionChange(
-                                                group.groupName,
-                                                column.name,
-                                                !column.visible,
+                                            onColumnToggle(
+                                                property.name,
+                                                !property.visible,
                                             )
                                         }
                                     />
                                     <label
                                         className="form-check-label d-block"
-                                        htmlFor={`${group.groupName}-${column.name}`}
+                                        htmlFor={`${group.groupName}-${property.name}`}
                                     >
-                                        {column.label}
+                                        {property.visibleName}
                                     </label>
                                 </div>
                             </a>
                         </li>
                     ))}
                     {/* Add a divider between groups */}
-                    {i < columnSelection.length - 1 && (
+                    {i < resultPropertyGroups.length - 1 && (
                         <li>
                             <hr className="dropdown-divider" />
                         </li>
