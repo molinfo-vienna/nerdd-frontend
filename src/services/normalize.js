@@ -23,6 +23,7 @@ function normalizeResultProperty(resultProperty) {
             (resultProperty.visible ?? true) &&
             resultProperty.name !== "problems",
         level: resultProperty.level || "molecule",
+        group: resultProperty.group || "General",
     }
 }
 
