@@ -79,24 +79,36 @@ export default function ResultsPage() {
         data: module,
         error: errorModule,
         isLoading: isLoadingModule,
-    } = useGetModuleQuery(moduleId)
+    } = useGetModuleQuery(moduleId || "", {
+        skip: moduleId === undefined,
+    })
 
     const {
         data: results,
         error: errorResults,
         isLoading: isLoadingResults,
         isFetching: isFetchingResults,
-    } = useGetResultsQuery({
-        moduleId,
-        jobId,
-        page: pageOneBased,
-    })
+    } = useGetResultsQuery(
+        {
+            moduleId,
+            jobId,
+            page: pageOneBased,
+        },
+        {
+            skip: moduleId === undefined || jobId === undefined,
+        },
+    )
 
     const {
         data: jobStatus,
         error: errorJobStatus,
         isLoading: isLoadingJobStatus,
-    } = useGetJobStatusQuery({ moduleId, jobId })
+    } = useGetJobStatusQuery(
+        { moduleId, jobId },
+        {
+            skip: moduleId === undefined || jobId === undefined,
+        },
+    )
 
     //
     // initialize state
