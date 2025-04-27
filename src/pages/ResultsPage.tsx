@@ -11,12 +11,16 @@ import {
     selectAtomColorProperty,
     selectAugmentedResultPropertyGroups,
     selectColumnRows,
+    selectNumberOfResults,
     selectPossibleAtomColorProperties,
+    selectResultsGroupedByMolId,
     selectVisibleResultProperties,
     setAtomColorProperty,
     setGroupVisibility,
     setResultProperties,
     setResultPropertyVisibility,
+    setResults,
+    setTask,
 } from "@/features/resultTable/resultTableSlice"
 import {
     useGetJobStatusQuery,
@@ -48,6 +52,8 @@ export default function ResultsPage() {
     const possibleAtomColorProperties = useAppSelector(
         selectPossibleAtomColorProperties,
     )
+    const resultsGroupedByMolId = useAppSelector(selectResultsGroupedByMolId)
+    const numberOfResults = useAppSelector(selectNumberOfResults)
 
     //
     // get parameters from url
@@ -100,9 +106,21 @@ export default function ResultsPage() {
             return
         }
 
+        dispatch(setTask(module.task))
         dispatch(setResultProperties(module.resultProperties))
     }, [module, dispatch])
 
+    useEffect(() => {
+        if (results === undefined) {
+            return
+        }
+
+        dispatch(setResults(results.data))
+    }, [results, dispatch])
+
+    //
+    // column selection
+    //
     const handleColumnToggle = useCallback(
         (propertyName: string, visible: boolean) => {
             dispatch(
@@ -122,7 +140,7 @@ export default function ResultsPage() {
     )
 
     //
-    // atom color selection state
+    // atom color selection
     //
     const handleAtomColorPropertyChange = useCallback(
         (newAtomColorProperty: ResultProperty | undefined) => {
@@ -134,6 +152,18 @@ export default function ResultsPage() {
     //
     // error handling
     //
+    if (moduleId === undefined) {
+        return ErrorPage({
+            error: new Error("Module ID is not defined"),
+        })
+    }
+
+    if (jobId === undefined) {
+        return ErrorPage({
+            error: new Error("Job ID is not defined"),
+        })
+    }
+
     if (errorModule) {
         return ErrorPage({ error: errorModule })
     }
@@ -148,7 +178,7 @@ export default function ResultsPage() {
         return ErrorPage({ error: errorResults })
     }
 
-    if (isLoadingModule || isLoadingJobStatus) {
+    if (isLoadingModule || module === undefined || isLoadingJobStatus) {
         return LoadingPage()
     }
 
@@ -156,8 +186,7 @@ export default function ResultsPage() {
     // status
     //
     const waitingForFirstResult =
-        results?.data === undefined ||
-        results.data.length === 0 ||
+        resultsGroupedByMolId.length === 0 ||
         isFetchingResults ||
         isLoadingResults
 
@@ -195,44 +224,42 @@ export default function ResultsPage() {
                         />
                     </div>
                 </div>
+
                 {!waitingForFirstResult && (
                     <>
                         <div className="row justify-content-center">
                             <div className="col-auto">
                                 <div className="mx-auto">
                                     <div className="clearfix"></div>
-                                    {!isLoadingResults &&
-                                        results?.data &&
-                                        results.data.length > 0 && (
-                                            <div>
-                                                <ResultTable
-                                                    module={module}
-                                                    results={results.data}
-                                                    firstColumnRow={
-                                                        firstColumnRow
-                                                    }
-                                                    secondColumnRow={
-                                                        secondColumnRow
-                                                    }
-                                                    resultProperties={
-                                                        visibleResultProperties
-                                                    }
-                                                    atomColorProperty={
-                                                        atomColorProperty
-                                                    }
-                                                />
-                                            </div>
-                                        )}
-                                </div>
-                                {!isLoadingResults &&
-                                    results.data.length > 1 && (
-                                        <Pagination
-                                            moduleId={moduleId}
-                                            jobId={jobId}
-                                            currentPageOneBased={pageOneBased}
-                                            className="mx-auto position-absolute start-50 translate-middle-x"
-                                        />
+                                    {numberOfResults > 0 && (
+                                        <div>
+                                            <ResultTable
+                                                module={module}
+                                                resultsGroupedByMolId={
+                                                    resultsGroupedByMolId
+                                                }
+                                                firstColumnRow={firstColumnRow}
+                                                secondColumnRow={
+                                                    secondColumnRow
+                                                }
+                                                resultProperties={
+                                                    visibleResultProperties
+                                                }
+                                                atomColorProperty={
+                                                    atomColorProperty
+                                                }
+                                            />
+                                        </div>
                                     )}
+                                </div>
+                                {numberOfResults > 1 && (
+                                    <Pagination
+                                        moduleId={moduleId}
+                                        jobId={jobId}
+                                        currentPageOneBased={pageOneBased}
+                                        className="mx-auto position-absolute start-50 translate-middle-x"
+                                    />
+                                )}
                             </div>
                         </div>
                     </>
