@@ -2,7 +2,7 @@ import type { ResultProperty } from "@/types"
 
 type ColorSelectDropdownProps = {
     selectedAtomColorProperty?: ResultProperty
-    possibleAtomColorProperties?: ResultProperty[]
+    possibleAtomColorProperties: ResultProperty[]
     onSelectedAtomColorPropertyChange: (property?: ResultProperty) => void
 }
 
@@ -16,7 +16,7 @@ export default function ColorSelectDropdown({
             className="dropdown-menu dropdown-menu-end"
             style={{ zIndex: 1030 }}
         >
-            {possibleAtomColorProperties?.length > 0 && (
+            {possibleAtomColorProperties.length > 0 && (
                 <>
                     <li>
                         <h5 className="dropdown-header">Color atoms by</h5>
