@@ -1,18 +1,15 @@
 import useColorPalettes from "@/features/colorPalettes/useColorPalettes"
-import type { Module, Result, ResultProperty } from "@/types"
-// TODO: add types for lodash
-import { sortedIndexBy } from "lodash"
+import type { Module, ResultProperty } from "@/types"
 import { memo, useMemo } from "react"
 import getColorPalette from "./getColorPalette"
-import type { AugmentedResultProperty } from "./resultTableSlice"
+import type { AugmentedResultProperty, ResultGroup } from "./resultTableSlice"
 import { Column } from "./resultTableSlice"
 import "./style.css"
 import TableRowGroup from "./TableRowGroup"
 
 type ResultTableProps = {
     module: Module
-    pageOneBased: number
-    results: Result[]
+    resultsGroupedByMolId: ResultGroup[]
     firstColumnRow: Column[]
     secondColumnRow: Column[]
     resultProperties: AugmentedResultProperty[]
@@ -21,7 +18,7 @@ type ResultTableProps = {
 
 const ResultTable = memo(function ResultTable({
     module,
-    results,
+    resultsGroupedByMolId,
     firstColumnRow,
     secondColumnRow,
     resultProperties,
@@ -40,54 +37,6 @@ const ResultTable = memo(function ResultTable({
             ]),
         )
     }, [module.resultProperties, palettes])
-
-    //
-    // prepare data for arranging it in a table
-    //
-
-    // entries might have multiple child rows (atoms, derivatives)
-    // --> group results by molecule id
-    const resultsGroupedByMolId = useMemo(() => {
-        // sort results by molecule id (and atom id or derivative id)
-        // -> construct a comparison function for sorting
-        let subKey: (result: Result) => number
-        if (module.task === "molecular_property_prediction") {
-            subKey = () => 0
-        } else if (module.task === "atom_property_prediction") {
-            subKey = (result) => result.atom_id ?? 0
-        } else if (module.task === "derivative_property_prediction") {
-            subKey = (result) => result.derivative_id ?? 0
-        } else {
-            throw new Error(`Unknown task: ${module.task}`)
-        }
-
-        return results.reduce((acc: ResultGroup[], result) => {
-            // find corresponding mol_id in acc
-            const groupIndex = sortedIndexBy(
-                acc,
-                result,
-                (x: ResultGroup) => x.mol_id,
-            )
-            const group = acc[groupIndex]
-
-            // check if mol_id is in acc
-            if (group === undefined || group.mol_id !== result.mol_id) {
-                // if mol_id is not in acc, add it at the correct index
-                acc.splice(groupIndex, 0, {
-                    mol_id: result.mol_id,
-                    // the row indices to all entries in the molecule's group
-                    children: [result],
-                })
-            } else {
-                // if mol_id is in acc, add the entry to the group
-                // add entry at the correct index (sorted by atom_id or derivative_id)
-                const subIndex = sortedIndexBy(group.children, result, subKey)
-                group.children.splice(subIndex, 0, result)
-            }
-
-            return acc
-        }, [])
-    }, [module.task, results])
 
     return (
         <div className="table-responsive-xxl">

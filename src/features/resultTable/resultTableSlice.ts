@@ -1,5 +1,7 @@
-import { type ResultProperty } from "@/types"
+import type { PredictionTask, Result, ResultProperty } from "@/types"
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
+// TODO: add types for lodash
+import { sortedIndexBy } from "lodash"
 
 export type AugmentedResultProperty = ResultProperty & {
     // Indicates whether the property starts / ends a property block (= continuous set of
@@ -29,7 +31,15 @@ export type Column = {
     sortable?: boolean
 }
 
+export type ResultGroup = {
+    mol_id: number
+    // the row indices to all entries in the molecule's group
+    children: Result[]
+}
+
 export type ResultTableState = {
+    task?: PredictionTask
+    results: Result[]
     resultProperties: ResultProperty[]
     groups: ResultPropertyGroup[]
     atomColorPropertyId: number
@@ -37,6 +47,8 @@ export type ResultTableState = {
 }
 
 const initialState: ResultTableState = {
+    task: undefined,
+    results: [],
     resultProperties: [],
     groups: [],
     atomColorPropertyId: -1,
@@ -101,6 +113,12 @@ const resultTableSlice = createSlice({
                 atomColorPropertyId,
                 resultPropertyMapping,
             }
+        },
+        setTask: (state, action: PayloadAction<PredictionTask>) => {
+            state.task = action.payload
+        },
+        setResults: (state, action: PayloadAction<Result[]>) => {
+            state.results = action.payload
         },
         setResultPropertyVisibility: (
             state,
@@ -293,6 +311,68 @@ const resultTableSlice = createSlice({
                         resultProperty.colorPalette != null,
                 ),
         ),
+        selectResultsGroupedByMolId: createSelector(
+            [
+                (state: ResultTableState) => state.task,
+                (state: ResultTableState) => state.results,
+            ],
+            (task, results) => {
+                //
+                // prepare data for arranging it in a table
+                //
+
+                // entries might have multiple child rows (atoms, derivatives)
+                // --> group results by molecule id
+
+                // sort results by molecule id (and atom id or derivative id)
+                // -> construct a comparison function for sorting
+                let subKey: (result: Result) => number
+                if (task === "molecular_property_prediction") {
+                    subKey = () => 0
+                } else if (task === "atom_property_prediction") {
+                    subKey = (result) => result.atom_id ?? 0
+                } else if (task === "derivative_property_prediction") {
+                    subKey = (result) => result.derivative_id ?? 0
+                } else {
+                    return []
+                }
+
+                return results.reduce((acc: ResultGroup[], result) => {
+                    // find corresponding mol_id in acc
+                    const groupIndex = sortedIndexBy(
+                        acc,
+                        result,
+                        (x: ResultGroup) => x.mol_id,
+                    )
+                    const group = acc[groupIndex]
+
+                    // check if mol_id is in acc
+                    if (group === undefined || group.mol_id !== result.mol_id) {
+                        // if mol_id is not in acc, add it at the correct index
+                        acc.splice(groupIndex, 0, {
+                            mol_id: result.mol_id,
+                            // the row indices to all entries in the molecule's group
+                            children: [result],
+                        })
+                    } else {
+                        // if mol_id is in acc, add the entry to the group
+                        // add entry at the correct index (sorted by atom_id or derivative_id)
+                        const subIndex = sortedIndexBy(
+                            group.children,
+                            result,
+                            subKey,
+                        )
+                        group.children.splice(subIndex, 0, result)
+                    }
+
+                    return acc
+                }, [])
+            },
+        ),
+        selectNumberOfResults: createSelector(
+            [(state: ResultTableState) => state.results],
+            (results: Result[]) => results.length,
+        ),
     },
 })
 
@@ -301,6 +381,8 @@ export const {
     setGroupVisibility,
     setResultPropertyVisibility,
     setAtomColorProperty,
+    setResults,
+    setTask,
 } = resultTableSlice.actions
 
 export const {
@@ -309,6 +391,8 @@ export const {
     selectColumnRows,
     selectVisibleResultProperties,
     selectPossibleAtomColorProperties,
+    selectResultsGroupedByMolId,
+    selectNumberOfResults,
 } = resultTableSlice.selectors
 
 export default resultTableSlice.reducer
