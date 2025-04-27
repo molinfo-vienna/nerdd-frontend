@@ -48,6 +48,7 @@ export function normalizeModule(module) {
         visibleName:
             module.visibleName || _.upperFirst(_.camelCase(module.name)),
         logo,
+        task: module.task || "molecular_property_prediction",
         publications: module.publications || [],
         jobParameters,
         resultProperties,
