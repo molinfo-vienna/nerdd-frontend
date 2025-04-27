@@ -2,14 +2,10 @@ import type { Module, ResultProperty } from "@/types"
 import classNames from "classnames"
 import { useCallback, useState } from "react"
 import TableCell from "./TableCell"
-import { AugmentedResultProperty } from "./resultTableSlice"
-
-type Group = {
-    children: any[]
-}
+import { AugmentedResultProperty, ResultGroup } from "./resultTableSlice"
 
 type TableRowGroupProps = {
-    group: Group
+    group: ResultGroup
     module: Module
     atomColorProperty?: ResultProperty
     resultProperties: AugmentedResultProperty[]
