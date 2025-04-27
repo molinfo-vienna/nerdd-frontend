@@ -1,8 +1,9 @@
+import type { JobParameter, Module, ResultProperty } from "@/types"
 import _ from "lodash"
 import ReactDOMServer from "react-dom/server"
 import { PiGearLight } from "react-icons/pi"
 
-function normalizeJobParameter(jobParameter) {
+function normalizeJobParameter(jobParameter): JobParameter {
     return {
         ...jobParameter,
         visibleName:
@@ -12,7 +13,7 @@ function normalizeJobParameter(jobParameter) {
     }
 }
 
-function normalizeResultProperty(resultProperty) {
+function normalizeResultProperty(resultProperty): ResultProperty {
     return {
         ...resultProperty,
         visibleName:
@@ -27,7 +28,7 @@ function normalizeResultProperty(resultProperty) {
     }
 }
 
-export function normalizeModule(module) {
+export function normalizeModule(module): Module {
     const reactElement = PiGearLight
 
     const logo =
