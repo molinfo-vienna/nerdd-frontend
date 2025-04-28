@@ -1,13 +1,13 @@
 import { useAppSelector } from "@/app/hooks"
 import parse, { attributesToProps, domToReact } from "html-react-parser"
 import { useEffect, useMemo, useRef, useState } from "react"
-import { selectAtomColorProperty } from "./resultTableSlice"
+import { ResultGroup, selectAtomColorProperty } from "./resultTableSlice"
 
 type MoleculeProps = {
     svgValue: string
     selectedAtom?: number
     onAtomSelect?: (atomId?: number) => void
-    group?: any
+    group?: ResultGroup
     propertyPalettes: Record<string, any>
 }
 
