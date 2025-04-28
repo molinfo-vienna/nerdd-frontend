@@ -1,20 +1,19 @@
-import type { Module } from "@/types"
+import type { Module, Result } from "@/types"
 import classNames from "classnames"
 import { RxCross1 } from "react-icons/rx"
 import Molecule from "./Molecule"
 import ProblemListBadge from "./ProblemListBadge"
 import ProblemListCell from "./ProblemListCell"
-import { type AugmentedResultProperty } from "./resultTableSlice"
+import { ResultGroup, type AugmentedResultProperty } from "./resultTableSlice"
 
 type TableCellProps = {
     module: Module
-    result: Record<string, any>
+    result: Result
     resultProperty: AugmentedResultProperty
     group: ResultGroup
     selectedAtom?: number
     className?: string
     onAtomSelect?: (atomId?: number) => void
-    atomColorProperty?: AugmentedResultProperty
     propertyPalettes: Record<string, any>
 }
 
@@ -26,7 +25,6 @@ export default function TableCell({
     selectedAtom,
     className,
     onAtomSelect,
-    atomColorProperty,
     propertyPalettes,
 }: TableCellProps) {
     const value = result[resultProperty.name]
@@ -58,7 +56,6 @@ export default function TableCell({
                             svgValue={value}
                             group={group}
                             // color palette for atoms
-                            atomColorProperty={atomColorProperty}
                             propertyPalettes={propertyPalettes}
                             // feature to select atoms
                             selectedAtom={selectedAtom}
