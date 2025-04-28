@@ -133,6 +133,17 @@ const resultTableSlice = createSlice({
             if (propertyIndex !== undefined) {
                 state.resultProperties[propertyIndex].visible = visible
             }
+
+            // if the user hides all properties, make sure that at least one propery (structure)
+            // is visible
+            if (
+                state.resultProperties.every(
+                    (resultProperty) => !resultProperty.visible,
+                )
+            ) {
+                const idx = state.resultPropertyMapping["preprocessed_mol"]
+                state.resultProperties[idx].visible = true
+            }
         },
         setGroupVisibility: (
             state,
@@ -150,6 +161,17 @@ const resultTableSlice = createSlice({
                         state.resultProperties[columnId].visible = visible
                     }
                 })
+            }
+
+            // if the user hides all properties, make sure that at least one propery (structure)
+            // is visible
+            if (
+                state.resultProperties.every(
+                    (resultProperty) => !resultProperty.visible,
+                )
+            ) {
+                const idx = state.resultPropertyMapping["preprocessed_mol"]
+                state.resultProperties[idx].visible = true
             }
         },
         setAtomColorProperty: (
@@ -317,10 +339,6 @@ const resultTableSlice = createSlice({
                 (state: ResultTableState) => state.results,
             ],
             (task, results) => {
-                //
-                // prepare data for arranging it in a table
-                //
-
                 // entries might have multiple child rows (atoms, derivatives)
                 // --> group results by molecule id
 
