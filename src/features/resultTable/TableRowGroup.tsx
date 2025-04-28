@@ -2,7 +2,7 @@ import type { Module, ResultProperty } from "@/types"
 import classNames from "classnames"
 import { useCallback, useState } from "react"
 import TableCell from "./TableCell"
-import { AugmentedResultProperty, ResultGroup } from "./resultTableSlice"
+import type { AugmentedResultProperty, ResultGroup } from "./resultTableSlice"
 
 type TableRowGroupProps = {
     group: ResultGroup
@@ -34,14 +34,13 @@ export default function TableRowGroup({
     )
 
     return group.children.map((result, j) => (
-        <tr key={j}>
+        <tr key={result.id}>
             {resultProperties.map(
-                // TODO: use name instead of k
-                (resultProperty, k) =>
+                (resultProperty) =>
                     // Render the molecule properties only for the first row of the group.
                     (resultProperty.level !== "molecule" || j === 0) && (
                         <TableCell
-                            key={k}
+                            key={resultProperty.name}
                             className={classNames({
                                 "row-group-end":
                                     resultProperty.level === "molecule" ||
