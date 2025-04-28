@@ -28,7 +28,6 @@ export default function TableCell({
     propertyPalettes,
 }: TableCellProps) {
     const value = result[resultProperty.name]
-    const molId = result.mol_id
 
     // compressed: cell is smaller when it refers to an atom / derivative entry
     const compressed =
@@ -52,7 +51,6 @@ export default function TableCell({
                     resultProperty.name === "preprocessed_mol" && (
                         <Molecule
                             //className="position-relative"
-                            molId={molId}
                             svgValue={value}
                             group={group}
                             // color palette for atoms
@@ -66,8 +64,9 @@ export default function TableCell({
                     resultProperty.name !== "preprocessed_mol" && (
                         <Molecule
                             //className="position-relative"
-                            molId={molId}
                             svgValue={value}
+                            group={group}
+                            propertyPalettes={propertyPalettes}
                         />
                     )}
                 {resultProperty.name === "preprocessed_mol" && (
