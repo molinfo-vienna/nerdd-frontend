@@ -7,7 +7,7 @@ type MoleculeProps = {
     svgValue: string
     selectedAtom?: number
     onAtomSelect?: (atomId?: number) => void
-    group?: ResultGroup
+    group: ResultGroup
     propertyPalettes: Record<string, any>
 }
 
@@ -28,7 +28,7 @@ export default function Molecule({
     // compute atom colors
     //
     const atomColors = useMemo(() => {
-        if (!group || atomColorProperty == null) return undefined
+        if (atomColorProperty == null || onAtomSelect == null) return undefined
 
         const colorScale = propertyPalettes[atomColorProperty?.name]
         if (colorScale == null) return undefined
