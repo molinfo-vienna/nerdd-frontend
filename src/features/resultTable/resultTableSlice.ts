@@ -3,7 +3,14 @@ import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 // TODO: add types for lodash
 import { sortedIndexBy } from "lodash"
 
-export type AugmentedResultProperty = ResultProperty & {
+export type InternalResultProperty = ResultProperty & {
+    // Indicates whether the property will be colored in the table
+    colored: boolean
+    // Indicates whether the property can potentially be colored
+    colorable: boolean
+}
+
+export type AugmentedResultProperty = InternalResultProperty & {
     // Indicates whether the property starts / ends a property block (= continuous set of
     // properties with the same level)
     startBlock: boolean
@@ -16,13 +23,17 @@ export type ResultPropertyGroup = {
 }
 
 export type AugmentedResultPropertyGroup = ResultPropertyGroup & {
-    resultProperties: ResultProperty[]
+    resultProperties: InternalResultProperty[]
     // Indicates whether all properties in the group are selected
     allSelected: boolean
+    // Indicates whether all properties in the group are colored
+    allColored: boolean
+    // Indicates whether some propery in the group is colorable
+    colorable: boolean
 }
 
 export type Column = {
-    group?: string
+    group: string
     name: string
     colspan: number
     rowspan: number
@@ -40,7 +51,7 @@ export type ResultGroup = {
 export type ResultTableState = {
     task?: PredictionTask
     results: Result[]
-    resultProperties: ResultProperty[]
+    resultProperties: InternalResultProperty[]
     groups: ResultPropertyGroup[]
     atomColorPropertyId: number
     resultPropertyMapping: Record<string, number>
@@ -64,6 +75,14 @@ const resultTableSlice = createSlice({
             action: PayloadAction<ResultProperty[]>,
         ) => {
             const { payload: resultProperties } = action
+
+            const transformedResultProperties: InternalResultProperty[] =
+                resultProperties.map((resultProperty) => ({
+                    ...resultProperty,
+                    colorable: resultProperty.colorPalette != null,
+                    // color all properties that have a color palette by default
+                    colored: resultProperty.colorPalette != null,
+                }))
 
             //
             // group result properties
@@ -108,7 +127,7 @@ const resultTableSlice = createSlice({
 
             return {
                 ...state,
-                resultProperties,
+                resultProperties: transformedResultProperties,
                 groups,
                 atomColorPropertyId,
                 resultPropertyMapping,
@@ -188,6 +207,38 @@ const resultTableSlice = createSlice({
                 state.atomColorPropertyId = -1
             }
         },
+        setResultPropertyIsColored: (
+            state,
+            action: PayloadAction<{
+                propertyName: string
+                colored: boolean
+            }>,
+        ) => {
+            const { propertyName, colored } = action.payload
+
+            const propertyIndex = state.resultPropertyMapping[propertyName]
+            if (propertyIndex !== undefined) {
+                state.resultProperties[propertyIndex].colored = colored
+            }
+        },
+        setPropertyGroupIsColored: (
+            state,
+            action: PayloadAction<{
+                groupName: string
+                colored: boolean
+            }>,
+        ) => {
+            const { groupName, colored } = action.payload
+
+            const group = state.groups.find((g) => g.groupName === groupName)
+            if (group) {
+                group.resultPropertyIds.forEach((columnId) => {
+                    if (state.resultProperties[columnId]) {
+                        state.resultProperties[columnId].colored = colored
+                    }
+                })
+            }
+        },
     },
     selectors: {
         selectAugmentedResultPropertyGroups: createSelector(
@@ -203,6 +254,15 @@ const resultTableSlice = createSlice({
                     ),
                     allSelected: group.resultPropertyIds.every(
                         (columnId) => resultProperties[columnId].visible,
+                    ),
+                    allColored: group.resultPropertyIds.every(
+                        (columnId) =>
+                            !resultProperties[columnId].visible ||
+                            !resultProperties[columnId].colorable ||
+                            resultProperties[columnId].colored,
+                    ),
+                    colorable: group.resultPropertyIds.some(
+                        (columnId) => resultProperties[columnId].colorable,
                     ),
                 })),
         ),
@@ -280,7 +340,7 @@ const resultTableSlice = createSlice({
         ),
         selectVisibleResultProperties: createSelector(
             [(state: ResultTableState) => state.resultProperties],
-            (resultProperties: ResultProperty[]) => {
+            (resultProperties) => {
                 const visibleResultProperties = resultProperties.filter(
                     (resultProperty) => resultProperty.visible,
                 )
@@ -399,6 +459,8 @@ export const {
     setGroupVisibility,
     setResultPropertyVisibility,
     setAtomColorProperty,
+    setResultPropertyIsColored,
+    setPropertyGroupIsColored,
     setResults,
     setTask,
 } = resultTableSlice.actions
