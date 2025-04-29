@@ -17,7 +17,9 @@ import {
     selectVisibleResultProperties,
     setAtomColorProperty,
     setGroupVisibility,
+    setPropertyGroupIsColored,
     setResultProperties,
+    setResultPropertyIsColored,
     setResultPropertyVisibility,
     setResults,
     setTask,
@@ -162,6 +164,28 @@ export default function ResultsPage() {
     )
 
     //
+    // color column selection
+    //
+    const handleColorColumnToggle = useCallback(
+        (propertyName: string, colored: boolean) => {
+            dispatch(
+                setResultPropertyIsColored({
+                    propertyName,
+                    colored,
+                }),
+            )
+        },
+        [dispatch],
+    )
+
+    const handleColorGroupToggle = useCallback(
+        (groupName: string, colored: boolean) => {
+            dispatch(setPropertyGroupIsColored({ groupName, colored }))
+        },
+        [dispatch],
+    )
+
+    //
     // error handling
     //
     if (moduleId === undefined) {
@@ -220,6 +244,9 @@ export default function ResultsPage() {
                         onAtomColorPropertyChange={
                             handleAtomColorPropertyChange
                         }
+                        resultPropertyGroups={augmentedResultPropertyGroups}
+                        onColorColumnToggle={handleColorColumnToggle}
+                        onColorGroupToggle={handleColorGroupToggle}
                     />
                     <DownloadActionButton jobStatus={jobStatus} />
                     <DeleteActionButton moduleId={moduleId} jobId={jobId} />
