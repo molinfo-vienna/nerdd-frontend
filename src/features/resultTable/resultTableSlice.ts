@@ -261,7 +261,9 @@ const resultTableSlice = createSlice({
                             resultProperties[columnId].colored,
                     ),
                     colorable: group.resultPropertyIds.some(
-                        (columnId) => resultProperties[columnId].colorable,
+                        (columnId) =>
+                            resultProperties[columnId].visible &&
+                            resultProperties[columnId].colorable,
                     ),
                 })),
         ),
