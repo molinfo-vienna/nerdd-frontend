@@ -23,7 +23,7 @@ export default function ModuleCard({ module }: ModuleCardProps) {
             </div>
             <div className="card-body pt-1">
                 <h3 className="card-title">{module.visibleName}</h3>
-                <p className="card-text fs-6">{module.logoCaption}</p>
+                <p className="card-text fs-6 px-2">{module.logoCaption}</p>
             </div>
         </Link>
     )
