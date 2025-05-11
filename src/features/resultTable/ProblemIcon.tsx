@@ -1,3 +1,4 @@
+import { ComponentType } from "react"
 import { FaQuestion } from "react-icons/fa"
 import {
     FaArrowRotateRight,
@@ -8,7 +9,10 @@ import {
 import { MdBrokenImage } from "react-icons/md"
 import { SiMoleculer } from "react-icons/si"
 
-const iconMapping = {
+const iconMapping: Record<
+    string,
+    ComponentType<{ size?: number; className?: string }>
+> = {
     remove_stereochemistry_failed: FaArrowRotateRight,
     incomplete_prediction_error: MdBrokenImage,
     unknown_preprocessing_error: FaQuestion,
