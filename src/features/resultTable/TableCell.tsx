@@ -39,41 +39,68 @@ export default function TableCell({
     //
     let cellContent
     if (resultProperty.type === "mol") {
-        cellContent = (
-            <div className="position-relative">
-                {value == null && (
-                    <RxCross1
-                        className="p-5 text-body-tertiary"
-                        style={{ width: "300px", height: "180px" }}
-                    />
-                )}
-                {value != null &&
-                    resultProperty.name === "preprocessed_mol" && (
+        if (resultProperty.name === "preprocessed_mol") {
+            // The property preprocessed_mol is special, because
+            // * we put the processing / loading errors at the top right of this cell
+            // * the molecule image will always be on maximum size (not zoonable on hover)
+            // * the atoms in this molecule depiction are selectable
+            cellContent = (
+                <>
+                    {value == null && (
+                        <RxCross1
+                            className="p-5 text-body-tertiary"
+                            style={{ width: "300px", height: "180px" }}
+                        />
+                    )}
+                    {value != null && (
                         <Molecule
-                            //className="position-relative"
                             svgValue={value}
                             group={group}
                             // color palette for atoms
                             propertyPalettes={propertyPalettes}
-                            // feature to select atoms
+                            // atom selection
                             selectedAtom={selectedAtom}
                             onAtomSelect={onAtomSelect}
                         />
                     )}
-                {value != null &&
-                    resultProperty.name !== "preprocessed_mol" && (
-                        <Molecule
-                            //className="position-relative"
-                            svgValue={value}
-                            group={group}
-                            propertyPalettes={propertyPalettes}
+                    <ProblemListBadge problems={result.problems} />
+                </>
+            )
+        } else {
+            // If the current property is not preprocessed_mol, we opt for a molecule image that
+            // * is zoomable on hover (zoomable wrapper div, placeholder div next to molecule)
+            // * shows a molecule on smaller size
+            // * disables atom selection
+            cellContent = (
+                <div className="zoomable">
+                    {value == null && (
+                        <RxCross1
+                            className="p-5 text-body-tertiary"
+                            style={{ width: "150px", height: "90px" }}
                         />
                     )}
-                {resultProperty.name === "preprocessed_mol" && (
-                    <ProblemListBadge problems={result.problems} />
-                )}
-            </div>
-        )
+                    {value != null && (
+                        <>
+                            <div
+                                style={{
+                                    width: "150px",
+                                    height: "90px",
+                                    left: 0,
+                                    top: 0,
+                                }}
+                                className="position-absolute"
+                            />
+                            <Molecule
+                                svgValue={value}
+                                group={group}
+                                propertyPalettes={propertyPalettes}
+                                // atom selection is disabled
+                            />
+                        </>
+                    )}
+                </div>
+            )
+        }
     } else if (resultProperty.type === "text") {
         // unused at the moment
         if (compressed) {
