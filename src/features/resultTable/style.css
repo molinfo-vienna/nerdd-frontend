@@ -62,6 +62,7 @@ td.highlighted.start-block.end-block {
  * Molecule depictions and images
  */
 td .molecule,
+td .error,
 td img {
     /* By default, molecule images have large size */
     width: 300px;
@@ -69,13 +70,10 @@ td img {
 }
 
 td.compressed svg.molecule,
+td.compressed .error,
 td.compressed img {
-    position: absolute;
-    left: 0;
-    top: 0;
     width: 150px;
     height: 90px;
-    pointer-events: none;
 }
 
 td.compressed>.zoomable {
@@ -83,6 +81,14 @@ td.compressed>.zoomable {
     width: 150px;
     height: 90px;
     display: inline-block;
+}
+
+td.compressed>.zoomable>svg.molecule,
+td.compressed>.zoomable>img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
 }
 
 td.compressed>.zoomable:hover>svg.molecule,

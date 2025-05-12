@@ -47,10 +47,7 @@ export default function TableCell({
             cellContent = (
                 <>
                     {value == null && (
-                        <RxCross1
-                            className="p-5 text-body-tertiary"
-                            style={{ width: "300px", height: "180px" }}
-                        />
+                        <RxCross1 className="error p-5 text-body-tertiary" />
                     )}
                     {value != null && (
                         <Molecule
@@ -74,10 +71,7 @@ export default function TableCell({
             cellContent = (
                 <div className="zoomable">
                     {value == null && (
-                        <RxCross1
-                            className="p-5 text-body-tertiary"
-                            style={{ width: "150px", height: "90px" }}
-                        />
+                        <RxCross1 className="error p-5 text-body-tertiary" />
                     )}
                     {value != null && (
                         <Molecule
