@@ -1,3 +1,4 @@
+import classNames from "classnames"
 import { ComponentType } from "react"
 import { FaQuestion } from "react-icons/fa"
 import {
@@ -8,6 +9,7 @@ import {
 } from "react-icons/fa6"
 import { MdBrokenImage } from "react-icons/md"
 import { SiMoleculer } from "react-icons/si"
+import "./ProblemIcon.css"
 
 const iconMapping: Record<
     string,
@@ -39,5 +41,15 @@ export default function ProblemIcon({
     className,
 }: ProblemIconProps) {
     const Icon = iconMapping[problemType] ?? defaultIcon
-    return <Icon size={size} className={className} />
+    return (
+        <div
+            className={classNames(
+                "problem-icon bg-danger rounded-circle ms-1 text-white",
+                "d-inline-flex align-items-center justify-content-center",
+                className,
+            )}
+        >
+            <Icon size={size} />
+        </div>
+    )
 }
