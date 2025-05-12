@@ -68,7 +68,7 @@ export default function TableCell({
             )
         } else {
             // If the current property is not preprocessed_mol, we opt for a molecule image that
-            // * is zoomable on hover (zoomable wrapper div, placeholder div next to molecule)
+            // * is zoomable on hover (zoomable wrapper div)
             // * shows a molecule on smaller size
             // * disables atom selection
             cellContent = (
@@ -143,14 +143,29 @@ export default function TableCell({
         if (value == null) {
             cellContent = "-"
         } else {
-            cellContent = (
-                <img
-                    className="object-fit-contain"
-                    src={value}
-                    width={300}
-                    height={180}
-                />
-            )
+            if (compressed) {
+                // Images on compressed cells (e.g. atom or derivative properties) are smaller,
+                // but zoomable on hover.
+                cellContent = (
+                    <div className="zoomable">
+                        <img
+                            className="object-fit-contain"
+                            src={value}
+                            width={150}
+                            height={90}
+                        />
+                    </div>
+                )
+            } else {
+                cellContent = (
+                    <img
+                        className="object-fit-contain"
+                        src={value}
+                        width={300}
+                        height={180}
+                    />
+                )
+            }
         }
     } else if (resultProperty.type === "problem_list") {
         if (value == null) {
