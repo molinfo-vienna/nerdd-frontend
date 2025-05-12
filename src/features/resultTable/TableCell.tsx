@@ -80,23 +80,12 @@ export default function TableCell({
                         />
                     )}
                     {value != null && (
-                        <>
-                            <div
-                                style={{
-                                    width: "150px",
-                                    height: "90px",
-                                    left: 0,
-                                    top: 0,
-                                }}
-                                className="position-absolute"
-                            />
-                            <Molecule
-                                svgValue={value}
-                                group={group}
-                                propertyPalettes={propertyPalettes}
-                                // atom selection is disabled
-                            />
-                        </>
+                        <Molecule
+                            svgValue={value}
+                            group={group}
+                            propertyPalettes={propertyPalettes}
+                            // atom selection is disabled
+                        />
                     )}
                 </div>
             )
