@@ -113,6 +113,13 @@ export default function ColorSelectDropdown({
             <li>
                 <h5 className="dropdown-header">Color columns</h5>
             </li>
+            {colorableGroups.length == 0 && (
+                <li>
+                    <a className="dropdown-item disabled" aria-disabled="true">
+                        No colorable columns selected
+                    </a>
+                </li>
+            )}
             {colorableGroups.map((group, i) => (
                 <Fragment key={group.groupName}>
                     <li>
