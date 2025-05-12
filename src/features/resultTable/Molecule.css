@@ -1,0 +1,6 @@
+svg ellipse.selected {
+    stroke: var(--bs-primary);
+    stroke-width: 2;
+    fill: transparent;
+    opacity: 1 !important;
+}

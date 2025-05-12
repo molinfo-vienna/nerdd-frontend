@@ -1,6 +1,7 @@
 import { useAppSelector } from "@/app/hooks"
 import parse, { attributesToProps, domToReact } from "html-react-parser"
 import { useEffect, useMemo, useRef, useState } from "react"
+import "./Molecule.css"
 import { ResultGroup, selectAtomColorProperty } from "./resultTableSlice"
 
 type MoleculeProps = {
