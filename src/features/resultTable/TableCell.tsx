@@ -45,7 +45,7 @@ export default function TableCell({
             // * the molecule image will always be on maximum size (not zoonable on hover)
             // * the atoms in this molecule depiction are selectable
             cellContent = (
-                <>
+                <div className="position-relative">
                     {value == null && (
                         <RxCross1 className="error p-5 text-body-tertiary" />
                     )}
@@ -61,7 +61,7 @@ export default function TableCell({
                         />
                     )}
                     <ProblemListBadge problems={result.problems} />
-                </>
+                </div>
             )
         } else {
             // If the current property is not preprocessed_mol, we opt for a molecule image that
