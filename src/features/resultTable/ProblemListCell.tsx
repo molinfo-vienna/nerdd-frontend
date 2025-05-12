@@ -1,5 +1,6 @@
 import classNames from "classnames"
 import ProblemIcon from "./ProblemIcon"
+import "./ProblemIcon.css"
 
 type ProblemListCellProps = {
     problems: [string, string][]
@@ -15,14 +16,12 @@ export default function ProblemListCell({ problems }: ProblemListCellProps) {
                         "mb-1": i < problems.length - 1,
                     })}
                 >
-                    <div className="problem-icon mx-2">
-                        <ProblemIcon
-                            problemType={problemType}
-                            size={15}
-                            className="text-white"
-                        />
-                    </div>
-                    {message}
+                    <ProblemIcon
+                        className="mx-2"
+                        problemType={problemType}
+                        size={15}
+                    />
+                    <p>{message}</p>
                 </li>
             ))}
         </ul>
