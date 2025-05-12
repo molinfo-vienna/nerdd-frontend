@@ -12,16 +12,17 @@ export default function ProblemListCell({ problems }: ProblemListCellProps) {
             {problems.map(([problemType, message], i) => (
                 <li
                     key={i}
-                    className={classNames("d-flex align-items-center", {
+                    className={classNames("d-flex", {
                         "mb-1": i < problems.length - 1,
                     })}
                 >
                     <ProblemIcon
+                        // put space between the icon and the text
                         className="mx-2"
                         problemType={problemType}
                         size={15}
                     />
-                    <p>{message}</p>
+                    <span>{message}</span>
                 </li>
             ))}
         </ul>
