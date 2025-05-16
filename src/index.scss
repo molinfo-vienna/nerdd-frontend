@@ -11,8 +11,8 @@
 // @import '~@fontsource/noto-sans/400.css';
 
 // load all fonts
-@import "~@fontsource/overpass/500.css";
-@import "~@fontsource/open-sans/400.css";
+@import "@fontsource/overpass/500.css";
+@import "@fontsource/open-sans/400.css";
 
 // fonts tried for main body text
 // * Martel Sans: weird spacing
@@ -155,7 +155,7 @@ $card-cap-bg: $card-bg;
 // ghostly white: #ECEBF3
 
 
-@import "~bootstrap/scss/bootstrap.scss";
+@import "bootstrap/scss/bootstrap.scss";
 
 body {
     -webkit-font-smoothing: antialiased;

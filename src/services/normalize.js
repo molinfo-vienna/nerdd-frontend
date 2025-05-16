@@ -1,6 +1,6 @@
 import _ from "lodash"
 import ReactDOMServer from "react-dom/server"
-import Icon from "../features/icon/Icon"
+import { PiGearLight } from "react-icons/pi"
 
 function normalizeJobParameter(jobParameter) {
     return {
@@ -27,21 +27,18 @@ function normalizeResultProperty(resultProperty) {
 }
 
 export function normalizeModule(module) {
-    const reactElement = Icon({
-        collection: "pi",
-        name: "PiGearLight",
-        stroke: "#084887",
-        fill: "#084887",
-    })
+    const reactElement = PiGearLight
 
     const logo =
         module.logo ||
         "data:image/svg+xml," +
             escape(ReactDOMServer.renderToStaticMarkup(reactElement))
 
-    const jobParameters = module.jobParameters?.map(normalizeJobParameter)
+    const jobParameters = (module.jobParameters || []).map(
+        normalizeJobParameter,
+    )
 
-    const resultProperties = module.resultProperties?.map(
+    const resultProperties = (module.resultProperties || [])?.map(
         normalizeResultProperty,
     )
 
@@ -50,7 +47,9 @@ export function normalizeModule(module) {
         visibleName:
             module.visibleName || _.upperFirst(_.camelCase(module.name)),
         logo,
+        publications: module.publications || [],
         jobParameters,
         resultProperties,
+        partners: module.partners || [],
     }
 }

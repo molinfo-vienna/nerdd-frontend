@@ -8,7 +8,7 @@ export default function getColorPalette(palettes, resultProperty) {
     }
 
     // type
-    let type = colorPaletteField.type || "categorical"
+    const type = colorPaletteField.type || "categorical"
 
     // domain
     let domain = undefined
