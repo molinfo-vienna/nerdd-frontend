@@ -1,3 +1,24 @@
+## [1.0.21](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.20...v1.0.21) (2025-05-16)
+
+
+### Bug Fixes
+
+* Add missing dependencies to useMemo, useEffect and useCallback hooks ([c9959a6](https://github.com/molinfo-vienna/nerdd-frontend/commit/c9959a6a70e84c04e96c54ec20a82e0b1acbd375))
+* Avoid infinite rerendering loop in JobForm ([2ee420a](https://github.com/molinfo-vienna/nerdd-frontend/commit/2ee420a1e12caaefec777158f4b5b0b2285e9136))
+* Avoid restarting RTK query engine ([977a6f1](https://github.com/molinfo-vienna/nerdd-frontend/commit/977a6f16fe7d1f64d83f4950ab36a075ca58ed03))
+* Make sure that arrays in module are always defined ([1ea8829](https://github.com/molinfo-vienna/nerdd-frontend/commit/1ea882908569b42e4cb1dce47e80ff66700acc92))
+* Move app hooks to separate folder ([4ac0423](https://github.com/molinfo-vienna/nerdd-frontend/commit/4ac04235bd03128ce4b53ad1d98945125a4e78b8))
+* Move redux store into the app folder ([bd58d05](https://github.com/molinfo-vienna/nerdd-frontend/commit/bd58d050e5e30bda9c1a23bd5d1153f995ca550f))
+* Move routing rules into app folder ([a038d6d](https://github.com/molinfo-vienna/nerdd-frontend/commit/a038d6ddff4109022e07bd884f63cf5d9d481d13))
+* Move scroll-up logic into Layout ([0a0bf75](https://github.com/molinfo-vienna/nerdd-frontend/commit/0a0bf753a8fce83c09cbd14412992a45931dd13e))
+* Pass rows to Textarea ([2dd87db](https://github.com/molinfo-vienna/nerdd-frontend/commit/2dd87db514da39ed0dd5c6eecc6adbd76f5fa743))
+* Propagate websocket results correctly ([e97de68](https://github.com/molinfo-vienna/nerdd-frontend/commit/e97de6813d4d7b8f42af6b7e91460465f88a358b))
+* Provide initial value for useRef ([998ca4e](https://github.com/molinfo-vienna/nerdd-frontend/commit/998ca4e12e9ae359a12e8fcb613945d04106569f))
+* Remove @babel/plugin-proposal-private-property-in-object ([dd4728b](https://github.com/molinfo-vienna/nerdd-frontend/commit/dd4728b5321b19e06d25fc00fc987378fdcd0d3d))
+* Structure base code using providers ([3846705](https://github.com/molinfo-vienna/nerdd-frontend/commit/384670558ed60548da627173e16cb5aa3e799aba))
+* Use classnames in ErrorPage ([f0f8bdd](https://github.com/molinfo-vienna/nerdd-frontend/commit/f0f8bdde75e3ef0825fac481a8a3f39dc574025c))
+* Use providers in index.tsx ([2b8da52](https://github.com/molinfo-vienna/nerdd-frontend/commit/2b8da52bd5b20e72220e9767be40731337abc500))
+
 ## [1.0.20](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.19...v1.0.20) (2025-04-21)
 
 
