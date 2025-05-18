@@ -5,11 +5,31 @@ import websocketQuery from "./websocketQuery"
 
 export const jobsApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        addJob: builder.mutation<JobStatus, { moduleId: string; data: any }>({
-            query: ({ moduleId, data }) => {
+        addJob: builder.mutation<
+            JobStatus,
+            {
+                moduleId: string
+                inputs: string[]
+                sources: string[]
+                params: Record<string, any>
+            }
+        >({
+            query: ({ moduleId, inputs, sources, params }) => {
                 const form = new FormData()
-                for (const key in data) {
-                    form.append(key, JSON.stringify(data[key]))
+
+                // add inputs
+                for (const input of inputs) {
+                    form.append("inputs", input)
+                }
+
+                // add sources
+                for (const source of sources) {
+                    form.append("sources", source)
+                }
+
+                // add params
+                for (const key in params) {
+                    form.append(key, JSON.stringify(params[key]))
                 }
 
                 return {
