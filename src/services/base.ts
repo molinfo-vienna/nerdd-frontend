@@ -5,7 +5,7 @@ export const baseApi = createApi({
     reducerPath: "nerddApi",
     refetchOnReconnect: true,
     baseQuery: fetchBaseQuery({
-        baseUrl: `/api`,
+        baseUrl: "/api",
     }),
     // we inject endpoints in other files of this directory
     // (e.g. jobs.js, modules.js, sources.js)
