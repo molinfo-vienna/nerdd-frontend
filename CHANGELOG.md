@@ -1,3 +1,11 @@
+## [1.0.22](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.21...v1.0.22) (2025-05-22)
+
+
+### Bug Fixes
+
+* Put rendering logic into Root component ([3432875](https://github.com/molinfo-vienna/nerdd-frontend/commit/34328750117cd54074492f0f71ec1276bae7075a))
+* Separate debug rendering from context provider ([0ab37b8](https://github.com/molinfo-vienna/nerdd-frontend/commit/0ab37b8bf8e30c151502880cdca4f5b37799a073))
+
 ## [1.0.21](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.20...v1.0.21) (2025-05-16)
 
 
