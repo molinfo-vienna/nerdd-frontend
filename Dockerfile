@@ -1,7 +1,7 @@
 #
 # BUILD
 #
-FROM node:23-alpine3.20 AS build
+FROM node:23 AS build
 
 # create directory app as root user 
 # change ownership to user "node" (predifined in "node:alpine" image)
@@ -26,7 +26,7 @@ RUN DISABLE_ESLINT_PLUGIN=true \
 #
 # RUN SERVER
 #
-FROM nginx:1.27.3-alpine3.20
+FROM nginx:1.27.3
 
 # necessary to display the image on Github
 LABEL org.opencontainers.image.source="https://github.com/molinfo-vienna/nerdd-frontend"
