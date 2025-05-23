@@ -1,3 +1,10 @@
+## [1.0.23](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.22...v1.0.23) (2025-05-23)
+
+
+### Bug Fixes
+
+* Update Actions workflow and Dockerfiles for arm64 compatibility ([a491862](https://github.com/molinfo-vienna/nerdd-frontend/commit/a4918624f2c0a0bb31ef3df0955fd19e8a8e81de))
+
 ## [1.0.22](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.21...v1.0.22) (2025-05-22)
 
 
