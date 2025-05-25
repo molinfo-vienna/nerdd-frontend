@@ -61,12 +61,9 @@ export default function MockServer({
                         // get correct module
                         const moduleId = request.params.moduleId
 
-                        const entry = request.requestBody.get("job")
+                        const sources = request.requestBody.get("sources") || []
 
-                        const body = JSON.parse(entry)
-
-                        // if body.input is an object, check if all specified sources exist
-                        const sources = body.sources
+                        // check if all specified sources exist
                         if (sources !== undefined) {
                             for (const source of sources) {
                                 if (
@@ -85,10 +82,12 @@ export default function MockServer({
 
                         // parameters are all entries in body that are not "sources" and "inputs"
                         const params = Object.fromEntries(
-                            Object.entries(body).filter(
-                                ([key, value]) =>
-                                    key !== "sources" && key !== "inputs",
-                            ),
+                            request.requestBody
+                                .entries()
+                                .filter(
+                                    ([key, value]) =>
+                                        key !== "sources" && key !== "inputs",
+                                ),
                         )
 
                         // create a new job
@@ -343,7 +342,7 @@ export default function MockServer({
 
                     // GET /modules
                     // (return all module configs)
-                    this.get("/modules/:moduleId/", (schema, request) => {
+                    this.get("/modules/:moduleId", (schema, request) => {
                         const moduleId = request.params.moduleId
 
                         if (
