@@ -49,6 +49,7 @@ const debugSlice = createSlice({
                         jobType,
                         sourceId: "fake-source-id",
                         params,
+                        status: "created",
                         createdAt: Date.now(),
                         entriesProcessed: [],
                         numEntriesProcessed: 0,
@@ -144,6 +145,21 @@ const debugSlice = createSlice({
                 },
             }
         },
+        updateJob(state, action) {
+            const { id } = action.payload
+            const job = state.jobs[id]
+
+            return {
+                ...state,
+                jobs: {
+                    ...state.jobs,
+                    [id]: {
+                        ...job,
+                        ...action.payload,
+                    },
+                },
+            }
+        },
     },
 })
 
@@ -156,6 +172,7 @@ export const {
     addMolecule,
     setNumModules,
     setNumEntriesTotal,
+    updateJob,
 } = debugSlice.actions
 
 export default debugSlice.reducer
