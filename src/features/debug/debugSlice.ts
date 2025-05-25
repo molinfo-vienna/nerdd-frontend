@@ -146,16 +146,16 @@ const debugSlice = createSlice({
             }
         },
         updateJob(state, action) {
-            const { id } = action.payload
-            const job = state.jobs[id]
+            const { jobId, ...updates } = action.payload
+            const job = state.jobs[jobId]
 
             return {
                 ...state,
                 jobs: {
                     ...state.jobs,
-                    [id]: {
+                    [jobId]: {
                         ...job,
-                        ...action.payload,
+                        ...updates,
                     },
                 },
             }
