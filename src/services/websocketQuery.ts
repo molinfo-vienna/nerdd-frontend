@@ -61,10 +61,10 @@ export default function websocketQuery<
                 const queryPath = queryWs(args)
                 const hostname = window.location.hostname
                 const port = window.location.port
-                const slash = queryPath.startsWith("/") ? "" : "/"
+                const basePath = queryPath.startsWith("/") ? "" : "/"
                 const protocol =
                     window.location.protocol === "https:" ? "wss" : "ws"
-                const url = `${protocol}://${hostname}:${port}${slash}${queryPath}`
+                const url = `${protocol}://${hostname}:${port}${basePath}${queryPath}`
 
                 // create a websocket connection when the cache subscription starts
                 // ReconnectingWebSocket is a drop-in replacement for the native WebSocket API
