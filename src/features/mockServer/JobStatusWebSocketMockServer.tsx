@@ -1,4 +1,3 @@
-import { addOutputFile } from "@/features/debug/debugSlice"
 import { Server as SocketServer } from "mock-socket"
 import { useEffect, useMemo, useState } from "react"
 import recursiveCamelToSnakeCase from "./recursiveCamelToSnakeCase"
@@ -32,7 +31,6 @@ export default function JobStatusWebSocketMockServer({
             numPagesTotal: job.showNumEntriesTotal
                 ? Math.ceil(job.numEntriesTotal / pageSize)
                 : undefined,
-            outputFiles: [],
         }),
         [job, pageSize],
     )
@@ -75,19 +73,6 @@ export default function JobStatusWebSocketMockServer({
             })
         }
     }, [socketServer, jobResponse])
-
-    useEffect(() => {
-        // after 5 seconds, add an output file
-        const timeout = setTimeout(() => {
-            addOutputFile({
-                jobId: job.id,
-                format: "sdf",
-                url: "http://some_url.sdf",
-            })
-        }, 5000)
-
-        return () => clearTimeout(timeout)
-    })
 
     return null
 }

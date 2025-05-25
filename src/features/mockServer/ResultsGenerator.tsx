@@ -1,6 +1,7 @@
 import { useAppDispatch } from "@/app/hooks"
 import {
     addMolecule,
+    addOutputFile,
     setNumEntriesTotal,
     updateJob,
 } from "@/features/debug/debugSlice"
@@ -68,12 +69,46 @@ export default function ResultsGenerator({
         return () => clearTimeout(timer)
     }, [dispatch, job.id])
 
-    // simulate job completion
+    // simulate adding output files
     useEffect(() => {
         if (job.numEntriesProcessed === job.numEntriesTotal) {
-            dispatch(updateJob({ id: job.id, status: "completed" }))
+            // add output files with delay
+            setTimeout(() => {
+                dispatch(
+                    addOutputFile({
+                        jobId: job.id,
+                        format: "sdf",
+                        url: "http://some_url.sdf",
+                    }),
+                )
+            }, 3000)
+
+            setTimeout(() => {
+                dispatch(
+                    addOutputFile({
+                        jobId: job.id,
+                        format: "csv",
+                        // deliberately use a different protocol (https) here to see what happens
+                        url: "https://some_url.csv",
+                    }),
+                )
+            }, 7000)
+
+            return
         }
     }, [dispatch, job.id, job.numEntriesProcessed, job.numEntriesTotal])
+
+    // simulate job completion
+    useEffect(() => {
+        if (job.outputFiles.length >= 2) {
+            dispatch(
+                updateJob({
+                    jobId: job.id,
+                    status: "completed",
+                }),
+            )
+        }
+    }, [dispatch, job.id, job.outputFiles.length])
 
     return null
 }
