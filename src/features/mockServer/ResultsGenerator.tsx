@@ -1,5 +1,9 @@
 import { useAppDispatch } from "@/app/hooks"
-import { addMolecule, setNumEntriesTotal } from "@/features/debug/debugSlice"
+import {
+    addMolecule,
+    setNumEntriesTotal,
+    updateJob,
+} from "@/features/debug/debugSlice"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { makeButton, useTweaks } from "use-tweaks"
@@ -31,6 +35,15 @@ export default function ResultsGenerator({
             return
         }
 
+        // if the job is completed, this useEffect will trigger (because job.status is updated)
+        // -> the old useEffect call will be disposed and the old timer will be cleared
+        // -> then, useEffect will be called again with job.status = "completed"
+        // -> returning here will prevent adding more molecules
+        if (job.status === "completed") {
+            // if the job is already completed, do not add more molecules
+            return
+        }
+
         const frequency = Math.max(1, Math.ceil(1000 / predictionSpeed))
 
         const timer = setInterval(
@@ -38,7 +51,7 @@ export default function ResultsGenerator({
             frequency,
         )
         return () => clearInterval(timer)
-    }, [dispatch, predictionSpeed, job.id])
+    }, [dispatch, predictionSpeed, job.id, job.status])
 
     // numEntriesTotal is computed in parallel to the prediction
     // -> emulate this by setting it after a delay
@@ -54,6 +67,13 @@ export default function ResultsGenerator({
 
         return () => clearTimeout(timer)
     }, [dispatch, job.id])
+
+    // simulate job completion
+    useEffect(() => {
+        if (job.numEntriesProcessed === job.numEntriesTotal) {
+            dispatch(updateJob({ id: job.id, status: "completed" }))
+        }
+    }, [dispatch, job.id, job.numEntriesProcessed, job.numEntriesTotal])
 
     return null
 }
