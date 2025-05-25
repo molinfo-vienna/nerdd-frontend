@@ -47,7 +47,7 @@ export default function JobStatusWebSocketMockServer({
         const wsProtocol = window.location.protocol === "https:" ? "wss" : "ws"
         const wsHost = window.location.hostname
         const wsPort = window.location.port ? `:${window.location.port}` : ""
-        const wsUrl = `${wsProtocol}://${wsHost}${wsPort}/websocket/${moduleId}/jobs/${job.id}/`
+        const wsUrl = `${wsProtocol}://${wsHost}${wsPort}/websocket/${moduleId}/jobs/${job.id}`
 
         const server = new SocketServer(wsUrl)
 
