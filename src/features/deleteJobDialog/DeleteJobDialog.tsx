@@ -1,31 +1,69 @@
 import { useDeleteJobMutation } from "@/services"
+import { Modal } from "bootstrap"
+import classNames from "classnames"
+import { useCallback, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 type DeleteJobDialogProps = {
-    id: string
     moduleId: string
     jobId: string
+    isOpen: boolean
+    setIsOpen: (isOpen: boolean) => void
 }
 
 export default function DeleteJobDialog({
-    id,
     moduleId,
     jobId,
+    isOpen,
+    setIsOpen,
 }: DeleteJobDialogProps) {
     const [deleteJob] = useDeleteJobMutation()
     const navigate = useNavigate()
 
-    const handleAccept = () => {
-        deleteJob({ moduleId, jobId }).then((response) => {
+    const [modal, setModal] = useState<Modal | null>(null)
+
+    const ref = useCallback((node: HTMLDivElement | null) => {
+        if (node) {
+            // Initialize Bootstrap modal
+            setModal((modal) => {
+                if (modal != null) {
+                    return modal
+                }
+                const newModal = new Modal(node, {
+                    backdrop: "static",
+                    keyboard: false,
+                })
+                return newModal
+            })
+        }
+    }, [])
+
+    useEffect(() => {
+        if (modal) {
+            if (isOpen) {
+                modal.show()
+            } else {
+                modal.hide()
+            }
+        }
+    }, [modal, isOpen])
+
+    const [isLoading, setIsLoading] = useState(false)
+
+    const handleAccept = useCallback(() => {
+        setIsLoading(true)
+        deleteJob({ moduleId, jobId }).then(({ data, error }) => {
+            setIsLoading(false)
+            setIsOpen(false)
             navigate("/")
         })
-    }
+    }, [deleteJob, moduleId, jobId, setIsLoading, setIsOpen, navigate])
 
     return (
         <div
             className="modal fade"
+            ref={ref}
             tabIndex={-1}
-            id={id}
             aria-labelledby="deleteJobModalLabel"
             aria-hidden="true"
         >
@@ -38,8 +76,8 @@ export default function DeleteJobDialog({
                         <button
                             type="button"
                             className="btn-close"
-                            data-bs-dismiss="modal"
                             aria-label="Close"
+                            onClick={() => setIsOpen(false)}
                         ></button>
                     </div>
                     <div className="modal-body">
@@ -49,21 +87,28 @@ export default function DeleteJobDialog({
                         <button
                             type="button"
                             className="btn btn-secondary"
-                            data-bs-dismiss="modal"
+                            onClick={() => setIsOpen(false)}
                         >
                             Close
                         </button>
-                        {/* The attribute data-bs-dismiss="modal" should not
-                         * be used here. However, if we omit it, the backdrop
-                         * (dark background) is still visible after closing the
-                         * modal. */}
                         <button
                             type="button"
                             className="btn btn-danger"
                             onClick={handleAccept}
-                            data-bs-dismiss="modal"
+                            disabled={isLoading}
                         >
-                            Delete
+                            <span
+                                className={classNames({ invisible: isLoading })}
+                            >
+                                Delete
+                            </span>
+                            {isLoading && (
+                                <span
+                                    className="spinner-border spinner-border-sm position-absolute start-50 translate-middle"
+                                    role="status"
+                                    aria-hidden="true"
+                                ></span>
+                            )}
                         </button>
                     </div>
                 </div>
