@@ -68,15 +68,14 @@ export default function DeleteJobDialog({
                     </div>
                     <div className="modal-body">
                         Are you sure you want to delete this job?
-                        {error && (
-                            <div
-                                className="alert alert-danger mt-3"
-                                role="alert"
-                            >
+                    </div>
+                    {error && (
+                        <div className="modal-body">
+                            <div className="alert alert-danger" role="alert">
                                 {error}
                             </div>
-                        )}
-                    </div>
+                        </div>
+                    )}
                     <div className="modal-footer">
                         <button
                             type="button"
