@@ -1,25 +1,20 @@
-import { useDeleteJobMutation } from "@/services"
 import { Modal } from "bootstrap"
 import classNames from "classnames"
 import { useCallback, useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
 
 type DeleteJobDialogProps = {
-    moduleId: string
-    jobId: string
     isOpen: boolean
     setIsOpen: (isOpen: boolean) => void
+    isLoading: boolean
+    onAccept: () => void
 }
 
 export default function DeleteJobDialog({
-    moduleId,
-    jobId,
     isOpen,
     setIsOpen,
+    isLoading,
+    onAccept,
 }: DeleteJobDialogProps) {
-    const [deleteJob] = useDeleteJobMutation()
-    const navigate = useNavigate()
-
     const [modal, setModal] = useState<Modal | null>(null)
 
     const ref = useCallback((node: HTMLDivElement | null) => {
@@ -47,17 +42,6 @@ export default function DeleteJobDialog({
             }
         }
     }, [modal, isOpen])
-
-    const [isLoading, setIsLoading] = useState(false)
-
-    const handleAccept = useCallback(() => {
-        setIsLoading(true)
-        deleteJob({ moduleId, jobId }).then(({ data, error }) => {
-            setIsLoading(false)
-            setIsOpen(false)
-            navigate("/")
-        })
-    }, [deleteJob, moduleId, jobId, setIsLoading, setIsOpen, navigate])
 
     return (
         <div
@@ -93,8 +77,8 @@ export default function DeleteJobDialog({
                         </button>
                         <button
                             type="button"
-                            className="btn btn-danger"
-                            onClick={handleAccept}
+                            className="btn btn-danger position-relative"
+                            onClick={onAccept}
                             disabled={isLoading}
                         >
                             <span
@@ -103,11 +87,17 @@ export default function DeleteJobDialog({
                                 Delete
                             </span>
                             {isLoading && (
-                                <span
-                                    className="spinner-border spinner-border-sm position-absolute start-50 translate-middle"
-                                    role="status"
-                                    aria-hidden="true"
-                                ></span>
+                                <div className="position-absolute top-50 start-50 translate-middle">
+                                    <span
+                                        className="spinner-border spinner-border-sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                    >
+                                        <span className="visually-hidden">
+                                            Loading...
+                                        </span>
+                                    </span>
+                                </div>
                             )}
                         </button>
                     </div>
