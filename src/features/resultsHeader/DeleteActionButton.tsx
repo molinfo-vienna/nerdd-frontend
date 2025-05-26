@@ -1,4 +1,8 @@
+import { useDeleteJobMutation } from "@/services"
+import { useCallback, useState } from "react"
+import { createPortal } from "react-dom"
 import { FaTrash } from "react-icons/fa6"
+import { useNavigate } from "react-router-dom"
 import DeleteJobDialog from "../deleteJobDialog/DeleteJobDialog"
 import ActionButton from "./ActionButton"
 
@@ -11,18 +15,44 @@ export default function DeleteActionButton({
     moduleId,
     jobId,
 }: DeleteActionButtonProps) {
+    const [deleteJob] = useDeleteJobMutation()
+
+    const navigate = useNavigate()
+
+    const [isOpen, setIsOpen] = useState(false)
+
+    const [isLoading, setIsLoading] = useState(false)
+
+    const handleAccept = useCallback(() => {
+        setIsLoading(true)
+        deleteJob({ moduleId, jobId }).then(({ data, error }) => {
+            setIsLoading(false)
+            setIsOpen(false)
+            setTimeout(() => navigate("/"), 500)
+        })
+    }, [deleteJob, moduleId, jobId, setIsLoading, setIsOpen, navigate])
+
     return (
-        <ActionButton label="Delete" style="danger" modalId="deleteJobModal">
-            <ActionButton.Icon>
-                <FaTrash />
-            </ActionButton.Icon>
-            <ActionButton.Modal>
+        <>
+            <ActionButton
+                label="Delete"
+                style="danger"
+                onClick={() => setIsOpen(true)}
+            >
+                <ActionButton.Icon>
+                    <FaTrash />
+                </ActionButton.Icon>
+            </ActionButton>
+            {/* Render the modal in the body (because a modal would not render correctly here) */}
+            {createPortal(
                 <DeleteJobDialog
-                    id="deleteJobModal"
-                    moduleId={moduleId}
-                    jobId={jobId}
-                />
-            </ActionButton.Modal>
-        </ActionButton>
+                    isOpen={isOpen}
+                    setIsOpen={setIsOpen}
+                    isLoading={isLoading}
+                    onAccept={handleAccept}
+                />,
+                document.body,
+            )}
+        </>
     )
 }
