@@ -7,6 +7,7 @@ type DeleteJobDialogProps = {
     setIsOpen: (isOpen: boolean) => void
     isLoading: boolean
     onAccept: () => void
+    error: string | null
 }
 
 export default function DeleteJobDialog({
@@ -14,6 +15,7 @@ export default function DeleteJobDialog({
     setIsOpen,
     isLoading,
     onAccept,
+    error,
 }: DeleteJobDialogProps) {
     const [modal, setModal] = useState<Modal | null>(null)
 
@@ -66,6 +68,14 @@ export default function DeleteJobDialog({
                     </div>
                     <div className="modal-body">
                         Are you sure you want to delete this job?
+                        {error && (
+                            <div
+                                className="alert alert-danger mt-3"
+                                role="alert"
+                            >
+                                {error}
+                            </div>
+                        )}
                     </div>
                     <div className="modal-footer">
                         <button
