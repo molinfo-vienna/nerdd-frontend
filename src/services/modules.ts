@@ -8,7 +8,7 @@ export const modulesApi = baseApi.injectEndpoints({
         // TODO: return list of modules
         getModules: builder.query<Record<string, Module>, void>({
             query: () => {
-                return `/modules`
+                return `/modules/`
             },
             transformResponse: (response) => {
                 // convert snake_case to camelCase

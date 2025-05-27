@@ -1,21 +1,18 @@
-import ColorSelectDropdown from "@/features/colorSelect/ColorSelectDropdown"
-import ColumnSelectDropdown from "@/features/columnSelect/ColumnSelectDropdown"
-import DeleteJobDialog from "@/features/deleteJobDialog/DeleteJobDialog"
+import ColorSelectActionButton from "@/features/header/ColorSelectActionButton"
+import ColumnSelectActionButton from "@/features/header/ColumnSelectActionButton"
+import DeleteActionButton from "@/features/header/DeleteActionButton"
+import DocsActionButton from "@/features/header/DocsActionButton"
+import DownloadActionButton from "@/features/header/DownloadActionButton"
+import ResultsHeader from "@/features/header/ResultsHeader"
 import Pagination from "@/features/pagination/Pagination"
-import ProgressBar from "@/features/progressBar/ProgressBar"
 import ResultTable from "@/features/resultTable/ResultTable"
 import {
     useGetJobStatusQuery,
     useGetModuleQuery,
     useGetResultsQuery,
 } from "@/services"
-import classNames from "classnames"
 import { useCallback, useEffect, useState } from "react"
-import { FaFileDownload } from "react-icons/fa"
-import { FaBookOpen, FaFileLines, FaTrash } from "react-icons/fa6"
-import { HiMiniViewColumns } from "react-icons/hi2"
-import { IoIosColorPalette } from "react-icons/io"
-import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom"
+import { useNavigate, useParams, useSearchParams } from "react-router-dom"
 import ErrorPage from "./ErrorPage"
 import Layout from "./Layout"
 import LoadingPage from "./LoadingPage"
@@ -213,270 +210,33 @@ export default function ResultsPage() {
         isFetchingResults ||
         isLoadingResults
 
-    const statusText = `${jobStatus.numEntriesProcessed ?? 0} / ${jobStatus.numEntriesTotal ?? "?"} molecules processed`
-
-    const outputFormats = ["sdf", "csv"]
-
-    const outputFileItems = outputFormats.map((format) => {
-        const fileFromStatus = (jobStatus.outputFiles ?? []).find(
-            (f) => f.format == format,
-        )
-        const status = fileFromStatus === undefined ? "disabled" : ""
-        return {
-            format,
-            status,
-            url: fileFromStatus?.url ?? "",
-        }
-    })
-
     return (
         <Layout>
             <Layout.Header>
-                <section className="container py-4">
-                    <div className="row justify-content-center pb-3">
-                        <div className="col">
-                            {/*
-                             * We use a flexbox with justify-content-center to center the
-                             * progress bar, the module name and the action buttons.
-                             */}
-                            <div className="d-flex justify-content-center">
-                                {/* Progress bar */}
-                                <ProgressBar
-                                    numEntriesProcessed={
-                                        jobStatus.numEntriesProcessed
-                                    }
-                                    numEntriesTotal={jobStatus.numEntriesTotal}
-                                />
-                                {/* Module name & status*/}
-                                <div className="d-flex flex-column p-2 me-5">
-                                    <div style={{ height: "50px" }}>
-                                        <h1 className="text-primary fw-bold my-auto">
-                                            {module.visibleName}
-                                        </h1>
-                                    </div>
-                                    <div style={{ height: "20px" }}>
-                                        <p className="mb-0">{statusText}</p>
-                                    </div>
-                                </div>
-                                {/* Action buttons */}
-                                <div className="btn-group" role="group">
-                                    {/* Docs */}
-                                    <Link
-                                        className="btn btn-outline-secondary text-center text-decoration-none text-reset d-block"
-                                        to={`/${moduleId}/about`}
-                                        type="button"
-                                    >
-                                        <div
-                                            className="d-flex flex-column p-2"
-                                            style={{
-                                                width: "90px",
-                                            }}
-                                        >
-                                            <div style={{ height: "42px" }}>
-                                                <p className="mb-0 text-primary">
-                                                    <FaBookOpen size={35} />
-                                                </p>
-                                            </div>
-                                            <span className="text-primary">
-                                                Docs
-                                            </span>
-                                        </div>
-                                    </Link>
-
-                                    {/* Columns */}
-                                    <div
-                                        className="btn-group dropdown-center"
-                                        role="group"
-                                    >
-                                        <Link
-                                            className={
-                                                "btn btn-outline-secondary text-center " +
-                                                "text-decoration-none text-reset d-block"
-                                            }
-                                            type="button"
-                                            data-bs-toggle="dropdown"
-                                            data-bs-auto-close="outside"
-                                            aria-expanded="false"
-                                        >
-                                            <div
-                                                className="d-flex flex-column p-2"
-                                                style={{
-                                                    width: "90px",
-                                                }}
-                                            >
-                                                <div
-                                                    style={{
-                                                        height: "42px",
-                                                    }}
-                                                >
-                                                    <p className="mb-0 text-primary">
-                                                        <HiMiniViewColumns
-                                                            size={36}
-                                                        />
-                                                    </p>
-                                                </div>
-                                                <span className="text-primary">
-                                                    Columns
-                                                </span>
-                                            </div>
-                                        </Link>
-                                        <ColumnSelectDropdown
-                                            columnSelection={columnSelection}
-                                            handleSelectionChange={
-                                                handleColumnSelectionChange
-                                            }
-                                        />
-                                    </div>
-                                    {/* Colors */}
-                                    <div
-                                        className="btn-group dropdown-center"
-                                        role="group"
-                                    >
-                                        <Link
-                                            className={classNames(
-                                                "btn btn-outline-secondary text-center",
-                                                "text-decoration-none text-reset d-block",
-                                                {
-                                                    disabled:
-                                                        possibleAtomColorProperties.length ===
-                                                        0,
-                                                },
-                                            )}
-                                            type="button"
-                                            data-bs-toggle="dropdown"
-                                            data-bs-auto-close="outside"
-                                            aria-expanded="false"
-                                        >
-                                            <div
-                                                className="d-flex flex-column p-2"
-                                                style={{
-                                                    width: "90px",
-                                                }}
-                                            >
-                                                <div
-                                                    style={{
-                                                        height: "42px",
-                                                    }}
-                                                >
-                                                    <p className="mb-0 text-primary">
-                                                        <IoIosColorPalette
-                                                            size={36}
-                                                        />
-                                                    </p>
-                                                </div>
-                                                <span className="text-primary">
-                                                    Colors
-                                                </span>
-                                            </div>
-                                        </Link>
-                                        <ColorSelectDropdown
-                                            selectedAtomColorProperty={
-                                                atomColorProperty
-                                            }
-                                            possibleAtomColorProperties={
-                                                possibleAtomColorProperties
-                                            }
-                                            onSelectedAtomColorPropertyChange={
-                                                handleAtomColorPropertyChange
-                                            }
-                                        />
-                                    </div>
-                                    {/* Download */}
-                                    <div
-                                        className="btn-group dropdown-center"
-                                        role="group"
-                                    >
-                                        <Link
-                                            className={classNames(
-                                                "btn btn-outline-secondary text-center ",
-                                                "text-decoration-none text-reset d-block",
-                                                {
-                                                    disabled:
-                                                        jobStatus.outputFiles ===
-                                                            undefined ||
-                                                        jobStatus.outputFiles
-                                                            .length == 0,
-                                                },
-                                            )}
-                                            type="button"
-                                            data-bs-toggle="dropdown"
-                                            data-bs-auto-close="outside"
-                                        >
-                                            <div
-                                                className="d-flex flex-column p-2"
-                                                style={{
-                                                    width: "90px",
-                                                }}
-                                            >
-                                                <div
-                                                    style={{
-                                                        height: "42px",
-                                                    }}
-                                                >
-                                                    <p className="mb-0 text-primary">
-                                                        <FaFileDownload
-                                                            size={33}
-                                                        />
-                                                    </p>
-                                                </div>
-                                                <span className="text-primary">
-                                                    Download
-                                                </span>
-                                            </div>
-                                        </Link>
-                                        <ul className="dropdown-menu">
-                                            {outputFileItems.map((item) => (
-                                                <li key={item.format}>
-                                                    <Link
-                                                        className={`dropdown-item ${item.status}`}
-                                                        to={item.url}
-                                                        target="_blank"
-                                                        download
-                                                    >
-                                                        <FaFileLines
-                                                            size={24}
-                                                            className="me-2"
-                                                        />
-                                                        {item.format.toUpperCase()}
-                                                    </Link>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                    {/* Delete */}
-                                    <Link
-                                        className="btn btn-outline-danger text-center text-decoration-none text-reset d-block"
-                                        to="#"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#deleteJobModal"
-                                        aria-expanded="false"
-                                    >
-                                        <div
-                                            className="d-flex flex-column p-2"
-                                            style={{
-                                                width: "90px",
-                                            }}
-                                        >
-                                            <div style={{ height: "42px" }}>
-                                                <p className="mb-0">
-                                                    <FaTrash size={33} />
-                                                </p>
-                                            </div>
-                                            <span>Delete</span>
-                                        </div>
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                <ResultsHeader
+                    module={module}
+                    jobStatus={jobStatus}
+                    columnSelection={columnSelection}
+                    onColumnSelectionChange={handleColumnSelectionChange}
+                >
+                    <DocsActionButton moduleId={moduleId} />
+                    <ColumnSelectActionButton
+                        columnSelection={columnSelection}
+                        onColumnSelectionChange={handleColumnSelectionChange}
+                    />
+                    <ColorSelectActionButton
+                        atomColorProperty={atomColorProperty}
+                        possibleAtomColorProperties={
+                            possibleAtomColorProperties
+                        }
+                        onAtomColorPropertyChange={
+                            handleAtomColorPropertyChange
+                        }
+                    />
+                    <DownloadActionButton jobStatus={jobStatus} />
+                    <DeleteActionButton moduleId={moduleId} jobId={jobId} />
+                </ResultsHeader>
             </Layout.Header>
-
-            <DeleteJobDialog
-                id="deleteJobModal"
-                moduleId={moduleId}
-                jobId={jobId}
-            />
 
             <div className="container-fluid py-4">
                 <div className="row justify-content-center">

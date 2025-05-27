@@ -39,11 +39,15 @@ export default function JobStatusWebSocketMockServer({
 
     // create a socket server
     useEffect(() => {
+        if (moduleId === undefined || job.id === null) {
+            return
+        }
+
         // Dynamically determine the port from window.location or fallback to 3000
         const wsProtocol = window.location.protocol === "https:" ? "wss" : "ws"
         const wsHost = window.location.hostname
         const wsPort = window.location.port ? `:${window.location.port}` : ""
-        const wsUrl = `${wsProtocol}://${wsHost}${wsPort}/websocket/${moduleId}/jobs/${job.id}`
+        const wsUrl = `${wsProtocol}://${wsHost}${wsPort}/websocket/${moduleId}/jobs/${job.id}/`
 
         const server = new SocketServer(wsUrl)
 
@@ -59,7 +63,7 @@ export default function JobStatusWebSocketMockServer({
             server.clients().forEach((client) => client.close())
             server.stop()
         }
-    }, [moduleId, job.id, jobResponse])
+    }, [moduleId, job.id])
 
     // send the job status if job (specifically numPagesProcessed) changes
     useEffect(() => {
