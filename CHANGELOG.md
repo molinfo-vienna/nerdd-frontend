@@ -1,3 +1,13 @@
+## [1.0.24](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.23...v1.0.24) (2025-05-27)
+
+
+### Bug Fixes
+
+* Add missing fields to JobStatus type ([70ee9f2](https://github.com/molinfo-vienna/nerdd-frontend/commit/70ee9f2d2352ea0a0e35e42da53a7bc9f7970532))
+* Add trailing slash to requests ([6f0b1f0](https://github.com/molinfo-vienna/nerdd-frontend/commit/6f0b1f00f93c443269fa26550ad17fcebc4caa6f))
+* Let mock websocket server listen on route with trailing slash ([c607e21](https://github.com/molinfo-vienna/nerdd-frontend/commit/c607e21e7ec3c56d5095f4b4952e9a23b57613c4))
+* Simplify ResultsPage component ([abda96b](https://github.com/molinfo-vienna/nerdd-frontend/commit/abda96b271c61353f2eb979b50e20fc31303d849))
+
 ## [1.0.23](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.22...v1.0.23) (2025-05-23)
 
 
