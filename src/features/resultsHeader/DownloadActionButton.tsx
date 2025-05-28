@@ -1,8 +1,10 @@
+import Tooltip from "@/features/tooltip/Tooltip"
 import { JobStatus } from "@/types"
 import { FaFileDownload } from "react-icons/fa"
 import { FaFileLines } from "react-icons/fa6"
 import { Link } from "react-router-dom"
 import ActionButton from "./ActionButton"
+import "./DownloadActionButton.css"
 
 type DownloadActionButtonProps = {
     jobStatus: JobStatus
@@ -28,16 +30,8 @@ export default function DownloadActionButton({
     const disabled =
         jobStatus.outputFiles === undefined || jobStatus.outputFiles.length == 0
 
-    return (
-        <ActionButton
-            label="Download"
-            disabled={disabled}
-            tooltip={
-                disabled
-                    ? "Download available after job is completed"
-                    : undefined
-            }
-        >
+    const button = (
+        <ActionButton label="Download" disabled={disabled}>
             <ActionButton.Icon>
                 <FaFileDownload />
             </ActionButton.Icon>
@@ -60,4 +54,18 @@ export default function DownloadActionButton({
             </ActionButton.Dropdown>
         </ActionButton>
     )
+
+    if (disabled) {
+        return (
+            <Tooltip
+                text="Download available after job is completed"
+                placement="bottom"
+                className="tooltip-wrapper"
+            >
+                {button}
+            </Tooltip>
+        )
+    } else {
+        return button
+    }
 }
