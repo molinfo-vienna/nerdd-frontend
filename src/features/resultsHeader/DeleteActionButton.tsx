@@ -26,7 +26,7 @@ export default function DeleteActionButton({
     const handleAccept = useCallback(() => {
         setIsLoading(true)
         setError(null)
-        deleteJob({ moduleId, jobId }).then(({ data, error }) => {
+        deleteJob({ moduleId, jobId }).then(({ error }) => {
             setIsLoading(false)
 
             if (error) {
