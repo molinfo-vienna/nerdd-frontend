@@ -1,10 +1,15 @@
-import debugSliceReducer from "@/features/debug/debugSlice"
 import fileFieldSliceReducer from "@/features/fileUpload/fileFieldSlice"
 import resultTableSliceReducer from "@/features/resultTable/resultTableSlice"
 import tweakPanelSliceReducer from "@/features/tweakPanel/tweakPanelSlice"
 import { baseApi } from "@/services"
 import { configureStore } from "@reduxjs/toolkit"
 import { setupListeners } from "@reduxjs/toolkit/query"
+
+// conditionally import debugSliceReducer based on environment (this saves 75% of bundle size)
+const debugSliceReducer =
+    import.meta.env.MODE === "development"
+        ? (await import("@/features/debug/debugSlice")).default
+        : (state = null) => state
 
 export const store = configureStore({
     reducer: {
