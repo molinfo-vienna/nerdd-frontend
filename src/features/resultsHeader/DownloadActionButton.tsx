@@ -1,4 +1,4 @@
-import Tooltip from "@/features/tooltip/Tooltip"
+import PopUp from "@/features/popup/PopUp"
 import { JobStatus } from "@/types"
 import { FaFileDownload } from "react-icons/fa"
 import { FaFileLines } from "react-icons/fa6"
@@ -57,13 +57,13 @@ export default function DownloadActionButton({
 
     if (disabled) {
         return (
-            <Tooltip
+            <PopUp
                 text="Download available after job is completed"
                 placement="bottom"
                 className="tooltip-wrapper"
             >
                 {button}
-            </Tooltip>
+            </PopUp>
         )
     } else {
         return button

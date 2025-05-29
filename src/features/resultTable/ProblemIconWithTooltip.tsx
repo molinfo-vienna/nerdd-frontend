@@ -1,4 +1,4 @@
-import Tooltip from "../tooltip/Tooltip"
+import PopUp from "@/features/popup/PopUp"
 import ProblemIcon from "./ProblemIcon"
 
 type ProblemIconWithTooltipProps = {
@@ -13,8 +13,8 @@ export default function ProblemIconWithTooltip({
     size,
 }: ProblemIconWithTooltipProps) {
     return (
-        <Tooltip text={tooltip} className="d-inline-flex">
+        <PopUp text={tooltip} className="d-inline-flex">
             <ProblemIcon problemType={problemType} size={size} />
-        </Tooltip>
+        </PopUp>
     )
 }
