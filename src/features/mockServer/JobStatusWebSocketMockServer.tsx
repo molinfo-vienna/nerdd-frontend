@@ -41,7 +41,6 @@ export default function JobStatusWebSocketMockServer({
             return
         }
 
-        // Dynamically determine the port from window.location or fallback to 3000
         const wsProtocol = window.location.protocol === "https:" ? "wss" : "ws"
         const wsHost = window.location.hostname
         const wsPort = window.location.port ? `:${window.location.port}` : ""
