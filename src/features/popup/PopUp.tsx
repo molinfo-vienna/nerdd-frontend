@@ -15,19 +15,19 @@ import {
 import { useRef, useState, type ReactNode } from "react"
 import { createPortal } from "react-dom"
 
-type TooltipProps = {
+type PopUpProps = {
     text: string
     placement?: "top" | "bottom" | "left" | "right"
     children: ReactNode
     className?: string
 }
 
-export default function Tooltip({
+export default function PopUp({
     text,
     placement = "top",
     children,
     className,
-}: TooltipProps) {
+}: PopUpProps) {
     const [isOpen, setIsOpen] = useState(false)
 
     const arrowRef = useRef(null)
