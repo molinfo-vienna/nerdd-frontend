@@ -1,19 +1,22 @@
-import AboutPage from "@/pages/AboutPage"
-import CitationPage from "@/pages/CitationPage"
-import CreateJobPage from "@/pages/CreateJobPage"
-import DeveloperPage from "@/pages/DeveloperPage"
-import ErrorPage from "@/pages/ErrorPage"
-import LandingPage from "@/pages/LandingPage"
-import LoadingPage from "@/pages/LoadingPage"
-import ResultsPage from "@/pages/ResultsPage"
+import { lazy, Suspense } from "react"
 import { createBrowserRouter } from "react-router-dom"
+
+import LoadingPage from "@/pages/LoadingPage"
+
+const LandingPage = lazy(() => import("@/pages/LandingPage"))
+const DeveloperPage = lazy(() => import("@/pages/DeveloperPage"))
+const CitationPage = lazy(() => import("@/pages/CitationPage"))
+const CreateJobPage = lazy(() => import("@/pages/CreateJobPage"))
+const AboutPage = lazy(() => import("@/pages/AboutPage"))
+const ResultsPage = lazy(() => import("@/pages/ResultsPage"))
+const ErrorPage = lazy(() => import("@/pages/ErrorPage"))
 
 export default function createRouter(children: React.ReactNode) {
     return createBrowserRouter([
         {
             path: "/",
             // TODO: use errorElement
-            element: children,
+            element: <Suspense fallback={<LoadingPage />}>{children}</Suspense>,
             children: [
                 {
                     path: "/",
