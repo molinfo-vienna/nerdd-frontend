@@ -1,5 +1,5 @@
 import type { JobParameter, Module, ResultProperty } from "@/types"
-import _ from "lodash"
+import { camelCase, upperFirst } from "lodash-es"
 import ReactDOMServer from "react-dom/server"
 import { PiGearLight } from "react-icons/pi"
 
@@ -8,7 +8,7 @@ function normalizeJobParameter(jobParameter): JobParameter {
         ...jobParameter,
         visibleName:
             jobParameter.visibleName ||
-            _.upperFirst(_.camelCase(jobParameter.name)),
+            upperFirst(camelCase(jobParameter.name)),
         required: jobParameter.required || false,
     }
 }
@@ -18,7 +18,7 @@ function normalizeResultProperty(resultProperty): ResultProperty {
         ...resultProperty,
         visibleName:
             resultProperty.visibleName ||
-            _.upperFirst(_.camelCase(resultProperty.name)),
+            upperFirst(camelCase(resultProperty.name)),
         // temporary: force problem list to be invisible at the start
         visible:
             (resultProperty.visible ?? true) &&
@@ -46,8 +46,7 @@ export function normalizeModule(module): Module {
 
     return {
         ...module,
-        visibleName:
-            module.visibleName || _.upperFirst(_.camelCase(module.name)),
+        visibleName: module.visibleName || upperFirst(camelCase(module.name)),
         logo,
         task: module.task || "molecular_property_prediction",
         publications: module.publications || [],

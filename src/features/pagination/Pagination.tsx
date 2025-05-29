@@ -1,6 +1,6 @@
 import { useGetJobStatusQuery } from "@/services"
 import classNames from "classnames"
-import { sortedLastIndexBy } from "lodash"
+import { sortedLastIndexBy } from "lodash-es"
 import { Link } from "react-router-dom"
 
 function pageStatus(

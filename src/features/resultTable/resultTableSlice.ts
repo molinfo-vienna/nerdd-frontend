@@ -1,6 +1,6 @@
 import type { PredictionTask, Result, ResultProperty } from "@/types"
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { sortedIndexBy } from "lodash"
+import { sortedIndexBy } from "lodash-es"
 
 export type InternalResultProperty = ResultProperty & {
     // Indicates whether the property will be colored in the table
