@@ -1,3 +1,24 @@
+## [1.0.25](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.24...v1.0.25) (2025-05-30)
+
+
+### Bug Fixes
+
+* Adapt icon sizes ([842efec](https://github.com/molinfo-vienna/nerdd-frontend/commit/842efec57cbf9df4405cddf9868f75a3ad614786))
+* Align button icons on result page ([cdf0dcf](https://github.com/molinfo-vienna/nerdd-frontend/commit/cdf0dcf4552b140762a45c627c387cb8c9760014))
+* Always render the bottom border of the ResultTable's head ([f27c8c6](https://github.com/molinfo-vienna/nerdd-frontend/commit/f27c8c61558913c21e0c79f8a4f5f8bac1b076b1))
+* Center error icons ([14d6518](https://github.com/molinfo-vienna/nerdd-frontend/commit/14d65187df0c71c3079c9c62921777431d476e2a))
+* Reduce font size of error icons ([69c58c2](https://github.com/molinfo-vienna/nerdd-frontend/commit/69c58c2047692959e764f65b586d57562a97588a))
+* Render modals as direct children of body ([09374ac](https://github.com/molinfo-vienna/nerdd-frontend/commit/09374ac9b9fb12c3a66b449a2fcbe874d9e981f8))
+* Simplify problem icon style ([ea40ec9](https://github.com/molinfo-vienna/nerdd-frontend/commit/ea40ec9c773b81eea121797333d7729e1b2b5943))
+* Simplify ResultsHeader component ([8926536](https://github.com/molinfo-vienna/nerdd-frontend/commit/8926536ebd96501d8559d90d1beba1d8b3774cb0))
+* Simplify styles in file upload ([17f404f](https://github.com/molinfo-vienna/nerdd-frontend/commit/17f404f7cdb7ca4968af1d9d7e1cc68ec1e280d6))
+* Simplify styles in header ([0ae1d8b](https://github.com/molinfo-vienna/nerdd-frontend/commit/0ae1d8b95e1d795ebac3b9a97fa72f2fe5df0902))
+* Simplify styles in module card ([cc134c7](https://github.com/molinfo-vienna/nerdd-frontend/commit/cc134c70e1509f77db0c235ffdb89dd95577b8fc))
+* Simplify styles in result table ([9c56c65](https://github.com/molinfo-vienna/nerdd-frontend/commit/9c56c65159ce8f25107dc553b9ce6e864a600f33))
+* Use a different danger color ([9dd2951](https://github.com/molinfo-vienna/nerdd-frontend/commit/9dd295136b5470c47c62fd4cbaa045871829e4de))
+* Use bootstrap classes in TableOfContents ([23d8310](https://github.com/molinfo-vienna/nerdd-frontend/commit/23d83108caf5a3a6a8018f34cb469f654805ea59))
+* Use css extension for style in TangleRuntime ([5b33f82](https://github.com/molinfo-vienna/nerdd-frontend/commit/5b33f8219c6a3d92d2b45b3b04f4ea135b99e8b0))
+
 ## [1.0.24](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.23...v1.0.24) (2025-05-27)
 
 
