@@ -22,6 +22,7 @@ export interface Module {
     jobParameters: JobParameter[]
     resultProperties: ResultProperty[]
     partners: Partner[]
+    outputFormats: string[]
 }
 
 export default Module
