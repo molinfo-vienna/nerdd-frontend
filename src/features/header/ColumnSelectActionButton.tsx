@@ -9,7 +9,7 @@ export default function ColumnSelectActionButton({
     return (
         <ActionButton label="Columns">
             <ActionButton.Icon>
-                <HiMiniViewColumns size={36} />
+                <HiMiniViewColumns size={43} viewBox="0 0 20 15" />
             </ActionButton.Icon>
             <ActionButton.Dropdown>
                 <ColumnSelectDropdown

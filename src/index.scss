@@ -3,12 +3,12 @@
 //
 
 // If you need to test fonts, download them here like that:
-// @import url('https://fonts.googleapis.com/css?family=Noto+Sans:regular,bold,italic&subset=latin,latin-ext');
+// @import url('https://fonts.googleapis.com/css?family=Open+Sans:regular,bold,italic&subset=latin,latin-ext');
 // After settling on a font you should 
 // * search your font on fontsource.org
-// * install it locally via npm install @fontsource/noto-sans
+// * install it locally via npm install @fontsource/<font-name>
 // * import it in your scss file like this:
-// @import '~@fontsource/noto-sans/400.css';
+// @import "@fontsource/<font-name>/400.css";
 
 // load all fonts
 @import "@fontsource/overpass/500.css";
@@ -17,9 +17,14 @@
 // fonts tried for main body text
 // * Martel Sans: weird spacing
 // * Roboto: too thin
+// * Nunito Sans: too playful
+// * Lato: too small (don't want to change font-size-base)
 // * Noto Sans: looks good
 // * Open Sans: insanely beautiful
-$font-family-base: 'Open Sans';
+$font-family-sans-serif: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+// $font-size-base: 1.1rem;
 
 // fonts tried for headings h1, h2, h3
 // * Work Sans (all font weights are too thin or too thick)
@@ -99,8 +104,12 @@ $blue: #084887; // polynesian blue
 // $red: #FF9F1C; // orange peel
 // $red: #A44A3F; // chestnut
 // $red: #D66853; // jasper
+// $red: #e55934; // cinnabar
 //
-$red: #e55934; // cinnabar
+// Cinnabar (#e55934) was a promising candidate, but Bootstrap computes a dark foreground color
+// for it and we prefer a light text color on danger elements.
+//
+$red: #c54a28; // some strong red
 
 //
 // The variable "green" is used for the success color in bootstrap. The success color appears in
@@ -183,6 +192,13 @@ a.muted-link:focus {
 }
 
 /*
+ * Additional font size (used in header of result table)
+ */
+.fs-7 {
+    font-size: $font-size-sm;
+}
+
+/*
  * A primary muted link is a link that is styled like *primary* regular text, but will 
  * look like a link when hovered.
  */
@@ -195,53 +211,6 @@ a.primary-muted-link:hover,
 a.primary-muted-link:focus {
     color: $primary;
     text-decoration: underline;
-}
-
-
-// custom.css
-.CircularProgressbar {
-    /*
-     * This fixes an issue where the CircularProgressbar svg has
-     * 0 width inside a "display: flex" container, and thus not visible.
-     */
-    width: 100%;
-    /*
-     * This fixes a centering issue with CircularProgressbarWithChildren:
-     * https://github.com/kevinsqi/react-circular-progressbar/issues/94
-     */
-    vertical-align: middle;
-}
-
-.CircularProgressbar-path {
-    stroke: $primary;
-}
-
-.CircularProgressbar-trail {
-    stroke: gray;
-}
-
-.CircularProgressbar-text {
-    fill: $primary;
-    font-size: 20px;
-    dominant-baseline: middle;
-    text-anchor: middle;
-}
-
-// TODO: Bootstrap probably does this already
-.btn-outline-danger p {
-    color: $danger;
-}
-
-.btn-outline-danger span {
-    color: $danger;
-}
-
-.btn-outline-danger:hover p {
-    color: $light;
-}
-
-.btn-outline-danger:hover span {
-    color: $light;
 }
 
 

@@ -4,7 +4,7 @@ import { sortedIndexBy } from "lodash"
 import { memo, useMemo } from "react"
 import getColorPalette from "./getColorPalette"
 import getColumnRows from "./getColumnRows"
-import "./style.scss"
+import "./style.css"
 import TableRowGroup from "./TableRowGroup"
 
 interface AugmentedResultProperty extends ResultProperty {
@@ -206,7 +206,7 @@ const ResultTable = memo(function ResultTable({
                 overflowY: "visible",
             }}
         >
-            <thead className="sticky-top">
+            <thead className="sticky-top fs-7">
                 <tr key="firstRow">
                     {firstColumnRow.map((column: ColumnItem) => (
                         <th
@@ -240,7 +240,7 @@ const ResultTable = memo(function ResultTable({
                     </tr>
                 )}
             </thead>
-            <tbody className="table-group-divider">
+            <tbody>
                 {resultsGroupedByMolId.map((group: ResultGroup) => (
                     <TableRowGroup
                         key={group.mol_id}

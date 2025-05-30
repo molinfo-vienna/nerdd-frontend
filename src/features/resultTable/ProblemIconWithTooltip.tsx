@@ -62,7 +62,9 @@ export default function ProblemIconWithTooltip({
             <div
                 ref={refs.setReference}
                 {...getReferenceProps()}
-                className="problem-icon ms-1 text-white"
+                className={`
+                    problem-icon bg-danger rounded-circle ms-1 text-white
+                    d-inline-flex align-items-center justify-content-center`}
             >
                 <ProblemIcon problemType={problemType} size={size} />
             </div>

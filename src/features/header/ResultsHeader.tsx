@@ -24,30 +24,22 @@ export default function ResultsHeader({
                         numEntriesTotal={jobStatus.numEntriesTotal}
                     />
                     {/* Module name & status*/}
-                    <div className="vstack p-2 me-5">
-                        <div
-                            style={{ height: "50px" }}
-                            className="d-none d-md-block"
-                        >
-                            <h1 className="text-primary fw-bold my-auto">
-                                {module.visibleName}
-                            </h1>
-                        </div>
-                        <div
-                            style={{ height: "30px" }}
-                            className="d-md-none d-xs-block"
-                        >
-                            <h1 className="text-primary fw-bold my-auto">
-                                {module.visibleName}
-                            </h1>
-                        </div>
-                        <div style={{ height: "20px" }}>
-                            <p className="mb-0">{statusText}</p>
-                        </div>
+                    <div
+                        className="d-flex flex-column justify-content-end py-2 me-5"
+                        style={{
+                            height: "90px",
+                        }}
+                    >
+                        {/* mb-n1: use negative margin to compensate for font with excessive 
+                            margin at the bottom */}
+                        <h1 className="text-primary fw-bold my-auto mb-n1">
+                            {module.visibleName}
+                        </h1>
+                        <span className="mb-1">{statusText}</span>
                     </div>
                 </div>
                 {/* Action buttons */}
-                <div className="pb-3 btn-group" role="group">
+                <div className="btn-group pb-3" role="group">
                     {children}
                 </div>
             </div>

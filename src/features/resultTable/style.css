@@ -1,0 +1,113 @@
+/*
+ * Table header 
+ */
+thead {
+    /* 
+     * The table header moves when scrolling down the page. However, the border bottom gets lost,
+     * because, technically, it is not the bottom border of the head but the top bottom of the 
+     * table body. For that reason, we use box-shadow on thead to make the border always visible. 
+     */
+    box-shadow: 0 calc(var(--bs-border-width)) 0 0 var(--bs-border-color);
+}
+
+/*
+ * Table cell highlighting
+ *
+ * By default, cells do not have borders. When hovering, the cell is highlighted with a box-shadow
+ * (to avoid that the text jumps around due to changing border size). When multiple cells in a row
+ * are highlighted, the box-shadows are combined to create a continuous highlight.
+ */
+.table td {
+    /* 
+     * do not draw borders
+     * Note: we used .table td as the selector to avoid being overridden by bootstrap
+     * (e.g. .table > * > *)
+     */
+    border-bottom-width: 0;
+}
+
+td.row-group-end {
+    border-bottom: var(--bs-border-width) solid var(--bs-border-color);
+}
+
+td.highlighted {
+    box-shadow:
+        inset 0 2px 0 0 var(--bs-primary),
+        inset 0 -2px 0 0 var(--bs-primary);
+}
+
+td.highlighted.start-block {
+    box-shadow:
+        inset 2px 0 0 0 var(--bs-primary),
+        inset 0 2px 0 0 var(--bs-primary),
+        inset 0 -2px 0 0 var(--bs-primary);
+}
+
+td.highlighted.end-block {
+    box-shadow:
+        inset -2px 0 0 0 var(--bs-primary),
+        inset 0 2px 0 0 var(--bs-primary),
+        inset 0 -2px 0 0 var(--bs-primary);
+}
+
+td.highlighted.start-block.end-block {
+    box-shadow:
+        inset 2px 0 0 0 var(--bs-primary),
+        inset -2px 0 0 0 var(--bs-primary),
+        inset 0 2px 0 0 var(--bs-primary),
+        inset 0 -2px 0 0 var(--bs-primary);
+}
+
+/*
+ * Molecule depictions and images
+ */
+td .molecule {
+    width: 300px;
+    height: 180px;
+}
+
+td.compressed svg.molecule {
+    width: 150px;
+    height: 90px;
+}
+
+td.compressed svg.molecule:hover {
+    width: 300px;
+    height: 180px;
+}
+
+td img {
+    width: 300px;
+    height: 180px;
+}
+
+td.compressed img {
+    width: 150px;
+    height: 90px;
+}
+
+td.compressed img:hover {
+    width: 300px;
+    height: 180px;
+}
+
+/*
+ * Problem icons
+ *
+ * The problem icons are used to indicate problems with the molecule and are displayed in the top 
+ * right corner of the cell.
+ */
+
+.problem-icon {
+    min-width: 26px;
+    max-width: 26px;
+    min-height: 26px;
+    max-height: 26px;
+}
+
+svg ellipse.selected {
+    stroke: var(--bs-primary);
+    stroke-width: 2;
+    fill: transparent;
+    opacity: 1 !important;
+}

@@ -1,6 +1,6 @@
 import { useRef, useState } from "react"
 import Draggable from "react-draggable"
-import "./style.scss"
+import "./style.css"
 
 const clampValue = (value: number, min: number, max: number): number => {
     return Math.min(max, Math.max(min, value))

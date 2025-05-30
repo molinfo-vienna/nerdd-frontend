@@ -1,5 +1,6 @@
 import classNames from "classnames"
 import { Children } from "react"
+import { createPortal } from "react-dom"
 import { Link, To } from "react-router-dom"
 
 type ActionButtonProps = {
@@ -46,12 +47,12 @@ export default function ActionButton({
     const buttonFragment = (
         <Link
             className={classNames(
-                "btn text-center text-decoration-none text-reset d-inline-block",
+                "btn text-center text-decoration-none d-inline-block",
                 {
                     // z-1 is necessary for styled buttons to keep their colored border visible
                     // when hovering neighbor elements
                     [`btn-outline-${style} z-1`]: style !== "primary",
-                    "btn-outline-secondary": style === "primary",
+                    "btn-outline-secondary text-primary": style === "primary",
                     disabled,
                 },
             )}
@@ -65,20 +66,20 @@ export default function ActionButton({
             aria-expanded={hasDropdown ? "false" : undefined}
         >
             <div
-                className={classNames("vstack p-2", `text-${style}`)}
+                className={classNames(
+                    "d-flex flex-column justify-content-end py-2",
+                )}
                 style={{
                     width: "90px",
+                    height: "90px",
                 }}
             >
-                <div style={{ height: "42px" }}>
-                    <p className="mb-0">{icon}</p>
-                </div>
-                <span>{label}</span>
+                <span className="mb-2">{icon}</span>
+                <span className="mb-1">{label}</span>
             </div>
         </Link>
     )
 
-    let result
     if (hasDropdown) {
         return (
             <div className="btn-group dropdown-center" role="group">
@@ -87,17 +88,16 @@ export default function ActionButton({
             </div>
         )
     } else if (hasModal) {
-        result = (
+        return (
             <>
                 {buttonFragment}
-                {modal}
+                {/* Render the modal in the body (because a modal would not render correctly here) */}
+                {createPortal(modal, document.body)}
             </>
         )
     } else {
         return buttonFragment
     }
-
-    return result
 }
 
 ActionButton.Icon = function ActionButtonIcon({ children }) {
