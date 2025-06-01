@@ -1,3 +1,4 @@
+import mdx from "@mdx-js/rollup"
 import react from "@vitejs/plugin-react"
 import { visualizer } from "rollup-plugin-visualizer"
 import { defineConfig, type PluginOption } from "vite"
@@ -5,6 +6,7 @@ import tsconfigPaths from "vite-tsconfig-paths"
 
 export default defineConfig(({ mode }) => ({
     plugins: [
+        { enforce: "pre", ...mdx() } as PluginOption,
         react(),
         visualizer({
             open: true,
