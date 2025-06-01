@@ -1,3 +1,10 @@
+## [1.0.26](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.25...v1.0.26) (2025-06-01)
+
+
+### Bug Fixes
+
+* Add proxy config ([f4b2f62](https://github.com/molinfo-vienna/nerdd-frontend/commit/f4b2f626df105ecf4bc9528a757ff64745e6c463))
+
 ## [1.0.25](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.24...v1.0.25) (2025-05-30)
 
 
