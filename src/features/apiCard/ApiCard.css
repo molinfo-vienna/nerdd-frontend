@@ -1,0 +1,16 @@
+code {
+    font-family: "Fira Code", source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        monospace;
+}
+
+/* .btn-underline doesn't suffice so we make the rule more specific */
+.btn.btn-underline {
+    border: 0;
+    border-bottom: 3px solid transparent;
+    border-radius: 0;
+    margin-bottom: -2px;
+}
+
+.btn.btn-underline.active {
+    border-bottom-color: var(--bs-primary);
+}
