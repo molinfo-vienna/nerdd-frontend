@@ -1,7 +1,7 @@
 import { type RefObject, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import ScrollSpy from "react-scrollspy-navigation"
-import "./style.scss"
+import "./TableOfContents.css"
 
 type TOCItem = {
     level: number

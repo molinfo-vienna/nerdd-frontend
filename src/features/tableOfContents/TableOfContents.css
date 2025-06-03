@@ -1,0 +1,28 @@
+.toc {
+    /* make the table of contents stick to top of the screen */
+    position: sticky;
+    /* 
+     * create a small gap (to the top)
+     * (there is also a small gap to the bottom, see below)
+     */
+    top: var(--bs-spacer-5);
+    /* restrict the height:
+       100vh: 100% of the viewport height
+       - var(--bs-spacer-5): subtract the top gap
+       - var(--bs-spacer-2): subtract the bottom gap
+    */
+    max-height: calc(100vh - var(--bs-spacer-5) - var(--bs-spacer-2));
+
+    /* make the table of contents scrollable (in case screen is too small) */
+    overflow-y: auto;
+}
+
+.toc ul {
+    list-style-type: none;
+    padding-left: 1rem;
+}
+
+.toc a.active {
+    font-weight: bold;
+    color: var(--bs-primary) !important;
+}
