@@ -15,7 +15,7 @@ export interface Module {
     visibleName: string
     logo: string
     logoCaption?: string
-    exampleSmiles?: string
+    exampleSmiles: string
     description?: string
     task: PredictionTask
     publications: Publication[]
