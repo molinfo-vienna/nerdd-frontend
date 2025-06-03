@@ -26,8 +26,8 @@ and web servers. If you need to process more input molecules, you should use a P
 (see below, [Large jobs](#large-jobs)).
 
 You can specify job parameters by adding them as GET parameters. Check the module's endpoint <code
-class="text-nowrap">/{props.module.id}/jobs</code> in the [API documentation]({props.baseUrl}/docs)
-for additional information about the names and types of all parameters available.
+class="text-nowrap">/{props.module.id}/jobs</code> in the <a href={`${props.baseUrl}/docs`}>API
+documentation</a> for additional information about the names and types of all parameters available.
 
 <ApiCard
     baseUrl={props.baseUrl}
@@ -39,8 +39,9 @@ for additional information about the names and types of all parameters available
 
 ## Large jobs
 
-For larger jobs, you need to use a POST request to the <code class="text-nowrap">/{props.module.id}/jobs</code> endpoint
-and provide the input molecules in the request body. 
+For larger jobs, you need to use a POST request to the <code
+class="text-nowrap">/{props.module.id}/jobs</code> endpoint and provide the input molecules in the
+request body. 
 
 <ApiCard
     baseUrl={props.baseUrl}
@@ -53,8 +54,9 @@ and provide the input molecules in the request body.
 
 ## Upload an input file
 
-To upload an input file, you need to use a POST request to the <code class="text-nowrap">/{props.module.id}/jobs</code> 
-endpoint and include the file in the request body.
+To upload an input file, you need to use a POST request to the <code
+class="text-nowrap">/{props.module.id}/jobs</code> endpoint and include the file in the request
+body.
 
 Note: files can not be uploaded in the corresponding GET endpoint. You have to use a POST request.
 
@@ -130,4 +132,4 @@ Jobs can be deleted by sending a DELETE request to the job's endpoint.
 
 # Full API documentation
 
-See all endpoints at [{props.baseUrl}/docs]({props.baseUrl}/docs).
+See all endpoints at <a href={`${props.baseUrl}/docs`}>{props.baseUrl}/docs</a>.
