@@ -2,9 +2,13 @@ import { useAppDispatch, useAppSelector } from "@/app/hooks"
 import MockServer from "@/features/mockServer/MockServer"
 import TweakPanel from "@/features/tweakPanel/TweakPanel"
 import { useDebounce, useLocalStorage } from "@uidotdev/usehooks"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { makeButton, useTweaks } from "use-tweaks"
 import { setNumModules } from "./debugSlice"
+
+type DebugProps = {
+    children?: React.ReactNode
+}
 
 type DebugSettings = {
     mockServerEnabled: boolean
@@ -16,7 +20,7 @@ type DebugSettings = {
     predictionSpeed: number
 }
 
-export default function Debug() {
+export default function Debug({ children }: DebugProps) {
     const dispatch = useAppDispatch()
     const moduleConfigs = useAppSelector((state) => state.debug.moduleConfigs)
     const jobs = useAppSelector((state) => state.debug.jobs)
@@ -112,6 +116,12 @@ export default function Debug() {
         })
     }, [debouncedTweaks, setSettings])
 
+    // render children after a short delay to ensure that the mock server is initialized
+    const [renderChildren, setRenderChildren] = useState(false)
+    useEffect(() => {
+        setTimeout(() => setRenderChildren(true), 50)
+    }, [setRenderChildren])
+
     return (
         <>
             <TweakPanel />
@@ -125,6 +135,7 @@ export default function Debug() {
                 jobs={jobs}
                 logRequests={logRequests}
             />
+            {renderChildren && children}
         </>
     )
 }
