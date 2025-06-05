@@ -15,7 +15,7 @@ export default function createRouter(children: React.ReactNode) {
     return createBrowserRouter([
         {
             path: "/",
-            // TODO: use errorElement
+            errorElement: <ErrorPage />,
             element: <Suspense fallback={<LoadingPage />}>{children}</Suspense>,
             children: [
                 {
