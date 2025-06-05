@@ -1,5 +1,6 @@
 import classNames from "classnames"
 import { BsExclamationCircle } from "react-icons/bs"
+import { isRouteErrorResponse, useRouteError } from "react-router-dom"
 import Layout from "./Layout"
 
 const statusMap = {
@@ -8,31 +9,52 @@ const statusMap = {
 }
 
 type ErrorPageProps = {
-    error?: {
-        status?: string | number
-        originalStatus?: string | number
-        data?: {
-            detail?: string
-        }
-    }
+    error?: Error | string
     explanation?: string
+    resetErrorBoundary?: () => void
 }
 
-export default function ErrorPage({ error, explanation }: ErrorPageProps) {
-    let status
-    if (error === undefined || error.status === undefined) {
-        status = "000"
-    } else if (error.status === "PARSING_ERROR") {
-        status = error.originalStatus ?? "000"
+export default function ErrorPage({
+    error,
+    resetErrorBoundary,
+    explanation,
+}: ErrorPageProps) {
+    let status = 0
+    let statusExplanation = "Unknown Error"
+    let message = "Something went wrong."
+
+    //
+    // check if this is a routing error
+    //
+    const routeError = useRouteError()
+    if (routeError) {
+        // leave this console.error call here for reporting errors
+        console.error(routeError)
+
+        if (isRouteErrorResponse(routeError)) {
+            status = routeError.status
+            statusExplanation = routeError.statusText
+
+            if (routeError.error) {
+                message = routeError.error.message
+            }
+        }
     } else {
-        status = error.status
+        // leave this console.error call here for reporting errors
+        console.error(error)
+
+        if (error.status === "PARSING_ERROR") {
+            status = error.originalStatus ?? 0
+        } else {
+            status = error.status
+        }
+        message = error?.data?.detail || "An unknown error occurred"
+
+        statusExplanation = statusMap[status] || "Unknown Error"
     }
-    const message = error?.data?.detail || "An unknown error occurred"
 
-    const statusExplanation = statusMap[status] || "Unknown Error"
-
-    // leave this console.error here for reporting errors
-    console.error(error)
+    // pad the status code to 3 digits, e.g. 20 -> 020
+    const statusString = status.toString().padStart(3, "0")
 
     return (
         <Layout>
@@ -58,7 +80,7 @@ export default function ErrorPage({ error, explanation }: ErrorPageProps) {
                             </div>
                             <div>
                                 <p className="text-danger fw-bold mb-0">
-                                    {status}: {statusExplanation}
+                                    {statusString}: {statusExplanation}
                                 </p>
                                 <h1>{message}</h1>
                                 {explanation && <p>{explanation}</p>}
