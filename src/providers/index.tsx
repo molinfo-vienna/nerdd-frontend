@@ -3,6 +3,7 @@ import AppRouterProvider from "./AppRouterProvider"
 import DebugProvider from "./DebugProvider"
 import ErrorBoundaryProvider from "./ErrorBoundaryProvider"
 import ReduxProvider from "./ReduxProvider"
+import SuspenseProvider from "./SuspenseProvider"
 
 type PropsWithRequiredChildren<P = unknown> = P & { children: ReactNode }
 
@@ -10,9 +11,10 @@ type Provider = ComponentType<PropsWithRequiredChildren>
 
 const providers: Provider[] = [
     ReduxProvider,
-    DebugProvider,
     AppRouterProvider,
     ErrorBoundaryProvider,
+    SuspenseProvider,
+    DebugProvider,
 ]
 
 export default function Providers({ children }: PropsWithChildren) {
