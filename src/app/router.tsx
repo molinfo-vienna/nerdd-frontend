@@ -71,18 +71,6 @@ export default function createRouter(children: React.ReactNode) {
                     id: "loading",
                     element: <LoadingPage />,
                 },
-                {
-                    path: "*",
-                    id: "not_found",
-                    element: (
-                        <ErrorPage
-                            error={{
-                                status: 404,
-                                data: { detail: "Page not found." },
-                            }}
-                        />
-                    ),
-                },
             ],
         },
     ])
