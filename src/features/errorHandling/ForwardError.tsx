@@ -1,6 +1,7 @@
-import { RouteError, UnknownError } from "@/app/errors"
+import { UnknownError } from "@/app/errors"
 import ErrorPage from "@/pages/ErrorPage"
 import { isRouteErrorResponse, useRouteError } from "react-router-dom"
+import RouteError from "./RouteError"
 
 export default function ForwardError() {
     const routeError = useRouteError()
