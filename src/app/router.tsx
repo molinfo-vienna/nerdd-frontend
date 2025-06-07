@@ -1,6 +1,7 @@
-import { lazy, Suspense } from "react"
+import { lazy } from "react"
 import { createBrowserRouter } from "react-router-dom"
 
+import ForwardError from "@/features/errorHandling/ForwardError"
 import LoadingPage from "@/pages/LoadingPage"
 
 const LandingPage = lazy(() => import("@/pages/LandingPage"))
@@ -9,14 +10,13 @@ const CitationPage = lazy(() => import("@/pages/CitationPage"))
 const CreateJobPage = lazy(() => import("@/pages/CreateJobPage"))
 const AboutPage = lazy(() => import("@/pages/AboutPage"))
 const ResultsPage = lazy(() => import("@/pages/ResultsPage"))
-const ErrorPage = lazy(() => import("@/pages/ErrorPage"))
 
 export default function createRouter(children: React.ReactNode) {
     return createBrowserRouter([
         {
             path: "/",
-            errorElement: <ErrorPage />,
-            element: <Suspense fallback={<LoadingPage />}>{children}</Suspense>,
+            element: children,
+            errorElement: <ForwardError />,
             children: [
                 {
                     path: "/",
