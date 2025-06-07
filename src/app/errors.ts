@@ -1,9 +1,11 @@
-import { ErrorResponse } from "react-router-dom"
-
 const statusMap: Record<number, string> = {
     0: "Unknown Error",
+    400: "Bad Request",
+    401: "Unauthorized",
     404: "Not Found",
+    408: "Request Timeout",
     500: "Internal Server Error",
+    503: "Service Unavailable",
 }
 
 export class NerddError extends Error {
@@ -20,28 +22,16 @@ export class NerddError extends Error {
 }
 
 export class UnknownError extends NerddError {
-    constructor() {
-        super(
-            "An unknown error occurred",
-            0,
-            "Please refresh the page or try again later.",
-        )
-    }
-}
-
-export class RouteError extends NerddError {
-    constructor(errorResponse: ErrorResponse) {
-        let explanation = undefined
-
-        // If the error has a nested error object, use its message
-        if (errorResponse.error && errorResponse.error.message) {
-            explanation = errorResponse.error.message
+    constructor(error: Error | string | undefined = undefined) {
+        let explanation
+        if (typeof error === "string") {
+            explanation = error
+        } else if (error instanceof Error) {
+            explanation = error.message
+        } else {
+            explanation = "Please refresh the page or try again later."
         }
 
-        super(
-            "Cannot find the requested resource",
-            errorResponse.status,
-            explanation,
-        )
+        super("Something went wrong", 0, explanation)
     }
 }
