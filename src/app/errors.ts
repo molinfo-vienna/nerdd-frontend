@@ -1,3 +1,5 @@
+import { ErrorResponse } from "react-router-dom"
+
 const statusMap: Record<number, string> = {
     0: "Unknown Error",
     404: "Not Found",
@@ -23,6 +25,23 @@ export class UnknownError extends NerddError {
             "An unknown error occurred",
             0,
             "Please refresh the page or try again later.",
+        )
+    }
+}
+
+export class RouteError extends NerddError {
+    constructor(errorResponse: ErrorResponse) {
+        let explanation = undefined
+
+        // If the error has a nested error object, use its message
+        if (errorResponse.error && errorResponse.error.message) {
+            explanation = errorResponse.error.message
+        }
+
+        super(
+            "Cannot find the requested resource",
+            errorResponse.status,
+            explanation,
         )
     }
 }
