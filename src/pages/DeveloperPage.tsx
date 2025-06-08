@@ -1,8 +1,7 @@
 import Documentation from "@/features/apiCard/Documentation.mdx"
 import TableOfContents from "@/features/tableOfContents/TableOfContents"
-import { useGetModuleQuery } from "@/services"
+import { useModule } from "@/services/hooks"
 import { useRef, useState } from "react"
-import { useParams } from "react-router-dom"
 import Layout from "./Layout"
 import LoadingPage from "./LoadingPage"
 
@@ -10,24 +9,14 @@ export default function DeveloperPage() {
     // get the base url from the current location
     const baseUrl = `${window.location.protocol}//${window.location.host}/api`
 
-    const { moduleId } = useParams<{ moduleId: string }>()
+    const { module, isLoading } = useModule()
 
     const ref = useRef(null)
-
-    const {
-        data: module,
-        isLoading,
-        isError,
-    } = useGetModuleQuery(moduleId || "", { skip: !moduleId })
 
     const [selectedLanguage, setSelectedLanguage] = useState("python")
 
     if (isLoading) {
-        return LoadingPage()
-    }
-
-    if (isError || !module) {
-        return LoadingPage()
+        return <LoadingPage />
     }
 
     return (
