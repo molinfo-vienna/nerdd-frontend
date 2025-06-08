@@ -1,26 +1,18 @@
 import ModuleHeader from "@/features/header/ModuleHeader"
 import JobForm from "@/features/jobForm/JobForm"
-import { useAddJobMutation, useGetModuleQuery } from "@/services"
+import { useAddJobMutation } from "@/services"
+import { useModule } from "@/services/hooks"
 import { FORM_ERROR } from "final-form"
-import { useNavigate, useParams } from "react-router-dom"
-import ErrorPage from "./ErrorPage"
+import { useNavigate } from "react-router-dom"
 import Layout from "./Layout"
 import LoadingPage from "./LoadingPage"
 
 export default function CreateJobPage() {
     const navigate = useNavigate()
 
-    const { moduleId } = useParams()
-
     const [addJob, {}] = useAddJobMutation()
 
-    const { data: module, error, isLoading } = useGetModuleQuery(moduleId)
-
-    if (error) {
-        return ErrorPage({
-            error: error,
-        })
-    }
+    const { module, isLoading } = useModule()
 
     if (isLoading) {
         return LoadingPage()
@@ -48,7 +40,12 @@ export default function CreateJobPage() {
             ]),
         )
 
-        const response = await addJob({ moduleId, inputs, sources, params })
+        const response = await addJob({
+            moduleId: module.id,
+            inputs,
+            sources,
+            params,
+        })
 
         if (response.error) {
             console.error(response.error)
@@ -59,7 +56,7 @@ export default function CreateJobPage() {
             }
         }
 
-        navigate(`/${moduleId}/${response.data.id}`)
+        navigate(`/${module.id}/${response.data.id}`)
     }
 
     return (
