@@ -1,6 +1,8 @@
+import { JobStatus } from "@/types"
 import { Module } from "@/types/module"
 import { useParams } from "react-router-dom"
 import RTKQueryError from "./RTKQueryError"
+import { useGetJobStatusQuery } from "./jobs"
 import { useGetModuleQuery } from "./modules"
 
 type UseModuleResult = {
@@ -26,6 +28,35 @@ export function useModule(throwErrors: boolean = true): UseModuleResult {
 
     return {
         module: data,
+        isLoading,
+    }
+}
+
+type UseJobStatusResult = {
+    jobStatus: JobStatus
+    isLoading: boolean
+}
+
+export function useJobStatus(throwErrors: boolean = true): UseJobStatusResult {
+    const { moduleId, jobId } = useParams()
+
+    const {
+        data: jobStatus,
+        error,
+        isLoading,
+    } = useGetJobStatusQuery(
+        { moduleId, jobId },
+        {
+            skip: moduleId === undefined || jobId === undefined,
+        },
+    )
+
+    if (error != null && throwErrors) {
+        throw new RTKQueryError(error)
+    }
+
+    return {
+        jobStatus,
         isLoading,
     }
 }
