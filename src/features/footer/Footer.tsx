@@ -1,4 +1,4 @@
-import { useGetModuleQuery } from "@/services"
+import { useModule } from "@/services/hooks"
 import {
     FaBook,
     FaBookOpen,
@@ -12,19 +12,11 @@ import {
     FaSitemap,
     FaWindowMaximize,
 } from "react-icons/fa6"
-import { Link, useParams } from "react-router-dom"
+import { Link } from "react-router-dom"
 import FooterLink from "./FooterLink"
 
 export default function Footer() {
-    //
-    // get current module
-    // * e.g. LandingPage is module-independent so moduleId will be undefined
-    // * e.g. CreateJobPage depends on module -> moduleId will be defined
-    //
-    const { moduleId } = useParams()
-    const { data: module } = useGetModuleQuery(moduleId, {
-        skip: moduleId === undefined,
-    })
+    const { module } = useModule(false)
 
     //
     // decide which partners to show
