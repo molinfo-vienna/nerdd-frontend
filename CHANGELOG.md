@@ -1,3 +1,12 @@
+## [1.0.27](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.26...v1.0.27) (2025-06-09)
+
+
+### Bug Fixes
+
+* Add parameter to indicate origin of request ([c9d7525](https://github.com/molinfo-vienna/nerdd-frontend/commit/c9d75254ea5edf8adfc9b153981ba2d3d9a6616e))
+* Return errors in form submit handler ([5628a97](https://github.com/molinfo-vienna/nerdd-frontend/commit/5628a97625efb4afd0c8d7e4e6fff3d1a04e06e8))
+* Simplify job submission logic ([0259dd4](https://github.com/molinfo-vienna/nerdd-frontend/commit/0259dd4a7506b64ff25604e2caa0dcc262391ef3))
+
 ## [1.0.26](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.25...v1.0.26) (2025-06-01)
 
 
