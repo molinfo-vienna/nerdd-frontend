@@ -1,6 +1,7 @@
 import ModuleHeader from "@/features/header/ModuleHeader"
 import JobForm from "@/features/jobForm/JobForm"
 import { useAddJobMutation, useGetModuleQuery } from "@/services"
+import { FORM_ERROR } from "final-form"
 import { useNavigate, useParams } from "react-router-dom"
 import ErrorPage from "./ErrorPage"
 import Layout from "./Layout"
@@ -50,8 +51,13 @@ export default function CreateJobPage() {
         // compose submit data
         const data = {
             job: {
+                // a list of inputs (raw text) to be used for the job
                 inputs,
+                // a list of sources (files) to be used for the job
                 sources,
+                // extra parameter to indicate that this job is submitted from the web UI
+                origin: "frontend",
+                // all job parameters
                 ...jobParams,
             },
         }
@@ -60,7 +66,11 @@ export default function CreateJobPage() {
 
         if (response.error) {
             console.error(response.error)
-            return
+            return {
+                [FORM_ERROR]:
+                    response.error.data?.detail ||
+                    "An error occurred while creating the job.",
+            }
         }
 
         navigate(`/${moduleId}/${response.data.id}`)
