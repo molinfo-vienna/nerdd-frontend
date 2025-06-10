@@ -1,3 +1,11 @@
+## [1.0.28](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.27...v1.0.28) (2025-06-10)
+
+
+### Bug Fixes
+
+* Add altcha dependency ([c0bf7ff](https://github.com/molinfo-vienna/nerdd-frontend/commit/c0bf7ff4b07eb66ce7f84cf913d56d4a83632de4))
+* Implement altcha component ([56af9c8](https://github.com/molinfo-vienna/nerdd-frontend/commit/56af9c87e2c89e5a01d1dc40a0e600cb82d493a0))
+
 ## [1.0.27](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.26...v1.0.27) (2025-06-09)
 
 
