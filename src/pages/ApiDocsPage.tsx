@@ -1,11 +1,11 @@
-import Documentation from "@/features/apiCard/Documentation.mdx"
+import Documentation from "@/features/apiDocs/ApiDocs.mdx"
 import TableOfContents from "@/features/tableOfContents/TableOfContents"
 import { useModule } from "@/services/hooks"
 import { useRef, useState } from "react"
 import Layout from "./Layout"
 import LoadingPage from "./LoadingPage"
 
-export default function DeveloperPage() {
+export default function ApiDocsPage() {
     // get the base url from the current location
     const baseUrl = `${window.location.protocol}//${window.location.host}/api`
 
