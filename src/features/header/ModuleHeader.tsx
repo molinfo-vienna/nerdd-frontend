@@ -42,7 +42,6 @@ export default function ModuleHeader({ module }: ModuleHeaderProps) {
     //   * Small screens (Smartphone): list of links below title and description
     //   * Medium screens (Tablet sideways): column on the right side
     //   * Large screens (Desktop): same as medium screens
-
     return (
         <section className="container py-5">
             <div className="row justify-content-center pb-3">
@@ -81,7 +80,8 @@ export default function ModuleHeader({ module }: ModuleHeaderProps) {
                 <div
                     // d-none d-lg-block: show this column only on large screens
                     // ps-xl-5: add padding on the left side for very large screens
-                    className="col-4 d-none d-lg-block ps-xl-5"
+                    // align-content-center: center the content vertically
+                    className="col-4 d-none d-lg-block ps-xl-5 align-content-center"
                 >
                     <div className="card">
                         {module.publications.map((publication, i) => (
