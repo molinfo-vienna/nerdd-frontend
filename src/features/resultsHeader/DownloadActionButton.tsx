@@ -34,7 +34,7 @@ export default function DownloadActionButton({
             }
         >
             <ActionButton.Icon>
-                <FaFileDownload size={33} />
+                <FaFileDownload />
             </ActionButton.Icon>
             <ActionButton.Dropdown>
                 <ul className="dropdown-menu">

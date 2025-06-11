@@ -1,10 +1,10 @@
-import ColorSelectActionButton from "@/features/header/ColorSelectActionButton"
-import ColumnSelectActionButton from "@/features/header/ColumnSelectActionButton"
-import DeleteActionButton from "@/features/header/DeleteActionButton"
-import DocsActionButton from "@/features/header/DocsActionButton"
-import DownloadActionButton from "@/features/header/DownloadActionButton"
-import ResultsHeader from "@/features/header/ResultsHeader"
 import Pagination from "@/features/pagination/Pagination"
+import ColorSelectActionButton from "@/features/resultsHeader/ColorSelectActionButton"
+import ColumnSelectActionButton from "@/features/resultsHeader/ColumnSelectActionButton"
+import DeleteActionButton from "@/features/resultsHeader/DeleteActionButton"
+import DocsActionButton from "@/features/resultsHeader/DocsActionButton"
+import DownloadActionButton from "@/features/resultsHeader/DownloadActionButton"
+import ResultsHeader from "@/features/resultsHeader/ResultsHeader"
 import ResultTable from "@/features/resultTable/ResultTable"
 import {
     useGetJobStatusQuery,

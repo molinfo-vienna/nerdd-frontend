@@ -176,7 +176,12 @@ export default function Pagination({
                         to={getPageLink(currentPageOneBased - 1)}
                         aria-label="Previous"
                     >
-                        <span aria-hidden="true">Previous</span>
+                        <span className="d-none d-sm-inline" aria-hidden="true">
+                            Previous
+                        </span>
+                        <span className="d-sm-none" aria-hidden="true">
+                            &laquo;
+                        </span>
                     </Link>
                 </li>
 
@@ -205,7 +210,12 @@ export default function Pagination({
                         to={getPageLink(currentPageOneBased + 1)}
                         aria-label="Next"
                     >
-                        <span aria-hidden="true">Next</span>
+                        <span className="d-none d-sm-inline" aria-hidden="true">
+                            Next
+                        </span>
+                        <span className="d-sm-none" aria-hidden="true">
+                            &raquo;
+                        </span>
                     </Link>
                 </li>
             </ul>
