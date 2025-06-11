@@ -1,3 +1,19 @@
+# [1.1.0](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.28...v1.1.0) (2025-06-11)
+
+
+### Bug Fixes
+
+* Compress pagination text on small screens ([fa2ec6f](https://github.com/molinfo-vienna/nerdd-frontend/commit/fa2ec6f695daf9a095f148bf3979cfd04c5e839c))
+* Hide button labels on small screens ([22e36b2](https://github.com/molinfo-vienna/nerdd-frontend/commit/22e36b26d2fd255796fc3c1df40619682cbf7109))
+* Make results table responsive on small screens ([3f37df1](https://github.com/molinfo-vienna/nerdd-frontend/commit/3f37df1a3f42ba741e3a0065e621b50716d3cc58))
+* Move results header into separate feature folder ([2e8dafb](https://github.com/molinfo-vienna/nerdd-frontend/commit/2e8dafbe6a4972159b03112b16b6570a0747cf80))
+* Tune the viewbox of all button icons ([bf85778](https://github.com/molinfo-vienna/nerdd-frontend/commit/bf85778f4373b72d1fb66d0e0866a957c4cd7388))
+
+
+### Features
+
+* Make app mobile again (MAMA) ([c016af2](https://github.com/molinfo-vienna/nerdd-frontend/commit/c016af2e53807aedfcc9e8d22286a6dcff7cde2b))
+
 ## [1.0.28](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.27...v1.0.28) (2025-06-10)
 
 
