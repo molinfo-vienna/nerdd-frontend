@@ -27,7 +27,7 @@ export default function ApiDocsPage() {
             </Layout.Header>
             <div className="container py-4">
                 <div className="row justify-content-center">
-                    <div className="col col-lg-6" ref={ref}>
+                    <div className="col col-lg-8 col-xl-6" ref={ref}>
                         <Documentation
                             baseUrl={baseUrl}
                             module={module}
@@ -35,7 +35,7 @@ export default function ApiDocsPage() {
                             setSelectedLanguage={setSelectedLanguage}
                         />
                     </div>
-                    <div className="col-lg-4 d-none d-lg-block ps-5">
+                    <div className="col-4 d-none d-lg-block ps-xl-5">
                         <TableOfContents contentRef={ref} />
                     </div>
                 </div>
