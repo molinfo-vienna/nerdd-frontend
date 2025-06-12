@@ -1,5 +1,5 @@
+import ProgressBar from "@/features/progressBar/ProgressBar"
 import { JobStatus, Module } from "@/types"
-import ProgressBar from "../progressBar/ProgressBar"
 
 type ResultsHeaderProps = {
     module: Module

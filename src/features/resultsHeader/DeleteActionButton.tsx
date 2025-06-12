@@ -1,9 +1,9 @@
+import DeleteJobDialog from "@/features/deleteJobDialog/DeleteJobDialog"
 import { useDeleteJobMutation } from "@/services"
 import { useCallback, useState } from "react"
 import { createPortal } from "react-dom"
 import { FaTrash } from "react-icons/fa6"
 import { useNavigate } from "react-router-dom"
-import DeleteJobDialog from "../deleteJobDialog/DeleteJobDialog"
 import ActionButton from "./ActionButton"
 
 type DeleteActionButtonProps = {
