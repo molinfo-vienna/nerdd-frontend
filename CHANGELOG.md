@@ -1,3 +1,29 @@
+## [1.1.1](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.0...v1.1.1) (2025-06-13)
+
+
+### Bug Fixes
+
+* Adapt ColorSelectDropdown to redux state ([528a19c](https://github.com/molinfo-vienna/nerdd-frontend/commit/528a19ce0a4cae6c80e29c92075a2662da6e7b55))
+* Adapt ColumnSelectDropdown to redux state ([224931b](https://github.com/molinfo-vienna/nerdd-frontend/commit/224931bf1ddca2f96c18b6262fad075f755606eb))
+* Adapt ResultsPage to redux state ([2b489c0](https://github.com/molinfo-vienna/nerdd-frontend/commit/2b489c0941cc01362b6c49a2b9e4b5da6f7abff4))
+* Add result table slice to store ([345a4f5](https://github.com/molinfo-vienna/nerdd-frontend/commit/345a4f5fc16136c8bea15d436f339f6447c3651a))
+* Convert normalize to typescript ([e472b3d](https://github.com/molinfo-vienna/nerdd-frontend/commit/e472b3d497ba0fd2fa747981f80b242cc7e79f93))
+* Define type for prediction tasks ([f0562a8](https://github.com/molinfo-vienna/nerdd-frontend/commit/f0562a868aac55da81e42859ec206438dd234086))
+* Implement result table slice ([9146d7b](https://github.com/molinfo-vienna/nerdd-frontend/commit/9146d7bb6c03c903d6454b8c14dbe3bd301e9d77))
+* Make sure that one column is shown when user deselects all ([b89c16d](https://github.com/molinfo-vienna/nerdd-frontend/commit/b89c16d0bdb3357c90e884e581d014374ed4e90e))
+* Move getColumnRows to selectors ([497554a](https://github.com/molinfo-vienna/nerdd-frontend/commit/497554a4ef5c15f81d768c5a479a3bf20e4b17cf))
+* Move result grouping into selector ([d87e6e8](https://github.com/molinfo-vienna/nerdd-frontend/commit/d87e6e8652eadafb850457b897334414b6bb53e9))
+* Normalize group field in result properties ([04f92c1](https://github.com/molinfo-vienna/nerdd-frontend/commit/04f92c13dbcb6a1666acd9f960a47ea919a786f7))
+* Remove unused type ([114c320](https://github.com/molinfo-vienna/nerdd-frontend/commit/114c3202e1d724b6cac48dad29f72598bda1a4fe))
+* Set a default value for module tasks ([d47b8bd](https://github.com/molinfo-vienna/nerdd-frontend/commit/d47b8bd250919798e28a1a3405158b37f84adf84))
+* Simplify ResultTable by using redux state ([d391a85](https://github.com/molinfo-vienna/nerdd-frontend/commit/d391a858457aac58572b1793bb1446a5a3933d15))
+* Simplify table components by using redux state ([82b909a](https://github.com/molinfo-vienna/nerdd-frontend/commit/82b909a5e563de19a92d300898050c5956920093))
+* Skip requests if parameters not defined ([22806f8](https://github.com/molinfo-vienna/nerdd-frontend/commit/22806f8e9864b6d35a5120accc840ef99f34adfe))
+* Update ResultProperty type ([368d5a9](https://github.com/molinfo-vienna/nerdd-frontend/commit/368d5a92288ea484c70c4149760b5a112f8863de))
+* Use correct fields to uniquely identiy records and properties ([58aee9a](https://github.com/molinfo-vienna/nerdd-frontend/commit/58aee9a003a97e64b965bbe474f9ee2aac701fcd))
+* Use correct path in hooks.ts ([0aab1ad](https://github.com/molinfo-vienna/nerdd-frontend/commit/0aab1ad3e4be0b9f9b6c2ccdd39a9332c5a1361c))
+* Use typescript for services/index.js ([3c979d0](https://github.com/molinfo-vienna/nerdd-frontend/commit/3c979d08ff3b65e684821fdf71abef37c4c56ea0))
+
 # [1.1.0](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.0.28...v1.1.0) (2025-06-11)
 
 
