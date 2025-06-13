@@ -1,8 +1,9 @@
+import type { JobParameter, Module, ResultProperty } from "@/types"
 import _ from "lodash"
 import ReactDOMServer from "react-dom/server"
 import { PiGearLight } from "react-icons/pi"
 
-function normalizeJobParameter(jobParameter) {
+function normalizeJobParameter(jobParameter): JobParameter {
     return {
         ...jobParameter,
         visibleName:
@@ -12,7 +13,7 @@ function normalizeJobParameter(jobParameter) {
     }
 }
 
-function normalizeResultProperty(resultProperty) {
+function normalizeResultProperty(resultProperty): ResultProperty {
     return {
         ...resultProperty,
         visibleName:
@@ -23,10 +24,11 @@ function normalizeResultProperty(resultProperty) {
             (resultProperty.visible ?? true) &&
             resultProperty.name !== "problems",
         level: resultProperty.level || "molecule",
+        group: resultProperty.group || "General",
     }
 }
 
-export function normalizeModule(module) {
+export function normalizeModule(module): Module {
     const reactElement = PiGearLight
 
     const logo =
@@ -47,6 +49,7 @@ export function normalizeModule(module) {
         visibleName:
             module.visibleName || _.upperFirst(_.camelCase(module.name)),
         logo,
+        task: module.task || "molecular_property_prediction",
         publications: module.publications || [],
         jobParameters,
         resultProperties,

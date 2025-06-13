@@ -3,6 +3,11 @@ import type { Partner } from "./partner"
 import type { Publication } from "./publication"
 import type { ResultProperty } from "./resultProperty"
 
+export type PredictionTask =
+    | "molecular_property_prediction"
+    | "atom_property_prediction"
+    | "derivative_property_prediction"
+
 export interface Module {
     id: string
     name: string
@@ -12,7 +17,7 @@ export interface Module {
     logoCaption?: string
     exampleSmiles?: string
     description?: string
-    task?: string
+    task: PredictionTask
     publications: Publication[]
     jobParameters: JobParameter[]
     resultProperties: ResultProperty[]

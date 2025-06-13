@@ -1,5 +1,6 @@
 import debugSliceReducer from "@/features/debug/debugSlice"
 import fileFieldSliceReducer from "@/features/fileUpload/fileFieldSlice"
+import resultTableSliceReducer from "@/features/resultTable/resultTableSlice"
 import tweakPanelSliceReducer from "@/features/tweakPanel/tweakPanelSlice"
 import { baseApi } from "@/services"
 import { configureStore } from "@reduxjs/toolkit"
@@ -11,6 +12,7 @@ export const store = configureStore({
         debug: debugSliceReducer,
         tweakPanel: tweakPanelSliceReducer,
         fileField: fileFieldSliceReducer,
+        resultTable: resultTableSliceReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(baseApi.middleware),

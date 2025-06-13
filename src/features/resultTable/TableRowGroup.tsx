@@ -2,16 +2,14 @@ import type { Module, ResultProperty } from "@/types"
 import classNames from "classnames"
 import { useCallback, useState } from "react"
 import TableCell from "./TableCell"
-
-type Group = {
-    children: any[]
-}
+import type { AugmentedResultProperty, ResultGroup } from "./resultTableSlice"
 
 type TableRowGroupProps = {
-    group: Group
+    group: ResultGroup
     module: Module
     atomColorProperty?: ResultProperty
-    resultProperties: ResultProperty[]
+    resultProperties: AugmentedResultProperty[]
+    propertyPalettes: Record<string, any>
 }
 
 export default function TableRowGroup({
@@ -19,29 +17,30 @@ export default function TableRowGroup({
     module,
     atomColorProperty,
     resultProperties,
+    propertyPalettes,
 }: TableRowGroupProps) {
     //
     // handle mouse over event
     //
-    const [selectedAtom, setSelectedAtom] = useState<
-        string | number | undefined
-    >(undefined)
+    const [selectedAtom, setSelectedAtom] = useState<number | undefined>(
+        undefined,
+    )
 
     const handleAtomSelect = useCallback(
-        (atomId: string | number) => {
+        (atomId: number) => {
             setSelectedAtom(atomId)
         },
         [setSelectedAtom],
     )
 
     return group.children.map((result, j) => (
-        <tr key={j}>
+        <tr key={result.id}>
             {resultProperties.map(
-                (resultProperty, k) =>
+                (resultProperty) =>
                     // Render the molecule properties only for the first row of the group.
                     (resultProperty.level !== "molecule" || j === 0) && (
                         <TableCell
-                            key={k}
+                            key={resultProperty.name}
                             className={classNames({
                                 "row-group-end":
                                     resultProperty.level === "molecule" ||
@@ -58,6 +57,7 @@ export default function TableRowGroup({
                                     : null
                             }
                             atomColorProperty={atomColorProperty}
+                            propertyPalettes={propertyPalettes}
                         />
                     ),
             )}

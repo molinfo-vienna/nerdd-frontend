@@ -1,12 +1,12 @@
 export interface ResultProperty {
-    name?: string
+    name: string
     type?: string
-    visibleName?: string
-    unit?: string
+    visibleName: string
     precision?: number
-    formatter?: string
-    group?: string
-    level?: string
+    group: string
+    level: string
+    visible: boolean
+    colorPalette?: string
 }
 
 export default ResultProperty

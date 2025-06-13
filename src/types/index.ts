@@ -1,7 +1,7 @@
 export type { Job } from "./job"
 export type { JobParameter } from "./jobParameter"
 export type { JobStatus } from "./jobStatus"
-export type { Module } from "./module"
+export type { Module, PredictionTask } from "./module"
 export type { OutputFile } from "./outputFile"
 export type { Partner } from "./partner"
 export type { Publication } from "./publication"
