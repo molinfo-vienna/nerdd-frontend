@@ -1,5 +1,5 @@
 import useColorPalettes from "@/features/colorPalettes/useColorPalettes"
-import type { Module, ResultProperty } from "@/types"
+import type { Module } from "@/types"
 import { memo, useMemo } from "react"
 import getColorPalette from "./getColorPalette"
 import type { AugmentedResultProperty, ResultGroup } from "./resultTableSlice"
@@ -13,7 +13,6 @@ type ResultTableProps = {
     firstColumnRow: Column[]
     secondColumnRow: Column[]
     resultProperties: AugmentedResultProperty[]
-    atomColorProperty?: ResultProperty
 }
 
 const ResultTable = memo(function ResultTable({
@@ -22,7 +21,6 @@ const ResultTable = memo(function ResultTable({
     firstColumnRow,
     secondColumnRow,
     resultProperties,
-    atomColorProperty,
 }: ResultTableProps) {
     //
     // compute color palettes once (to improve memoization)
@@ -92,7 +90,6 @@ const ResultTable = memo(function ResultTable({
                             group={group}
                             module={module}
                             resultProperties={resultProperties}
-                            atomColorProperty={atomColorProperty}
                             propertyPalettes={propertyPalettes}
                         />
                     ))}

@@ -257,9 +257,6 @@ export default function ResultsPage() {
                                                 resultProperties={
                                                     visibleResultProperties
                                                 }
-                                                atomColorProperty={
-                                                    atomColorProperty
-                                                }
                                             />
                                         </div>
                                     )}

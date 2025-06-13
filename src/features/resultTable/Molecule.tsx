@@ -1,13 +1,13 @@
-import { ResultProperty } from "@/types"
+import { useAppSelector } from "@/app/hooks"
 import parse, { attributesToProps, domToReact } from "html-react-parser"
 import { useEffect, useMemo, useRef, useState } from "react"
+import { ResultGroup, selectAtomColorProperty } from "./resultTableSlice"
 
 type MoleculeProps = {
     svgValue: string
     selectedAtom?: number
     onAtomSelect?: (atomId?: number) => void
-    group?: any
-    atomColorProperty?: ResultProperty
+    group: ResultGroup
     propertyPalettes: Record<string, any>
 }
 
@@ -16,9 +16,10 @@ export default function Molecule({
     selectedAtom,
     onAtomSelect,
     group,
-    atomColorProperty,
     propertyPalettes,
 }: MoleculeProps) {
+    const atomColorProperty = useAppSelector(selectAtomColorProperty)
+
     const [svg, setSvg] = useState<React.ReactElement | null>(null)
 
     const ref = useRef<SVGSVGElement>(null)
@@ -27,7 +28,7 @@ export default function Molecule({
     // compute atom colors
     //
     const atomColors = useMemo(() => {
-        if (!group || atomColorProperty == null) return undefined
+        if (atomColorProperty == null || onAtomSelect == null) return undefined
 
         const colorScale = propertyPalettes[atomColorProperty?.name]
         if (colorScale == null) return undefined

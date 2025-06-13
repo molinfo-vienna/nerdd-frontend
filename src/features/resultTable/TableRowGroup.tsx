@@ -1,4 +1,4 @@
-import type { Module, ResultProperty } from "@/types"
+import type { Module } from "@/types"
 import classNames from "classnames"
 import { useCallback, useState } from "react"
 import TableCell from "./TableCell"
@@ -7,7 +7,6 @@ import type { AugmentedResultProperty, ResultGroup } from "./resultTableSlice"
 type TableRowGroupProps = {
     group: ResultGroup
     module: Module
-    atomColorProperty?: ResultProperty
     resultProperties: AugmentedResultProperty[]
     propertyPalettes: Record<string, any>
 }
@@ -15,7 +14,6 @@ type TableRowGroupProps = {
 export default function TableRowGroup({
     group,
     module,
-    atomColorProperty,
     resultProperties,
     propertyPalettes,
 }: TableRowGroupProps) {
@@ -56,7 +54,6 @@ export default function TableRowGroup({
                                     ? handleAtomSelect
                                     : null
                             }
-                            atomColorProperty={atomColorProperty}
                             propertyPalettes={propertyPalettes}
                         />
                     ),
