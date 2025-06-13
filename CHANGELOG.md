@@ -1,3 +1,15 @@
+## [1.1.2](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.1...v1.1.2) (2025-06-13)
+
+
+### Bug Fixes
+
+* Do not drill atomColorProperty through components ([fdd3978](https://github.com/molinfo-vienna/nerdd-frontend/commit/fdd3978f7e1ae7ddf2693fa691969cf78a7ccbf1))
+* Do not pass atomColorProperty to results table ([aa141ce](https://github.com/molinfo-vienna/nerdd-frontend/commit/aa141ce17215234239ebe315b408700c113bb7eb))
+* Get atomColorProperty from redux state ([b9c03b9](https://github.com/molinfo-vienna/nerdd-frontend/commit/b9c03b9d11b59aa1244e527bcbdc3a82ebfbd0b9))
+* Make group a required prop in Molecule ([3f273f8](https://github.com/molinfo-vienna/nerdd-frontend/commit/3f273f86bbd7138f72ea6c6b9dc258cdd16a6370))
+* Remove unused variable ([ae72dcb](https://github.com/molinfo-vienna/nerdd-frontend/commit/ae72dcbbcc1949572c16084f7411c66d3ee1f4d6))
+* Use correct type for group in Molecule component ([af57de7](https://github.com/molinfo-vienna/nerdd-frontend/commit/af57de705f6c44785d6bbcc40faa522a09982925))
+
 ## [1.1.1](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.0...v1.1.1) (2025-06-13)
 
 
