@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.3...v1.1.4) (2025-06-14)
+
+
+### Bug Fixes
+
+* Install types for lodash ([f3e81ce](https://github.com/molinfo-vienna/nerdd-frontend/commit/f3e81ce9dae862d76e1cf6fd207b9d23758e1166))
+
 ## [1.1.3](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.2...v1.1.3) (2025-06-14)
 
 
