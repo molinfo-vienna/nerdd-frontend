@@ -1,3 +1,13 @@
+## [1.1.3](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.2...v1.1.3) (2025-06-14)
+
+
+### Bug Fixes
+
+* Color columns according to redux state ([bd2d0d7](https://github.com/molinfo-vienna/nerdd-frontend/commit/bd2d0d7a8929cfd1cf694d5c203f6af8487052e2))
+* Connect coloring components with redux state ([4149f31](https://github.com/molinfo-vienna/nerdd-frontend/commit/4149f31f2e98ce21bdb82ac65430b607fb2d0b56))
+* List colorable columns in ColorSelectDropdown ([904fe9b](https://github.com/molinfo-vienna/nerdd-frontend/commit/904fe9b38dd9f5a3ee5deee24eeca204bf02fd7e))
+* Make column coloring configurable ([0d78ed6](https://github.com/molinfo-vienna/nerdd-frontend/commit/0d78ed699528a3bbd67b1dac100a2ff39a7a869b))
+
 ## [1.1.2](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.1...v1.1.2) (2025-06-13)
 
 
