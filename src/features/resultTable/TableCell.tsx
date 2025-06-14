@@ -192,7 +192,9 @@ export default function TableCell({
             "d-none": !resultProperty.visible,
         }),
         style: {
-            backgroundColor: propertyPalettes[resultProperty.name](value),
+            backgroundColor: resultProperty.colored
+                ? propertyPalettes[resultProperty.name](value)
+                : undefined,
         },
         onMouseEnter: (e) =>
             resultProperty.level === "atom" && onAtomSelect
