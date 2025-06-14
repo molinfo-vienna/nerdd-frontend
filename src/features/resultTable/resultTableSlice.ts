@@ -1,6 +1,5 @@
 import type { PredictionTask, Result, ResultProperty } from "@/types"
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
-// TODO: add types for lodash
 import { sortedIndexBy } from "lodash"
 
 export type InternalResultProperty = ResultProperty & {
