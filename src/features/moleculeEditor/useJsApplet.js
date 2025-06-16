@@ -29,7 +29,7 @@ export default function useJsApplet() {
     }, [])
 
     // JSME has a broken installation process, so we need to load it manually.
-    useScript("/resources/legacyjs/jsme_2017-02-26/jsme/jsme.nocache.js", {
+    useScript("/resources/legacyjs/jsme_2024-04-29/jsme/jsme.nocache.js", {
         removeOnUnmount: false,
     })
 
