@@ -169,18 +169,6 @@ export default function ResultsPage() {
     //
     // error handling
     //
-    if (moduleId === undefined) {
-        return ErrorPage({
-            error: new Error("Module ID is not defined"),
-        })
-    }
-
-    if (jobId === undefined) {
-        return ErrorPage({
-            error: new Error("Job ID is not defined"),
-        })
-    }
-
     if (errorResults) {
         return ErrorPage({ error: errorResults })
     }
