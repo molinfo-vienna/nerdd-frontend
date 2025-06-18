@@ -1,28 +1,23 @@
+import { NerddError } from "@/app/errors"
 import ModuleCard from "@/features/moduleCard/ModuleCard"
 import { useGetModulesQuery } from "@/services"
-import ErrorPage from "./ErrorPage"
 import Layout from "./Layout"
 import LoadingPage from "./LoadingPage"
 
 export default function LandingPage() {
     const { data: modules, error, isLoading } = useGetModulesQuery()
 
-    if (error) {
-        return ErrorPage({ error })
+    if (error != null) {
+        throw error
     }
 
-    // TODO: show a message if there are no modules
     if (isLoading) {
         return LoadingPage()
-    } else if (modules === undefined || Object.keys(modules).length === 0) {
-        return (
-            <ErrorPage
-                error={{
-                    status: "000",
-                    data: { detail: "Modules are not available." },
-                }}
-            />
-        )
+    }
+
+    // loading is done, but no modules are available
+    if (modules == null || Object.keys(modules).length === 0) {
+        throw new NerddError("No modules available", 400)
     }
 
     // sort modules alphabetically by name
