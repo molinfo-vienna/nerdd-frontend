@@ -43,7 +43,6 @@ export default function MockServer({
     useEffect(() => {
         if (enabled) {
             const server = createServer({
-                logging: true,
                 routes() {
                     // passthrough for static resources
                     // (do that first before defining the namespace /api)
