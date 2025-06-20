@@ -69,7 +69,7 @@ td img {
     height: 180px;
 }
 
-td.compressed svg.molecule,
+td.compressed .molecule,
 td.compressed .error,
 td.compressed img {
     width: 150px;
