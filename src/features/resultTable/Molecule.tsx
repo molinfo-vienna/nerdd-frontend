@@ -206,5 +206,5 @@ export default function Molecule({
         }
     }, [selectedAtom, svg])
 
-    return svg ?? <ImagePlaceholder height={"180px"} width={"300px"} />
+    return svg ?? <ImagePlaceholder className="molecule" />
 }
