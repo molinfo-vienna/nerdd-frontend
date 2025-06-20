@@ -17,7 +17,7 @@ export default function ImagePlaceholder({
             })}
             style={{ width: width, height: height }}
         >
-            <div className="placeholder w-100 h-100"></div>
+            <div className="placeholder bg-light w-100 h-100"></div>
         </div>
     )
 }
