@@ -16,20 +16,9 @@ export default function LandingPage() {
     }
 
     // loading is done, but no modules are available
-    if (modules == null || Object.keys(modules).length === 0) {
+    if (modules == null || modules.length === 0) {
         throw new NerddError("No modules available", 400)
     }
-
-    // sort modules alphabetically by name
-    const modulesByRank = Object.values(modules).sort((a, b) => {
-        if (a.rank < b.rank) {
-            return -1
-        }
-        if (a.rank > b.rank) {
-            return 1
-        }
-        return 0
-    })
 
     return (
         <Layout>
@@ -50,7 +39,7 @@ export default function LandingPage() {
              */}
             <div className="container-fluid px-xxl-5 pb-5">
                 <div className="row justify-content-center row-cols-auto gx-4 gy-4">
-                    {modulesByRank.map((module) => (
+                    {modules.map((module) => (
                         <div key={module.id} className="col">
                             <ModuleCard module={module} />
                         </div>
