@@ -1,15 +1,11 @@
 import { NerddError } from "@/app/errors"
 import ModuleCard from "@/features/moduleCard/ModuleCard"
-import { useGetModulesQuery } from "@/services"
+import { useModules } from "@/services/hooks"
 import Layout from "./Layout"
 import LoadingPage from "./LoadingPage"
 
 export default function LandingPage() {
-    const { data: modules, error, isLoading } = useGetModulesQuery()
-
-    if (error != null) {
-        throw error
-    }
+    const { modules, isLoading } = useModules()
 
     if (isLoading) {
         return LoadingPage()
