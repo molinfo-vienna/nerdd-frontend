@@ -25,13 +25,13 @@ export default function createRouter(children: React.ReactNode) {
                     element: <LandingPage />,
                 },
                 {
-                    path: "/developer",
-                    id: "api_general",
+                    path: "/api-docs",
+                    id: "apiDocsGeneral",
                     element: <ApiDocsPage />,
                 },
                 {
                     path: "/cite",
-                    id: "cite_general",
+                    id: "citeGeneral",
                     element: <CitationPage />,
                 },
                 {
@@ -51,7 +51,7 @@ export default function createRouter(children: React.ReactNode) {
                 },
                 {
                     path: "/:moduleId/api",
-                    id: "api",
+                    id: "apiDocs",
                     element: <ApiDocsPage />,
                 },
                 {
