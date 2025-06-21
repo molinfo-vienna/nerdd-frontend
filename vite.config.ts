@@ -24,14 +24,15 @@ export default defineConfig(({ mode }) => ({
         port: Number(process.env.PORT) || 3000,
         host: true,
         // Proxy API requests to the backend server in development mode
+        // Note: The proxy will never be reached when the mock server is enabled.
         proxy:
             mode === "development"
                 ? {
-                      "/api": {
+                      "/api/": {
                           target: "http://localhost:8000",
                           changeOrigin: true,
                           secure: false,
-                          rewrite: (path) => path.replace(/^\/api/, ""),
+                          rewrite: (path) => path,
                       },
                   }
                 : undefined,
