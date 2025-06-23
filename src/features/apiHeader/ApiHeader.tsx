@@ -11,7 +11,7 @@ type ApiHeaderProps = {
 export default function ApiHeader({ baseUrl }: ApiHeaderProps) {
     const { modules, isLoading: isLoadingAllModules } = useModules()
 
-    const { module, isLoading: isLoadingModule } = useModule()
+    const { module, isLoading: isLoadingModule } = useModule(false)
 
     const description = `All prediction modules can be used via our REST API. Select one of the 
         tools on the right to get a quickstart guide and an overview of all endpoints to run 
@@ -56,10 +56,10 @@ export default function ApiHeader({ baseUrl }: ApiHeaderProps) {
                                         module.logo ??
                                         `/api/modules/${module.id}/logo`
                                     }
-                                    className="card-img-top"
+                                    className="card-img-top p-2"
                                     alt="..."
                                 />
-                                {module.visibleName}
+                                <span>{module.visibleName}</span>
                             </Link>
                         ))}
                     </div>
