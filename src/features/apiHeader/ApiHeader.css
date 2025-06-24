@@ -7,7 +7,12 @@
 }
 
 .api-button {
-    min-width: 6rem;
+    /* 
+     * use min-width: 33% here to ensure that 
+     * - there are at most 3 buttons per row 
+     * - the buttons have the same width (as opposed to using a fixed value like 200px)
+     */
+    min-width: 33%;
     background-color: var(--bs-card-bg);
 }
 
