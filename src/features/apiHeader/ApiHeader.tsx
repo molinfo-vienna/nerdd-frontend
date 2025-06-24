@@ -2,6 +2,7 @@ import { useModule, useModules } from "@/services/hooks"
 import classNames from "classnames"
 import Markdown from "react-markdown"
 import { Link } from "react-router-dom"
+import ImagePlaceholder from "../placeholder/ImagePlaceholder"
 import "./ApiHeader.css"
 
 type ApiHeaderProps = {
@@ -11,24 +12,29 @@ type ApiHeaderProps = {
 export default function ApiHeader({ baseUrl }: ApiHeaderProps) {
     const { modules, isLoading: isLoadingAllModules } = useModules()
 
-    const { module, isLoading: isLoadingModule } = useModule(false)
+    const { module } = useModule(false)
 
-    const description = `All prediction modules can be used via our REST API. Select one of the 
+    const pseudoModule = {
+        id: undefined,
+        visibleName: "Overview",
+        description: `All prediction modules can be used via our REST API. Select one of the 
         tools on the right to get a quickstart guide and an overview of all endpoints to run 
-        predictions automatically. For more details, see the [full API documentation](${baseUrl}).`
+        predictions automatically. For more details, see the [full API documentation](${baseUrl}).`,
+    }
 
-    const activeModule = modules?.find((m) => m.id === module?.id)
+    const activeModule =
+        modules?.find((m) => m.id === module?.id) ?? pseudoModule
 
     return (
         <section className="container py-5">
             <div className="row justify-content-center pb-3">
                 <div className="col col-lg-8 col-xl-6">
                     <h2 className="pb-3">
-                        <span className="text-primary fw-bold">API: </span>
-                        Documentation
+                        <span className="text-primary fw-bold">REST API: </span>
+                        {activeModule.visibleName}
                     </h2>
                     <Markdown className="lead">
-                        {module != null ? module.description : description}
+                        {activeModule.description}
                     </Markdown>
                 </div>
                 {/* Info card as column on large screens */}
@@ -39,29 +45,43 @@ export default function ApiHeader({ baseUrl }: ApiHeaderProps) {
                     className="col-4 d-none d-lg-block ps-xl-5 align-content-center"
                 >
                     <div className="api-header-card card d-flex flex-row flex-wrap justify-content-center overflow-hidden">
-                        {modules?.map((module, i) => (
-                            <Link
-                                key={i}
-                                className={classNames(
-                                    "api-button flex-fill d-flex flex-column text-decoration-none",
-                                    "align-items-center py-2 px-3",
-                                    {
-                                        active: module.id === activeModule?.id,
-                                    },
-                                )}
-                                to={`/${module.id}/api`}
-                            >
-                                <img
-                                    src={
-                                        module.logo ??
-                                        `/api/modules/${module.id}/logo`
-                                    }
-                                    className="card-img-top p-2"
-                                    alt="..."
-                                />
-                                <span>{module.visibleName}</span>
-                            </Link>
-                        ))}
+                        {!isLoadingAllModules &&
+                            modules.map((module, i) => (
+                                <Link
+                                    key={i}
+                                    className={classNames(
+                                        "api-button flex-fill d-flex flex-column text-decoration-none",
+                                        "align-items-center py-2 px-3",
+                                        {
+                                            active:
+                                                module.id === activeModule.id,
+                                        },
+                                    )}
+                                    to={`/${module.id}/api`}
+                                >
+                                    <img
+                                        src={
+                                            module.logo ??
+                                            `/api/modules/${module.id}/logo`
+                                        }
+                                        className="card-img-top p-2"
+                                        alt="..."
+                                    />
+                                    <span>{module.visibleName}</span>
+                                </Link>
+                            ))}
+                        {isLoadingAllModules &&
+                            Array.from({ length: 8 }).map((_, i) => (
+                                <div
+                                    key={i}
+                                    className="api-button flex-fill d-flex flex-column text-decoration-none align-items-center py-2 px-3"
+                                >
+                                    <ImagePlaceholder className="card-img-top p-2" />
+                                    <span className="placeholder-glow bg-light w-75">
+                                        <span className="placeholder"></span>
+                                    </span>
+                                </div>
+                            ))}
                     </div>
                 </div>
             </div>

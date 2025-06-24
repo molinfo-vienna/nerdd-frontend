@@ -19,7 +19,7 @@
     background-color: var(--bs-secondary);
 }
 
-.api-button img {
+.api-button .card-img-top {
     width: 4.5rem;
     height: 4.5rem;
 }
