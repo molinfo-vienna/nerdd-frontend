@@ -3,6 +3,7 @@ import classNames from "classnames"
 import Markdown from "react-markdown"
 import { Link } from "react-router-dom"
 import ImagePlaceholder from "../placeholder/ImagePlaceholder"
+import LazyLoadImage from "../placeholder/LazyLoadImage"
 import "./ApiHeader.css"
 
 type ApiHeaderProps = {
@@ -59,13 +60,13 @@ export default function ApiHeader({ baseUrl }: ApiHeaderProps) {
                                     )}
                                     to={`/${module.id}/api`}
                                 >
-                                    <img
+                                    <LazyLoadImage
                                         src={
                                             module.logo ??
                                             `/api/modules/${module.id}/logo`
                                         }
+                                        alt={module.visibleName}
                                         className="card-img-top p-2"
-                                        alt="..."
                                     />
                                     <span>{module.visibleName}</span>
                                 </Link>
