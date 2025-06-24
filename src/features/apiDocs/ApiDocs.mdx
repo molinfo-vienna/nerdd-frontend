@@ -18,15 +18,15 @@ results can be done in a few simple steps:
 ## Create a simple job
 
 You can create small jobs for testing / demonstration purposes by sending GET requests to the <code
-class="text-nowrap">/{props.module.id}/jobs</code> endpoint. Use the parameter `inputs` to provide
-input molecules in common representations (e.g. SMILES, InChI). You can specify more than one input
-molecule by setting `inputs` multiple times (see code below). The number of input molecules is
-limited, because the length of the resulting URL is constrained by web browsers, client libraries,
-and web servers. If you need to process more input molecules, you should use a POST request instead
-(see below, [Large jobs](#large-jobs)).
+className="text-nowrap">/{props.module.id}/jobs</code> endpoint. Use the parameter `inputs` to
+provide input molecules in common representations (e.g. SMILES, InChI). You can specify more than
+one input molecule by setting `inputs` multiple times (see code below). The number of input
+molecules is limited, because the length of the resulting URL is constrained by web browsers, client
+libraries, and web servers. If you need to process more input molecules, you should use a POST
+request instead (see below, [Large jobs](#large-jobs)).
 
 You can specify job parameters by adding them as GET parameters. Check the module's endpoint <code
-class="text-nowrap">/{props.module.id}/jobs</code> in the <a href={`${props.baseUrl}/docs`}>API
+className="text-nowrap">/{props.module.id}/jobs</code> in the <a href={`${props.baseUrl}/docs`}>API
 documentation</a> for additional information about the names and types of all parameters available.
 
 <ApiCard
@@ -40,8 +40,8 @@ documentation</a> for additional information about the names and types of all pa
 ## Large jobs
 
 For larger jobs, you need to use a POST request to the <code
-class="text-nowrap">/{props.module.id}/jobs</code> endpoint and provide the input molecules in the
-request body. 
+className="text-nowrap">/{props.module.id}/jobs</code> endpoint and provide the input molecules in 
+the request body. 
 
 <ApiCard
     baseUrl={props.baseUrl}
@@ -55,7 +55,7 @@ request body.
 ## Upload an input file
 
 To upload an input file, you need to use a POST request to the <code
-class="text-nowrap">/{props.module.id}/jobs</code> endpoint and include the file in the request
+className="text-nowrap">/{props.module.id}/jobs</code> endpoint and include the file in the request
 body.
 
 Note: files can not be uploaded in the corresponding GET endpoint. You have to use a POST request.
@@ -85,10 +85,11 @@ response contains information about the job's progress (`status`, `num_entries_p
 ## Get results
 
 Results are served in multiple pages containing a fixed number of entries each. The number of total
-pages can be determined by the `num_pages_total` field in the job status response (see above) or 
-by fetching the results of the first page (see below) and reading the `job.num_pages_total` field. Note
+pages can be determined by the `num_pages_total` field in the job status response (see above) or by
+fetching the results of the first page (see below) and reading the `job.num_pages_total` field. Note
 that the `num_pages_total` field is undefined as long as the number of input molecules is not known,
-yet. The request has to be repeated (at sensible intervals) until the `num_pages_total` field is set.
+yet. The request has to be repeated (at sensible intervals) until the `num_pages_total` field is
+set.
 
 The `page` parameter can be used to iterate through the pages. Note that the first page is
 `page=1`, not `page=0`.
