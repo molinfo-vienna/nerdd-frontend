@@ -13,7 +13,7 @@ type ApiHeaderProps = {
 export default function ApiHeader({ baseUrl }: ApiHeaderProps) {
     const { modules, isLoading: isLoadingAllModules } = useModules()
 
-    const { module } = useModule(false)
+    const { module, isLoading: isLoadingModule } = useModule(false)
 
     const pseudoModule = {
         id: undefined,
@@ -24,7 +24,7 @@ export default function ApiHeader({ baseUrl }: ApiHeaderProps) {
     }
 
     const activeModule =
-        modules?.find((m) => m.id === module?.id) ?? pseudoModule
+        isLoadingModule || module == null ? pseudoModule : module
 
     return (
         <section className="container py-5">
@@ -51,7 +51,7 @@ export default function ApiHeader({ baseUrl }: ApiHeaderProps) {
                                 <Link
                                     key={i}
                                     className={classNames(
-                                        "api-button flex-fill d-flex flex-column text-decoration-none",
+                                        "api-button d-flex flex-column text-decoration-none",
                                         "align-items-center py-2 px-3",
                                         {
                                             active:
