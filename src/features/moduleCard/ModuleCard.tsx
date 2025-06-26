@@ -19,7 +19,8 @@ export default function ModuleCard({ module }: ModuleCardProps) {
                 <LazyLoadImage
                     src={module.logo ?? `/api/modules/${module.id}/logo`}
                     alt={module.visibleName}
-                    className="card-img-top object-fit-contain"
+                    // mx-auto: not needed for the resulting image, but for the loading placeholder
+                    className="card-img-top object-fit-contain mx-auto"
                 />
             </div>
             <div className="card-body pt-1">
