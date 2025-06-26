@@ -18,9 +18,9 @@ export default function ApiHeader({ baseUrl }: ApiHeaderProps) {
     const pseudoModule = {
         id: undefined,
         visibleName: "Overview",
-        description: `All prediction modules can be used via our REST API. Select one of the 
-        tools on the right to get a quickstart guide and an overview of all endpoints to run 
-        predictions automatically. For more details, see the [full API documentation](${baseUrl}).`,
+        description: `All prediction modules can be used via our REST API to run predictions 
+        automatically. Select one of the tools to get a quickstart guide and an overview of all 
+        endpoints. For more details, see the [full API documentation](${baseUrl}).`,
     }
 
     const activeModule =
@@ -37,6 +37,28 @@ export default function ApiHeader({ baseUrl }: ApiHeaderProps) {
                     <Markdown className="lead">
                         {activeModule.description}
                     </Markdown>
+                    {/* Info card as list of links */}
+                    <div
+                        // d-block d-lg-none: show the list of links only on small screens
+                        className="d-block d-lg-none"
+                    >
+                        {!isLoadingAllModules &&
+                            modules.map((module, index) => (
+                                <Link
+                                    key={index}
+                                    className={classNames(
+                                        "text-decoration-none my-auto me-4",
+                                        {
+                                            "fw-bold":
+                                                module.id === activeModule.id,
+                                        },
+                                    )}
+                                    to={`/${module.id}/api`}
+                                >
+                                    <span>{module.visibleName}</span>
+                                </Link>
+                            ))}
+                    </div>
                 </div>
                 {/* Info card as column on large screens */}
                 <div
