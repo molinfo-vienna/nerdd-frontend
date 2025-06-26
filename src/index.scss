@@ -171,10 +171,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/*
- * A muted link is a link that is styled like regular text, but will look like a link 
- * when hovered.
- */
+// A muted link is a link that is styled like regular text, but will look like a link when hovered.
 a.muted-link {
     color: $body-secondary-color;
     text-decoration: none;
@@ -186,17 +183,13 @@ a.muted-link:focus {
     text-decoration: underline;
 }
 
-/*
- * Additional font size (used in header of result table)
- */
+// Additional font size (used in header of result table)
 .fs-7 {
     font-size: $font-size-sm;
 }
 
-/*
- * A primary muted link is a link that is styled like *primary* regular text, but will 
- * look like a link when hovered.
- */
+// A primary muted link is a link that is styled like *primary* regular text, but will look like a
+// link when hovered.
 a.primary-muted-link {
     color: $primary;
     text-decoration: none;
@@ -208,7 +201,9 @@ a.primary-muted-link:focus {
     text-decoration: underline;
 }
 
-
+// We would like to underline the navbar only on large screens (on small screens, the navigation
+// is replaced by a hamburger menu). For that reason, introduce classes border-*-* classes, e.g.
+// border-sm-bottom, etc.
 @each $breakpoint in map-keys($grid-breakpoints) {
     @include media-breakpoint-up($breakpoint) {
         $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
@@ -256,7 +251,6 @@ a.primary-muted-link:focus {
         }
     }
 }
-
 
 :root {
 
