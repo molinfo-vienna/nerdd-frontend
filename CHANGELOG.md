@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.4...v1.1.5) (2025-07-04)
+
+
+### Bug Fixes
+
+* Show only visible columns in color select dropdown ([8464a9e](https://github.com/molinfo-vienna/nerdd-frontend/commit/8464a9ed96e3fa6ecd55db253bb856f74d55bf2c))
+
 ## [1.1.4](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.3...v1.1.4) (2025-06-14)
 
 
