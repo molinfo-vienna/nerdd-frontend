@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useId, useState } from "react"
+import { useCallback, useEffect, useId, useMemo, useState } from "react"
+import "./MoleculeEditor.css"
 import useJsApplet from "./useJsApplet"
 
 type MoleculeEditorProps = {
@@ -6,7 +7,7 @@ type MoleculeEditorProps = {
     onChange?: (value: string) => void
     width?: string
     height?: string
-    config?: Record<string, any>
+    depict?: boolean
 }
 
 export default function MoleculeEditor({
@@ -14,13 +15,22 @@ export default function MoleculeEditor({
     onChange,
     width = "100%",
     height = "340px",
-    config = {},
+    depict = false,
 }: MoleculeEditorProps) {
     const JSApplet = useJsApplet()
     const [appletInstance, setAppletInstance] = useState(null)
 
     // generate id
     const containerId = useId()
+
+    const config = useMemo(
+        () => ({
+            // noShowdragandDropIconindepictmode: hide the blue triangle icon (bottom right corner)
+            options: `noquery${depict ? ",depict,nozoom" : ""}`,
+            guicolor: "#ffffff",
+        }),
+        [depict],
+    )
 
     const jsmeContainerRef = useCallback(
         (node: HTMLElement | null) => {
@@ -77,5 +87,11 @@ export default function MoleculeEditor({
         }, 0)
     }
 
-    return <div id={containerId} ref={jsmeContainerRef}></div>
+    return (
+        <div
+            className={depict ? "" : "molecule-editor"}
+            id={containerId}
+            ref={jsmeContainerRef}
+        ></div>
+    )
 }
