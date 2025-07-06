@@ -1,3 +1,15 @@
+## [1.1.6](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.5...v1.1.6) (2025-07-06)
+
+
+### Bug Fixes
+
+* Add style enabling tooltips on button group items ([cd91305](https://github.com/molinfo-vienna/nerdd-frontend/commit/cd91305f28130e3d5f136c1ad2bf8fb1b1102ca3))
+* Add tooltip on disabled download button ([504a034](https://github.com/molinfo-vienna/nerdd-frontend/commit/504a0344f6ba09412f4f332eecd04c5c6d2d647c))
+* Add type in ProblemIcon ([433fc74](https://github.com/molinfo-vienna/nerdd-frontend/commit/433fc74689139e3763eeeb6cb541b7c74a1655da))
+* Create separate tooltip component ([875e074](https://github.com/molinfo-vienna/nerdd-frontend/commit/875e074bb3c0f22b64179a40efe13f3e277a98dc))
+* Enable tooltips on ActionButton ([9533420](https://github.com/molinfo-vienna/nerdd-frontend/commit/95334206b9620b7959ee783d0eeebda240568e95))
+* Use tooltip component in ProblemIconWithTooltip ([7736a8f](https://github.com/molinfo-vienna/nerdd-frontend/commit/7736a8ff93720c1985ce03893bdc570f06330dcf))
+
 ## [1.1.5](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.4...v1.1.5) (2025-07-04)
 
 
