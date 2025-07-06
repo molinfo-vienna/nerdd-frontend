@@ -25,12 +25,17 @@ export default function DownloadActionButton({
         }
     })
 
+    const disabled =
+        jobStatus.outputFiles === undefined || jobStatus.outputFiles.length == 0
+
     return (
         <ActionButton
             label="Download"
-            disabled={
-                jobStatus.outputFiles === undefined ||
-                jobStatus.outputFiles.length == 0
+            disabled={disabled}
+            tooltip={
+                disabled
+                    ? "Download available after job is completed"
+                    : undefined
             }
         >
             <ActionButton.Icon>

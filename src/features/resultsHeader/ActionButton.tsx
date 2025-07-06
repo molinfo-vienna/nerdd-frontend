@@ -2,12 +2,15 @@ import classNames from "classnames"
 import { Children } from "react"
 import { createPortal } from "react-dom"
 import { Link, To } from "react-router-dom"
+import Tooltip from "../tooltip/Tooltip"
+import "./ActionButton.css"
 
 type ActionButtonProps = {
     label: string
     style?: "secondary" | "primary" | "danger" | "success" | "warning" | "info"
     to?: To
     disabled?: boolean
+    tooltip?: string
     modalId?: string
     children?: React.ReactNode
 }
@@ -17,6 +20,7 @@ export default function ActionButton({
     style = "primary",
     to = "#",
     disabled = false,
+    tooltip = undefined,
     modalId,
     children,
 }: ActionButtonProps) {
@@ -34,11 +38,16 @@ export default function ActionButton({
         (child: any) => child.type === ActionButton.Modal,
     )
 
+    const hasTooltip = !!tooltip
     const hasDropdown = !!dropdown
     const hasModal = !!modal
 
     let dataBsToggle = undefined
-    if (hasModal) {
+    if (hasTooltip) {
+        // Note: tooltips do not work if button is disabled
+        // -> for that reason we wrap the button in a div later (see below)
+        dataBsToggle = undefined
+    } else if (hasModal) {
         dataBsToggle = "modal"
     } else if (hasDropdown) {
         dataBsToggle = "dropdown"
@@ -47,7 +56,7 @@ export default function ActionButton({
     const buttonFragment = (
         <Link
             className={classNames(
-                "btn text-center text-decoration-none d-flex flex-column justify-content-end p-3 align-items-center",
+                "btn text-center text-decoration-none p-3 d-flex flex-column justify-content-end align-items-center",
                 {
                     // z-1 is necessary for styled buttons to keep their colored border visible
                     // when hovering neighbor elements
@@ -86,7 +95,17 @@ export default function ActionButton({
         </Link>
     )
 
-    if (hasDropdown) {
+    if (hasTooltip) {
+        return (
+            <Tooltip
+                text={tooltip}
+                placement="bottom"
+                className="tooltip-wrapper"
+            >
+                {buttonFragment}
+            </Tooltip>
+        )
+    } else if (hasDropdown) {
         return (
             <div className="btn-group dropdown-center" role="group">
                 {buttonFragment}
