@@ -1,3 +1,10 @@
+## [1.1.7](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.6...v1.1.7) (2025-07-06)
+
+
+### Bug Fixes
+
+* Add small padding on module card text ([ec593ea](https://github.com/molinfo-vienna/nerdd-frontend/commit/ec593ea802e4e6023cedd26c719eb6326eeeb283))
+
 ## [1.1.6](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.5...v1.1.6) (2025-07-06)
 
 
