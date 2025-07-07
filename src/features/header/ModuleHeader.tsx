@@ -62,6 +62,7 @@ export default function ModuleHeader({ module }: ModuleHeaderProps) {
                         {icons.map((icon, index) =>
                             icon.href !== undefined ? (
                                 <Link
+                                    key={index}
                                     className="text-decoration-none my-auto me-4"
                                     to={icon.href}
                                 >
