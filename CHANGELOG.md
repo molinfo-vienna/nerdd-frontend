@@ -1,3 +1,11 @@
+## [1.1.9](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.8...v1.1.9) (2025-07-08)
+
+
+### Bug Fixes
+
+* Fix positioning of problem icons ([69c6eea](https://github.com/molinfo-vienna/nerdd-frontend/commit/69c6eeafe4660397edf261bc83dc56f1ea3f9f0e))
+* Show message when no colorable columns were seleted ([0384e0b](https://github.com/molinfo-vienna/nerdd-frontend/commit/0384e0b65943035d3554699e05d5674ffa1c94a6))
+
 ## [1.1.8](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.7...v1.1.8) (2025-07-08)
 
 
