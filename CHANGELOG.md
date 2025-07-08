@@ -1,3 +1,19 @@
+## [1.1.8](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.7...v1.1.8) (2025-07-08)
+
+
+### Bug Fixes
+
+* Adapt components using ProblemIcon ([9331611](https://github.com/molinfo-vienna/nerdd-frontend/commit/933161134ec995b56481ca1e858ad39b71ef5a78))
+* Add class for error icon style ([478c7a7](https://github.com/molinfo-vienna/nerdd-frontend/commit/478c7a74fdbf2a7fdbe8c08b12ff80f497c78fc3))
+* Align table cell containing problems to the left ([18f6ced](https://github.com/molinfo-vienna/nerdd-frontend/commit/18f6ced290986775621734a8a1c80282f486dd51))
+* Extend ProblemIcon component ([2a6c11b](https://github.com/molinfo-vienna/nerdd-frontend/commit/2a6c11bafeca18a01a7e9546897b7055256ecc01))
+* Extract molecule styles into separate stylesheet ([5350fb9](https://github.com/molinfo-vienna/nerdd-frontend/commit/5350fb94ae53b4df2be955d1737c73d75d70dfb1))
+* Extract ProblemIcon styles into separate stylesheet ([e112c05](https://github.com/molinfo-vienna/nerdd-frontend/commit/e112c0523616322466dc3e4c708b708b43b6c6c4))
+* Keep table cells static when hovering molecules ([0718ee2](https://github.com/molinfo-vienna/nerdd-frontend/commit/0718ee286ca8a0a8bdbdf1de79ec7541351faeb2))
+* Make image columns scale up on hover ([35b8979](https://github.com/molinfo-vienna/nerdd-frontend/commit/35b89798d7941cb651879f29c63f3fd8233c5fa4))
+* Refactor molecule image depiction and add comments ([fe42424](https://github.com/molinfo-vienna/nerdd-frontend/commit/fe42424ed2b0df331c7e952cb053c20ac6970a1f))
+* Use bootstrap classes for handling overflow in table ([3728b66](https://github.com/molinfo-vienna/nerdd-frontend/commit/3728b66c982cedac7d1b8b6d45b55bf2803701e7))
+
 ## [1.1.7](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.6...v1.1.7) (2025-07-06)
 
 
