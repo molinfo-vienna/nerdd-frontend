@@ -39,41 +39,51 @@ export default function TableCell({
     //
     let cellContent
     if (resultProperty.type === "mol") {
-        cellContent = (
-            <div className="position-relative">
-                {value == null && (
-                    <RxCross1
-                        className="p-5 text-body-tertiary"
-                        style={{ width: "300px", height: "180px" }}
-                    />
-                )}
-                {value != null &&
-                    resultProperty.name === "preprocessed_mol" && (
+        if (resultProperty.name === "preprocessed_mol") {
+            // The property preprocessed_mol is special, because
+            // * we put the processing / loading errors at the top right of this cell
+            // * the molecule image will always be on maximum size (not zoonable on hover)
+            // * the atoms in this molecule depiction are selectable
+            cellContent = (
+                <>
+                    {value == null && (
+                        <RxCross1 className="error p-5 text-body-tertiary" />
+                    )}
+                    {value != null && (
                         <Molecule
-                            //className="position-relative"
                             svgValue={value}
                             group={group}
                             // color palette for atoms
                             propertyPalettes={propertyPalettes}
-                            // feature to select atoms
+                            // atom selection
                             selectedAtom={selectedAtom}
                             onAtomSelect={onAtomSelect}
                         />
                     )}
-                {value != null &&
-                    resultProperty.name !== "preprocessed_mol" && (
+                    <ProblemListBadge problems={result.problems} />
+                </>
+            )
+        } else {
+            // If the current property is not preprocessed_mol, we opt for a molecule image that
+            // * is zoomable on hover (zoomable wrapper div)
+            // * shows a molecule on smaller size
+            // * disables atom selection
+            cellContent = (
+                <div className="zoomable">
+                    {value == null && (
+                        <RxCross1 className="error p-5 text-body-tertiary" />
+                    )}
+                    {value != null && (
                         <Molecule
-                            //className="position-relative"
                             svgValue={value}
                             group={group}
                             propertyPalettes={propertyPalettes}
+                            // atom selection is disabled
                         />
                     )}
-                {resultProperty.name === "preprocessed_mol" && (
-                    <ProblemListBadge problems={result.problems} />
-                )}
-            </div>
-        )
+                </div>
+            )
+        }
     } else if (resultProperty.type === "text") {
         // unused at the moment
         if (compressed) {
@@ -127,14 +137,29 @@ export default function TableCell({
         if (value == null) {
             cellContent = "-"
         } else {
-            cellContent = (
-                <img
-                    className="object-fit-contain"
-                    src={value}
-                    width={300}
-                    height={180}
-                />
-            )
+            if (compressed) {
+                // Images on compressed cells (e.g. atom or derivative properties) are smaller,
+                // but zoomable on hover.
+                cellContent = (
+                    <div className="zoomable">
+                        <img
+                            className="object-fit-contain"
+                            src={value}
+                            width={150}
+                            height={90}
+                        />
+                    </div>
+                )
+            } else {
+                cellContent = (
+                    <img
+                        className="object-fit-contain"
+                        src={value}
+                        width={300}
+                        height={180}
+                    />
+                )
+            }
         }
     } else if (resultProperty.type === "problem_list") {
         if (value == null) {
@@ -183,6 +208,7 @@ export default function TableCell({
                 selectedAtom === result.atom_id,
             "start-block": resultProperty.startBlock,
             "end-block": resultProperty.endBlock,
+            "text-start": resultProperty.type === "problem_list",
             // By default, all cells are aligned vertically at the center. If the module task is
             // atom or derivative property prediction, we would like to align the molecule-level
             // cells at the top.

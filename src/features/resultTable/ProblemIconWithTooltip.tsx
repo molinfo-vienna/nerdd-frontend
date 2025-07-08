@@ -13,11 +13,7 @@ export default function ProblemIconWithTooltip({
     size,
 }: ProblemIconWithTooltipProps) {
     return (
-        <Tooltip
-            text={tooltip}
-            className={`problem-icon bg-danger rounded-circle ms-1 text-white
-                        d-inline-flex align-items-center justify-content-center`}
-        >
+        <Tooltip text={tooltip} className="d-inline-flex">
             <ProblemIcon problemType={problemType} size={size} />
         </Tooltip>
     )

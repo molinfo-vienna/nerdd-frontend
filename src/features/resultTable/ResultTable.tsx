@@ -42,12 +42,7 @@ const ResultTable = memo(function ResultTable({
                 // align-middle: aligns the text vertically in the middle of the cell
                 //     Note: cells might override this alignment and browsers will complain that
                 //           align-middle has no effect
-                className="table text-center table-sm w-auto align-middle"
-                // TODO: put in class
-                style={{
-                    overflowX: "visible",
-                    overflowY: "visible",
-                }}
+                className="table text-center table-sm w-auto align-middle overflow-x-visible overflow-y-visible"
             >
                 <thead className="sticky-top fs-7">
                     <tr key="firstRow">

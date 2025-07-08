@@ -1,5 +1,6 @@
 import classNames from "classnames"
 import ProblemIcon from "./ProblemIcon"
+import "./ProblemIcon.css"
 
 type ProblemListCellProps = {
     problems: [string, string][]
@@ -11,18 +12,17 @@ export default function ProblemListCell({ problems }: ProblemListCellProps) {
             {problems.map(([problemType, message], i) => (
                 <li
                     key={i}
-                    className={classNames("d-flex align-items-center", {
+                    className={classNames("d-flex", {
                         "mb-1": i < problems.length - 1,
                     })}
                 >
-                    <div className="problem-icon mx-2">
-                        <ProblemIcon
-                            problemType={problemType}
-                            size={15}
-                            className="text-white"
-                        />
-                    </div>
-                    {message}
+                    <ProblemIcon
+                        // put space between the icon and the text
+                        className="mx-2"
+                        problemType={problemType}
+                        size={15}
+                    />
+                    <span>{message}</span>
                 </li>
             ))}
         </ul>
