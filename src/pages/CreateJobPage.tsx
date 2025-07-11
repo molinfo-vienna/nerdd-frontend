@@ -28,8 +28,8 @@ export default function CreateJobPage() {
 
     const onSubmit = async (values) => {
         // input
-        let inputs = []
-        let sources = []
+        let inputs: string[] = []
+        let sources: string[] = []
         if (values.inputType === "text") {
             inputs = [values.input]
         } else if (values.inputType === "file") {
@@ -41,28 +41,14 @@ export default function CreateJobPage() {
         }
 
         // all other job parameters
-        const jobParams = Object.fromEntries(
+        const params = Object.fromEntries(
             module.jobParameters.map((param) => [
                 param.name,
                 values[param.name],
             ]),
         )
 
-        // compose submit data
-        const data = {
-            job: {
-                // a list of inputs (raw text) to be used for the job
-                inputs,
-                // a list of sources (files) to be used for the job
-                sources,
-                // extra parameter to indicate that this job is submitted from the web UI
-                origin: "frontend",
-                // all job parameters
-                ...jobParams,
-            },
-        }
-
-        const response = await addJob({ moduleId, data })
+        const response = await addJob({ moduleId, inputs, sources, params })
 
         if (response.error) {
             console.error(response.error)
