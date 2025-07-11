@@ -1,3 +1,11 @@
+## [1.1.10](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.9...v1.1.10) (2025-07-11)
+
+
+### Bug Fixes
+
+* Avoid json objects for encoding jobs ([04d5184](https://github.com/molinfo-vienna/nerdd-frontend/commit/04d518454195e7172aed9ec440c036e5d55ccdc7))
+* Change parameters of addJobMutation ([4411953](https://github.com/molinfo-vienna/nerdd-frontend/commit/4411953742606728dcb0a0a2bd01cba74689a7a9))
+
 ## [1.1.9](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.8...v1.1.9) (2025-07-08)
 
 
