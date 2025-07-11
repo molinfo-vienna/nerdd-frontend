@@ -1,3 +1,10 @@
+## [1.1.12](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.11...v1.1.12) (2025-07-11)
+
+
+### Bug Fixes
+
+* Remove slashes at the start of query urls ([0859064](https://github.com/molinfo-vienna/nerdd-frontend/commit/0859064099bec209f70cf04c3422ac4ce7c8dc18))
+
 ## [1.1.11](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.10...v1.1.11) (2025-07-11)
 
 
