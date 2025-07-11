@@ -7,9 +7,9 @@ export const resultsApi = baseApi.injectEndpoints({
         getResults: websocketQuery({
             builder,
             query: ({ moduleId, jobId, page }) =>
-                `/${moduleId}/jobs/${jobId}/results?page=${page}&return_incomplete=true`,
+                `${moduleId}/jobs/${jobId}/results?page=${page}&return_incomplete=true`,
             queryWs: ({ moduleId, jobId, page }) =>
-                `/websocket/${moduleId}/jobs/${jobId}/results?page=${page}`,
+                `websocket/${moduleId}/jobs/${jobId}/results?page=${page}`,
             process: (draft, data, complete) => {
                 if (complete) {
                     draft.isIncomplete = false
