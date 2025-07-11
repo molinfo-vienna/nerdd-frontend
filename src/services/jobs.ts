@@ -29,7 +29,7 @@ export const jobsApi = baseApi.injectEndpoints({
 
                 // add params
                 for (const key in params) {
-                    form.append(key, JSON.stringify(params[key]))
+                    form.append(key, params[key])
                 }
 
                 return {
