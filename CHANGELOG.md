@@ -1,3 +1,10 @@
+## [1.1.11](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.10...v1.1.11) (2025-07-11)
+
+
+### Bug Fixes
+
+* Avoid JSON.stringify when submitting job parameters ([5cea1e8](https://github.com/molinfo-vienna/nerdd-frontend/commit/5cea1e8680d5156a89b7c210e44b8a6ac586e235))
+
 ## [1.1.10](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.9...v1.1.10) (2025-07-11)
 
 
