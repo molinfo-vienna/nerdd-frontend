@@ -1,31 +1,55 @@
-import { useDeleteJobMutation } from "@/services"
-import { useNavigate } from "react-router-dom"
+import { Modal } from "bootstrap"
+import classNames from "classnames"
+import { useCallback, useEffect, useState } from "react"
 
 type DeleteJobDialogProps = {
-    id: string
-    moduleId: string
-    jobId: string
+    isOpen: boolean
+    setIsOpen: (isOpen: boolean) => void
+    isLoading: boolean
+    onAccept: () => void
+    error: string | null
 }
 
 export default function DeleteJobDialog({
-    id,
-    moduleId,
-    jobId,
+    isOpen,
+    setIsOpen,
+    isLoading,
+    onAccept,
+    error,
 }: DeleteJobDialogProps) {
-    const [deleteJob] = useDeleteJobMutation()
-    const navigate = useNavigate()
+    const [modal, setModal] = useState<Modal | null>(null)
 
-    const handleAccept = () => {
-        deleteJob({ moduleId, jobId }).then((response) => {
-            navigate("/")
-        })
-    }
+    const ref = useCallback((node: HTMLDivElement | null) => {
+        if (node) {
+            // Initialize Bootstrap modal
+            setModal((modal) => {
+                if (modal != null) {
+                    return modal
+                }
+                const newModal = new Modal(node, {
+                    backdrop: "static",
+                    keyboard: false,
+                })
+                return newModal
+            })
+        }
+    }, [])
+
+    useEffect(() => {
+        if (modal) {
+            if (isOpen) {
+                modal.show()
+            } else {
+                modal.hide()
+            }
+        }
+    }, [modal, isOpen])
 
     return (
         <div
             className="modal fade"
+            ref={ref}
             tabIndex={-1}
-            id={id}
             aria-labelledby="deleteJobModalLabel"
             aria-hidden="true"
         >
@@ -38,32 +62,52 @@ export default function DeleteJobDialog({
                         <button
                             type="button"
                             className="btn-close"
-                            data-bs-dismiss="modal"
                             aria-label="Close"
+                            onClick={() => setIsOpen(false)}
                         ></button>
                     </div>
                     <div className="modal-body">
                         Are you sure you want to delete this job?
                     </div>
+                    {error && (
+                        <div className="modal-body">
+                            <div className="alert alert-danger" role="alert">
+                                {error}
+                            </div>
+                        </div>
+                    )}
                     <div className="modal-footer">
                         <button
                             type="button"
                             className="btn btn-secondary"
-                            data-bs-dismiss="modal"
+                            onClick={() => setIsOpen(false)}
                         >
                             Close
                         </button>
-                        {/* The attribute data-bs-dismiss="modal" should not
-                         * be used here. However, if we omit it, the backdrop
-                         * (dark background) is still visible after closing the
-                         * modal. */}
                         <button
                             type="button"
-                            className="btn btn-danger"
-                            onClick={handleAccept}
-                            data-bs-dismiss="modal"
+                            className="btn btn-danger position-relative"
+                            onClick={onAccept}
+                            disabled={isLoading}
                         >
-                            Delete
+                            <span
+                                className={classNames({ invisible: isLoading })}
+                            >
+                                Delete
+                            </span>
+                            {isLoading && (
+                                <div className="position-absolute top-50 start-50 translate-middle">
+                                    <span
+                                        className="spinner-border spinner-border-sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                    >
+                                        <span className="visually-hidden">
+                                            Loading...
+                                        </span>
+                                    </span>
+                                </div>
+                            )}
                         </button>
                     </div>
                 </div>

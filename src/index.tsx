@@ -1,7 +1,6 @@
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 
-import "bootstrap/dist/js/bootstrap.bundle"
 import "./index.scss"
 
 import reportWebVitals from "./reportWebVitals"

@@ -1,6 +1,5 @@
 import classNames from "classnames"
 import { Children } from "react"
-import { createPortal } from "react-dom"
 import { Link, To } from "react-router-dom"
 import Tooltip from "../tooltip/Tooltip"
 import "./ActionButton.css"
@@ -9,6 +8,7 @@ type ActionButtonProps = {
     label: string
     style?: "secondary" | "primary" | "danger" | "success" | "warning" | "info"
     to?: To
+    onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void
     disabled?: boolean
     tooltip?: string
     modalId?: string
@@ -21,7 +21,7 @@ export default function ActionButton({
     to = "#",
     disabled = false,
     tooltip = undefined,
-    modalId,
+    onClick,
     children,
 }: ActionButtonProps) {
     const childrenArray = Children.toArray(children)
@@ -34,21 +34,14 @@ export default function ActionButton({
         (child: any) => child.type === ActionButton.Dropdown,
     )
 
-    const modal = childrenArray.find(
-        (child: any) => child.type === ActionButton.Modal,
-    )
-
     const hasTooltip = !!tooltip
     const hasDropdown = !!dropdown
-    const hasModal = !!modal
 
     let dataBsToggle = undefined
     if (hasTooltip) {
         // Note: tooltips do not work if button is disabled
         // -> for that reason we wrap the button in a div later (see below)
         dataBsToggle = undefined
-    } else if (hasModal) {
-        dataBsToggle = "modal"
     } else if (hasDropdown) {
         dataBsToggle = "dropdown"
     }
@@ -66,10 +59,9 @@ export default function ActionButton({
                 },
             )}
             to={to}
+            onClick={onClick}
             type="button"
             data-bs-toggle={dataBsToggle}
-            // modal
-            data-bs-target={hasModal ? `#${modalId}` : undefined}
             // dropdown
             data-bs-auto-close={hasDropdown ? "outside" : undefined}
             aria-expanded={hasDropdown ? "false" : undefined}
@@ -112,14 +104,6 @@ export default function ActionButton({
                 {dropdown}
             </div>
         )
-    } else if (hasModal) {
-        return (
-            <>
-                {buttonFragment}
-                {/* Render the modal in the body (because a modal would not render correctly here) */}
-                {createPortal(modal, document.body)}
-            </>
-        )
     } else {
         return buttonFragment
     }
@@ -130,9 +114,5 @@ ActionButton.Icon = function ActionButtonIcon({ children }) {
 }
 
 ActionButton.Dropdown = function ActionButtonDropdown({ children }) {
-    return <>{children}</>
-}
-
-ActionButton.Modal = function ActionButtonModal({ children }) {
     return <>{children}</>
 }
