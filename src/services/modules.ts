@@ -7,7 +7,7 @@ export const modulesApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         // TODO: return list of modules
         getModules: builder.query<Record<string, Module>, void>({
-            query: () => "modules/",
+            query: () => "/modules",
             transformResponse: (response) => {
                 // convert snake_case to camelCase
                 const responseCamelCase = recursiveSnakeToCamelCase(response)
@@ -25,7 +25,7 @@ export const modulesApi = baseApi.injectEndpoints({
             },
         }),
         getModule: builder.query<Module, string>({
-            query: (moduleId) => `modules/${moduleId}/`,
+            query: (moduleId) => `/modules/${moduleId}`,
             transformResponse: (response) => {
                 // convert snake_case to camelCase
                 const moduleCamelCase = recursiveSnakeToCamelCase(response)
