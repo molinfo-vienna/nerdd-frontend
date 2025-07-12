@@ -1,3 +1,11 @@
+## [1.1.13](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.12...v1.1.13) (2025-07-12)
+
+
+### Bug Fixes
+
+* Remove trailing slashes in request urls (again :D) ([dd5e88c](https://github.com/molinfo-vienna/nerdd-frontend/commit/dd5e88c23f5d9c9206342bec7fe4c18fe23dd04d))
+* Use prefix slashes in request urls (again) to improve readability ([7dadbde](https://github.com/molinfo-vienna/nerdd-frontend/commit/7dadbde2a675af5f595811541f161591ea1597bc))
+
 ## [1.1.12](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.11...v1.1.12) (2025-07-11)
 
 
