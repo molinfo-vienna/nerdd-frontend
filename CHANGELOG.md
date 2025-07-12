@@ -1,3 +1,18 @@
+## [1.1.14](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.13...v1.1.14) (2025-07-12)
+
+
+### Bug Fixes
+
+* Add error prop to DeleteJobDialog ([dc17f21](https://github.com/molinfo-vienna/nerdd-frontend/commit/dc17f21f5fe1ac0eb9c4dddb4bf156494a5116a0))
+* Delete delete logic from DeleteJobDialog ([3edce8c](https://github.com/molinfo-vienna/nerdd-frontend/commit/3edce8c0bb75a48b1a44808a3156021b5c910848))
+* Do not import full bootstrap js bundle ([f955120](https://github.com/molinfo-vienna/nerdd-frontend/commit/f95512048938199bfb3c378771cef66b8d08cf59))
+* Explicitly use state in DeleteJobDialog ([00b2e0f](https://github.com/molinfo-vienna/nerdd-frontend/commit/00b2e0f898d855f10b8483f4f9d399a9e47c36aa))
+* Extract modal from ActionButton ([45874bc](https://github.com/molinfo-vienna/nerdd-frontend/commit/45874bc0de960ee0213284e7983f9527e9eefa4a))
+* Install bootstrap types ([6875095](https://github.com/molinfo-vienna/nerdd-frontend/commit/687509524f7f06344636d596c9895b86adc30317))
+* Move error message in DeleteJobDialog ([ac7dee4](https://github.com/molinfo-vienna/nerdd-frontend/commit/ac7dee40ab409f0ef5a650efd91fa21c71c36380))
+* Move modal and deletion logic to DeleteActionButton ([662bb27](https://github.com/molinfo-vienna/nerdd-frontend/commit/662bb27539d3d82263a3fae669aa9b9a5ed25bf7))
+* Report errors during job deletion ([382162c](https://github.com/molinfo-vienna/nerdd-frontend/commit/382162ce64a32dbb1b528b13ba90811f91ba7aae))
+
 ## [1.1.13](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.12...v1.1.13) (2025-07-12)
 
 
