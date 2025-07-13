@@ -1,14 +1,12 @@
-import { useDebug } from "@/features/debug/DebugContext"
 import { lazy, Suspense } from "react"
 import { Outlet } from "react-router-dom"
 
-export default function Root() {
-    const isDebug = useDebug()
-
-    const Debug = isDebug
+const Debug =
+    import.meta.env.MODE === "development"
         ? lazy(() => import("@/features/debug/Debug"))
         : () => <></>
 
+export default function Root() {
     return (
         <>
             <Outlet />
