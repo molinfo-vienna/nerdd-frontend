@@ -1,3 +1,14 @@
+## [1.1.16](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.15...v1.1.16) (2025-07-13)
+
+
+### Bug Fixes
+
+* Adapt code to lodash-es ([a7cdbc4](https://github.com/molinfo-vienna/nerdd-frontend/commit/a7cdbc47bff1f2bfe16ad0984f3322a4427603ff))
+* Import Debug component only in development mode ([ba2f9fe](https://github.com/molinfo-vienna/nerdd-frontend/commit/ba2f9fe3d133095f282b1143159aa65bc34e7eb7))
+* Import debugReducerSlice only in development mode ([77b0fd3](https://github.com/molinfo-vienna/nerdd-frontend/commit/77b0fd3b6ffce7f41acdb65cd87cbc59eee1e320))
+* Replace lodash with lodash-es ([e48b649](https://github.com/molinfo-vienna/nerdd-frontend/commit/e48b64953404afa50271d8a04f41ed4dfdb31f3c))
+* Use lazy loading for pages ([b6ac2e9](https://github.com/molinfo-vienna/nerdd-frontend/commit/b6ac2e9f3f8f9e033e3ad88d62676a5c2c6bb978))
+
 ## [1.1.15](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.14...v1.1.15) (2025-07-13)
 
 
