@@ -1,8 +1,6 @@
 import classNames from "classnames"
 import { Children } from "react"
 import { Link, To } from "react-router-dom"
-import Tooltip from "../tooltip/Tooltip"
-import "./ActionButton.css"
 
 type ActionButtonProps = {
     label: string
@@ -10,8 +8,6 @@ type ActionButtonProps = {
     to?: To
     onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void
     disabled?: boolean
-    tooltip?: string
-    modalId?: string
     children?: React.ReactNode
 }
 
@@ -20,7 +16,6 @@ export default function ActionButton({
     style = "primary",
     to = "#",
     disabled = false,
-    tooltip = undefined,
     onClick,
     children,
 }: ActionButtonProps) {
@@ -33,16 +28,10 @@ export default function ActionButton({
     const dropdown = childrenArray.find(
         (child: any) => child.type === ActionButton.Dropdown,
     )
-
-    const hasTooltip = !!tooltip
     const hasDropdown = !!dropdown
 
     let dataBsToggle = undefined
-    if (hasTooltip) {
-        // Note: tooltips do not work if button is disabled
-        // -> for that reason we wrap the button in a div later (see below)
-        dataBsToggle = undefined
-    } else if (hasDropdown) {
+    if (hasDropdown) {
         dataBsToggle = "dropdown"
     }
 
@@ -87,17 +76,7 @@ export default function ActionButton({
         </Link>
     )
 
-    if (hasTooltip) {
-        return (
-            <Tooltip
-                text={tooltip}
-                placement="bottom"
-                className="tooltip-wrapper"
-            >
-                {buttonFragment}
-            </Tooltip>
-        )
-    } else if (hasDropdown) {
+    if (hasDropdown) {
         return (
             <div className="btn-group dropdown-center" role="group">
                 {buttonFragment}
