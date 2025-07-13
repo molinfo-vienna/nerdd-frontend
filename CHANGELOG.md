@@ -1,3 +1,15 @@
+## [1.1.15](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.14...v1.1.15) (2025-07-13)
+
+
+### Bug Fixes
+
+* Adapt all references to PopUp ([f7bc343](https://github.com/molinfo-vienna/nerdd-frontend/commit/f7bc3436d5c5e89399b0425b0a829c00eb08f7b3))
+* Decouple Tooltip from ActionButton ([97af8a7](https://github.com/molinfo-vienna/nerdd-frontend/commit/97af8a78a0ddd77a0278c433755a472a3708eec8))
+* Remove ProblemIconWithTooltip component ([347487a](https://github.com/molinfo-vienna/nerdd-frontend/commit/347487a4d808aba7dd1d0bd86163700e4d6cf0b0))
+* Remove usused variable in DeleteActionButton ([ef0bc69](https://github.com/molinfo-vienna/nerdd-frontend/commit/ef0bc69e4e0d863abdb6088c1fd537776b3eaea2))
+* Rename Tooltip component to PopUp ([da26349](https://github.com/molinfo-vienna/nerdd-frontend/commit/da26349b0b8b9e5d08b2409da01dad7c384cfe17))
+* Wrap DownloadActionButton with tooltip ([7cbdbd5](https://github.com/molinfo-vienna/nerdd-frontend/commit/7cbdbd56e505f0d491cecb93194e6c3f8184fa9e))
+
 ## [1.1.14](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.13...v1.1.14) (2025-07-12)
 
 
