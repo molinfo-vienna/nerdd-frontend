@@ -1,3 +1,11 @@
+## [1.1.17](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.16...v1.1.17) (2025-07-14)
+
+
+### Bug Fixes
+
+* Add output_formats to Module type ([c2d5ba1](https://github.com/molinfo-vienna/nerdd-frontend/commit/c2d5ba17f264d34c2f180f205740b96ab71c45eb))
+* Get available output formats from server ([e09b793](https://github.com/molinfo-vienna/nerdd-frontend/commit/e09b793a66f389d5610e72b89ce6b3e165e46455))
+
 ## [1.1.16](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.15...v1.1.16) (2025-07-13)
 
 
