@@ -448,6 +448,7 @@ export function generateModuleConfig(i) {
         ),
         result_properties: resultProperties,
         about: generateAbout(i),
+        output_formats: ["csv", "sdf"],
     }
 }
 

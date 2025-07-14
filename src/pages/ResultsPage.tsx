@@ -248,7 +248,10 @@ export default function ResultsPage() {
                         onColorColumnToggle={handleColorColumnToggle}
                         onColorGroupToggle={handleColorGroupToggle}
                     />
-                    <DownloadActionButton jobStatus={jobStatus} />
+                    <DownloadActionButton
+                        jobStatus={jobStatus}
+                        outputFormats={module.outputFormats}
+                    />
                     <DeleteActionButton moduleId={moduleId} jobId={jobId} />
                 </ResultsHeader>
             </Layout.Header>

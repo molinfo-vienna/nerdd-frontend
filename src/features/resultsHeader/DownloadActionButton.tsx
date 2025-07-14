@@ -8,13 +8,13 @@ import "./DownloadActionButton.css"
 
 type DownloadActionButtonProps = {
     jobStatus: JobStatus
+    outputFormats: string[]
 }
 
 export default function DownloadActionButton({
     jobStatus,
+    outputFormats,
 }: DownloadActionButtonProps) {
-    const outputFormats = ["sdf", "csv"]
-
     const outputFileItems = outputFormats.map((format) => {
         const fileFromStatus = (jobStatus.outputFiles ?? []).find(
             (f) => f.format == format,
