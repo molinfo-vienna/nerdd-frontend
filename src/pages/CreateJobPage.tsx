@@ -3,6 +3,7 @@ import JobForm from "@/features/jobForm/JobForm"
 import { useAddJobMutation } from "@/services"
 import { useModule } from "@/services/hooks"
 import { FORM_ERROR } from "final-form"
+import { useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 import Layout from "./Layout"
 import LoadingPage from "./LoadingPage"
@@ -14,11 +15,7 @@ export default function CreateJobPage() {
 
     const { module, isLoading } = useModule()
 
-    if (isLoading) {
-        return LoadingPage()
-    }
-
-    const onSubmit = async (values) => {
+    const onSubmit = useCallback(async (values) => {
         // input
         let inputs: string[] = []
         let sources: string[] = []
@@ -57,6 +54,10 @@ export default function CreateJobPage() {
         }
 
         navigate(`/${module.id}/${response.data.id}`)
+    }, [addJob, module, navigate])
+
+    if (isLoading) {
+        return LoadingPage()
     }
 
     return (
