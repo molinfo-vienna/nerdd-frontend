@@ -27,7 +27,8 @@ export class UnknownError extends NerddError {
         if (typeof error === "string") {
             explanation = error
         } else if (error instanceof Error) {
-            explanation = error.message
+            // Don't expose internal error messages to users
+            explanation = undefined
         } else {
             explanation = "Please refresh the page or try again later."
         }
