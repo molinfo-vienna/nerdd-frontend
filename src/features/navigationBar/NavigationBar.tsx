@@ -1,5 +1,7 @@
 import { useGetModuleQuery } from "@/services"
+import { Collapse } from "bootstrap"
 import classNames from "classnames"
+import { useCallback, useState } from "react"
 import { FaBars, FaGithub } from "react-icons/fa6"
 import { Link, useMatches, useParams } from "react-router-dom"
 
@@ -72,6 +74,40 @@ export default function NavigationBar() {
         .flatMap((value) => [{ ...value, type: "link" }, divider])
         .slice(0, -1)
 
+    // collapse the navbar on small screens
+    const [collapse, setCollapse] = useState<Collapse | null>(null)
+
+    const ref = useCallback(
+        (node: HTMLDivElement | null) => {
+            if (node === null) {
+                return
+            }
+
+            setCollapse(
+                new Collapse(node, {
+                    toggle: false,
+                }),
+            )
+
+            // cleanup function to destroy the collapse instance
+            return () => {
+                setCollapse((prev) => {
+                    if (prev) {
+                        prev.dispose()
+                    }
+                    return null
+                })
+            }
+        },
+        [setCollapse],
+    )
+
+    const handleClickMenuButton = useCallback(() => {
+        if (collapse) {
+            collapse.toggle()
+        }
+    }, [collapse])
+
     return (
         // navbar on landing page is very short
         // (~350px < 375px = typical iPhone screen width)
@@ -115,17 +151,16 @@ export default function NavigationBar() {
                     </Link>
                     <button
                         className="navbar-toggler border-0"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarNavDropdown"
                         aria-controls="navbarNavDropdown"
                         aria-expanded="false"
                         aria-label="Toggle navigation"
+                        onClick={handleClickMenuButton}
                     >
                         <FaBars />
                     </button>
                     <div
                         className="collapse navbar-collapse flex-grow-0"
-                        id="navbarNavDropdown"
+                        ref={ref}
                     >
                         {/*
                          * align-items-*-center: vertically align navbar entries
