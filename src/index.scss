@@ -109,7 +109,7 @@ $blue: #084887; // polynesian blue
 // Cinnabar (#e55934) was a promising candidate, but Bootstrap computes a dark foreground color
 // for it and we prefer a light text color on danger elements.
 //
-$red: #c54a28; // some strong red
+$red: #c54a28; // some red
 
 //
 // The variable "green" is used for the success color in bootstrap. The success color appears in
@@ -124,7 +124,7 @@ $red: #c54a28; // some strong red
 //
 $green: #1C7C54; // dark spring green
 
-
+// TODO: use a dark color here to stay consistent with bootstrap
 $secondary: #E6E8E6; // platinum
 // $secondary: #A2BCE0; // powder blue
 
@@ -169,11 +169,6 @@ $card-cap-bg: $card-bg;
 body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-        monospace;
 }
 
 /*
@@ -259,5 +254,14 @@ a.primary-muted-link:focus {
             border-top: $border-width solid $border-color !important;
             border-bottom: $border-width solid $border-color !important;
         }
+    }
+}
+
+
+:root {
+
+    // generate --bs-spacer-X variables
+    @each $key, $value in $spacers {
+        --bs-spacer-#{$key}: #{$value};
     }
 }
