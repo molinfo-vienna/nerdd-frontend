@@ -1,3 +1,12 @@
+## [1.2.1](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.0...v1.2.1) (2025-07-18)
+
+
+### Bug Fixes
+
+* Expose bootstrap spacer variables ([c7ed2c7](https://github.com/molinfo-vienna/nerdd-frontend/commit/c7ed2c7cb60f88bd101baa73323a5d5b4be1cb85))
+* Use html links in documentation to render variables ([1f6086f](https://github.com/molinfo-vienna/nerdd-frontend/commit/1f6086f90c5b7bdb74ce7e5a51035c211805737d))
+* Use plain css for TableOfContents component ([2d38464](https://github.com/molinfo-vienna/nerdd-frontend/commit/2d38464c563223fb8472c0be543e663d9a4e413c))
+
 # [1.2.0](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.17...v1.2.0) (2025-07-18)
 
 
