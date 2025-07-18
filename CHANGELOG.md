@@ -1,3 +1,11 @@
+## [1.2.2](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.1...v1.2.2) (2025-07-18)
+
+
+### Bug Fixes
+
+* Make exampleSmiles mandatory in Module ([f9da363](https://github.com/molinfo-vienna/nerdd-frontend/commit/f9da363346a292130bd4ddf299bbda5f84740ede))
+* Provide default value for exampleSmiles ([9052ad7](https://github.com/molinfo-vienna/nerdd-frontend/commit/9052ad79170f6f639abe956f10950540146516f3))
+
 ## [1.2.1](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.0...v1.2.1) (2025-07-18)
 
 
