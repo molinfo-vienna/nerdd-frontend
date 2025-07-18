@@ -1,3 +1,10 @@
+## [1.2.4](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.3...v1.2.4) (2025-07-18)
+
+
+### Bug Fixes
+
+* Use javascript to control hamburger menu (instead of data attributes) ([7373100](https://github.com/molinfo-vienna/nerdd-frontend/commit/73731008a4abec2255fb58fdee49bd71d9c37eaa))
+
 ## [1.2.3](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.2...v1.2.3) (2025-07-18)
 
 
