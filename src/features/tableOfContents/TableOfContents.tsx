@@ -28,7 +28,7 @@ const renderTOC = (toc: TOCItem[]) => {
                          * because react-scrollspy can't handle components containing the links.
                          */}
                         <a
-                            className="text-decoration-none text-body-secondary"
+                            className="text-decoration-none text-body-secondary fs-7"
                             href={`#${item.id}`}
                         >
                             {item.text}
@@ -38,7 +38,7 @@ const renderTOC = (toc: TOCItem[]) => {
                 ) : (
                     <li key={index}>
                         <a
-                            className="text-decoration-none text-body-secondary"
+                            className="text-decoration-none text-body-secondary fs-7"
                             href={`#${item.id}`}
                         >
                             {item.text}
