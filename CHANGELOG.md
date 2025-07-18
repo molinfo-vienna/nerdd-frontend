@@ -1,3 +1,29 @@
+# [1.2.0](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.17...v1.2.0) (2025-07-18)
+
+
+### Bug Fixes
+
+* Add complex job creation example for Python ([93f5588](https://github.com/molinfo-vienna/nerdd-frontend/commit/93f55884288a4c3be768cefbdbf8c96604d681d2))
+* Add example to delete jobs in Python ([a539594](https://github.com/molinfo-vienna/nerdd-frontend/commit/a5395949f57df4794c66f355f9e111185bfdc5b3))
+* Add example to get job status ([f8357ef](https://github.com/molinfo-vienna/nerdd-frontend/commit/f8357ef2fe574cfe7a9946e93c514cca28bf3fdb))
+* Add example to get results in Python ([90d7f45](https://github.com/molinfo-vienna/nerdd-frontend/commit/90d7f45d2b01d550ef7d4415989ab73e10bd948f))
+* Add example to upload job with file in Python ([827ed3e](https://github.com/molinfo-vienna/nerdd-frontend/commit/827ed3efdf6a71cd9641a50a209662dd3fb28b2d))
+* Add quickstart example for Python ([6858ecf](https://github.com/molinfo-vienna/nerdd-frontend/commit/6858ecfa5af6161a8b243c482cc6d15ed7054276))
+* Add rehype-slug plugin to mdx ([e26b5a4](https://github.com/molinfo-vienna/nerdd-frontend/commit/e26b5a47c10e0749a9ef3aea5d498d4ca79a8a94))
+* Add simple job creation example for Python ([5412adc](https://github.com/molinfo-vienna/nerdd-frontend/commit/5412adc1d454869e15639fe71b77ebe45383c906))
+* Configure mdx-js ([139d486](https://github.com/molinfo-vienna/nerdd-frontend/commit/139d4862b9e9e1726f2cd46efdc8e47c70388f0b))
+* Implement component to show code snippets ([ef082d3](https://github.com/molinfo-vienna/nerdd-frontend/commit/ef082d3ea4e8b21b545e64f3133b40d247ef1dcc))
+* Implement CopyToClipboard button ([537ac18](https://github.com/molinfo-vienna/nerdd-frontend/commit/537ac18549ea9e5df2a9df4387c218f86528c04f))
+* Install highlight.js ([9a77831](https://github.com/molinfo-vienna/nerdd-frontend/commit/9a778314c72314785cfe15e51e633fbcdba0fea4))
+* Install mdx-js ([78cf586](https://github.com/molinfo-vienna/nerdd-frontend/commit/78cf5861b422e2a4b100a83f176b339444528cee))
+* Use arctis theme for code snippets ([6364073](https://github.com/molinfo-vienna/nerdd-frontend/commit/636407397db1bfcd93cdd74a9e222506e620ae82))
+* Write text for documentation page ([55a1621](https://github.com/molinfo-vienna/nerdd-frontend/commit/55a1621f3f517c02deb6e7596ae29636dd2c8090))
+
+
+### Features
+
+* Add page with API instructions ([28f31fa](https://github.com/molinfo-vienna/nerdd-frontend/commit/28f31fa59c445d364b62fee4eb8e3af2e79d28a4))
+
 ## [1.1.17](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.1.16...v1.1.17) (2025-07-14)
 
 
