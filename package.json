@@ -17,6 +17,7 @@
         "classnames": "^2.5.1",
         "d3": "^7.9.0",
         "final-form": "^4.20.10",
+        "highlight.js": "^11.11.1",
         "html-react-parser": "^5.2.2",
         "http-proxy-middleware": "^3.0.0",
         "lodash-es": "^4.17.21",
@@ -63,6 +64,7 @@
     "devDependencies": {
         "@eslint/js": "^9.26.0",
         "@faker-js/faker": "^8.3.1",
+        "@mdx-js/rollup": "^3.1.0",
         "@semantic-release/changelog": "^6.0.3",
         "@semantic-release/git": "^10.0.1",
         "@semantic-release/github": "^11.0.1",

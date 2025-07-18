@@ -1,0 +1,133 @@
+import ApiCard from "./ApiCard";
+
+# Quickstart
+
+Creating a computational job for the module **{props.module.visibleName}** and retrieving the 
+results can be done in a few simple steps:
+
+<ApiCard
+    baseUrl={props.baseUrl}
+    module={props.module}
+    exampleName="quickstart"
+    selectedLanguage={props.selectedLanguage}
+    onSelectLanguage={props.setSelectedLanguage}
+/>
+
+# Recipes
+
+## Create a simple job
+
+You can create small jobs for testing / demonstration purposes by sending GET requests to the <code
+class="text-nowrap">/{props.module.id}/jobs</code> endpoint. Use the parameter `inputs` to provide
+input molecules in common representations (e.g. SMILES, InChI). You can specify more than one input
+molecule by setting `inputs` multiple times (see code below). The number of input molecules is
+limited, because the length of the resulting URL is constrained by web browsers, client libraries,
+and web servers. If you need to process more input molecules, you should use a POST request instead
+(see below, [Large jobs](#large-jobs)).
+
+You can specify job parameters by adding them as GET parameters. Check the module's endpoint <code
+class="text-nowrap">/{props.module.id}/jobs</code> in the [API documentation]({props.baseUrl}/docs)
+for additional information about the names and types of all parameters available.
+
+<ApiCard
+    baseUrl={props.baseUrl}
+    module={props.module}
+    exampleName="createSimpleJob"
+    selectedLanguage={props.selectedLanguage}
+    onSelectLanguage={props.setSelectedLanguage}
+/>
+
+## Large jobs
+
+For larger jobs, you need to use a POST request to the <code class="text-nowrap">/{props.module.id}/jobs</code> endpoint
+and provide the input molecules in the request body. 
+
+<ApiCard
+    baseUrl={props.baseUrl}
+    module={props.module}
+    exampleName="createComplexJob"
+    selectedLanguage={props.selectedLanguage}
+    onSelectLanguage={props.setSelectedLanguage}
+/>
+
+
+## Upload an input file
+
+To upload an input file, you need to use a POST request to the <code class="text-nowrap">/{props.module.id}/jobs</code> 
+endpoint and include the file in the request body.
+
+Note: files can not be uploaded in the corresponding GET endpoint. You have to use a POST request.
+
+<ApiCard
+    baseUrl={props.baseUrl}
+    module={props.module}
+    exampleName="createJobWithFile"
+    selectedLanguage={props.selectedLanguage}
+    onSelectLanguage={props.setSelectedLanguage}
+/>
+
+## Get job status
+
+After creating a job, you can check its status by sending a GET request to the job's endpoint. The
+response contains information about the job's progress (`status`, `num_entries_processed`, 
+`num_entries_total`, `num_pages_processed`, `num_pages_total`).
+
+<ApiCard
+    baseUrl={props.baseUrl}
+    module={props.module}
+    exampleName="getJobStatus"
+    selectedLanguage={props.selectedLanguage}
+    onSelectLanguage={props.setSelectedLanguage}
+/>
+
+## Get results
+
+Results are served in multiple pages containing a fixed number of entries each. The number of total
+pages can be determined by the `num_pages_total` field in the job status response (see above) or 
+by fetching the results of the first page (see below) and reading the `job.num_pages_total` field. Note
+that the `num_pages_total` field is undefined as long as the number of input molecules is not known,
+yet. The request has to be repeated (at sensible intervals) until the `num_pages_total` field is set.
+
+The `page` parameter can be used to iterate through the pages. Note that the first page is
+`page=1`, not `page=0`.
+
+<ApiCard
+    baseUrl={props.baseUrl}
+    module={props.module}
+    exampleName="getResults"
+    selectedLanguage={props.selectedLanguage}
+    onSelectLanguage={props.setSelectedLanguage}
+/>
+
+## Delete job
+
+Jobs can be deleted by sending a DELETE request to the job's endpoint.
+
+<ApiCard
+    baseUrl={props.baseUrl}
+    module={props.module}
+    exampleName="deleteJob"
+    selectedLanguage={props.selectedLanguage}
+    onSelectLanguage={props.setSelectedLanguage}
+/>
+
+# Additional notes
+
+* When adding a trailing slash to a request URL (e.g. `/jobs/123/` intead of `/jobs/123`), the
+  server will redirect to the non-slash version using a 307 redirect response. Some libraries like
+  `requests` in Python or the function `fetch` in JavaScript will follow this redirect 
+  automatically, while others like `curl` will need to be configured to do so.
+* Result pages are indexed starting from 1 to be consistent with the web UI. The first page is
+  `page=1` and accessing page 0 will return an error (status 404, Not Found).
+* Result pages can be fetched using the query parameter `incomplete` (e.g.
+  `/jobs/123/results?page=1&incomplete=true`). This will return all results that are available at
+  the time of the request, even if not all results on the requested page are processed, yet. The
+  response contains a field `pagination.is_incomplete` that will be set to `true` if the page is
+  incomplete and more results are expected to be available later.
+* A request for a non-existing result page might return a 202 (Accepted) response if the job is
+  still running and the requested page exists but is not yet available. However, a 404 (Not
+  Found) response indicates that the page is out of range (or the job has been deleted).
+
+# Full API documentation
+
+See all endpoints at [{props.baseUrl}/docs]({props.baseUrl}/docs).
