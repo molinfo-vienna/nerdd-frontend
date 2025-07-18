@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.2...v1.2.3) (2025-07-18)
+
+
+### Bug Fixes
+
+* Decrease font size in table of contents ([8a48371](https://github.com/molinfo-vienna/nerdd-frontend/commit/8a483718c6f18c1a31c889e590abff4f9f201ec9))
+
 ## [1.2.2](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.1...v1.2.2) (2025-07-18)
 
 
