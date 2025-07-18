@@ -36,6 +36,12 @@ export function normalizeModule(module): Module {
         "data:image/svg+xml," +
             escape(ReactDOMServer.renderToStaticMarkup(reactElement))
 
+    const task = module.task ?? "molecular_property_prediction"
+
+    const exampleSmiles =
+        module.exampleSmiles ??
+        "CN1CCN(Cc2ccc(cc2)C(=O)Nc3ccc(C)c(Nc4nccc(n4)c5cccnc5)c3)CC1 example smiles"
+
     const jobParameters = (module.jobParameters || []).map(
         normalizeJobParameter,
     )
@@ -48,7 +54,8 @@ export function normalizeModule(module): Module {
         ...module,
         visibleName: module.visibleName || upperFirst(camelCase(module.name)),
         logo,
-        task: module.task || "molecular_property_prediction",
+        task,
+        exampleSmiles,
         publications: module.publications || [],
         jobParameters,
         resultProperties,
