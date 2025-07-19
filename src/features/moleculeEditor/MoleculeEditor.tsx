@@ -69,7 +69,7 @@ export default function MoleculeEditor({
     useEffect(() => {
         if (appletInstance) {
             // JSME can't handle SMILES with labels, so we need to remove them
-            const cleanValue = value != null ? value.split(" ")[0] : value
+            const cleanValue = value != null ? value.split(/\s+/)[0] : value
 
             // Avoid rerendering the drawn molecule. If the same smiles value is passed
             // this way, the exact coordinates are preserved.
