@@ -1,5 +1,6 @@
 import type { Module, Result } from "@/types"
 import classNames from "classnames"
+import { rgb } from "d3-color"
 import { RxCross1 } from "react-icons/rx"
 import Molecule from "./Molecule"
 import ProblemListBadge from "./ProblemListBadge"
@@ -197,6 +198,19 @@ export default function TableCell({
     }
 
     //
+    // figure out background color (and contrast text color)
+    //
+    const backgroundColor = resultProperty.colored
+                ? propertyPalettes[resultProperty.name](value)
+                : undefined
+    let needsLightText = false
+    if (backgroundColor !== undefined) {
+        const { r, g, b } = rgb(backgroundColor)
+        const luminance = 0.2126 * r/255 + 0.7152 * g/255 + 0.0722 * b/255
+        needsLightText = luminance < 0.5
+    }
+
+    //
     // render actual table cell
     //
     const commonProps = {
@@ -216,11 +230,10 @@ export default function TableCell({
                 module.task !== "molecular_property_prediction" &&
                 resultProperty.level === "molecule",
             "d-none": !resultProperty.visible,
+            "text-light": needsLightText,
         }),
         style: {
-            backgroundColor: resultProperty.colored
-                ? propertyPalettes[resultProperty.name](value)
-                : undefined,
+            backgroundColor,
         },
         onMouseEnter: (e) =>
             resultProperty.level === "atom" && onAtomSelect
