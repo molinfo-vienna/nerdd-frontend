@@ -1,15 +1,11 @@
-import MoleculeEditor from "@/features/moleculeEditor/MoleculeEditor"
 import { type Module } from "@/types"
-import classNames from "classnames"
 import { createForm, FORM_ERROR, FormApi } from "final-form"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { Field, Form, FormSpy } from "react-final-form"
+import { Field, Form } from "react-final-form"
 import { FaPaperPlane } from "react-icons/fa6"
-import FileField from "./FileField"
+import DynamicInput from "./DynamicInput"
 import JobParameterField from "./JobParameterField"
-import MoleculeEditorField from "./MoleculeEditorField"
 import Row from "./Row"
-import Textarea from "./Textarea"
 
 type JobFormProps = {
     module: Module
@@ -17,20 +13,6 @@ type JobFormProps = {
 }
 
 export default function JobForm({ module, onSubmit }: JobFormProps) {
-    // create a placeholder for the text input
-    // (first few characters of the example SMILES)
-    const exampleSmiles = module.exampleSmiles.split(/\s+/)[0]
-    const placeholderSmiles = exampleSmiles.slice(0, 13) + "..."
-
-    // The file field contains a drop zone and a list of uploaded files. We want to
-    // position the tooltip at the center of the *upload zone* (ignoring the list of
-    // uploaded files). To do this, we need to get a reference to the upload zone and
-    // pass it to the tooltip component.
-    const inputTextFieldTooltipPositionReference =
-        useRef<HTMLTextAreaElement>(null)
-    const fileFieldTooltipPositionReference = useRef<HTMLElement>(null)
-    const inputDrawnTooltipPositionReference = useRef<HTMLElement>(null)
-
     // When the user clicks on the submit button, we have to make sure to upload all
     // files before submitting the form to server. For that we introduce two state variables:
     // * formPending indicates whether files are still being uploaded (formPending)
@@ -73,7 +55,7 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
             if (
                 // all files uploaded?
                 values.inputFile?.filter((file) =>
-                    ["pending", "deleting"].includes(file.status),
+                    ["pending", "deleting"].includes(file.status)
                 ).length > 0
             ) {
                 // We are setting an error on a pseudo field that doesn't exist in the form.
@@ -90,7 +72,7 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
 
             return errors
         },
-        [module, setFormPending],
+        [module, setFormPending]
     )
 
     //
@@ -98,7 +80,7 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
     //
     const formApi = useMemo(
         () => createForm({ onSubmit, validate }),
-        [onSubmit, validate],
+        [onSubmit, validate]
     )
 
     const handleDelayedSubmit = useCallback(() => {
@@ -123,6 +105,11 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
                 <h2 className="mb-5">Start prediction</h2>
 
                 <Form
+                    subscription={{
+                        submitting: true,
+                        errors: true,
+                        submitError: true,
+                    }}
                     form={formRef.current}
                     render={({
                         handleSubmit,
@@ -131,166 +118,80 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
                         submitError,
                     }) => (
                         <form onSubmit={handleSubmit} noValidate>
-                            <FormSpy subscription={{ values: true }}>
-                                {({ values }) => (
-                                    <>
-                                        <Row>
-                                            <>
-                                                <div className="form-check form-check-inline">
-                                                    <Field
-                                                        name="inputType"
-                                                        id="inputTextOption"
-                                                        component="input"
-                                                        type="radio"
-                                                        className="form-check-input"
-                                                        value="text"
-                                                        initialValue="text"
-                                                    />
-                                                    <label
-                                                        htmlFor="inputTextOption"
-                                                        className="form-check-label"
-                                                    >
-                                                        Enter text
-                                                    </label>
-                                                </div>
-                                                <div className="form-check form-check-inline">
-                                                    <Field
-                                                        name="inputType"
-                                                        id="inputFileOption"
-                                                        component="input"
-                                                        type="radio"
-                                                        className="form-check-input"
-                                                        value="file"
-                                                    />
-                                                    <label
-                                                        htmlFor="inputFileOption"
-                                                        className="form-check-label"
-                                                    >
-                                                        Upload file
-                                                    </label>
-                                                </div>
-                                                <div className="form-check form-check-inline">
-                                                    <Field
-                                                        name="inputType"
-                                                        id="inputDrawOption"
-                                                        component="input"
-                                                        type="radio"
-                                                        className="form-check-input"
-                                                        value="draw"
-                                                    />
-                                                    <label
-                                                        htmlFor="inputDrawOption"
-                                                        className="form-check-label"
-                                                    >
-                                                        Draw molecule
-                                                    </label>
-                                                </div>
-                                                <div className="form-check form-check-inline">
-                                                    <Field
-                                                        name="inputType"
-                                                        id="inputExampleOption"
-                                                        component="input"
-                                                        type="radio"
-                                                        className="form-check-input"
-                                                        value="example"
-                                                    />
-                                                    <label
-                                                        htmlFor="inputExampleOption"
-                                                        className="form-check-label"
-                                                    >
-                                                        Use example
-                                                    </label>
-                                                </div>
-                                            </>
-                                        </Row>
-
-                                        <Row
-                                            helpText="Use any of the formats SMILES, SDF or InChI."
-                                            positionReference={
-                                                inputTextFieldTooltipPositionReference
-                                            }
-                                            className={classNames({
-                                                "d-none":
-                                                    values.inputType !== "text",
-                                            })}
+                            <Row>
+                                {/* grouping everything in a fragment is necessary here  */}
+                                <>
+                                    <div className="form-check form-check-inline">
+                                        <Field
+                                            name="inputType"
+                                            id="inputTextOption"
+                                            component="input"
+                                            type="radio"
+                                            className="form-check-input"
+                                            value="text"
+                                            initialValue="text"
+                                        />
+                                        <label
+                                            htmlFor="inputTextOption"
+                                            className="form-check-label"
                                         >
-                                            <Field
-                                                name="input"
-                                                id="input"
-                                                rows={5}
-                                                positionReference={
-                                                    inputTextFieldTooltipPositionReference
-                                                }
-                                                aria-describedby="inputHelp"
-                                                initialValue=""
-                                                placeholder={placeholderSmiles}
-                                                component={Textarea}
-                                            />
-                                        </Row>
-
-                                        <Row
-                                            helpText="File format can be SMILES, SDF, InChI or compressed archives like
-                        ZIP, TAR, GZ containing other files with molecular representations. 
-                        Multiple files can be uploaded."
-                                            className={classNames({
-                                                "d-none":
-                                                    values.inputType !== "file",
-                                            })}
-                                            positionReference={
-                                                fileFieldTooltipPositionReference
-                                            }
+                                            Enter text
+                                        </label>
+                                    </div>
+                                    <div className="form-check form-check-inline">
+                                        <Field
+                                            name="inputType"
+                                            id="inputFileOption"
+                                            component="input"
+                                            type="radio"
+                                            className="form-check-input"
+                                            value="file"
+                                        />
+                                        <label
+                                            htmlFor="inputFileOption"
+                                            className="form-check-label"
                                         >
-                                            <Field
-                                                name="inputFile"
-                                                id="inputFile"
-                                                // do not provide initialValue = []
-                                                // 1. it is not needed
-                                                // 2. a rerender will always create a new array
-                                                //    -> this triggers another rerender
-                                                component={FileField}
-                                                aria-describedby="inputFileHelp"
-                                                positionReference={
-                                                    fileFieldTooltipPositionReference
-                                                }
-                                                multiple
-                                            />
-                                        </Row>
-
-                                        <Row
-                                            className={classNames({
-                                                "d-none":
-                                                    values.inputType !== "draw",
-                                            })}
+                                            Upload file
+                                        </label>
+                                    </div>
+                                    <div className="form-check form-check-inline">
+                                        <Field
+                                            name="inputType"
+                                            id="inputDrawOption"
+                                            component="input"
+                                            type="radio"
+                                            className="form-check-input"
+                                            value="draw"
+                                        />
+                                        <label
+                                            htmlFor="inputDrawOption"
+                                            className="form-check-label"
                                         >
-                                            <Field
-                                                name="inputDrawn"
-                                                id="inputDrawn"
-                                                initialValue={""}
-                                                component={MoleculeEditorField}
-                                                aria-describedby="inputDrawnHelp"
-                                                positionReference={
-                                                    inputDrawnTooltipPositionReference
-                                                }
-                                            />
-                                        </Row>
-
-                                        <Row
-                                            className={classNames({
-                                                "d-none":
-                                                    values.inputType !==
-                                                    "example",
-                                            })}
+                                            Draw molecule
+                                        </label>
+                                    </div>
+                                    <div className="form-check form-check-inline">
+                                        <Field
+                                            name="inputType"
+                                            id="inputExampleOption"
+                                            component="input"
+                                            type="radio"
+                                            className="form-check-input"
+                                            value="example"
+                                        />
+                                        <label
+                                            htmlFor="inputExampleOption"
+                                            className="form-check-label"
                                         >
-                                            <MoleculeEditor
-                                                value={exampleSmiles}
-                                                width="300px"
-                                                height="200px"
-                                                depict={true}
-                                            />
-                                        </Row>
-                                    </>
-                                )}
-                            </FormSpy>
+                                            Use example
+                                        </label>
+                                    </div>
+                                </>
+                            </Row>
+
+                            <DynamicInput
+                                exampleSmiles={module.exampleSmiles}
+                            />
 
                             {module.jobParameters.map((jobParameter, i) => (
                                 <Row key={i} helpText={jobParameter.helpText}>
