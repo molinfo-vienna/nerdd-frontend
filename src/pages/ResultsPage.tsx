@@ -24,8 +24,8 @@ import {
     setResults,
     setTask,
 } from "@/features/resultTable/resultTableSlice"
-import { useGetJobStatusQuery, useGetResultsQuery } from "@/services"
-import { useModule } from "@/services/hooks"
+import { useGetResultsQuery } from "@/services"
+import { useJobStatus, useModule } from "@/services/hooks"
 import { ResultProperty } from "@/types"
 import { useCallback, useEffect } from "react"
 import { useNavigate, useParams, useSearchParams } from "react-router-dom"
@@ -75,6 +75,7 @@ export default function ResultsPage() {
     // fetch data
     //
     const { module, isLoading: isLoadingModule } = useModule()
+    const { jobStatus, isLoading: isLoadingJobStatus } = useJobStatus()
 
     const {
         data: results,
@@ -87,17 +88,6 @@ export default function ResultsPage() {
             jobId,
             page: pageOneBased,
         },
-        {
-            skip: moduleId === undefined || jobId === undefined,
-        },
-    )
-
-    const {
-        data: jobStatus,
-        error: errorJobStatus,
-        isLoading: isLoadingJobStatus,
-    } = useGetJobStatusQuery(
-        { moduleId, jobId },
         {
             skip: moduleId === undefined || jobId === undefined,
         },
@@ -188,12 +178,6 @@ export default function ResultsPage() {
     if (jobId === undefined) {
         return ErrorPage({
             error: new Error("Job ID is not defined"),
-        })
-    }
-
-    if (errorJobStatus) {
-        return ErrorPage({
-            error: errorJobStatus,
         })
     }
 

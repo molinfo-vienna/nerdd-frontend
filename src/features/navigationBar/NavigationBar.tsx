@@ -1,9 +1,9 @@
-import { useModule } from "@/services/hooks"
+import { useJobStatus, useModule } from "@/services/hooks"
 import { Collapse } from "bootstrap"
 import classNames from "classnames"
 import { useCallback, useState } from "react"
 import { FaBars, FaGithub } from "react-icons/fa6"
-import { Link, useMatches, useParams } from "react-router-dom"
+import { Link, useMatches } from "react-router-dom"
 
 export default function NavigationBar() {
     // figure out which page we are on
@@ -11,11 +11,9 @@ export default function NavigationBar() {
     const match = matches[matches.length - 1]
     const pageId = match?.id || "unknown"
 
-    // get the params from the url (we might need them)
-    const { jobId } = useParams()
-
     // get the module to receive the module name
     const { module } = useModule(false)
+    const { jobStatus } = useJobStatus(false)
 
     // configure the breadcrumb elements based on the page
     let breadcrumbElements
@@ -44,11 +42,11 @@ export default function NavigationBar() {
                 { name: module.visibleName, url: `/${module.id}` },
                 { name: "API", url: `/${module.id}/api` },
             ]
-        } else if (pageId === "results") {
+        } else if (pageId === "results" && jobStatus != null) {
             breadcrumbElements = [
                 { name: "Home", url: "/" },
                 { name: module.visibleName, url: `/${module.id}` },
-                { name: "Results", url: `/${module.id}/${jobId}` },
+                { name: "Results", url: `/${module.id}/${jobStatus.id}` },
             ]
         } else {
             // unknown page
