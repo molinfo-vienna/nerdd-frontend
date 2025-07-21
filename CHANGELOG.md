@@ -1,3 +1,12 @@
+## [1.2.6](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.5...v1.2.6) (2025-07-21)
+
+
+### Bug Fixes
+
+* Make use of error boundary when fetching job status ([f8bc8ca](https://github.com/molinfo-vienna/nerdd-frontend/commit/f8bc8ca9a846597e5c19b330f95a4e7ac7b2ee7f))
+* Simplify fetching job status in NavigationBar ([09bc653](https://github.com/molinfo-vienna/nerdd-frontend/commit/09bc65323dff8ac8c8ab09d780c854bf92d1f1ad))
+* Simplify fetching job status in ResultsPage ([eb0c132](https://github.com/molinfo-vienna/nerdd-frontend/commit/eb0c132208245312910a491968649429ced9466d))
+
 ## [1.2.5](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.4...v1.2.5) (2025-07-21)
 
 
