@@ -1,38 +1,15 @@
+import { NerddError } from "@/app/errors"
 import classNames from "classnames"
 import { BsExclamationCircle } from "react-icons/bs"
 import Layout from "./Layout"
 
-const statusMap = {
-    404: "Not Found",
-    500: "Internal Server Error",
-}
-
 type ErrorPageProps = {
-    error?: {
-        status?: string | number
-        originalStatus?: string | number
-        data?: {
-            detail?: string
-        }
-    }
-    explanation?: string
+    error: NerddError
 }
 
-export default function ErrorPage({ error, explanation }: ErrorPageProps) {
-    let status
-    if (error === undefined || error.status === undefined) {
-        status = "000"
-    } else if (error.status === "PARSING_ERROR") {
-        status = error.originalStatus ?? "000"
-    } else {
-        status = error.status
-    }
-    const message = error?.data?.detail || "An unknown error occurred"
-
-    const statusExplanation = statusMap[status] || "Unknown Error"
-
-    // leave this console.error here for reporting errors
-    console.error(error)
+export default function ErrorPage({ error }: ErrorPageProps) {
+    // pad the status code to 3 digits, e.g. 20 -> 020
+    const statusString = error.status.toString().padStart(3, "0")
 
     return (
         <Layout>
@@ -47,7 +24,7 @@ export default function ErrorPage({ error, explanation }: ErrorPageProps) {
                                 `d-flex flex-row align-items-center`,
                                 {
                                     "align-items-center":
-                                        explanation === undefined,
+                                        error.explanation === undefined,
                                 },
                             )}
                         >
@@ -58,10 +35,12 @@ export default function ErrorPage({ error, explanation }: ErrorPageProps) {
                             </div>
                             <div>
                                 <p className="text-danger fw-bold mb-0">
-                                    {status}: {statusExplanation}
+                                    {statusString}: {error.statusText}
                                 </p>
-                                <h1>{message}</h1>
-                                {explanation && <p>{explanation}</p>}
+                                <h1>{error.message}</h1>
+                                {error.explanation !== undefined && (
+                                    <p>{error.explanation}</p>
+                                )}
                             </div>
                         </div>
                     </div>

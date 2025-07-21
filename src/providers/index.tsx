@@ -2,12 +2,18 @@ import { ComponentType, PropsWithChildren, ReactNode } from "react"
 import AppRouterProvider from "./AppRouterProvider"
 import DebugProvider from "./DebugProvider"
 import ReduxProvider from "./ReduxProvider"
+import SuspenseProvider from "./SuspenseProvider"
 
 type PropsWithRequiredChildren<P = unknown> = P & { children: ReactNode }
 
 type Provider = ComponentType<PropsWithRequiredChildren>
 
-const providers: Provider[] = [ReduxProvider, DebugProvider, AppRouterProvider]
+const providers: Provider[] = [
+    ReduxProvider,
+    AppRouterProvider,
+    SuspenseProvider,
+    DebugProvider,
+]
 
 export default function Providers({ children }: PropsWithChildren) {
     const Provider = providers.reduceRight(

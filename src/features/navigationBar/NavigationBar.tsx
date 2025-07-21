@@ -1,4 +1,4 @@
-import { useGetModuleQuery } from "@/services"
+import { useModule } from "@/services/hooks"
 import { Collapse } from "bootstrap"
 import classNames from "classnames"
 import { useCallback, useState } from "react"
@@ -12,45 +12,43 @@ export default function NavigationBar() {
     const pageId = match?.id || "unknown"
 
     // get the params from the url (we might need them)
-    const { moduleId, jobId } = useParams()
+    const { jobId } = useParams()
 
-    // get the module list to receive the module name
-    const { data: module } = useGetModuleQuery(moduleId, {
-        skip: moduleId === undefined,
-    })
+    // get the module to receive the module name
+    const { module } = useModule(false)
 
     // configure the breadcrumb elements based on the page
     let breadcrumbElements
     let shortNavigation = false
-    if (moduleId !== undefined && module !== undefined) {
+    if (module != undefined) {
         if (pageId == "createJob") {
             breadcrumbElements = [
                 { name: "Home", url: "/" },
-                { name: module.visibleName, url: `/${moduleId}` },
+                { name: module.visibleName, url: `/${module.id}` },
             ]
         } else if (pageId === "about") {
             breadcrumbElements = [
                 { name: "Home", url: "/" },
-                { name: module.visibleName, url: `/${moduleId}` },
-                { name: "About", url: `/${moduleId}/about` },
+                { name: module.visibleName, url: `/${module.id}` },
+                { name: "About", url: `/${module.id}/about` },
             ]
         } else if (pageId === "cite") {
             breadcrumbElements = [
                 { name: "Home", url: "/" },
-                { name: module.visibleName, url: `/${moduleId}` },
-                { name: "Cite", url: `/${moduleId}/cite` },
+                { name: module.visibleName, url: `/${module.id}` },
+                { name: "Cite", url: `/${module.id}/cite` },
             ]
         } else if (pageId === "api") {
             breadcrumbElements = [
                 { name: "Home", url: "/" },
-                { name: module.visibleName, url: `/${moduleId}` },
-                { name: "API", url: `/${moduleId}/api` },
+                { name: module.visibleName, url: `/${module.id}` },
+                { name: "API", url: `/${module.id}/api` },
             ]
         } else if (pageId === "results") {
             breadcrumbElements = [
                 { name: "Home", url: "/" },
-                { name: module.visibleName, url: `/${moduleId}` },
-                { name: "Results", url: `/${moduleId}/${jobId}` },
+                { name: module.visibleName, url: `/${module.id}` },
+                { name: "Results", url: `/${module.id}/${jobId}` },
             ]
         } else {
             // unknown page
@@ -79,6 +77,13 @@ export default function NavigationBar() {
 
     const ref = useCallback(
         (node: HTMLDivElement | null) => {
+            setCollapse((prev) => {
+                if (prev) {
+                    prev.dispose()
+                }
+                return null
+            })
+
             if (node === null) {
                 return
             }
@@ -88,16 +93,6 @@ export default function NavigationBar() {
                     toggle: false,
                 }),
             )
-
-            // cleanup function to destroy the collapse instance
-            return () => {
-                setCollapse((prev) => {
-                    if (prev) {
-                        prev.dispose()
-                    }
-                    return null
-                })
-            }
         },
         [setCollapse],
     )

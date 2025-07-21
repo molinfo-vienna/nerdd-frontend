@@ -1,27 +1,20 @@
 import ModuleHeader from "@/features/header/ModuleHeader"
 import TableOfContents from "@/features/tableOfContents/TableOfContents"
-import { useGetModuleQuery } from "@/services"
+import { useModule } from "@/services/hooks"
 import { useRef } from "react"
 import Markdown from "react-markdown"
-import { useParams } from "react-router-dom"
 import rehypeSlug from "rehype-slug"
 import remarkGfm from "remark-gfm"
-import ErrorPage from "./ErrorPage"
 import Layout from "./Layout"
 import LoadingPage from "./LoadingPage"
 
 export default function AboutPage() {
     const ref = useRef(null)
-    const { moduleId } = useParams()
 
-    const { data: module, error, isLoading } = useGetModuleQuery(moduleId)
+    const { module, isLoading } = useModule()
 
     if (isLoading) {
         return LoadingPage()
-    }
-
-    if (!module) {
-        return ErrorPage({ error })
     }
 
     // apply bootstrap styling to specific markdown elements

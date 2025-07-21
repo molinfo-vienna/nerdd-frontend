@@ -24,11 +24,8 @@ import {
     setResults,
     setTask,
 } from "@/features/resultTable/resultTableSlice"
-import {
-    useGetJobStatusQuery,
-    useGetModuleQuery,
-    useGetResultsQuery,
-} from "@/services"
+import { useGetJobStatusQuery, useGetResultsQuery } from "@/services"
+import { useModule } from "@/services/hooks"
 import { ResultProperty } from "@/types"
 import { useCallback, useEffect } from "react"
 import { useNavigate, useParams, useSearchParams } from "react-router-dom"
@@ -77,13 +74,7 @@ export default function ResultsPage() {
     //
     // fetch data
     //
-    const {
-        data: module,
-        error: errorModule,
-        isLoading: isLoadingModule,
-    } = useGetModuleQuery(moduleId || "", {
-        skip: moduleId === undefined,
-    })
+    const { module, isLoading: isLoadingModule } = useModule()
 
     const {
         data: results,
@@ -200,10 +191,6 @@ export default function ResultsPage() {
         })
     }
 
-    if (errorModule) {
-        return ErrorPage({ error: errorModule })
-    }
-
     if (errorJobStatus) {
         return ErrorPage({
             error: errorJobStatus,
@@ -214,8 +201,8 @@ export default function ResultsPage() {
         return ErrorPage({ error: errorResults })
     }
 
-    if (isLoadingModule || module === undefined || isLoadingJobStatus) {
-        return LoadingPage()
+    if (isLoadingModule || isLoadingJobStatus) {
+        return <LoadingPage />
     }
 
     //

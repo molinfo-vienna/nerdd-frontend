@@ -1,16 +1,14 @@
-import { DebugContext } from "@/features/debug/DebugContext"
-import { ReactNode } from "react"
+import { lazy, PropsWithChildren, ReactNode } from "react"
 
 type DebugProviderProps = {
     children: ReactNode
 }
 
-export default function DebugProvider({ children }: DebugProviderProps) {
-    const isDebug = import.meta.env.MODE === "development"
+const Debug =
+    import.meta.env.MODE === "development"
+        ? lazy(() => import("@/features/debug/Debug"))
+        : ({ children }: PropsWithChildren) => <>{children}</>
 
-    return (
-        <DebugContext.Provider value={isDebug}>
-            {children}
-        </DebugContext.Provider>
-    )
+export default function DebugProvider({ children }: DebugProviderProps) {
+    return <Debug>{children}</Debug>
 }
