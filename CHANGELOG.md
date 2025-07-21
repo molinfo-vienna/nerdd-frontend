@@ -1,3 +1,35 @@
+## [1.2.5](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.4...v1.2.5) (2025-07-21)
+
+
+### Bug Fixes
+
+* Add custom error class for RTK Query ([06ffa18](https://github.com/molinfo-vienna/nerdd-frontend/commit/06ffa185d277878c4fc3b20a36bd8fb7325dc718))
+* Add errorElement to react router ([7b381af](https://github.com/molinfo-vienna/nerdd-frontend/commit/7b381afe18f650c4c0ff20a1d34170e7c83df74a))
+* Add RouteError class ([345eb9d](https://github.com/molinfo-vienna/nerdd-frontend/commit/345eb9dd13365502ee748980dc5caeb65320fed7))
+* Add UnknownError class ([b8af7f5](https://github.com/molinfo-vienna/nerdd-frontend/commit/b8af7f5efee369af165a522fd77e2259abd8c3e6))
+* Create base error class ([5690904](https://github.com/molinfo-vienna/nerdd-frontend/commit/5690904926487e6a8fa1bbb47d04abd7db884c20))
+* Create SuspenseProvider ([c318b96](https://github.com/molinfo-vienna/nerdd-frontend/commit/c318b96b9cbe5d4660a1bf8fb9489c18db9dc210))
+* Extend UnknownError ([2184037](https://github.com/molinfo-vienna/nerdd-frontend/commit/2184037e674badaa8ddb30702e3c20c49caf8c46))
+* Give app an ErrorBoundary ([bd8be7b](https://github.com/molinfo-vienna/nerdd-frontend/commit/bd8be7b53701d2cf454063f7879b71b6e47c49bb))
+* Handle routing errors in ErrorPage ([cb09055](https://github.com/molinfo-vienna/nerdd-frontend/commit/cb090552b28ee0b6ba42edbb11fda0f4785be828))
+* Implement ErrorBoundaryProvider ([7b1cefb](https://github.com/molinfo-vienna/nerdd-frontend/commit/7b1cefbf908c8dc68b208fa312b1bb8c467b278e))
+* Install react-error-boundary ([1d9cb26](https://github.com/molinfo-vienna/nerdd-frontend/commit/1d9cb26a3fa8cfceed676766d16ed96cb1b2a6d0))
+* Make use of ErrorBoundary when fetching current module ([0ca9345](https://github.com/molinfo-vienna/nerdd-frontend/commit/0ca93453b210ac0016286929f227872b34d05c97))
+* Move Debug component to DebugProvider ([3c6f616](https://github.com/molinfo-vienna/nerdd-frontend/commit/3c6f616a4857b8c44068bd052bb648d9698129aa))
+* Move RouteError to errorHandling feature ([2f8e6de](https://github.com/molinfo-vienna/nerdd-frontend/commit/2f8e6de08a11a7822857a128ffab7ecb71e7b418))
+* Nest content in Debug component ([043df21](https://github.com/molinfo-vienna/nerdd-frontend/commit/043df21f2cd7140940c40e7671c7780bd8706da6))
+* Normalize error in ForwardError component ([1fc4bec](https://github.com/molinfo-vienna/nerdd-frontend/commit/1fc4bec8bbf98fc983a941f9d04835f05fb2c2fd))
+* Remove redundant not_found route ([1af24fb](https://github.com/molinfo-vienna/nerdd-frontend/commit/1af24fb343087f7df67ce5c07907bf30d3e1351f))
+* Simplify fetching module in AboutPage ([cf27fe8](https://github.com/molinfo-vienna/nerdd-frontend/commit/cf27fe80753032da8b3b422e107efff620e507d3))
+* Simplify fetching module in CreateJobPage ([cb95c70](https://github.com/molinfo-vienna/nerdd-frontend/commit/cb95c701f599bfe5ca5a6000565752025346e839))
+* Simplify fetching module in DeveloperPage ([d79c650](https://github.com/molinfo-vienna/nerdd-frontend/commit/d79c65067bc5a2039da969507ca88ffa6802b8af))
+* Simplify fetching module in Footer ([c522fcd](https://github.com/molinfo-vienna/nerdd-frontend/commit/c522fcd7922f030be9a0693e65a0ecd93b11223d))
+* Simplify fetching module in NavigationBar ([3c39ff9](https://github.com/molinfo-vienna/nerdd-frontend/commit/3c39ff934a38c501b2c6c25e7bb270aaab79434f))
+* Simplify fetching module in ResultsPage ([66cc1c3](https://github.com/molinfo-vienna/nerdd-frontend/commit/66cc1c397362699ce5598c3ff7cd8e6149e70eb5))
+* Transform and forward route errors ([9a4a670](https://github.com/molinfo-vienna/nerdd-frontend/commit/9a4a670d295299c7748d4fcaae9b06d3bef6896c))
+* Uninstall react-error-boundary ([4b9e489](https://github.com/molinfo-vienna/nerdd-frontend/commit/4b9e48937ca5f0a2197d6de2692acfa9cb955471))
+* Use react router's built-in ErrorBoundary ([c4f13dc](https://github.com/molinfo-vienna/nerdd-frontend/commit/c4f13dc950cc30c1e61f4efa4698465061ea29d1))
+
 ## [1.2.4](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.3...v1.2.4) (2025-07-18)
 
 
