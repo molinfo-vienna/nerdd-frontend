@@ -34,10 +34,18 @@ export default function ModuleHeader({ module }: ModuleHeaderProps) {
         },
     ]
 
+    // Notes about the responsive design:
+    // * Header:
+    //   * consists of two parts: (1) title & description and (2) info card
+    //
+    // * Info card:
+    //   * Small screens (Smartphone): list of links below title and description
+    //   * Medium screens (Tablet sideways): column on the right side
+    //   * Large screens (Desktop): same as medium screens
     return (
         <section className="container py-5">
             <div className="row justify-content-center pb-3">
-                <div className="col-sm-6">
+                <div className="col col-lg-8 col-xl-6">
                     <h2 className="pb-3">
                         <span className="text-primary fw-bold">
                             {module.visibleName}
@@ -46,17 +54,36 @@ export default function ModuleHeader({ module }: ModuleHeaderProps) {
                         {module.title}
                     </h2>
                     <Markdown className="lead">{module.description}</Markdown>
-                </div>
-                <div className="col-sm-4 align-content-center justify-content-center px-4">
-                    <div className="card">
-                        {/* {title !== undefined && (
-                                <div className="card-header">
-                                    <h4 className="my-0 text-body-secondary">
-                                        {title}
-                                    </h4>
+                    {/* Info card as list of links */}
+                    <div
+                        // d-block d-lg-none: show the list of links only on small screens
+                        className="d-block d-lg-none"
+                    >
+                        {icons.map((icon, index) =>
+                            icon.href !== undefined ? (
+                                <Link
+                                    className="text-decoration-none my-auto me-4"
+                                    to={icon.href}
+                                >
+                                    <icon.Icon size={15} />
+                                    <span className="ms-1">{icon.caption}</span>
+                                </Link>
+                            ) : (
+                                <div className="my-auto d-block">
+                                    {icon.caption}
                                 </div>
-                            )} */}
-
+                            ),
+                        )}
+                    </div>
+                </div>
+                {/* Info card as column on large screens */}
+                <div
+                    // d-none d-lg-block: show this column only on large screens
+                    // ps-xl-5: add padding on the left side for very large screens
+                    // align-content-center: center the content vertically
+                    className="col-4 d-none d-lg-block ps-xl-5 align-content-center"
+                >
+                    <div className="card">
                         {module.publications.map((publication, i) => (
                             <div
                                 className="card-body d-flex flex-wrap px-4"

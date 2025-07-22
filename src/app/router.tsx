@@ -5,11 +5,12 @@ import ForwardError from "@/features/errorHandling/ForwardError"
 import LoadingPage from "@/pages/LoadingPage"
 
 const LandingPage = lazy(() => import("@/pages/LandingPage"))
-const DeveloperPage = lazy(() => import("@/pages/DeveloperPage"))
+const ApiDocsPage = lazy(() => import("@/pages/ApiDocsPage"))
 const CitationPage = lazy(() => import("@/pages/CitationPage"))
 const CreateJobPage = lazy(() => import("@/pages/CreateJobPage"))
 const AboutPage = lazy(() => import("@/pages/AboutPage"))
 const ResultsPage = lazy(() => import("@/pages/ResultsPage"))
+const ConstructionPage = lazy(() => import("@/pages/ConstructionPage"))
 
 export default function createRouter(children: React.ReactNode) {
     return createBrowserRouter([
@@ -26,7 +27,7 @@ export default function createRouter(children: React.ReactNode) {
                 {
                     path: "/developer",
                     id: "api_general",
-                    element: <DeveloperPage />,
+                    element: <ApiDocsPage />,
                 },
                 {
                     path: "/cite",
@@ -36,7 +37,7 @@ export default function createRouter(children: React.ReactNode) {
                 {
                     path: "/contact",
                     id: "contact",
-                    element: <DeveloperPage />,
+                    element: <ConstructionPage />,
                 },
                 {
                     path: "/:moduleId",
@@ -51,7 +52,7 @@ export default function createRouter(children: React.ReactNode) {
                 {
                     path: "/:moduleId/api",
                     id: "api",
-                    element: <DeveloperPage />,
+                    element: <ApiDocsPage />,
                 },
                 {
                     path: "/:moduleId/cite",

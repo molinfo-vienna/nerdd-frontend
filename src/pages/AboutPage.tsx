@@ -67,18 +67,16 @@ export default function AboutPage() {
 
             <div className="container py-5">
                 <div className="row justify-content-center">
-                    <div className="col-sm-6">
-                        <div ref={ref}>
-                            <Markdown
-                                rehypePlugins={[rehypeSlug]}
-                                remarkPlugins={[remarkGfm]}
-                                components={components}
-                            >
-                                {module.about}
-                            </Markdown>
-                        </div>
+                    <div className="col col-lg-8 col-xl-6" ref={ref}>
+                        <Markdown
+                            rehypePlugins={[rehypeSlug]}
+                            remarkPlugins={[remarkGfm]}
+                            components={components}
+                        >
+                            {module.about}
+                        </Markdown>
                     </div>
-                    <div className="col-sm-4">
+                    <div className="col-4 d-none d-lg-block ps-xl-5">
                         <TableOfContents contentRef={ref} />
                     </div>
                 </div>

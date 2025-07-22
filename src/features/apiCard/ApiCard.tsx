@@ -97,7 +97,7 @@ export default function ApiCard({
                     .filter((param) => param.default !== undefined)
                     .map(
                         (param) =>
-                            `        "${param.name}": ${_t(param.default)}`,
+                            `        "${param.name}": ${_t(param.default)},`,
                     )
 
                 const jobParametersBlock =
