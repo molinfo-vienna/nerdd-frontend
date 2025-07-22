@@ -13,7 +13,6 @@ export interface Module {
     name: string
     title: string
     visibleName: string
-    logo: string
     logoCaption?: string
     exampleSmiles: string
     description?: string

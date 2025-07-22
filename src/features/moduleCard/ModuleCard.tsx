@@ -17,7 +17,7 @@ export default function ModuleCard({ module }: ModuleCardProps) {
                 {/* object-fit-contain: image keeps aspect ratio */}
                 <img
                     className="card-img-top object-fit-contain"
-                    src={module.logo}
+                    src={`/api/modules/${module.id}/logo`}
                     alt={module.visibleName}
                 />
             </div>

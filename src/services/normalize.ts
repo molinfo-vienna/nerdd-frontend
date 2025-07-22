@@ -1,7 +1,5 @@
 import type { JobParameter, Module, ResultProperty } from "@/types"
 import { camelCase, upperFirst } from "lodash-es"
-import ReactDOMServer from "react-dom/server"
-import { PiGearLight } from "react-icons/pi"
 
 function normalizeJobParameter(jobParameter): JobParameter {
     return {
@@ -29,13 +27,6 @@ function normalizeResultProperty(resultProperty): ResultProperty {
 }
 
 export function normalizeModule(module): Module {
-    const reactElement = PiGearLight
-
-    const logo =
-        module.logo ||
-        "data:image/svg+xml," +
-            escape(ReactDOMServer.renderToStaticMarkup(reactElement))
-
     const task = module.task ?? "molecular_property_prediction"
 
     const exampleSmiles =
@@ -53,7 +44,6 @@ export function normalizeModule(module): Module {
     return {
         ...module,
         visibleName: module.visibleName || upperFirst(camelCase(module.name)),
-        logo,
         task,
         exampleSmiles,
         publications: module.publications || [],
