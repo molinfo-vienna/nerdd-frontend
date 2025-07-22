@@ -1,3 +1,18 @@
+## [1.2.7](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.6...v1.2.7) (2025-07-22)
+
+
+### Bug Fixes
+
+* Adapt column layout in AboutPage ([ff35d56](https://github.com/molinfo-vienna/nerdd-frontend/commit/ff35d56089cdb1bded73fbc43d72b0edae5e43b7))
+* Adapt column layout in ApiDocsPage ([45e42cd](https://github.com/molinfo-vienna/nerdd-frontend/commit/45e42cddc235106898dcd55a83320651a76a6e99))
+* Center info card verically ([b577b5d](https://github.com/molinfo-vienna/nerdd-frontend/commit/b577b5df4a32d74c6bb85a7ee7e47d36a914f5fb))
+* Fine-tune responsive design in ModuleHeader ([4b21ad8](https://github.com/molinfo-vienna/nerdd-frontend/commit/4b21ad85d22ab38226164e958a39e05223abe440))
+* Fix typo in ApiCard ([4f27aec](https://github.com/molinfo-vienna/nerdd-frontend/commit/4f27aec81ea500aa9f471a0030224990eaeee83d))
+* Move API docs to separate feature ([41a499a](https://github.com/molinfo-vienna/nerdd-frontend/commit/41a499ac7141de1a104a1a3a899733b4830ce056))
+* Rename DeveloperPage to ApiDocsPage ([b858266](https://github.com/molinfo-vienna/nerdd-frontend/commit/b8582666665a04c01f68c54b4adb725f0655daf4))
+* Use correct import instruction in ApiDocs ([5d28830](https://github.com/molinfo-vienna/nerdd-frontend/commit/5d28830639e27c361284c7b803bb941f9989c587))
+* Use same header in ApiDocsPage as in AboutPage ([dc0a697](https://github.com/molinfo-vienna/nerdd-frontend/commit/dc0a697a95f73c79c4c62b9eabde893f13ed9d59))
+
 ## [1.2.6](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.5...v1.2.6) (2025-07-21)
 
 
