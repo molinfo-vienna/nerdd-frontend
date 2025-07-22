@@ -1,3 +1,12 @@
+## [1.2.9](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.8...v1.2.9) (2025-07-22)
+
+
+### Bug Fixes
+
+* Fetch module logo from different backend route ([71ecbad](https://github.com/molinfo-vienna/nerdd-frontend/commit/71ecbadc98d4734b4d6458610cbebdd6c16b71a4))
+* Ignore logo in module normalization ([f086028](https://github.com/molinfo-vienna/nerdd-frontend/commit/f086028c8c04b97f3fae8680cea3201fc12c9350))
+* Remove logo from Module type ([3c41ae0](https://github.com/molinfo-vienna/nerdd-frontend/commit/3c41ae05e0d1914518b4188f21e4790e47883ef2))
+
 ## [1.2.8](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.7...v1.2.8) (2025-07-22)
 
 
