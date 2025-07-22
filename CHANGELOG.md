@@ -1,3 +1,10 @@
+## [1.2.8](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.7...v1.2.8) (2025-07-22)
+
+
+### Bug Fixes
+
+* Remove theme color variables ([8f7fd44](https://github.com/molinfo-vienna/nerdd-frontend/commit/8f7fd449576221db1207f35a99c7e215448dd0ed))
+
 ## [1.2.7](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.6...v1.2.7) (2025-07-22)
 
 
