@@ -345,10 +345,7 @@ export default function MockServer({
                     this.get("/modules/:moduleId", (schema, request) => {
                         const moduleId = request.params.moduleId
 
-                        if (
-                            return404 ||
-                            moduleConfigs[moduleId] === undefined
-                        ) {
+                        if (return404 || moduleConfigs[moduleId] == null) {
                             return new Response(
                                 404,
                                 {},
