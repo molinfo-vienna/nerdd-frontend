@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react"
 import rehypeSlug from "rehype-slug"
 import { visualizer } from "rollup-plugin-visualizer"
 import { defineConfig, type PluginOption } from "vite"
+import { sri } from "vite-plugin-sri3"
 import tsconfigPaths from "vite-tsconfig-paths"
 
 export default defineConfig(({ mode }) => ({
@@ -16,6 +17,7 @@ export default defineConfig(({ mode }) => ({
             brotliSize: true,
         }) as PluginOption,
         tsconfigPaths(),
+        sri({ ignoreMissingAsset: false }),
     ],
     base: "/",
     server: {
