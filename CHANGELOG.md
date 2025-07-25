@@ -1,3 +1,11 @@
+## [1.2.12](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.11...v1.2.12) (2025-07-25)
+
+
+### Bug Fixes
+
+* Add SRI in build ([b9c51cb](https://github.com/molinfo-vienna/nerdd-frontend/commit/b9c51cbf4558abd13ef1e879f95a7df6b1a10c63))
+* Install vite-plugin-sri3 ([0db969a](https://github.com/molinfo-vienna/nerdd-frontend/commit/0db969a041e780d7ce0caeabf1ff211821c70dbe))
+
 ## [1.2.11](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.10...v1.2.11) (2025-07-25)
 
 
