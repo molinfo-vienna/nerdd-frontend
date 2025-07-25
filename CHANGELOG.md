@@ -1,3 +1,11 @@
+## [1.2.10](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.9...v1.2.10) (2025-07-25)
+
+
+### Bug Fixes
+
+* Update version of JSME ([4ed9537](https://github.com/molinfo-vienna/nerdd-frontend/commit/4ed9537da55d6cc9493887257a3d20c71855c154))
+* Use new version of JSME ([de1073e](https://github.com/molinfo-vienna/nerdd-frontend/commit/de1073e5bf39c2c94a7ea48886b735df316a16fd))
+
 ## [1.2.9](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.8...v1.2.9) (2025-07-22)
 
 
