@@ -1,3 +1,10 @@
+## [1.2.11](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.10...v1.2.11) (2025-07-25)
+
+
+### Bug Fixes
+
+* Import only the latin subset of fonts ([7819cf4](https://github.com/molinfo-vienna/nerdd-frontend/commit/7819cf411f21e3f155cae289b9137ab9c935144d))
+
 ## [1.2.10](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.9...v1.2.10) (2025-07-25)
 
 
