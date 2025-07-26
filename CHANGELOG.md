@@ -1,3 +1,10 @@
+## [1.2.13](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.12...v1.2.13) (2025-07-26)
+
+
+### Bug Fixes
+
+* Add missing JSME files ([a4a29eb](https://github.com/molinfo-vienna/nerdd-frontend/commit/a4a29eb04165560040d4e72fd0e65a424a2e8a87))
+
 ## [1.2.12](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.11...v1.2.12) (2025-07-25)
 
 
