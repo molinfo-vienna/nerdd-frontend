@@ -1,3 +1,12 @@
+## [1.2.15](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.14...v1.2.15) (2025-07-27)
+
+
+### Bug Fixes
+
+* Handle pages that are not guaranteed to exist ([c7f2661](https://github.com/molinfo-vienna/nerdd-frontend/commit/c7f26619c326f750c5e8b45bab71398be20e5d41))
+* Simplify error handling in ResultsPage ([f335e05](https://github.com/molinfo-vienna/nerdd-frontend/commit/f335e05c137362ee401ddcf1a6c6bd690650a82c))
+* Use error boundary in LandingPage ([d81451e](https://github.com/molinfo-vienna/nerdd-frontend/commit/d81451e0da71fef77979aa9760bed666d553bae8))
+
 ## [1.2.14](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.13...v1.2.14) (2025-07-27)
 
 
