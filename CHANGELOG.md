@@ -1,3 +1,10 @@
+## [1.2.14](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.13...v1.2.14) (2025-07-27)
+
+
+### Bug Fixes
+
+* Add rank to module type ([5db0c56](https://github.com/molinfo-vienna/nerdd-frontend/commit/5db0c56c3c880ba8451e1da2808af80394378e43))
+
 ## [1.2.13](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.12...v1.2.13) (2025-07-26)
 
 
