@@ -43,6 +43,7 @@ export function normalizeModule(module): Module {
 
     return {
         ...module,
+        rank: module.rank || 0,
         visibleName: module.visibleName || upperFirst(camelCase(module.name)),
         task,
         exampleSmiles,

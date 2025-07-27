@@ -10,9 +10,11 @@ export type PredictionTask =
 
 export interface Module {
     id: string
+    rank: number
     name: string
     title: string
     visibleName: string
+    logo?: string
     logoCaption?: string
     exampleSmiles: string
     description?: string
