@@ -29,7 +29,6 @@ import { useJobStatus, useModule } from "@/services/hooks"
 import { ResultProperty } from "@/types"
 import { useCallback, useEffect } from "react"
 import { useNavigate, useParams, useSearchParams } from "react-router-dom"
-import ErrorPage from "./ErrorPage"
 import Layout from "./Layout"
 import LoadingPage from "./LoadingPage"
 
@@ -169,20 +168,16 @@ export default function ResultsPage() {
     //
     // error handling
     //
-    if (moduleId === undefined) {
-        return ErrorPage({
-            error: new Error("Module ID is not defined"),
-        })
-    }
-
-    if (jobId === undefined) {
-        return ErrorPage({
-            error: new Error("Job ID is not defined"),
-        })
-    }
-
     if (errorResults) {
-        return ErrorPage({ error: errorResults })
+        // Status 202 means that the page might exist, but the server is still figuring out the
+        // job size.
+        if ("status" in errorResults && errorResults.status === 202) {
+            // do nothing
+        } else if (pageOneBased == 1) {
+            throw errorResults
+        } else {
+            navigate(`/${moduleId}/${jobId}`)
+        }
     }
 
     if (isLoadingModule || isLoadingJobStatus) {
@@ -195,7 +190,10 @@ export default function ResultsPage() {
     const waitingForFirstResult =
         resultsGroupedByMolId.length === 0 ||
         isFetchingResults ||
-        isLoadingResults
+        isLoadingResults ||
+        (errorResults &&
+            "status" in errorResults &&
+            errorResults.status === 202)
 
     return (
         <Layout>
