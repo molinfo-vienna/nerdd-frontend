@@ -1,3 +1,20 @@
+# [1.3.0](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.15...v1.3.0) (2025-07-27)
+
+
+### Bug Fixes
+
+* Disable logging in Mockserver ([72ac309](https://github.com/molinfo-vienna/nerdd-frontend/commit/72ac30990f385aec5e724366361b51602eca8787))
+* Implement endpoint for fetching resources like SVGs ([0fa4279](https://github.com/molinfo-vienna/nerdd-frontend/commit/0fa427967ae0b10a7d6157895da0ae27a2b5404b))
+* Implement ImagePlaceholder component ([678dde2](https://github.com/molinfo-vienna/nerdd-frontend/commit/678dde28ab6003b8115d965daaeb6f07d9e586c9))
+* Provide option to override base url in baseApi ([b38b64f](https://github.com/molinfo-vienna/nerdd-frontend/commit/b38b64f8a6d62fbce29d92eafc5340d5831652ce))
+* Show placeholder for module cards while loading ([dc430b2](https://github.com/molinfo-vienna/nerdd-frontend/commit/dc430b26874f30b43b2e40a888b8939dada4cf54))
+* Simplify resources mocking in Mockserver ([d6b2c2e](https://github.com/molinfo-vienna/nerdd-frontend/commit/d6b2c2eb02376c46e2413be6671e9e4a33748e11))
+
+
+### Features
+
+* Add placeholder while loading molecule images ([5140146](https://github.com/molinfo-vienna/nerdd-frontend/commit/51401466bd737771d1c46e8bcd0f8a1c9032c3c0))
+
 ## [1.2.15](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.14...v1.2.15) (2025-07-27)
 
 
