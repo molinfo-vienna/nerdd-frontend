@@ -1,6 +1,8 @@
 import { useAppSelector } from "@/app/hooks"
+import { useGetResourceQuery } from "@/services/resources"
 import parse, { attributesToProps, domToReact } from "html-react-parser"
 import { useEffect, useMemo, useRef, useState } from "react"
+import ImagePlaceholder from "../placeholder/ImagePlaceholder"
 import "./Molecule.css"
 import { ResultGroup, selectAtomColorProperty } from "./resultTableSlice"
 
@@ -21,7 +23,20 @@ export default function Molecule({
 }: MoleculeProps) {
     const atomColorProperty = useAppSelector(selectAtomColorProperty)
 
+    const [svgAsString, setSvgAsString] = useState(svgValue)
     const [svg, setSvg] = useState<React.ReactElement | null>(null)
+    const { data, error, isLoading } = useGetResourceQuery(svgValue, {
+        skip:
+            svgValue == null ||
+            svgValue.startsWith("<svg") ||
+            svgValue.startsWith("<?xml"),
+    })
+
+    useEffect(() => {
+        if (data != null && !isLoading && !error) {
+            setSvgAsString(data)
+        }
+    }, [data, error, isLoading, setSvgAsString])
 
     const ref = useRef<SVGSVGElement>(null)
 
@@ -164,19 +179,14 @@ export default function Molecule({
         }
 
         // TODO: is there a better way to recognize SVGs?
-        if (svgValue.startsWith("<svg") || svgValue.startsWith("<?xml")) {
-            const svg = parse(svgValue, parseOptions)
+        if (
+            svgAsString != null &&
+            (svgAsString.startsWith("<svg") || svgAsString.startsWith("<?xml"))
+        ) {
+            const svg = parse(svgAsString, parseOptions)
             setSvg(svg as React.ReactElement)
-        } else {
-            // svgValue is a URL pointing to an svg file
-            fetch(svgValue)
-                .then((response) => response.text())
-                .then((text) => {
-                    const svg = parse(text, parseOptions)
-                    setSvg(svg as React.ReactElement)
-                })
         }
-    }, [svgValue, onAtomSelect, atomColors])
+    }, [svgAsString, onAtomSelect, atomColors])
 
     //
     // we dynamically add (and remove) a class to the correct atom when selected
@@ -196,5 +206,5 @@ export default function Molecule({
         }
     }, [selectedAtom, svg])
 
-    return svg
+    return svg ?? <ImagePlaceholder height={"180px"} width={"300px"} />
 }

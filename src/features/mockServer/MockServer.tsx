@@ -44,18 +44,13 @@ export default function MockServer({
         if (enabled) {
             const server = createServer({
                 routes() {
+                    // passthrough for static resources
+                    // (do that first before defining the namespace /api)
+                    this.passthrough(`/resources/**`)
+
                     this.namespace = "/api"
 
-                    // Dynamically passthrough absolute URLs with the current port (for Vite)
-                    const port = window.location.port
-                    const hostname = window.location.hostname
-                    if (port) {
-                        this.passthrough(
-                            `http://${hostname}:${port}/resources/**`,
-                        )
-                    }
-
-                    // POST /jobs
+                    // POST /:moduleId/jobs
                     // (create a job and return the job id)
                     this.post("/:moduleId/jobs", (schema, request) => {
                         // get correct module
@@ -121,7 +116,7 @@ export default function MockServer({
                         return recursiveCamelToSnakeCase(jobResponse)
                     })
 
-                    // DELETE /jobs/:jobId
+                    // DELETE /:moduleId/jobs/:jobId
                     // (delete a job)
                     this.delete("/:moduleId/jobs/:jobId", (schema, request) => {
                         const jobId = request.params.jobId
@@ -136,7 +131,7 @@ export default function MockServer({
                         return new Response(204)
                     })
 
-                    // GET /jobs/:jobId
+                    // GET /:moduleId/jobs/:jobId
                     // (return the job status)
                     this.get("/:moduleId/jobs/:jobId", (schema, request) => {
                         if (return404) {
@@ -185,7 +180,7 @@ export default function MockServer({
                         return recursiveCamelToSnakeCase(jobResponse)
                     })
 
-                    // GET /jobs/:jobId/results
+                    // GET /:moduleId/jobs/:jobId/results
                     // (return results for a job)
                     this.get(
                         "/:moduleId/jobs/:jobId/results",
@@ -338,6 +333,25 @@ export default function MockServer({
                     // (return all module configs)
                     this.get("/modules", () => {
                         return Object.values(moduleConfigs)
+                    })
+
+                    // GET /modules/:moduleId/logo
+                    // (return all module configs)
+                    this.get("/modules/:moduleId/logo", (schema, request) => {
+                        console.log("yup")
+                        const moduleId = request.params.moduleId
+
+                        if (return404 || moduleConfigs[moduleId] == null) {
+                            return new Response(
+                                404,
+                                {},
+                                { detail: "Module not found" },
+                            )
+                        }
+
+                        const moduleConfig = moduleConfigs[moduleId]
+
+                        return {}
                     })
 
                     // GET /modules

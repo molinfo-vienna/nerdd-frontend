@@ -1,5 +1,8 @@
 import { type Module } from "@/types"
+import classNames from "classnames"
+import { useState } from "react"
 import { Link } from "react-router-dom"
+import ImagePlaceholder from "../placeholder/ImagePlaceholder"
 import "./style.scss"
 
 type ModuleCardProps = {
@@ -7,6 +10,10 @@ type ModuleCardProps = {
 }
 
 export default function ModuleCard({ module }: ModuleCardProps) {
+    const src = module.logo ?? `/api/modules/${module.id}/logo`
+
+    const [isLoading, setIsLoading] = useState(module.logo === undefined)
+
     return (
         <Link
             to={module.id}
@@ -14,11 +21,15 @@ export default function ModuleCard({ module }: ModuleCardProps) {
         >
             {/* border-0: remove separation line between card header and body */}
             <div className="card-header border-0 pt-4 pb-3">
+                {isLoading && <ImagePlaceholder height={"8rem"} />}
                 {/* object-fit-contain: image keeps aspect ratio */}
                 <img
-                    className="card-img-top object-fit-contain"
-                    src={`/api/modules/${module.id}/logo`}
+                    className={classNames("card-img-top object-fit-contain", {
+                        "d-none": isLoading,
+                    })}
+                    src={src}
                     alt={module.visibleName}
+                    onLoad={() => setIsLoading(false)}
                 />
             </div>
             <div className="card-body pt-1">
