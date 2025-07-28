@@ -1,3 +1,13 @@
+## [1.3.1](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.0...v1.3.1) (2025-07-28)
+
+
+### Bug Fixes
+
+* Adapt placeholder size to image in table ([6453946](https://github.com/molinfo-vienna/nerdd-frontend/commit/64539465297bddcd8217b620cc8e78fea1386187))
+* Add className parameter to ImagePlaceholder ([36a9ffc](https://github.com/molinfo-vienna/nerdd-frontend/commit/36a9ffc5b81e6d406420dcfa57b060881c64ee09))
+* Uncomment reportWebVitals ([cddf46a](https://github.com/molinfo-vienna/nerdd-frontend/commit/cddf46a3ab56317e6551eda3dd750a567f483722))
+* Use light background for placeholders ([61b82d2](https://github.com/molinfo-vienna/nerdd-frontend/commit/61b82d2f8d201d9495ca942460863742f6e281ae))
+
 # [1.3.0](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.2.15...v1.3.0) (2025-07-27)
 
 
