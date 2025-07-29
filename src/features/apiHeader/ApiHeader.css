@@ -1,0 +1,25 @@
+.api-header-card {
+    /* 
+     * Main idea: the card has multiple buttons 
+     */
+    background-color: var(--bs-card-border-color);
+    gap: 1px;
+}
+
+.api-button {
+    min-width: 6rem;
+    background-color: var(--bs-card-bg);
+}
+
+.api-button.active {
+    background-color: var(--bs-primary-bg-subtle);
+}
+
+.api-button:hover {
+    background-color: var(--bs-secondary);
+}
+
+.api-button img {
+    width: 5rem;
+    height: 5rem;
+}

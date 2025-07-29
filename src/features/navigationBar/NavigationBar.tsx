@@ -16,7 +16,14 @@ export default function NavigationBar() {
     const { jobStatus } = useJobStatus(false)
 
     // configure the breadcrumb elements based on the page
-    let breadcrumbElements
+    let breadcrumbElements: Array<
+        | {
+              name: string
+              url: string
+              type?: "link"
+          }
+        | { type: "divider" }
+    > = []
     let shortNavigation = false
     if (module != undefined) {
         if (pageId == "createJob") {
@@ -208,7 +215,7 @@ export default function NavigationBar() {
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link to="/developer" className="nav-link">
+                                <Link to="/api-docs" className="nav-link">
                                     API
                                 </Link>
                             </li>

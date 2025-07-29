@@ -3,7 +3,7 @@ import classNames from "classnames"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import ImagePlaceholder from "../placeholder/ImagePlaceholder"
-import "./style.scss"
+import "./ModuleCard.scss"
 
 type ModuleCardProps = {
     module: Module
