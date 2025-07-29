@@ -1,3 +1,14 @@
+## [1.3.3](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.2...v1.3.3) (2025-07-29)
+
+
+### Bug Fixes
+
+* Add type to breadcrumbElements ([bd92174](https://github.com/molinfo-vienna/nerdd-frontend/commit/bd921741409c7023421467063529fcef24fd02e8))
+* Implement ApiHeader component ([845b7bb](https://github.com/molinfo-vienna/nerdd-frontend/commit/845b7bb78d1f344eefe1a376228c3ff536587f9a))
+* Normalize route names ([abef148](https://github.com/molinfo-vienna/nerdd-frontend/commit/abef14891c77394fdbaf3d6c9138a25f406048bf))
+* Use correct route to APIs ([4c82f2d](https://github.com/molinfo-vienna/nerdd-frontend/commit/4c82f2d7c11832df45006c25100727afa13cd471))
+* Use different header in ApiDocsPage ([e3974d0](https://github.com/molinfo-vienna/nerdd-frontend/commit/e3974d087fff893eebce63f62b9654fc7d628837))
+
 ## [1.3.2](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.1...v1.3.2) (2025-07-29)
 
 
