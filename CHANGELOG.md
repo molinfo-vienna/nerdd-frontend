@@ -1,3 +1,15 @@
+## [1.3.2](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.1...v1.3.2) (2025-07-29)
+
+
+### Bug Fixes
+
+* Extract useModules hook ([8c1ada6](https://github.com/molinfo-vienna/nerdd-frontend/commit/8c1ada672c0abf1fa07cfb9e37bd8f9dd8a2070e))
+* Leave proxy paths untouched ([ddab37c](https://github.com/molinfo-vienna/nerdd-frontend/commit/ddab37c5d381ce92ce94925e73541e7e29b18abd))
+* Move services hooks into separate folder ([e28040b](https://github.com/molinfo-vienna/nerdd-frontend/commit/e28040bdef1b06a1350f68eaeed3894cc04ea1ae))
+* Return module list in services ([53aa8e9](https://github.com/molinfo-vienna/nerdd-frontend/commit/53aa8e9d96c50e1becdeac89d03453722efa506e))
+* Simplify error handling on LandingPage ([5f3cd93](https://github.com/molinfo-vienna/nerdd-frontend/commit/5f3cd932d5e65d607c6adb509f9d88de2848821e))
+* Sort modules by rank in services ([9cba7b6](https://github.com/molinfo-vienna/nerdd-frontend/commit/9cba7b6f85bb3a336d363fc6c6e19e83a4ea3d05))
+
 ## [1.3.1](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.0...v1.3.1) (2025-07-28)
 
 
