@@ -1,35 +1,20 @@
 import { NerddError } from "@/app/errors"
 import ModuleCard from "@/features/moduleCard/ModuleCard"
-import { useGetModulesQuery } from "@/services"
+import { useModules } from "@/services/hooks"
 import Layout from "./Layout"
 import LoadingPage from "./LoadingPage"
 
 export default function LandingPage() {
-    const { data: modules, error, isLoading } = useGetModulesQuery()
-
-    if (error != null) {
-        throw error
-    }
+    const { modules, isLoading } = useModules()
 
     if (isLoading) {
         return LoadingPage()
     }
 
     // loading is done, but no modules are available
-    if (modules == null || Object.keys(modules).length === 0) {
+    if (modules == null || modules.length === 0) {
         throw new NerddError("No modules available", 400)
     }
-
-    // sort modules alphabetically by name
-    const modulesByRank = Object.values(modules).sort((a, b) => {
-        if (a.rank < b.rank) {
-            return -1
-        }
-        if (a.rank > b.rank) {
-            return 1
-        }
-        return 0
-    })
 
     return (
         <Layout>
@@ -50,7 +35,7 @@ export default function LandingPage() {
              */}
             <div className="container-fluid px-xxl-5 pb-5">
                 <div className="row justify-content-center row-cols-auto gx-4 gy-4">
-                    {modulesByRank.map((module) => (
+                    {modules.map((module) => (
                         <div key={module.id} className="col">
                             <ModuleCard module={module} />
                         </div>

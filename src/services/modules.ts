@@ -5,21 +5,24 @@ import recursiveSnakeToCamelCase from "./recursiveSnakeToCamelCase"
 
 export const modulesApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        // TODO: return list of modules
-        getModules: builder.query<Record<string, Module>, void>({
+        getModules: builder.query<Module[], void>({
             query: () => "/modules",
             transformResponse: (response) => {
                 // convert snake_case to camelCase
                 const responseCamelCase = recursiveSnakeToCamelCase(response)
 
-                // This query returns an array as response. We would like to access
-                // modules by their names, e.g. modules["module_name"].
-                // --> Convert array to object.
-                const modules = {}
-                for (const module of responseCamelCase) {
-                    const normalizedModule = normalizeModule(module)
-                    modules[normalizedModule.id] = normalizedModule
-                }
+                // normalize each module and sort them by rank
+                const modules = responseCamelCase
+                    .map(normalizeModule)
+                    .sort((a, b) => {
+                        if (a.rank < b.rank) {
+                            return -1
+                        }
+                        if (a.rank > b.rank) {
+                            return 1
+                        }
+                        return 0
+                    })
 
                 return modules
             },
