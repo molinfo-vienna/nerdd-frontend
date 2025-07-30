@@ -1,4 +1,5 @@
 import { Module } from "@/types/module"
+import { skipToken } from "@reduxjs/toolkit/query"
 import { useParams } from "react-router-dom"
 import { useGetModuleQuery } from "../modules"
 import RTKQueryError from "../RTKQueryError"
@@ -16,16 +17,15 @@ export function useModule(throwErrors: boolean = true): UseModuleResult {
     //
     const { moduleId } = useParams()
 
-    const { data, isLoading, error } = useGetModuleQuery(moduleId ?? "", {
-        skip: moduleId == null,
-    })
+    const { data, isLoading, error } = useGetModuleQuery(moduleId ?? skipToken)
 
     if (error != null && throwErrors) {
         throw new RTKQueryError(error)
     }
 
+    // for some reason, RTK query returns a cached module when skipToken (or skip option) is used
     return {
-        module: data,
+        module: moduleId != null ? data : undefined,
         isLoading,
     }
 }
