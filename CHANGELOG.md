@@ -1,3 +1,17 @@
+## [1.3.4](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.3...v1.3.4) (2025-07-30)
+
+
+### Bug Fixes
+
+* Extract LazyLoadImage component ([f83ee82](https://github.com/molinfo-vienna/nerdd-frontend/commit/f83ee82589a6c5f57f0822668183542b48cd3bdd))
+* Improve layout on API page ([f511382](https://github.com/molinfo-vienna/nerdd-frontend/commit/f5113829aa0d0f21675b3e706b283d689ae7726b))
+* Make sure that card buttons have same width ([c6423f3](https://github.com/molinfo-vienna/nerdd-frontend/commit/c6423f384492904dce6b88581290e6eb05a7a8cc))
+* Use className in ApiDocs ([6e7abf3](https://github.com/molinfo-vienna/nerdd-frontend/commit/6e7abf3e84798e8187d21396d781626cdee4b1d0))
+* Use LazyLoadImage in ApiHeader ([e61e56b](https://github.com/molinfo-vienna/nerdd-frontend/commit/e61e56b43447f99aa74eaf82ed57d73bf9931a41))
+* Use LazyLoadImage in ModuleCard ([f85c38a](https://github.com/molinfo-vienna/nerdd-frontend/commit/f85c38a8db92f3732e75edadbdf284611f71ecb7))
+* Use placeholders on API page when loading ([ddd3ccb](https://github.com/molinfo-vienna/nerdd-frontend/commit/ddd3ccbcbda30a1f80e0c899e73deb0910543b02))
+* Use skipToken in useModule hook ([23ef2fa](https://github.com/molinfo-vienna/nerdd-frontend/commit/23ef2fabd947a3bbf0aeeb6bab573058ed88e5d7))
+
 ## [1.3.3](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.2...v1.3.3) (2025-07-29)
 
 
