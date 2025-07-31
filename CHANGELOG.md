@@ -1,3 +1,12 @@
+## [1.3.5](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.4...v1.3.5) (2025-07-31)
+
+
+### Bug Fixes
+
+* Let all API card buttons have the same size ([b4f65c0](https://github.com/molinfo-vienna/nerdd-frontend/commit/b4f65c0600f99f3ca3dec5589eccf6f6fc72985c))
+* Show API tool list on mobile ([01aa058](https://github.com/molinfo-vienna/nerdd-frontend/commit/01aa058aa159e30e548c7200cbe1f1a9bdb1fa22))
+* Show module description on API page ([8eb2d75](https://github.com/molinfo-vienna/nerdd-frontend/commit/8eb2d75a2e052ba435166b1a249439e79a5404b6))
+
 ## [1.3.4](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.3...v1.3.4) (2025-07-30)
 
 
