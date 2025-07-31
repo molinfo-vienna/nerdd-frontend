@@ -13,18 +13,18 @@ type ApiHeaderProps = {
 export default function ApiHeader({ baseUrl }: ApiHeaderProps) {
     const { modules, isLoading: isLoadingAllModules } = useModules()
 
-    const { module } = useModule(false)
+    const { module, isLoading: isLoadingModule } = useModule(false)
 
     const pseudoModule = {
         id: undefined,
         visibleName: "Overview",
-        description: `All prediction modules can be used via our REST API. Select one of the 
-        tools on the right to get a quickstart guide and an overview of all endpoints to run 
-        predictions automatically. For more details, see the [full API documentation](${baseUrl}).`,
+        description: `All prediction modules can be used via our REST API to run predictions 
+        automatically. Select one of the tools to get a quickstart guide and an overview of all 
+        endpoints. For more details, see the [full API documentation](${baseUrl}).`,
     }
 
     const activeModule =
-        modules?.find((m) => m.id === module?.id) ?? pseudoModule
+        isLoadingModule || module == null ? pseudoModule : module
 
     return (
         <section className="container py-5">
@@ -37,6 +37,28 @@ export default function ApiHeader({ baseUrl }: ApiHeaderProps) {
                     <Markdown className="lead">
                         {activeModule.description}
                     </Markdown>
+                    {/* Info card as list of links */}
+                    <div
+                        // d-block d-lg-none: show the list of links only on small screens
+                        className="d-block d-lg-none"
+                    >
+                        {!isLoadingAllModules &&
+                            modules.map((module, index) => (
+                                <Link
+                                    key={index}
+                                    className={classNames(
+                                        "text-decoration-none my-auto me-4",
+                                        {
+                                            "fw-bold":
+                                                module.id === activeModule.id,
+                                        },
+                                    )}
+                                    to={`/${module.id}/api`}
+                                >
+                                    <span>{module.visibleName}</span>
+                                </Link>
+                            ))}
+                    </div>
                 </div>
                 {/* Info card as column on large screens */}
                 <div
@@ -51,7 +73,7 @@ export default function ApiHeader({ baseUrl }: ApiHeaderProps) {
                                 <Link
                                     key={i}
                                     className={classNames(
-                                        "api-button flex-fill d-flex flex-column text-decoration-none",
+                                        "api-button d-flex flex-column text-decoration-none",
                                         "align-items-center py-2 px-3",
                                         {
                                             active:
