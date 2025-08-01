@@ -1,3 +1,10 @@
+## [1.3.6](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.5...v1.3.6) (2025-08-01)
+
+
+### Bug Fixes
+
+* Center placeholders on landing page ([7c0fa55](https://github.com/molinfo-vienna/nerdd-frontend/commit/7c0fa551438c1a0a5f7f8e8f2e6f25f82cde1b3c))
+
 ## [1.3.5](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.4...v1.3.5) (2025-07-31)
 
 
