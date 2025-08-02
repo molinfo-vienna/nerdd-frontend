@@ -1,6 +1,6 @@
 import DeleteJobDialog from "@/features/deleteJobDialog/DeleteJobDialog"
 import { useDeleteJobMutation } from "@/services"
-import { useCallback, useState } from "react"
+import { memo, useCallback, useState } from "react"
 import { createPortal } from "react-dom"
 import { FaTrash } from "react-icons/fa6"
 import { useNavigate } from "react-router-dom"
@@ -11,10 +11,7 @@ type DeleteActionButtonProps = {
     jobId: string
 }
 
-export default function DeleteActionButton({
-    moduleId,
-    jobId,
-}: DeleteActionButtonProps) {
+function DeleteActionButton({ moduleId, jobId }: DeleteActionButtonProps) {
     const [deleteJob] = useDeleteJobMutation()
 
     const navigate = useNavigate()
@@ -64,3 +61,5 @@ export default function DeleteActionButton({
         </>
     )
 }
+
+export default memo(DeleteActionButton)
