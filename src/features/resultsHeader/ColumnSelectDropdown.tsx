@@ -1,5 +1,5 @@
+import { AugmentedResultPropertyGroup } from "@/features/resultTable/resultTableSlice"
 import { Fragment } from "react"
-import { AugmentedResultPropertyGroup } from "../resultTable/resultTableSlice"
 
 type ColumnSelectDropdownProps = {
     resultPropertyGroups: AugmentedResultPropertyGroup[]
