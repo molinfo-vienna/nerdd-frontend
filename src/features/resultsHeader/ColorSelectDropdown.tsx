@@ -37,7 +37,6 @@ export default function ColorSelectDropdown({
                     <li key="atom-color-none">
                         <a
                             className="dropdown-item"
-                            href="#"
                             onClick={() =>
                                 onSelectedAtomColorPropertyChange(undefined)
                             }
@@ -58,7 +57,7 @@ export default function ColorSelectDropdown({
                                     }
                                 />
                                 <label
-                                    className="form-check-label fw-bold"
+                                    className="form-check-label"
                                     htmlFor="atom-color-none"
                                 >
                                     None
@@ -70,7 +69,6 @@ export default function ColorSelectDropdown({
                         <li key={`atom-color-${property.name}`}>
                             <a
                                 className="dropdown-item"
-                                href="#"
                                 onClick={() =>
                                     onSelectedAtomColorPropertyChange(property)
                                 }
@@ -92,7 +90,7 @@ export default function ColorSelectDropdown({
                                         }
                                     />
                                     <label
-                                        className="form-check-label fw-bold"
+                                        className="form-check-label"
                                         htmlFor={`atom-color-${property.name}`}
                                     >
                                         {property.visibleName}
@@ -163,7 +161,6 @@ export default function ColorSelectDropdown({
                                 <li key={`${group.groupName}-${property.name}`}>
                                     <a
                                         className="dropdown-item"
-                                        href="#"
                                         onClick={(e) => {
                                             e.preventDefault()
                                             onColorColumnToggle(
