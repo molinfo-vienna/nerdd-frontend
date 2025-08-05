@@ -1,0 +1,25 @@
+.molecule-editor {
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    /* same look and feel as remaining bootstrap input */
+    border-radius: var(--bs-border-radius);
+    /* overflow:hidden, because content would overlap with the round corners */
+    overflow: hidden;
+}
+
+/* hide that blue triangle in the bottom right corner of JSME editors */
+.jsa-resetDiv svg g polygon[fill="blue"] {
+    display: none;
+}
+
+.jsa-resetDiv div[draggable] {
+    display: none;
+}
+
+.jsa-resetDiv img[title="drag out molecule file (MOL format)"] {
+    display: none;
+}
+
+/* hide thick borders */
+.jsa-resetDiv g line[stroke="rgb(178,178,178)"][stroke-width="30"] {
+    display: none;
+}

@@ -287,9 +287,7 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
                                                 value={exampleSmiles}
                                                 width="300px"
                                                 height="200px"
-                                                config={{
-                                                    options: "depict",
-                                                }}
+                                                depict={true}
                                             />
                                         </Row>
                                     </>
