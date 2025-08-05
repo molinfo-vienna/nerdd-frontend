@@ -1,3 +1,13 @@
+## [1.3.7](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.6...v1.3.7) (2025-08-05)
+
+
+### Bug Fixes
+
+* Adapt JobForm to MoleculeEditor ([6ff5c2f](https://github.com/molinfo-vienna/nerdd-frontend/commit/6ff5c2f58320747796119ef328012b2add6501dc))
+* Adapt style of MoleculeEditor ([cdc611b](https://github.com/molinfo-vienna/nerdd-frontend/commit/cdc611b6c2c334ac973ac3e0e91d57d69cbf4686))
+* Add depict prop to MoleculeEditor ([f5162f4](https://github.com/molinfo-vienna/nerdd-frontend/commit/f5162f4ffdac7f41a0bfef4286ffc5d47d377796))
+* Add key prop in ModuleHeader ([8e03ac6](https://github.com/molinfo-vienna/nerdd-frontend/commit/8e03ac6cb9c2ec71e1cf2b68e2690b2394d88952))
+
 ## [1.3.6](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.5...v1.3.6) (2025-08-01)
 
 
