@@ -7,7 +7,11 @@ import MoleculeEditorField from "./MoleculeEditorField"
 import Row from "./Row"
 import Textarea from "./Textarea"
 
-export default function DynamicInput({ exampleSmiles }) {
+type DynamicInputProps = {
+    exampleSmiles: string
+}
+
+export default function DynamicInput({ exampleSmiles }: DynamicInputProps) {
     // create a placeholder for the text input
     // (first few characters of the example SMILES)
     const placeholderSmiles = exampleSmiles.split(/\s+/)[0].slice(0, 13) + "..."
