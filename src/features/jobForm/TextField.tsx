@@ -5,7 +5,7 @@ import { type FieldRenderProps } from "react-final-form"
 type TextFieldProps = FieldRenderProps<string> & {
     label?: string
     placeholder?: string
-    positionReference?: RefObject<HTMLInputElement>
+    positionReference?: RefObject<HTMLInputElement | null>
 }
 
 export default function TextField({
@@ -15,13 +15,14 @@ export default function TextField({
     placeholder,
     positionReference,
 }: TextFieldProps) {
+    const error = meta.error || meta.submitError
     return (
         <div className="form-floating mb-3">
             <input
                 type="text"
                 placeholder={placeholder}
                 className={classNames("form-control", {
-                    "is-invalid": meta.touched && meta.error,
+                    "is-invalid": meta.touched && error,
                 })}
                 {...input}
                 ref={positionReference}
@@ -31,8 +32,8 @@ export default function TextField({
                     {label}
                 </label>
             )}
-            {meta.error && meta.touched && (
-                <div className="invalid-feedback">{meta.error}</div>
+            {error && meta.touched && (
+                <div className="invalid-feedback">{error}</div>
             )}
         </div>
     )

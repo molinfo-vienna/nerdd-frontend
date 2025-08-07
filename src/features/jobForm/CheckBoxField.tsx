@@ -4,7 +4,7 @@ import { type FieldRenderProps } from "react-final-form"
 
 type CheckBoxFieldProps = FieldRenderProps<boolean> & {
     label?: string
-    positionReference?: RefObject<HTMLInputElement>
+    positionReference?: RefObject<HTMLInputElement | null>
     className?: string
 }
 
@@ -15,27 +15,28 @@ export default function CheckBoxField({
     positionReference,
     className,
 }: CheckBoxFieldProps) {
+    const error = meta.error || meta.submitError
     return (
         <div className="form-check form-check-lg">
             <input
                 className={classNames("form-check-input", className, {
-                    "is-invalid": meta.touched && meta.error,
+                    "is-invalid": meta.touched && error,
                 })}
                 {...input}
                 id={input.name}
                 type="checkbox"
-                ref={positionReference}
             />
             {label && (
                 <label
                     htmlFor={input.name}
                     className="form-check-label fs-6 align-middle"
+                    ref={positionReference}
                 >
                     {label}
                 </label>
             )}
-            {meta.touched && meta.error && (
-                <div className="invalid-feedback">{meta.error}</div>
+            {meta.touched && error && (
+                <div className="invalid-feedback">{error}</div>
             )}
         </div>
     )
