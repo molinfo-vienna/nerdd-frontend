@@ -3,9 +3,8 @@ import { type File } from "@/features/fileUpload/fileFieldSlice"
 import { type RefObject } from "react"
 import { type FieldRenderProps } from "react-final-form"
 
-// Define type for the component props
 type FileFieldProps = FieldRenderProps<File[]> & {
-    positionReference?: RefObject<HTMLElement>
+    positionReference?: RefObject<HTMLElement | null>
 }
 
 export default function FileField({
