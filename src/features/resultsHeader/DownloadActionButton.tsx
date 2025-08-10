@@ -1,5 +1,5 @@
 import PopUp from "@/features/popup/PopUp"
-import { JobStatus } from "@/types"
+import { Job } from "@/types"
 import { memo } from "react"
 import { FaFileDownload } from "react-icons/fa"
 import { FaFileLines } from "react-icons/fa6"
@@ -8,15 +8,15 @@ import ActionButton from "./ActionButton"
 import "./DownloadActionButton.css"
 
 type DownloadActionButtonProps = {
-    jobStatus: JobStatus
+    job: Job
     outputFormats: string[]
 }
 
 function DownloadActionButton({
-    jobStatus,
+    job,
     outputFormats,
 }: DownloadActionButtonProps) {
-    const outputFiles = jobStatus.outputFiles ?? []
+    const outputFiles = job.outputFiles ?? []
     const outputFileItems = outputFormats.map((format) => {
         const fileFromStatus = outputFiles.find((f) => f.format == format)
         const status = fileFromStatus === undefined ? "disabled" : ""
@@ -43,7 +43,7 @@ function DownloadActionButton({
                     <FaFileDownload />
                 </ActionButton.Icon>
             </ActionButton>
-            <ul className="dropdown-menu">
+            <ul className="dropdown-menu" style={{ zIndex: 1030 }}>
                 {outputFileItems.map((item) => (
                     <li key={item.format}>
                         <Link
@@ -78,10 +78,9 @@ function DownloadActionButton({
 
 export default memo(DownloadActionButton, (prev, next) => {
     return (
-        prev.jobStatus.outputFiles.length ===
-            next.jobStatus.outputFiles.length &&
-        prev.jobStatus.outputFiles.every((file, index) => {
-            const nextFile = next.jobStatus.outputFiles[index]
+        prev.job.outputFiles.length === next.job.outputFiles.length &&
+        prev.job.outputFiles.every((file, index) => {
+            const nextFile = next.job.outputFiles[index]
             return (
                 nextFile !== undefined &&
                 file.format === nextFile.format &&

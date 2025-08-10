@@ -13,7 +13,7 @@ export default function NavigationBar() {
 
     // get the module to receive the module name
     const { module } = useModule(false)
-    const { jobStatus } = useJobStatus(false)
+    const { job } = useJobStatus(false)
 
     // configure the breadcrumb elements based on the page
     let breadcrumbElements: Array<
@@ -49,11 +49,11 @@ export default function NavigationBar() {
                 { name: module.visibleName, url: `/${module.id}` },
                 { name: "API", url: `/${module.id}/api` },
             ]
-        } else if (pageId === "results" && jobStatus != null) {
+        } else if (pageId === "results" && job != null) {
             breadcrumbElements = [
                 { name: "Home", url: "/" },
                 { name: module.visibleName, url: `/${module.id}` },
-                { name: "Results", url: `/${module.id}/${jobStatus.id}` },
+                { name: "Results", url: `/${module.id}/${job.id}` },
             ]
         } else {
             // unknown page

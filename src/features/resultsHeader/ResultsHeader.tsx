@@ -1,18 +1,18 @@
 import ProgressBar from "@/features/progressBar/ProgressBar"
-import { JobStatus, Module } from "@/types"
+import { Job, Module } from "@/types"
 
 type ResultsHeaderProps = {
     module: Module
-    jobStatus: JobStatus
+    job: Job
     children?: React.ReactNode
 }
 
 export default function ResultsHeader({
     module,
-    jobStatus,
+    job,
     children,
 }: ResultsHeaderProps) {
-    const statusText = `${jobStatus.numEntriesProcessed ?? 0} / ${jobStatus.numEntriesTotal ?? "?"} molecules processed`
+    const statusText = `${job.numEntriesProcessed ?? 0} / ${job.numEntriesTotal ?? "?"} molecules processed`
 
     return (
         <section className="d-flex justify-content-center py-4">
@@ -31,8 +31,8 @@ export default function ResultsHeader({
                 >
                     {/* Progress bar */}
                     <ProgressBar
-                        numEntriesProcessed={jobStatus.numEntriesProcessed}
-                        numEntriesTotal={jobStatus.numEntriesTotal}
+                        numEntriesProcessed={job.numEntriesProcessed}
+                        numEntriesTotal={job.numEntriesTotal}
                     />
                     {/* Module name & status */}
                     <div className="d-flex flex-column py-3 me-lg-3">
