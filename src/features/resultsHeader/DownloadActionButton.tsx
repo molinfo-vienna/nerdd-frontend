@@ -30,28 +30,35 @@ function DownloadActionButton({
     const disabled = outputFiles.length == 0
 
     const button = (
-        <ActionButton label="Download" disabled={disabled}>
-            <ActionButton.Icon>
-                <FaFileDownload />
-            </ActionButton.Icon>
-            <ActionButton.Dropdown>
-                <ul className="dropdown-menu">
-                    {outputFileItems.map((item) => (
-                        <li key={item.format}>
-                            <Link
-                                className={`dropdown-item ${item.status}`}
-                                to={item.url}
-                                target="_blank"
-                                download
-                            >
-                                <FaFileLines size={24} className="me-2" />
-                                {item.format.toUpperCase()}
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-            </ActionButton.Dropdown>
-        </ActionButton>
+        <div className="btn-group dropdown-center" role="group">
+            <ActionButton
+                label="Download"
+                disabled={disabled}
+                // dropdown
+                data-bs-toggle="dropdown"
+                data-bs-auto-close="outside"
+                aria-expanded="false"
+            >
+                <ActionButton.Icon>
+                    <FaFileDownload />
+                </ActionButton.Icon>
+            </ActionButton>
+            <ul className="dropdown-menu">
+                {outputFileItems.map((item) => (
+                    <li key={item.format}>
+                        <Link
+                            className={`dropdown-item ${item.status}`}
+                            to={item.url}
+                            target="_blank"
+                            download
+                        >
+                            <FaFileLines size={24} className="me-2" />
+                            {item.format.toUpperCase()}
+                        </Link>
+                    </li>
+                ))}
+            </ul>
+        </div>
     )
 
     if (disabled) {
