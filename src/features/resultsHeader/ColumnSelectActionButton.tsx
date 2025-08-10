@@ -16,21 +16,27 @@ function ColumnSelectActionButton({
     onGroupToggle,
 }: ColumnSelectActionButtonProps) {
     return (
-        <ActionButton label="Columns">
-            <ActionButton.Icon>
-                <HiMiniViewColumns
-                    viewBox="1 3 18 14"
-                    style={{ width: "1.45em", height: "1em" }}
-                />
-            </ActionButton.Icon>
-            <ActionButton.Dropdown>
-                <ColumnSelectDropdown
-                    resultPropertyGroups={resultPropertyGroups}
-                    onColumnToggle={onColumnToggle}
-                    onGroupToggle={onGroupToggle}
-                />
-            </ActionButton.Dropdown>
-        </ActionButton>
+        <div className="btn-group dropdown-center" role="group">
+            <ActionButton
+                label="Columns"
+                // dropdown
+                data-bs-toggle="dropdown"
+                data-bs-auto-close="outside"
+                aria-expanded="false"
+            >
+                <ActionButton.Icon>
+                    <HiMiniViewColumns
+                        viewBox="1 3 18 14"
+                        style={{ width: "1.45em", height: "1em" }}
+                    />
+                </ActionButton.Icon>
+            </ActionButton>
+            <ColumnSelectDropdown
+                resultPropertyGroups={resultPropertyGroups}
+                onColumnToggle={onColumnToggle}
+                onGroupToggle={onGroupToggle}
+            />
+        </div>
     )
 }
 
