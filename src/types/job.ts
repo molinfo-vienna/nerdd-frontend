@@ -7,7 +7,7 @@ export interface Job {
     params: Record<string, any>
     createdAt: Date
     status: string
-    entriesProcessed?: any[]
+    entriesProcessed?: Array<[number, number]>
     numEntriesTotal?: number
     numEntriesProcessed: number
     numPagesTotal?: number
