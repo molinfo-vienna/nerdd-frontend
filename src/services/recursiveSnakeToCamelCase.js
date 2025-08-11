@@ -1,3 +1,9 @@
+export function snakeToCamelCase(str) {
+    return str.replace(/([-_][a-z])/gi, (c) =>
+        c.toUpperCase().replace(/[-_]/g, ""),
+    )
+}
+
 // Convert object keys from snake_case to camelCase (recursively).
 // Stolen from: https://stackoverflow.com/questions/59769649/recursively-convert-an-object-fields-from-snake-case-to-camelcase
 export default function recursiveSnakeToCamelCase(item) {
@@ -10,9 +16,7 @@ export default function recursiveSnakeToCamelCase(item) {
     }
     return Object.fromEntries(
         Object.entries(item).map(([key, value]) => [
-            key.replace(/([-_][a-z])/gi, (c) =>
-                c.toUpperCase().replace(/[-_]/g, ""),
-            ),
+            snakeToCamelCase(key),
             recursiveSnakeToCamelCase(value),
         ]),
     )
