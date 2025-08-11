@@ -45,19 +45,21 @@ function DocsActionButton({ module, job }: DocsActionButtonProps) {
                 <div>
                     <h6 className="dropdown-header">Selected parameters</h6>
                 </div>
-                <div className="container px-4">
+                <ul className="ms-2">
                     {module.jobParameters.map((param) => (
-                        <div key={param.name} className="row">
-                            <div className="col-auto">{param.visibleName}:</div>
-                            <div className="col">
+                        <li key={param.name}>
+                            <p className="mb-0">
+                                <span className="fw-bold">
+                                    {param.visibleName}:{" "}
+                                </span>
                                 {convertParamValueToString(
                                     job.params[snakeToCamelCase(param.name)],
                                     param,
                                 )}
-                            </div>
-                        </div>
+                            </p>
+                        </li>
                     ))}
-                </div>
+                </ul>
                 <div className="dropdown-divider"></div>
                 <div>
                     <h6 className="dropdown-header">Documentation</h6>
