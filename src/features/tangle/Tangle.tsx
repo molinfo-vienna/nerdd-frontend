@@ -1,27 +1,31 @@
 import { useRef, useState } from "react"
 import Draggable from "react-draggable"
-import "./style.css"
+import "./Tangle.css"
 
 const clampValue = (value: number, min: number, max: number): number => {
     return Math.min(max, Math.max(min, value))
 }
 
-type TangleRuntimeProps = {
-    moleculesPerSecond: number
+type TangleProps = {
     initialValue: number
+    min: number
+    max: number
+    setValue: (value: number) => void
+    children?: React.ReactNode
 }
 
-export default function TangleRuntime({
-    moleculesPerSecond,
+export default function Tangle({
     initialValue,
-}: TangleRuntimeProps) {
+    min,
+    max,
+    setValue,
+    children,
+}: TangleProps) {
     //
     // parameters
     //
 
     // min and max number of molecules possible
-    const min = 1
-    const max = 100000
     const range = max - min
 
     // distance in pixels that the mouse has to move to change the value to max / min
@@ -84,57 +88,13 @@ export default function TangleRuntime({
         setInitialPixelOffset(currentPixelOffset)
     }
 
-    //
-    // displaying the processing time
-    //
-
     // based on the position on the invisible slider, calculate the value
     const value =
         Math.sign(currentPixelOffset) *
         Math.exp(Math.abs(currentPixelOffset) / scale)
     const clampedValue = clampValue(value, min, max)
 
-    // always show meaningful molecule numbers to the user
-    // 12345 -> 12000
-    // 1234 -> 1200
-    // 123 -> 120
-    // 12 -> 12
-    let roundedValue
-    if (clampedValue < 100) {
-        roundedValue = Math.round(clampedValue)
-    } else {
-        const numberOfDigits = Math.floor(Math.log10(clampedValue))
-        const factor = Math.pow(10, numberOfDigits - 1)
-        roundedValue = Math.round(clampedValue / factor) * factor
-    }
-
-    const numberOfMoleculesText =
-        clampedValue == 1 ? "1 molecule" : `${roundedValue} molecules`
-
-    const processingTime = (roundedValue / moleculesPerSecond) * 1000
-
-    // format the processing time
-    let processingTimeText
-    if (processingTime > 48 * 60 * 60 * 1000) {
-        // more than 48 hours -> show days
-        const days = Math.round(processingTime / (24 * 60 * 60 * 1000))
-        processingTimeText = `${days} days`
-    } else if (processingTime > 60 * 60 * 1000) {
-        // more than 1 hour -> show hours
-        const hours = Math.floor(processingTime / (60 * 60 * 1000))
-        processingTimeText = `${hours}h`
-    } else if (processingTime > 60 * 1000) {
-        // more than 1 minute -> show minutes
-        const minutes = Math.floor(processingTime / (60 * 1000))
-        processingTimeText = `${minutes}min`
-    } else if (processingTime > 1000) {
-        // more than 1 second -> show seconds
-        const seconds = Math.floor(processingTime / 1000)
-        processingTimeText = `${seconds}s`
-    } else {
-        // less than 1 second -> show "< 1s"
-        processingTimeText = `< 1s`
-    }
+    setValue(clampedValue)
 
     return (
         <>
@@ -145,10 +105,9 @@ export default function TangleRuntime({
                 nodeRef={nodeRef}
             >
                 <span ref={nodeRef} className="tangle-text">
-                    {numberOfMoleculesText}
+                    {children}
                 </span>
-            </Draggable>{" "}
-            in {processingTimeText}
+            </Draggable>
         </>
     )
 }
