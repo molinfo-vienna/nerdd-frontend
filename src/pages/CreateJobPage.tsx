@@ -1,4 +1,4 @@
-import ModuleHeader from "@/features/header/ModuleHeader"
+import CreateJobHeader from "@/features/createJobHeader/CreateJobHeader"
 import JobForm from "@/features/jobForm/JobForm"
 import { useAddJobMutation } from "@/services"
 import { useModule } from "@/services/hooks"
@@ -89,7 +89,7 @@ export default function CreateJobPage() {
     return (
         <Layout>
             <Layout.Header>
-                <ModuleHeader module={module} />
+                <CreateJobHeader module={module} />
             </Layout.Header>
 
             <div className="container py-5">
