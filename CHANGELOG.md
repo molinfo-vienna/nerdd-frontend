@@ -1,3 +1,10 @@
+## [1.3.8](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.7...v1.3.8) (2025-08-14)
+
+
+### Bug Fixes
+
+* Fix websocket connection bug in chrome ([40dc99f](https://github.com/molinfo-vienna/nerdd-frontend/commit/40dc99fd76dd264e13c7cbc8a227c80ddc105810))
+
 ## [1.3.7](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.6...v1.3.7) (2025-08-05)
 
 
