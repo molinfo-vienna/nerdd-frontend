@@ -69,7 +69,7 @@ export default function websocketQuery<
                 // create a websocket connection when the cache subscription starts
                 // ReconnectingWebSocket is a drop-in replacement for the native WebSocket API
                 // Main benefit is that it automatically reconnects when the connection is lost.
-                ws = new ReconnectingWebSocket(url, protocol, {
+                ws = new ReconnectingWebSocket(url, [], {
                     maxReconnectionDelay: 30000,
                 })
 
