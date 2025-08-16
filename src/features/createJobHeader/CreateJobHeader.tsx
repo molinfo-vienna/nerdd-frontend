@@ -147,10 +147,7 @@ export default function CreateJobHeader({ module }: CreateJobHeaderProps) {
                     </h2>
                     <Markdown className="lead">{module.description}</Markdown>
                     {/* Info card as list of links */}
-                    <div
-                        // d-block d-lg-none: show the list of links only on small screens
-                        className="d-block d-lg-none"
-                    >
+                    <div>
                         {icons.map((icon, index) =>
                             icon.href !== undefined ? (
                                 <Link
