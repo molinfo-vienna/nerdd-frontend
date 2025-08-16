@@ -48,7 +48,11 @@ export default function CreateJobHeader({ module }: CreateJobHeaderProps) {
     const waitingTimeMinutes = module.waitingTimeMinutes
 
     let waitingTimeText
-    if (waitingTimeMinutes <= 1) {
+    if (waitingTimeMinutes > 60) {
+        const waitingTimeHours = Math.floor(waitingTimeMinutes / 60)
+        const remainingMinutes = Math.round(waitingTimeMinutes % 60)
+        waitingTimeText = `${waitingTimeHours}h, ${remainingMinutes}min`
+    } else if (waitingTimeMinutes <= 1) {
         waitingTimeText = "< 1 min"
     } else {
         waitingTimeText = `${waitingTimeMinutes} min`
@@ -108,15 +112,15 @@ export default function CreateJobHeader({ module }: CreateJobHeaderProps) {
     } else if (processingTimeSeconds > 60 * 60) {
         // more than 1 hour -> show hours
         const hours = Math.floor(processingTimeSeconds / (60 * 60))
-        processingTimeText = `${hours} h`
+        processingTimeText = `${hours}h`
     } else if (processingTimeSeconds > 60) {
         // more than 1 minute -> show minutes
         const minutes = Math.floor(processingTimeSeconds / 60)
-        processingTimeText = `${minutes} min`
+        processingTimeText = `${minutes}min`
     } else if (processingTimeSeconds > 1) {
         // more than 1 second -> show seconds
         const seconds = Math.floor(processingTimeSeconds)
-        processingTimeText = `${seconds} s`
+        processingTimeText = `${seconds}s`
     } else {
         // less than 1 second -> show "< 1s"
         processingTimeText = `< 1s`
