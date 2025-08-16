@@ -45,7 +45,7 @@ export default function CreateJobHeader({ module }: CreateJobHeaderProps) {
     //
     // Estimate waiting time
     //
-    const waitingTimeMinutes = 1
+    const waitingTimeMinutes = module.waitingTimeMinutes
 
     let waitingTimeText
     if (waitingTimeMinutes <= 1) {
