@@ -461,6 +461,7 @@ export function generateModuleConfig(i) {
             precision: 0.01,
         }),
         max_num_molecules: faker.number.int({ min: 1000, max: 1000000 }),
+        waiting_time_minutes: faker.number.int({ min: 0, max: 10000 }),
     }
 }
 
