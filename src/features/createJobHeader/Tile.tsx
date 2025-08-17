@@ -17,7 +17,7 @@ export default function Tile({ children }: TileProps) {
         <li className="list-group-item">
             <div className="d-flex align-items-center my-3">
                 <div
-                    className="text-center ms-2 me-3"
+                    className="text-center ms-2 me-2"
                     style={{ width: "70px" }}
                 >
                     <span className="text-primary">{icon}</span>
