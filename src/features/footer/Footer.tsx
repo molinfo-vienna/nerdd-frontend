@@ -108,12 +108,12 @@ export default function Footer() {
                                 <FooterLink
                                     Icon={FaBookOpen} // BookFill
                                     title="Documentation"
-                                    url="/docs"
+                                    url="/about"
                                 />
                                 <FooterLink
                                     Icon={FaPlug} // PlugFill
                                     title="Developer API"
-                                    url="/developer"
+                                    url="/api-docs"
                                 />
                                 <FooterLink
                                     Icon={FaBook} // BookmarksFill
