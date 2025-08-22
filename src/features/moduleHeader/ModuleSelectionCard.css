@@ -1,0 +1,37 @@
+.api-header-card {
+    /* 
+     * Main idea: The API card has multiple buttons and we would like to have borders between them.
+     * Using borders around the buttons would interfere with the borders (especially the rounded
+     * corners) of the card itself. For this reason, we give the card the same background color
+     * as the borders of the buttons and use a gap to *simulate* borders between the buttons!
+     */
+    background-color: var(--bs-card-border-color);
+    gap: 1px;
+}
+
+.api-button {
+    /* 
+     * Let all buttons have the same width and height.
+     */
+    flex: 1 1 0;
+
+    /* 
+     * We used a different background color for the card to simulate borders between buttons
+     * (see explanation above). For that reason, we need to set the correct background color
+     * here.
+     */
+    background-color: var(--bs-card-bg);
+}
+
+.api-button.active {
+    background-color: var(--bs-primary-bg-subtle);
+}
+
+.api-button:hover {
+    background-color: var(--bs-secondary);
+}
+
+.api-button .card-img-top {
+    width: 4.5rem;
+    height: 4.5rem;
+}
