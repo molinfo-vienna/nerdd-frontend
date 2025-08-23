@@ -60,10 +60,22 @@ export default function Footer() {
                     <div className="col-xl-3 col-lg-3 col-md-3 offset-xl-1 mb-3">
                         <h5 className="mb-3">NERDD</h5>
                         <ul className="list-unstyled">
-                            <li>
-                                <span className="fs-5">
+                            <li className="mb-3">
+                                <span className="fs-6">
                                     Next-generation E-Resource for Drug
                                     Discovery
+                                </span>
+                            </li>
+                            <li>
+                                <span className="fs-6">
+                                    Developed by{" "}
+                                    <a
+                                        href="https://github.com/shirte"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        Steffen Hirte
+                                    </a>
                                 </span>
                             </li>
                         </ul>
