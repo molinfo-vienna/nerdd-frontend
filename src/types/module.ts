@@ -18,6 +18,7 @@ export interface Module {
     logoCaption?: string
     exampleSmiles: string
     description?: string
+    about?: string
     task: PredictionTask
     publications: Publication[]
     jobParameters: JobParameter[]
