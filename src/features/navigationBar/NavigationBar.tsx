@@ -43,7 +43,7 @@ export default function NavigationBar() {
                 { name: module.visibleName, url: `/${module.id}` },
                 { name: "Cite", url: `/${module.id}/cite` },
             ]
-        } else if (pageId === "api") {
+        } else if (pageId === "apiDocs") {
             breadcrumbElements = [
                 { name: "Home", url: "/" },
                 { name: module.visibleName, url: `/${module.id}` },
