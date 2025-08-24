@@ -1,6 +1,6 @@
 import Tangle from "@/features/tangle/Tangle"
 import { type Module } from "@/types"
-import { useState, type ComponentType } from "react"
+import { useState } from "react"
 import {
     FaBook,
     FaBookOpen,
@@ -10,38 +10,14 @@ import {
 } from "react-icons/fa6"
 import { IoSpeedometer } from "react-icons/io5"
 import Markdown from "react-markdown"
-import { Link } from "react-router-dom"
+import HeaderLink from "../moduleHeader/HeaderLink"
 import Tile from "./Tile"
 
 type CreateJobHeaderProps = {
     module: Module
 }
 
-type IconItem = {
-    Icon: ComponentType<{ size?: number }>
-    caption: string
-    href?: string
-}
-
 export default function CreateJobHeader({ module }: CreateJobHeaderProps) {
-    const icons: IconItem[] = [
-        {
-            Icon: FaBookOpen,
-            caption: "Docs",
-            href: `/${module.id}/about`,
-        },
-        {
-            Icon: FaPlug,
-            caption: "API",
-            href: `/${module.id}/api`,
-        },
-        {
-            Icon: FaBook,
-            caption: "Cite",
-            href: `/${module.id}/cite`,
-        },
-    ]
-
     //
     // Estimate waiting time
     //
@@ -148,22 +124,21 @@ export default function CreateJobHeader({ module }: CreateJobHeaderProps) {
                     <Markdown className="lead">{module.description}</Markdown>
                     {/* Info card as list of links */}
                     <div>
-                        {icons.map((icon, index) =>
-                            icon.href !== undefined ? (
-                                <Link
-                                    key={index}
-                                    className="text-decoration-none my-auto me-4"
-                                    to={icon.href}
-                                >
-                                    <icon.Icon size={15} />
-                                    <span className="ms-1">{icon.caption}</span>
-                                </Link>
-                            ) : (
-                                <div className="my-auto d-block">
-                                    {icon.caption}
-                                </div>
-                            ),
-                        )}
+                        <HeaderLink
+                            Icon={FaBookOpen}
+                            href={`/${module.id}/about`}
+                            caption="Docs"
+                        />
+                        <HeaderLink
+                            Icon={FaPlug}
+                            href={`/${module.id}/api`}
+                            caption="API"
+                        />
+                        <HeaderLink
+                            Icon={FaBook}
+                            href={`/${module.id}/cite`}
+                            caption="Cite"
+                        />
                     </div>
                 </div>
                 {/* Info card as column on large screens */}
