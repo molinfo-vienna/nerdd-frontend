@@ -122,13 +122,19 @@ export default function TableCell({
         } else {
             cellContent = value
         }
-    } else if (resultProperty.type === "int") {
+    } else if (
+        resultProperty.type === "int" ||
+        resultProperty.type === "integer"
+    ) {
         if (value == null) {
             cellContent = "-"
         } else {
             cellContent = value
         }
-    } else if (resultProperty.type === "bool") {
+    } else if (
+        resultProperty.type === "bool" ||
+        resultProperty.type === "boolean"
+    ) {
         if (value == null) {
             cellContent = "-"
         } else {
@@ -180,7 +186,10 @@ export default function TableCell({
         } else {
             cellContent = value
         }
-    } else if (resultProperty.type === "string") {
+    } else if (
+        resultProperty.type === "string" ||
+        resultProperty.type === "str"
+    ) {
         if (value == null) {
             cellContent = "-"
         } else {
@@ -201,12 +210,13 @@ export default function TableCell({
     // figure out background color (and contrast text color)
     //
     const backgroundColor = resultProperty.colored
-                ? propertyPalettes[resultProperty.name](value)
-                : undefined
+        ? propertyPalettes[resultProperty.name](value)
+        : undefined
     let needsLightText = false
     if (backgroundColor !== undefined) {
         const { r, g, b } = rgb(backgroundColor)
-        const luminance = 0.2126 * r/255 + 0.7152 * g/255 + 0.0722 * b/255
+        const luminance =
+            (0.2126 * r) / 255 + (0.7152 * g) / 255 + (0.0722 * b) / 255
         needsLightText = luminance < 0.5
     }
 
