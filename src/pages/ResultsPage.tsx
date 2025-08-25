@@ -227,15 +227,17 @@ export default function ResultsPage() {
             </Layout.Header>
 
             <div className="container-fluid py-4">
-                <div className="row justify-content-center">
-                    <div className="col-auto my-3">
-                        <Pagination
-                            moduleId={moduleId}
-                            jobId={jobId}
-                            currentPageOneBased={pageOneBased}
-                        />
+                {numberOfResults > 0 && (
+                    <div className="row justify-content-center">
+                        <div className="col-auto my-3">
+                            <Pagination
+                                moduleId={moduleId}
+                                jobId={jobId}
+                                currentPageOneBased={pageOneBased}
+                            />
+                        </div>
                     </div>
-                </div>
+                )}
 
                 {!waitingForFirstResult && (
                     <>
