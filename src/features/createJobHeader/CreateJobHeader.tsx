@@ -1,4 +1,5 @@
 import Tangle from "@/features/tangle/Tangle"
+import { useGetModuleQueueStatsQuery } from "@/services"
 import { type Module } from "@/types"
 import { useState } from "react"
 import {
@@ -18,20 +19,32 @@ type CreateJobHeaderProps = {
 }
 
 export default function CreateJobHeader({ module }: CreateJobHeaderProps) {
+    const {
+        data: queueStats,
+        isLoading: isLoadingQueueStats,
+        error,
+    } = useGetModuleQueueStatsQuery(module.id)
+
     //
     // Estimate waiting time
     //
-    const waitingTimeMinutes = module.waitingTimeMinutes
+    const waitingTimeMinutes = queueStats?.waitingTimeMinutes
+    const prefix = queueStats?.estimate === "upper_bound" ? "<" : ">"
 
     let waitingTimeText
-    if (waitingTimeMinutes > 60) {
+    if (isLoadingQueueStats) {
+        waitingTimeText = "loading"
+    } else if (error || waitingTimeMinutes === undefined) {
+        console.error("Error loading queue stats", error)
+        waitingTimeText = "unknown"
+    } else if (waitingTimeMinutes > 60) {
         const waitingTimeHours = Math.floor(waitingTimeMinutes / 60)
         const remainingMinutes = Math.round(waitingTimeMinutes % 60)
-        waitingTimeText = `${waitingTimeHours}h, ${remainingMinutes}min`
+        waitingTimeText = `${prefix} ${waitingTimeHours}h, ${remainingMinutes}min`
     } else if (waitingTimeMinutes <= 1) {
         waitingTimeText = "< 1 min"
     } else {
-        waitingTimeText = `${waitingTimeMinutes} min`
+        waitingTimeText = `${prefix} ${waitingTimeMinutes} min`
     }
 
     //
@@ -164,7 +177,13 @@ export default function CreateJobHeader({ module }: CreateJobHeaderProps) {
                                     <FaClock size={50} />
                                 </Tile.Icon>
                                 <Tile.Highlight>
-                                    {waitingTimeText}
+                                    {isLoadingQueueStats ? (
+                                        <span className="placeholder">
+                                            10h, 50min
+                                        </span>
+                                    ) : (
+                                        waitingTimeText
+                                    )}
                                 </Tile.Highlight>
                                 <Tile.Label>Estimated time in queue</Tile.Label>
                             </Tile>
