@@ -6,6 +6,7 @@ import DeleteActionButton from "@/features/resultsHeader/DeleteActionButton"
 import DocsActionButton from "@/features/resultsHeader/DocsActionButton"
 import DownloadActionButton from "@/features/resultsHeader/DownloadActionButton"
 import ResultsHeader from "@/features/resultsHeader/ResultsHeader"
+import ResultsProgress from "@/features/resultsProgress/ResultsProgress"
 import ResultTable from "@/features/resultTable/ResultTable"
 import {
     selectAtomColorProperty,
@@ -274,14 +275,7 @@ export default function ResultsPage() {
                 )}
 
                 {waitingForFirstResult && (
-                    <div className="row justify-content-center">
-                        <div className="col-md-auto mt-5 pt-5 text-center">
-                            <div className="spinner-border" role="status"></div>
-                            <div className="mt-2">
-                                <span>Waiting for first result</span>
-                            </div>
-                        </div>
-                    </div>
+                    <ResultsProgress module={module} job={job} />
                 )}
             </div>
         </Layout>
