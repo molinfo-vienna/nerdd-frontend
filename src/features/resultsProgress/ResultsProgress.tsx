@@ -28,14 +28,14 @@ function formatTime(totalSeconds: number) {
             "minute",
             "minutes",
         )}`
-    } else if (totalMinutes > 0) {
+    } else if (totalSeconds > 60) {
         return `${totalMinutes} ${pluralize(totalMinutes, "minute", "minutes")}, ${seconds} ${pluralize(
             seconds,
             "second",
             "seconds",
         )}`
     } else {
-        return `${totalSeconds} ${pluralize(totalSeconds, "second", "seconds")}`
+        return `one minute`
     }
 }
 
@@ -45,13 +45,18 @@ export default function ResultsProgress({ module, job }: ResultsProgressProps) {
     const [timePassedSeconds, setTimePassedSeconds] = useState(0)
 
     let progressText
-    if (isLoading) {
+    if (job.numEntriesProcessed > 0) {
+        progressText = <span>Fetching results...</span>
+    } else if (isLoading) {
         progressText = <span>Fetching job status...</span>
     } else if (error || data == null) {
         progressText = (
             <span>Error fetching job status. Try refreshing the page."</span>
         )
     } else if (data.numActiveJobs === 0) {
+        // job is currently not waiting in the queue and already being processed
+
+        // compute the time until first batch is done
         const firstBatchSize =
             job.numEntriesTotal ??
             Math.min(module.batchSize, job.numEntriesTotal)
@@ -65,12 +70,9 @@ export default function ResultsProgress({ module, job }: ResultsProgressProps) {
             )
 
         let timeToFirstResultsText
-        if (
-            timeToFirstResultsSeconds == null ||
-            timeToFirstResultsSeconds <= 60
-        ) {
+        if (timeToFirstResultsSeconds == null) {
             timeToFirstResultsText = <>soon</>
-        } else if (timeToFirstResultsSeconds < 120) {
+        } else {
             timeToFirstResultsText = (
                 <>
                     in less than{" "}
@@ -87,12 +89,19 @@ export default function ResultsProgress({ module, job }: ResultsProgressProps) {
             </>
         )
     } else {
+        // job is waiting in the queue
+
+        // compute the waiting time
         const waitingTimeSeconds =
             data.waitingTimeMinutes * 60 - timePassedSeconds
+
+        // consider if the provided value from the server is a lower bound
         const precisionNumActiveJobs =
             data.estimate === "lower_bound" ? "> " : ""
         const precisionWaitingTime =
             data.estimate === "lower_bound" ? "> " : "approximately "
+
+        // construct a URL that can be used to return to this page
         const url = `${window.location.origin}/${module.id}/${job.id}`
 
         progressText = (
@@ -108,12 +117,13 @@ export default function ResultsProgress({ module, job }: ResultsProgressProps) {
                     {formatTime(waitingTimeSeconds)}
                 </span>
                 . You can navigate away from the page and come back later to
-                monitor the job's progress using this link: <br />
+                monitor the job's progress by using this link: <br />
                 <a href={url}>{url}</a>.
             </span>
         )
     }
 
+    // Update time passed every second
     useEffect(() => {
         const interval = setInterval(() => {
             setTimePassedSeconds((prev) => prev + 1)
