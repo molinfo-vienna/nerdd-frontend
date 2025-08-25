@@ -9,7 +9,12 @@ import { baseApi } from "@/services"
 import { createServer, Response } from "miragejs"
 import { Fragment, useEffect } from "react"
 import { useStore } from "react-redux"
-import { generateResults, jobId, sourceId } from "./fake"
+import {
+    generateModuleQueueStats,
+    generateResults,
+    jobId,
+    sourceId,
+} from "./fake"
 import JobStatusWebSocketMockServer from "./JobStatusWebSocketMockServer"
 import recursiveCamelToSnakeCase from "./recursiveCamelToSnakeCase"
 import ResultsGenerator from "./ResultsGenerator"
@@ -368,6 +373,25 @@ export default function MockServer({
                         }
 
                         return moduleConfigs[moduleId]
+                    })
+
+                    // GET /modules/:moduleId/queue
+                    // (return module queue stats)
+                    this.get("/modules/:moduleId/queue", (schema, request) => {
+                        const moduleId = request.params.moduleId
+
+                        if (return404 || moduleConfigs[moduleId] == null) {
+                            return new Response(
+                                404,
+                                {},
+                                { detail: "Module not found" },
+                            )
+                        }
+
+                        // generate fake module stats
+                        const queueStats = generateModuleQueueStats(moduleId)
+
+                        return queueStats
                     })
 
                     // PUT /sources/

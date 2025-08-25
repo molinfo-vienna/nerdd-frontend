@@ -461,7 +461,6 @@ export function generateModuleConfig(i) {
             precision: 0.01,
         }),
         max_num_molecules: faker.number.int({ min: 1000, max: 1000000 }),
-        waiting_time_minutes: faker.number.int({ min: 0, max: 10000 }),
     }
 }
 
@@ -473,4 +472,13 @@ export function generateModuleConfigDict(num) {
     const moduleConfigs = generateModuleConfigArray(num)
 
     return Object.fromEntries(moduleConfigs.map((c) => [c.name, c]))
+}
+
+export function generateModuleQueueStats(moduleId) {
+    return {
+        module_id: moduleId,
+        waiting_time_minutes: faker.number.int({ min: 0, max: 10000 }),
+        num_active_jobs: faker.number.int({ min: 0, max: 100 }),
+        estimate: faker.helpers.arrayElement(["upper_bound", "lower_bound"]),
+    }
 }
