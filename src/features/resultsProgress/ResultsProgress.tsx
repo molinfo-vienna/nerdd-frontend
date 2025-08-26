@@ -40,9 +40,16 @@ function formatTime(totalSeconds: number) {
 }
 
 function ResultsProgress({ module, job }: ResultsProgressProps) {
-    const { data, isLoading, error } = useGetJobQueueStatsQuery(job.id)
+    const { data, isLoading, error } = useGetJobQueueStatsQuery(job.id, {
+        // get a new estimate every five minutes (300000 milliseconds)
+        pollingInterval: 300000,
+    })
 
     const [timePassedSeconds, setTimePassedSeconds] = useState(0)
+
+    useEffect(() => {
+        setTimePassedSeconds(0)
+    }, [data?.waitingTimeMinutes])
 
     let progressText
     if (job.numEntriesProcessed > 0) {
