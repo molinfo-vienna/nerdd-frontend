@@ -1,4 +1,4 @@
-import { JobStatus } from "@/types"
+import { JobStatus, QueueStats } from "@/types"
 import { baseApi } from "./base"
 import recursiveSnakeToCamelCase from "./recursiveSnakeToCamelCase"
 import websocketQuery from "./websocketQuery"
@@ -66,8 +66,20 @@ export const jobsApi = baseApi.injectEndpoints({
             transformResponse: recursiveSnakeToCamelCase,
             transformResponseWs: recursiveSnakeToCamelCase,
         }),
+        getJobQueueStats: builder.query<QueueStats, string>({
+            query: (jobId) => `/jobs/${jobId}/queue`,
+            transformResponse: (response) => {
+                // convert snake_case to camelCase
+                const statsCamelCase = recursiveSnakeToCamelCase(response)
+                return statsCamelCase as QueueStats
+            },
+        }),
     }),
 })
 
-export const { useAddJobMutation, useDeleteJobMutation, useGetJobStatusQuery } =
-    jobsApi
+export const {
+    useAddJobMutation,
+    useDeleteJobMutation,
+    useGetJobStatusQuery,
+    useGetJobQueueStatsQuery,
+} = jobsApi
