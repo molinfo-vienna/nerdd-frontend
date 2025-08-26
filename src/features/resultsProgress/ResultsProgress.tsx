@@ -1,6 +1,6 @@
 import { useGetJobQueueStatsQuery } from "@/services"
 import { Job, Module } from "@/types"
-import { useEffect, useState } from "react"
+import { memo, useEffect, useState } from "react"
 
 type ResultsProgressProps = {
     module: Module
@@ -39,7 +39,7 @@ function formatTime(totalSeconds: number) {
     }
 }
 
-export default function ResultsProgress({ module, job }: ResultsProgressProps) {
+function ResultsProgress({ module, job }: ResultsProgressProps) {
     const { data, isLoading, error } = useGetJobQueueStatsQuery(job.id)
 
     const [timePassedSeconds, setTimePassedSeconds] = useState(0)
@@ -58,16 +58,18 @@ export default function ResultsProgress({ module, job }: ResultsProgressProps) {
 
         // compute the time until first batch is done
         const firstBatchSize =
-            job.numEntriesTotal ??
-            Math.min(module.batchSize, job.numEntriesTotal)
+            job.numEntriesTotal == null
+                ? undefined
+                : Math.min(module.batchSize, job.numEntriesTotal)
         const timeToFirstResultsSeconds =
-            firstBatchSize ??
-            Math.max(
-                module.startupTimeSeconds +
-                    firstBatchSize * module.secondsPerMolecule,
-                -timePassedSeconds,
-                60,
-            )
+            firstBatchSize == null
+                ? undefined
+                : Math.max(
+                      module.startupTimeSeconds +
+                          firstBatchSize * module.secondsPerMolecule,
+                      -timePassedSeconds,
+                      60,
+                  )
 
         let timeToFirstResultsText
         if (timeToFirstResultsSeconds == null) {
@@ -75,7 +77,7 @@ export default function ResultsProgress({ module, job }: ResultsProgressProps) {
         } else {
             timeToFirstResultsText = (
                 <>
-                    in less than{" "}
+                    in approximately{" "}
                     <span className="text-primary fw-bold">
                         {formatTime(timeToFirstResultsSeconds)}
                     </span>
@@ -134,9 +136,11 @@ export default function ResultsProgress({ module, job }: ResultsProgressProps) {
 
     return (
         <div className="row justify-content-center">
-            <div className="col-auto col-md-4 mt-5 pt-5 text-center">
+            <div className="col-auto col-md-5 mt-5 pt-5 text-center">
                 <div className="mt-2">{progressText}</div>
             </div>
         </div>
     )
 }
+
+export default memo(ResultsProgress)
