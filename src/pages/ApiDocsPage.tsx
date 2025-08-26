@@ -31,6 +31,7 @@ export default function ApiDocsPage() {
                     title="REST API"
                     description={description}
                     module={module}
+                    subRoute="api"
                 />
             </Layout.Header>
             {module != null && (

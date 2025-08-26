@@ -36,6 +36,7 @@ export default function AboutPage() {
                     title="Documentation"
                     description={description}
                     module={module}
+                    subRoute="about"
                 />
             </Layout.Header>
 
