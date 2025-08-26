@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Draggable from "react-draggable"
 import "./Tangle.css"
 
@@ -94,7 +94,9 @@ export default function Tangle({
         Math.exp(Math.abs(currentPixelOffset) / scale)
     const clampedValue = clampValue(value, min, max)
 
-    setValue(clampedValue)
+    useEffect(() => {
+        setValue(clampedValue)
+    }, [clampedValue, setValue])
 
     return (
         <>
