@@ -1,3 +1,11 @@
+## [1.3.9](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.8...v1.3.9) (2025-08-28)
+
+
+### Bug Fixes
+
+* Display errors from server when creating a job ([b7c3bdd](https://github.com/molinfo-vienna/nerdd-frontend/commit/b7c3bdd3f1bc02d632e140188a4992b2c4083438))
+* Do not expose internal error messages to user ([4116ed0](https://github.com/molinfo-vienna/nerdd-frontend/commit/4116ed0db7e76e2b56a54205ebb53563eca1b6ab))
+
 ## [1.3.8](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.7...v1.3.8) (2025-08-14)
 
 
