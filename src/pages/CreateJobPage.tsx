@@ -51,7 +51,7 @@ export default function CreateJobPage() {
             console.error(response.error)
             return {
                 [FORM_ERROR]:
-                    response.error.data?.detail ||
+                    response.error.data?.detail[0].msg ||
                     "An error occurred while creating the job.",
             }
         }
