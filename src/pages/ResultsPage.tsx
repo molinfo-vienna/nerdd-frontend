@@ -227,7 +227,9 @@ export default function ResultsPage() {
             </Layout.Header>
 
             <div className="container-fluid py-4">
-                {numberOfResults > 0 && (
+                {job.numEntriesProcessed > 0 && (
+                    // This pagination is shown if there is at least one result *in total*
+                    // (in contrast to the second pagination component below).
                     <div className="row justify-content-center">
                         <div className="col-auto my-3">
                             <Pagination
@@ -263,7 +265,9 @@ export default function ResultsPage() {
                                         </div>
                                     )}
                                 </div>
-                                {numberOfResults > 1 && (
+                                {numberOfResults > 0 && (
+                                    // This pagination is only shown if there is at least one
+                                    // result *on this page*.
                                     <Pagination
                                         moduleId={moduleId}
                                         jobId={jobId}
