@@ -90,7 +90,7 @@ function ResultsProgress({ module, job }: ResultsProgressProps) {
             timeToFirstResultsText = (
                 <>
                     in approximately{" "}
-                    <span className="text-primary fw-bold">
+                    <span className="text-primary fw-bold text-nowrap">
                         {formatTime(timeToFirstResultsSeconds)}
                     </span>
                 </>
@@ -127,7 +127,7 @@ function ResultsProgress({ module, job }: ResultsProgressProps) {
                     {data.numActiveJobs + 1}
                 </span>{" "}
                 in the queue and the waiting time is {precisionWaitingTime}
-                <span className="text-primary fw-bold">
+                <span className="text-primary fw-bold text-nowrap">
                     {formatTime(waitingTimeSeconds)}
                 </span>
                 . You can navigate away from the page and come back later to
