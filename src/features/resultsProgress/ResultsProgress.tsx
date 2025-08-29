@@ -16,19 +16,18 @@ function formatTime(totalSeconds: number) {
     const totalHours = Math.floor(totalMinutes / 60)
     const days = Math.floor(totalHours / 24)
 
-    const seconds = totalSeconds % 60
-    const minutes = totalMinutes % 60
-    const hours = totalHours % 24
-
     if (days > 0) {
+        const hours = totalHours % 24
         return `${days} ${pluralize(days, "day", "days")}, ${hours} ${pluralize(hours, "hour", "hours")}`
     } else if (totalHours > 0) {
+        const minutes = totalMinutes % 60
         return `${totalHours} ${pluralize(totalHours, "hour", "hours")}, ${minutes} ${pluralize(
             minutes,
             "minute",
             "minutes",
         )}`
     } else if (totalSeconds > 60) {
+        const seconds = totalSeconds % 60
         return `${totalMinutes} ${pluralize(totalMinutes, "minute", "minutes")}, ${seconds} ${pluralize(
             seconds,
             "second",
@@ -58,7 +57,7 @@ function ResultsProgress({ module, job }: ResultsProgressProps) {
         progressText = <span>Fetching job status...</span>
     } else if (error || data == null) {
         progressText = (
-            <span>Error fetching job status. Try refreshing the page."</span>
+            <span>Error fetching job status. Try refreshing the page.</span>
         )
     } else if (data.numActiveJobs === 0) {
         // job is currently not waiting in the queue and already being processed
@@ -72,9 +71,15 @@ function ResultsProgress({ module, job }: ResultsProgressProps) {
             firstBatchSize == null
                 ? undefined
                 : Math.max(
-                      module.startupTimeSeconds +
-                          firstBatchSize * module.secondsPerMolecule,
-                      -timePassedSeconds,
+                      // get a valid integer number of seconds (ceil)
+                      // module needs to start up (startupTimeSeconds)
+                      // then it needs to process the first batch (firstBatchSize * secondsPerMolecule)
+                      // subtract the time that has already passed (timePassedSeconds)
+                      Math.ceil(
+                          module.startupTimeSeconds +
+                              firstBatchSize * module.secondsPerMolecule -
+                              timePassedSeconds,
+                      ),
                       60,
                   )
 
@@ -101,8 +106,9 @@ function ResultsProgress({ module, job }: ResultsProgressProps) {
         // job is waiting in the queue
 
         // compute the waiting time
-        const waitingTimeSeconds =
-            data.waitingTimeMinutes * 60 - timePassedSeconds
+        const waitingTimeSeconds = Math.ceil(
+            data.waitingTimeMinutes * 60 - timePassedSeconds,
+        )
 
         // consider if the provided value from the server is a lower bound
         const precisionNumActiveJobs =
@@ -120,8 +126,7 @@ function ResultsProgress({ module, job }: ResultsProgressProps) {
                     position {precisionNumActiveJobs}
                     {data.numActiveJobs + 1}
                 </span>{" "}
-                in the queue and the estimated waiting time is{" "}
-                {precisionWaitingTime}
+                in the queue and the waiting time is {precisionWaitingTime}
                 <span className="text-primary fw-bold">
                     {formatTime(waitingTimeSeconds)}
                 </span>
@@ -139,7 +144,7 @@ function ResultsProgress({ module, job }: ResultsProgressProps) {
         }, 1000)
 
         return () => clearInterval(interval)
-    }, [])
+    }, [setTimePassedSeconds])
 
     return (
         <div className="row justify-content-center">
