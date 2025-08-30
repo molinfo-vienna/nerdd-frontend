@@ -1,3 +1,10 @@
+## [1.3.11](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.10...v1.3.11) (2025-08-30)
+
+
+### Bug Fixes
+
+* Make checkbox labels clickable ([fb48686](https://github.com/molinfo-vienna/nerdd-frontend/commit/fb486866b153e30acf6ac0c988f211ae72a71b86))
+
 ## [1.3.10](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.9...v1.3.10) (2025-08-28)
 
 
