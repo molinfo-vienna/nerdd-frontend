@@ -22,6 +22,7 @@ export default function CheckBoxField({
                     "is-invalid": meta.touched && meta.error,
                 })}
                 {...input}
+                id={input.name}
                 type="checkbox"
                 ref={positionReference}
             />
