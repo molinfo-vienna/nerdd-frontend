@@ -1,3 +1,11 @@
+## [1.3.12](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.11...v1.3.12) (2025-09-01)
+
+
+### Bug Fixes
+
+* Assume that exampleSmiles is defined ([66bcc87](https://github.com/molinfo-vienna/nerdd-frontend/commit/66bcc87a6171a5130cb7653a3306ea776a036e88))
+* Use regex to split SMILES strings ([17fa31a](https://github.com/molinfo-vienna/nerdd-frontend/commit/17fa31ab459e128b00da4af8645858383c0f047b))
+
 ## [1.3.11](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.10...v1.3.11) (2025-08-30)
 
 
