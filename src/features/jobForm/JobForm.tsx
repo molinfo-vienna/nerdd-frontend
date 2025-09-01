@@ -19,9 +19,7 @@ type JobFormProps = {
 export default function JobForm({ module, onSubmit }: JobFormProps) {
     // create a placeholder for the text input
     // (first few characters of the example SMILES)
-    const exampleSmiles = module.exampleSmiles
-        ? module.exampleSmiles.split()[0]
-        : "CN1CCN(Cc2ccc(cc2)C(=O)Nc3ccc(C)c(Nc4nccc(n4)c5cccnc5)c3)CC1"
+    const exampleSmiles = module.exampleSmiles.split(/\s+/)[0]
     const placeholderSmiles = exampleSmiles.slice(0, 13) + "..."
 
     // The file field contains a drop zone and a list of uploaded files. We want to
