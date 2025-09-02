@@ -1,3 +1,10 @@
+## [1.3.14](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.13...v1.3.14) (2025-09-02)
+
+
+### Bug Fixes
+
+* Show light text on table cells with dark bg ([54640ff](https://github.com/molinfo-vienna/nerdd-frontend/commit/54640ffc22966d855e64ff4295aa3096aff0330b))
+
 ## [1.3.13](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.12...v1.3.13) (2025-09-02)
 
 
