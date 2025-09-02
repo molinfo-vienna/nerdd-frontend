@@ -1,3 +1,5 @@
+import ImagePlaceholder from "@/features/placeholder/ImagePlaceholder"
+import classNames from "classnames"
 import { useCallback, useEffect, useId, useMemo, useState } from "react"
 import "./MoleculeEditor.css"
 import useJsApplet from "./useJsApplet"
@@ -19,6 +21,7 @@ export default function MoleculeEditor({
 }: MoleculeEditorProps) {
     const JSApplet = useJsApplet()
     const [appletInstance, setAppletInstance] = useState(null)
+    const isLoading = appletInstance == null
 
     // generate id
     const containerId = useId()
@@ -88,10 +91,16 @@ export default function MoleculeEditor({
     }
 
     return (
-        <div
-            className={depict ? "" : "molecule-editor"}
-            id={containerId}
-            ref={jsmeContainerRef}
-        ></div>
+        <>
+            {isLoading && <ImagePlaceholder width={width} height={height} />}
+            <div
+                className={classNames({
+                    "molecule-editor": !depict, 
+                    "d-none" : isLoading
+                })}
+                id={containerId}
+                ref={jsmeContainerRef}
+            ></div>
+        </>
     )
 }
