@@ -1,3 +1,10 @@
+## [1.3.13](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.12...v1.3.13) (2025-09-02)
+
+
+### Bug Fixes
+
+* Show placeholder while loading jsme editor ([af5cd7e](https://github.com/molinfo-vienna/nerdd-frontend/commit/af5cd7ed3d937768743429fa36910d607af2df12))
+
 ## [1.3.12](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.11...v1.3.12) (2025-09-01)
 
 
