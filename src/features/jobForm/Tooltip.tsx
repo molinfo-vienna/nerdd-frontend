@@ -67,11 +67,14 @@ export default function Tooltip({
         // if the user hovers over the tooltip, it should stay open
         handleClose: safePolygon(),
     })
-    const click = useClick(context)
+    const click = useClick(context, {
+        // should be used in combination with useHover
+        ignoreMouse: true,
+    })
     const focus = useFocus(context)
     const dismiss = useDismiss(context, {
-        // if the user clicks on the tooltip, it should stay open
-        outsidePress: false,
+        // close the tooltip when clicking outside
+        outsidePress: true,
     })
 
     const role = useRole(context, {
