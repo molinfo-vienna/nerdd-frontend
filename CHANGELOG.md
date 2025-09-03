@@ -1,3 +1,10 @@
+## [1.3.16](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.15...v1.3.16) (2025-09-03)
+
+
+### Bug Fixes
+
+* Close tooltips when clicking outside ([2df867a](https://github.com/molinfo-vienna/nerdd-frontend/commit/2df867aa3a1b1d92cfdee9a7ad5bc2e2468fe29f))
+
 ## [1.3.15](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.14...v1.3.15) (2025-09-03)
 
 
