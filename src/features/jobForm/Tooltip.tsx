@@ -1,6 +1,7 @@
 import {
     arrow,
     safePolygon,
+    useClick,
     useDismiss,
     useFloating,
     useFocus,
@@ -66,6 +67,7 @@ export default function Tooltip({
         // if the user hovers over the tooltip, it should stay open
         handleClose: safePolygon(),
     })
+    const click = useClick(context)
     const focus = useFocus(context)
     const dismiss = useDismiss(context, {
         // if the user clicks on the tooltip, it should stay open
@@ -80,6 +82,7 @@ export default function Tooltip({
     // Merge all the interactions into prop getters
     const { getReferenceProps, getFloatingProps } = useInteractions([
         hover,
+        click,
         focus,
         dismiss,
         role,
