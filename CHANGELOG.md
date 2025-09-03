@@ -1,3 +1,10 @@
+## [1.3.15](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.14...v1.3.15) (2025-09-03)
+
+
+### Bug Fixes
+
+* Open tooltips on click (nice for mobile) ([71c5f0d](https://github.com/molinfo-vienna/nerdd-frontend/commit/71c5f0d97d8775760f39e8a2997e6df75082208b))
+
 ## [1.3.14](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.13...v1.3.14) (2025-09-02)
 
 
