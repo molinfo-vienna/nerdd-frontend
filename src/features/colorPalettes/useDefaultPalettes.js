@@ -30,7 +30,7 @@ export default function useDefaultPalettes() {
         const rootStyles = getComputedStyle(document.documentElement)
 
         const positive = rootStyles.getPropertyValue("--bs-primary")
-        const neutral = rootStyles.getPropertyValue("--bs-body-bg")
+        const neutral = rootStyles.getPropertyValue("--bs-tertiary-bg")
         const negative = rootStyles.getPropertyValue("--bs-danger")
 
         const blue = rootStyles.getPropertyValue("--bs-blue")
