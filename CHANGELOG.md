@@ -1,3 +1,12 @@
+## [1.3.18](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.17...v1.3.18) (2025-09-05)
+
+
+### Bug Fixes
+
+* Create component for different molecule input fields ([23c794c](https://github.com/molinfo-vienna/nerdd-frontend/commit/23c794ce3af18842668b4859569a215d06f5fd4f))
+* Improve Row component ([6bee0eb](https://github.com/molinfo-vienna/nerdd-frontend/commit/6bee0eb365f8278ac546a590f0ef913ed53b5282))
+* Use form subscription to improve performance ([84f6b9c](https://github.com/molinfo-vienna/nerdd-frontend/commit/84f6b9ce16a6877645e4a90910132f2ff4b490b4))
+
 ## [1.3.17](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.16...v1.3.17) (2025-09-05)
 
 
