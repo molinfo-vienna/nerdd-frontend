@@ -1,3 +1,10 @@
+## [1.3.17](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.16...v1.3.17) (2025-09-05)
+
+
+### Bug Fixes
+
+* Avoid error on chrome about type='checkbox' ([8a64c6f](https://github.com/molinfo-vienna/nerdd-frontend/commit/8a64c6f7b0d730e377e72f159fc461edf4aaf79b))
+
 ## [1.3.16](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.15...v1.3.16) (2025-09-03)
 
 
