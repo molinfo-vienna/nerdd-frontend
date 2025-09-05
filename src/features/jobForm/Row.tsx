@@ -32,9 +32,11 @@ export default function Row({
                 }
             >
                 {/* again: tooltip is centered at the first child */}
-                <div ref={positionReference === undefined ? ref : null}>
-                    {firstChild}
-                </div>
+                {positionReference === undefined ? (
+                    <div ref={ref}>{firstChild}</div>
+                ) : (
+                    firstChild
+                )}
                 {/* remaining children are also rendered */}
                 {restChildren}
             </Tooltip>
