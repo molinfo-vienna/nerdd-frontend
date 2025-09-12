@@ -1,6 +1,7 @@
 import useColorPalettes from "@/features/colorPalettes/useColorPalettes"
 import type { Module } from "@/types"
 import { memo, useMemo } from "react"
+import ColumnHeader from "./ColumnHeader"
 import getColorPalette from "./getColorPalette"
 import type { AugmentedResultProperty, ResultGroup } from "./resultTableSlice"
 import { Column } from "./resultTableSlice"
@@ -13,6 +14,9 @@ type ResultTableProps = {
     firstColumnRow: Column[]
     secondColumnRow: Column[]
     resultProperties: AugmentedResultProperty[]
+    onClickSort(column: Column): void
+    sortBy?: string
+    sortAscending: boolean
 }
 
 const ResultTable = memo(function ResultTable({
@@ -21,6 +25,9 @@ const ResultTable = memo(function ResultTable({
     firstColumnRow,
     secondColumnRow,
     resultProperties,
+    onClickSort,
+    sortBy,
+    sortAscending,
 }: ResultTableProps) {
     //
     // compute color palettes once (to improve memoization)
@@ -47,33 +54,25 @@ const ResultTable = memo(function ResultTable({
                 <thead className="sticky-top fs-7">
                     <tr key="firstRow">
                         {firstColumnRow.map((column) => (
-                            <th
-                                scope="col"
+                            <ColumnHeader
                                 key={column.name}
-                                rowSpan={column.rowspan}
-                                colSpan={column.colspan}
-                            >
-                                {column.colspan > 1 ? (
-                                    <div className="border-bottom border-primary mx-3 py-2">
-                                        {column.visibleName}
-                                    </div>
-                                ) : (
-                                    column.visibleName
-                                )}
-                            </th>
+                                column={column}
+                                onClickSort={onClickSort}
+                                sortBy={sortBy}
+                                sortAscending={sortAscending}
+                            />
                         ))}
                     </tr>
                     {secondColumnRow.length > 0 && (
                         <tr key="secondRow">
                             {secondColumnRow.map((column) => (
-                                <th
-                                    scope="col"
+                                <ColumnHeader
                                     key={column.name}
-                                    rowSpan={column.rowspan}
-                                    colSpan={column.colspan}
-                                >
-                                    {column.visibleName}
-                                </th>
+                                    column={column}
+                                    onClickSort={onClickSort}
+                                    sortBy={sortBy}
+                                    sortAscending={sortAscending}
+                                />
                             ))}
                         </tr>
                     )}
