@@ -1,4 +1,5 @@
 import { ResultProperty } from "@/types"
+import { memo } from "react"
 import { FaPalette } from "react-icons/fa6"
 import { AugmentedResultPropertyGroup } from "../resultTable/resultTableSlice"
 import ActionButton from "./ActionButton"
@@ -13,7 +14,7 @@ type ColorSelectActionButtonProps = {
     onColorGroupToggle: (groupName: string, colored: boolean) => void
 }
 
-export default function ColorSelectActionButton({
+function ColorSelectActionButton({
     atomColorProperty,
     possibleAtomColorProperties,
     onAtomColorPropertyChange,
@@ -42,3 +43,5 @@ export default function ColorSelectActionButton({
         </ActionButton>
     )
 }
+
+export default memo(ColorSelectActionButton)

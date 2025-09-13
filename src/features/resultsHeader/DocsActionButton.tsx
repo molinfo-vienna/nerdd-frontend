@@ -1,3 +1,4 @@
+import { memo } from "react"
 import { FaBookOpen } from "react-icons/fa6"
 import ActionButton from "./ActionButton"
 
@@ -5,7 +6,7 @@ type DocsActionButtonProps = {
     moduleId: string
 }
 
-export default function DocsActionButton({ moduleId }: DocsActionButtonProps) {
+function DocsActionButton({ moduleId }: DocsActionButtonProps) {
     return (
         <ActionButton to={`/${moduleId}/about`} label="Docs">
             <ActionButton.Icon>
@@ -17,3 +18,5 @@ export default function DocsActionButton({ moduleId }: DocsActionButtonProps) {
         </ActionButton>
     )
 }
+
+export default memo(DocsActionButton)

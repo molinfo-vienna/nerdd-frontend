@@ -37,7 +37,6 @@ export default function ColorSelectDropdown({
                     <li key="atom-color-none">
                         <a
                             className="dropdown-item"
-                            href="#"
                             onClick={() =>
                                 onSelectedAtomColorPropertyChange(undefined)
                             }
@@ -51,15 +50,14 @@ export default function ColorSelectDropdown({
                                     checked={
                                         selectedAtomColorProperty === undefined
                                     }
-                                    onChange={() =>
-                                        onSelectedAtomColorPropertyChange(
-                                            undefined,
-                                        )
-                                    }
+                                    // When clicking the radio button, the event bubbles up to the
+                                    // <a> and triggers onSelectedAtomColorPropertyChange. For this
+                                    // reason, we don't need an onChange / onClick handler here.
+                                    readOnly
                                 />
                                 <label
-                                    className="form-check-label fw-bold"
-                                    htmlFor="atom-color-none"
+                                    className="form-check-label"
+                                    // htmlFor="atom-color-none"
                                 >
                                     None
                                 </label>
@@ -70,7 +68,6 @@ export default function ColorSelectDropdown({
                         <li key={`atom-color-${property.name}`}>
                             <a
                                 className="dropdown-item"
-                                href="#"
                                 onClick={() =>
                                     onSelectedAtomColorPropertyChange(property)
                                 }
@@ -85,14 +82,13 @@ export default function ColorSelectDropdown({
                                             property.name ===
                                             selectedAtomColorProperty?.name
                                         }
-                                        onChange={() =>
-                                            onSelectedAtomColorPropertyChange(
-                                                property,
-                                            )
-                                        }
+                                        // When clicking the radio button, the event bubbles up to
+                                        // the <a> and triggers onClick. For this reason, we don't
+                                        // need an onChange / onClick handler here.
+                                        readOnly
                                     />
                                     <label
-                                        className="form-check-label fw-bold"
+                                        className="form-check-label"
                                         htmlFor={`atom-color-${property.name}`}
                                     >
                                         {property.visibleName}
@@ -125,13 +121,12 @@ export default function ColorSelectDropdown({
                     <li>
                         <a
                             className="dropdown-item"
-                            onClick={(e) => {
-                                e.preventDefault()
+                            onClick={() =>
                                 onColorGroupToggle(
                                     group.groupName,
                                     !group.allColored,
                                 )
-                            }}
+                            }
                         >
                             <div className="form-check">
                                 <input
@@ -140,16 +135,17 @@ export default function ColorSelectDropdown({
                                     value=""
                                     id={group.groupName}
                                     checked={group.allColored}
-                                    onChange={() =>
-                                        onColorGroupToggle(
-                                            group.groupName,
-                                            !group.allColored,
-                                        )
-                                    }
+                                    // When clicking the checkbox, the event bubbles up to the <a>
+                                    // and triggers onColorGroupToggle. For this reason, we don't
+                                    // need an onChange / onClick handler here.
+                                    readOnly
                                 />
                                 <label
                                     className="form-check-label fw-bolder"
-                                    htmlFor={group.groupName}
+                                    // Don't use htmlFor here: clicking the label would trigger the
+                                    // onChange event on the checkbox, but doesn't bubble up to the
+                                    // <a> element above. Nothing would happen.
+                                    // htmlFor={group.groupName}
                                 >
                                     {group.groupName}
                                 </label>
@@ -163,14 +159,12 @@ export default function ColorSelectDropdown({
                                 <li key={`${group.groupName}-${property.name}`}>
                                     <a
                                         className="dropdown-item"
-                                        href="#"
-                                        onClick={(e) => {
-                                            e.preventDefault()
+                                        onClick={() =>
                                             onColorColumnToggle(
                                                 property.name,
                                                 !property.colored,
                                             )
-                                        }}
+                                        }
                                     >
                                         <div className="form-check">
                                             <input
@@ -179,16 +173,19 @@ export default function ColorSelectDropdown({
                                                 value=""
                                                 id={`${group.groupName}-${property.name}`}
                                                 checked={property.colored}
-                                                onChange={() =>
-                                                    onColorColumnToggle(
-                                                        property.name,
-                                                        !property.colored,
-                                                    )
-                                                }
+                                                // When clicking the checkbox, the event bubbles up
+                                                // to the <a> and triggers onColorColumnToggle. For
+                                                // this reason, we don't need an onChange / onClick
+                                                // handler here.
+                                                readOnly
                                             />
                                             <label
                                                 className="form-check-label d-block"
-                                                htmlFor={`${group.groupName}-${property.name}`}
+                                                // Don't use htmlFor here: clicking the label would
+                                                // trigger the onChange event on the checkbox, but
+                                                // doesn't bubble up to the <a> element above.
+                                                // Nothing would happen.
+                                                // htmlFor={`${group.groupName}-${property.name}`}
                                             >
                                                 {property.visibleName}
                                             </label>

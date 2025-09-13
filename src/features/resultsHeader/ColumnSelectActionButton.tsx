@@ -1,3 +1,4 @@
+import { memo } from "react"
 import { HiMiniViewColumns } from "react-icons/hi2"
 import { AugmentedResultPropertyGroup } from "../resultTable/resultTableSlice"
 import ActionButton from "./ActionButton"
@@ -9,7 +10,7 @@ type ColumnSelectActionButtonProps = {
     onGroupToggle: (groupName: string, isSelected: boolean) => void
 }
 
-export default function ColumnSelectActionButton({
+function ColumnSelectActionButton({
     resultPropertyGroups,
     onColumnToggle,
     onGroupToggle,
@@ -32,3 +33,5 @@ export default function ColumnSelectActionButton({
         </ActionButton>
     )
 }
+
+export default memo(ColumnSelectActionButton)

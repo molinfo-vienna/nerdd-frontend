@@ -1,5 +1,6 @@
 import PopUp from "@/features/popup/PopUp"
 import { JobStatus } from "@/types"
+import { memo } from "react"
 import { FaFileDownload } from "react-icons/fa"
 import { FaFileLines } from "react-icons/fa6"
 import { Link } from "react-router-dom"
@@ -11,14 +12,13 @@ type DownloadActionButtonProps = {
     outputFormats: string[]
 }
 
-export default function DownloadActionButton({
+function DownloadActionButton({
     jobStatus,
     outputFormats,
 }: DownloadActionButtonProps) {
+    const outputFiles = jobStatus.outputFiles ?? []
     const outputFileItems = outputFormats.map((format) => {
-        const fileFromStatus = (jobStatus.outputFiles ?? []).find(
-            (f) => f.format == format,
-        )
+        const fileFromStatus = outputFiles.find((f) => f.format == format)
         const status = fileFromStatus === undefined ? "disabled" : ""
         return {
             format,
@@ -27,8 +27,7 @@ export default function DownloadActionButton({
         }
     })
 
-    const disabled =
-        jobStatus.outputFiles === undefined || jobStatus.outputFiles.length == 0
+    const disabled = outputFiles.length == 0
 
     const button = (
         <ActionButton label="Download" disabled={disabled}>
@@ -69,3 +68,19 @@ export default function DownloadActionButton({
         return button
     }
 }
+
+export default memo(DownloadActionButton, (prev, next) => {
+    return (
+        prev.jobStatus.outputFiles.length ===
+            next.jobStatus.outputFiles.length &&
+        prev.jobStatus.outputFiles.every((file, index) => {
+            const nextFile = next.jobStatus.outputFiles[index]
+            return (
+                nextFile !== undefined &&
+                file.format === nextFile.format &&
+                file.url === nextFile.url
+            )
+        }) &&
+        prev.outputFormats === next.outputFormats
+    )
+})
