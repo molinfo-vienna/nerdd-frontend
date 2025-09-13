@@ -1,3 +1,17 @@
+## [1.3.19](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.18...v1.3.19) (2025-09-13)
+
+
+### Bug Fixes
+
+* Fine-tune checkbox behaviour in dropdown ([4301950](https://github.com/molinfo-vienna/nerdd-frontend/commit/430195064c473d1992903df2b8ef16af0c53068d))
+* Fine-tune radio button behaviour in dropdown ([3bc0df3](https://github.com/molinfo-vienna/nerdd-frontend/commit/3bc0df329f9841e54c0e7038c77378844ff6bb3a))
+* Memoize ColorSelectionActionButton ([694de3f](https://github.com/molinfo-vienna/nerdd-frontend/commit/694de3fcdaf8aa32d2a82d1ced5915cba184df48))
+* Memoize ColumnSelectActionButton ([9d48a1d](https://github.com/molinfo-vienna/nerdd-frontend/commit/9d48a1d26ae23ca1313857311ff31ec58536d8ba))
+* Memoize DeleteActionButton ([b8ed1eb](https://github.com/molinfo-vienna/nerdd-frontend/commit/b8ed1ebeab0bd1a46354eb4593f90ed56a0653f1))
+* Memoize DocsActionButton ([0802374](https://github.com/molinfo-vienna/nerdd-frontend/commit/0802374f468da9311f6cd2569dc44bf9de7ff42e))
+* Memoize DownloadActionButton ([b0ca63f](https://github.com/molinfo-vienna/nerdd-frontend/commit/b0ca63fb047fe1a6c36d777b9cf2471aaf97dcd2))
+* Remove bold font on dropdown items ([46132e3](https://github.com/molinfo-vienna/nerdd-frontend/commit/46132e33860fa495f6bfb48be044bfd770a0ce07))
+
 ## [1.3.18](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.17...v1.3.18) (2025-09-05)
 
 
