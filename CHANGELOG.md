@@ -1,3 +1,10 @@
+## [1.3.21](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.20...v1.3.21) (2025-09-17)
+
+
+### Bug Fixes
+
+* Report field-based errors after submission ([a48f3d1](https://github.com/molinfo-vienna/nerdd-frontend/commit/a48f3d1a910cf2dd08869eb8f1c37650bc1f698e))
+
 ## [1.3.20](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.19...v1.3.20) (2025-09-17)
 
 
