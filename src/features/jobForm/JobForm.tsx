@@ -55,7 +55,7 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
             if (
                 // all files uploaded?
                 values.inputFile?.filter((file) =>
-                    ["pending", "deleting"].includes(file.status)
+                    ["pending", "deleting"].includes(file.status),
                 ).length > 0
             ) {
                 // We are setting an error on a pseudo field that doesn't exist in the form.
@@ -72,7 +72,7 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
 
             return errors
         },
-        [module, setFormPending]
+        [module, setFormPending],
     )
 
     //
@@ -80,7 +80,7 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
     //
     const formApi = useMemo(
         () => createForm({ onSubmit, validate }),
-        [onSubmit, validate]
+        [onSubmit, validate],
     )
 
     const handleDelayedSubmit = useCallback(() => {

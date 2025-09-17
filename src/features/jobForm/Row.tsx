@@ -5,7 +5,7 @@ import Tooltip from "./Tooltip"
 type RowProps = {
     helpText?: string
     children: ReactNode
-    positionReference?: RefObject<HTMLElement>
+    positionReference?: RefObject<HTMLElement | null>
     className?: string
 }
 

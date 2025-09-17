@@ -22,11 +22,12 @@ export default function SelectField({
     positionReference,
     className,
 }: SelectFieldProps) {
+    const error = meta.error || meta.submitError
     return (
         <div className="form-floating mb-3">
             <select
                 className={classNames("form-select", className, {
-                    "is-invalid": meta.touched && meta.error,
+                    "is-invalid": meta.touched && error,
                 })}
                 {...input}
                 ref={positionReference}
@@ -45,8 +46,8 @@ export default function SelectField({
                     {label}
                 </label>
             )}
-            {meta.touched && meta.error && (
-                <div className="invalid-feedback">{meta.error}</div>
+            {meta.touched && error && (
+                <div className="invalid-feedback">{error}</div>
             )}
         </div>
     )

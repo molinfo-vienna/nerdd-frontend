@@ -23,7 +23,7 @@ import "./style.css"
 type TooltipProps = {
     children: ReactNode
     helpText?: string
-    positionReference: RefObject<HTMLElement>
+    positionReference: RefObject<HTMLElement | null>
 }
 
 export default function Tooltip({

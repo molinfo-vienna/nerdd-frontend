@@ -3,7 +3,7 @@ import { type RefObject } from "react"
 import { type FieldRenderProps } from "react-final-form"
 
 type MoleculeEditorFieldProps = FieldRenderProps<string> & {
-    positionReference?: RefObject<HTMLElement>
+    positionReference?: RefObject<HTMLElement | null>
 }
 
 export default function MoleculeEditorField({
