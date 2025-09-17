@@ -1,3 +1,10 @@
+## [1.3.20](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.19...v1.3.20) (2025-09-17)
+
+
+### Bug Fixes
+
+* Show field-based error messages ([8d286ed](https://github.com/molinfo-vienna/nerdd-frontend/commit/8d286ed7fd0ab21d4ec0da77143e4b1ba0804782))
+
 ## [1.3.19](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.18...v1.3.19) (2025-09-13)
 
 
