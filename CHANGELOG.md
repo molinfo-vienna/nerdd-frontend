@@ -1,3 +1,12 @@
+## [1.3.23](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.22...v1.3.23) (2025-09-18)
+
+
+### Bug Fixes
+
+* Extract snakeToCamelCase util function ([fffc6e8](https://github.com/molinfo-vienna/nerdd-frontend/commit/fffc6e8338cbc2c8c3cf953307787c74e4dbbe95))
+* Show job parameters on results page ([908925a](https://github.com/molinfo-vienna/nerdd-frontend/commit/908925a23e5fa41940baa01759a56b3928864588))
+* Use list instead of table for parameters ([2d02a97](https://github.com/molinfo-vienna/nerdd-frontend/commit/2d02a979f5f4a342dd76219fa8b7766cfee20987))
+
 ## [1.3.22](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.21...v1.3.22) (2025-09-18)
 
 
