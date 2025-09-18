@@ -1,5 +1,5 @@
 import classNames from "classnames"
-import { Children } from "react"
+import { Children, MouseEvent, useCallback } from "react"
 import { Link, To } from "react-router-dom"
 
 type ActionButtonProps = {
@@ -18,6 +18,7 @@ export default function ActionButton({
     disabled = false,
     onClick,
     children,
+    ...props
 }: ActionButtonProps) {
     const childrenArray = Children.toArray(children)
 
@@ -25,17 +26,17 @@ export default function ActionButton({
         (child: any) => child.type === ActionButton.Icon,
     )
 
-    const dropdown = childrenArray.find(
-        (child: any) => child.type === ActionButton.Dropdown,
+    const handleClick = useCallback(
+        (e: MouseEvent<HTMLAnchorElement>) => {
+            if (onClick !== undefined) {
+                e.preventDefault()
+                onClick(e)
+            }
+        },
+        [onClick],
     )
-    const hasDropdown = !!dropdown
 
-    let dataBsToggle = undefined
-    if (hasDropdown) {
-        dataBsToggle = "dropdown"
-    }
-
-    const buttonFragment = (
+    return (
         <Link
             className={classNames(
                 "btn text-center text-decoration-none p-3 d-flex flex-column justify-content-end align-items-center",
@@ -48,12 +49,9 @@ export default function ActionButton({
                 },
             )}
             to={to}
-            onClick={onClick}
+            onClick={handleClick}
             type="button"
-            data-bs-toggle={dataBsToggle}
-            // dropdown
-            data-bs-auto-close={hasDropdown ? "outside" : undefined}
-            aria-expanded={hasDropdown ? "false" : undefined}
+            {...props}
         >
             <span
                 className="mb-sm-2 fs-2 align-bottom lh-1 text-center"
@@ -75,23 +73,8 @@ export default function ActionButton({
             </span>
         </Link>
     )
-
-    if (hasDropdown) {
-        return (
-            <div className="btn-group dropdown-center" role="group">
-                {buttonFragment}
-                {dropdown}
-            </div>
-        )
-    } else {
-        return buttonFragment
-    }
 }
 
 ActionButton.Icon = function ActionButtonIcon({ children }) {
-    return <>{children}</>
-}
-
-ActionButton.Dropdown = function ActionButtonDropdown({ children }) {
     return <>{children}</>
 }

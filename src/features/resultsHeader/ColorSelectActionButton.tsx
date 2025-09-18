@@ -23,24 +23,27 @@ function ColorSelectActionButton({
     onColorGroupToggle,
 }: ColorSelectActionButtonProps) {
     return (
-        <ActionButton label="Colors">
-            <ActionButton.Icon>
-                <FaPalette />
-            </ActionButton.Icon>
-
-            <ActionButton.Dropdown>
-                <ColorSelectDropdown
-                    selectedAtomColorProperty={atomColorProperty}
-                    possibleAtomColorProperties={possibleAtomColorProperties}
-                    onSelectedAtomColorPropertyChange={
-                        onAtomColorPropertyChange
-                    }
-                    resultPropertyGroups={resultPropertyGroups}
-                    onColorColumnToggle={onColorColumnToggle}
-                    onColorGroupToggle={onColorGroupToggle}
-                />
-            </ActionButton.Dropdown>
-        </ActionButton>
+        <div className="btn-group dropdown-center" role="group">
+            <ActionButton
+                label="Colors"
+                // dropdown
+                data-bs-toggle="dropdown"
+                data-bs-auto-close="outside"
+                aria-expanded="false"
+            >
+                <ActionButton.Icon>
+                    <FaPalette />
+                </ActionButton.Icon>
+            </ActionButton>
+            <ColorSelectDropdown
+                selectedAtomColorProperty={atomColorProperty}
+                possibleAtomColorProperties={possibleAtomColorProperties}
+                onSelectedAtomColorPropertyChange={onAtomColorPropertyChange}
+                resultPropertyGroups={resultPropertyGroups}
+                onColorColumnToggle={onColorColumnToggle}
+                onColorGroupToggle={onColorGroupToggle}
+            />
+        </div>
     )
 }
 

@@ -20,6 +20,10 @@ function DeleteActionButton({ moduleId, jobId }: DeleteActionButtonProps) {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
 
+    const handleClick = useCallback(() => {
+        setIsOpen(true)
+    }, [setIsOpen])
+
     const handleAccept = useCallback(() => {
         setIsLoading(true)
         setError(null)
@@ -38,11 +42,7 @@ function DeleteActionButton({ moduleId, jobId }: DeleteActionButtonProps) {
 
     return (
         <>
-            <ActionButton
-                label="Delete"
-                style="danger"
-                onClick={() => setIsOpen(true)}
-            >
+            <ActionButton label="Delete" style="danger" onClick={handleClick}>
                 <ActionButton.Icon>
                     <FaTrash />
                 </ActionButton.Icon>

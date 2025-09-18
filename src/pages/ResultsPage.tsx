@@ -74,7 +74,7 @@ export default function ResultsPage() {
     // fetch data
     //
     const { module, isLoading: isLoadingModule } = useModule()
-    const { jobStatus, isLoading: isLoadingJobStatus } = useJobStatus()
+    const { job, isLoading: isLoadingJobStatus } = useJobStatus()
 
     const {
         data: results,
@@ -198,8 +198,8 @@ export default function ResultsPage() {
     return (
         <Layout>
             <Layout.Header>
-                <ResultsHeader module={module} jobStatus={jobStatus}>
-                    <DocsActionButton moduleId={moduleId} />
+                <ResultsHeader module={module} job={job}>
+                    <DocsActionButton module={module} job={job} />
                     <ColumnSelectActionButton
                         resultPropertyGroups={augmentedResultPropertyGroups}
                         onColumnToggle={handleColumnToggle}
@@ -218,7 +218,7 @@ export default function ResultsPage() {
                         onColorGroupToggle={handleColorGroupToggle}
                     />
                     <DownloadActionButton
-                        jobStatus={jobStatus}
+                        job={job}
                         outputFormats={module.outputFormats}
                     />
                     <DeleteActionButton moduleId={moduleId} jobId={jobId} />

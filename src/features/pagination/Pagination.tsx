@@ -85,7 +85,7 @@ export default function Pagination({
     // get job status
     //
     const {
-        data: jobStatus,
+        data: job,
         error: errorJobStatus,
         isLoading: isLoadingJobStatus,
     } = useGetJobStatusQuery({ moduleId, jobId })
@@ -94,9 +94,9 @@ export default function Pagination({
         return
     }
 
-    const pageSize = jobStatus.pageSize
-    const entriesProcessed = jobStatus.entriesProcessed
-    const numPagesTotal = jobStatus.numPagesTotal
+    const pageSize = job.pageSize
+    const entriesProcessed = job.entriesProcessed
+    const numPagesTotal = job.numPagesTotal
 
     //
     // figure out which pages to show
