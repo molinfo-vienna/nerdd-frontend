@@ -16,8 +16,13 @@ function convertParamValueToString(
 ): string {
     if (value == null) {
         return "-"
-    }
-    if (jobParameter.type === "boolean" || jobParameter.type === "bool") {
+    } else if (jobParameter.choices != null) {
+        const choice = jobParameter.choices.find((c) => c.value === value)
+        return choice ? choice.label : String(value)
+    } else if (
+        jobParameter.type === "boolean" ||
+        jobParameter.type === "bool"
+    ) {
         return value ? "yes" : "no"
     } else {
         return String(value)
@@ -45,22 +50,32 @@ function DocsActionButton({ module, job }: DocsActionButtonProps) {
                 <div>
                     <h6 className="dropdown-header">Selected parameters</h6>
                 </div>
-                <ul className="ms-2">
-                    {module.jobParameters.map((param) => (
-                        <li key={param.name}>
-                            <p className="mb-0">
-                                <span className="fw-bold">
-                                    {param.visibleName}:{" "}
-                                </span>
-                                {convertParamValueToString(
-                                    job.params[snakeToCamelCase(param.name)],
-                                    param,
-                                )}
-                            </p>
-                        </li>
-                    ))}
-                </ul>
+                {module.jobParameters.length === 0 && (
+                    <p className="mb-0 px-4 text-muted text-nowrap">
+                        {module.visibleName} has no parameters.
+                    </p>
+                )}
+                {module.jobParameters.length > 0 && (
+                    <ul className="ms-2">
+                        {module.jobParameters.map((param) => (
+                            <li key={param.name}>
+                                <p className="mb-0 text-nowrap">
+                                    <span className="fw-bold">
+                                        {param.visibleName}:{" "}
+                                    </span>
+                                    {convertParamValueToString(
+                                        job.params[
+                                            snakeToCamelCase(param.name)
+                                        ],
+                                        param,
+                                    )}
+                                </p>
+                            </li>
+                        ))}
+                    </ul>
+                )}
                 <div className="dropdown-divider"></div>
+
                 <div>
                     <h6 className="dropdown-header">Documentation</h6>
                 </div>
@@ -70,8 +85,8 @@ function DocsActionButton({ module, job }: DocsActionButtonProps) {
                     target="_blank"
                 >
                     <FaExternalLinkAlt /> More about{" "}
-                    <span className="fw-bold">{module.visibleName}</span> and
-                    its parameters
+                    <span className="fw-bold">{module.visibleName}</span>
+                    {module.jobParameters.length > 0 && " and its parameters"}
                 </a>
             </div>
         </div>
