@@ -1,3 +1,14 @@
+## [1.3.22](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.21...v1.3.22) (2025-09-18)
+
+
+### Bug Fixes
+
+* Adapt ColorSelectActionButton ([3131827](https://github.com/molinfo-vienna/nerdd-frontend/commit/31318271ea94193c0478b1c437a196dd16bdae9d))
+* Adapt ColumnSelectActionButton ([75205ab](https://github.com/molinfo-vienna/nerdd-frontend/commit/75205ab092185c9d591f65565160da11eadd4041))
+* Adapt DownloadActionButton ([3270e43](https://github.com/molinfo-vienna/nerdd-frontend/commit/3270e4302981d7b8fb8f9b5cbecefd4d8bf04eec))
+* Make ActionButton independent of dropdowns ([83d41b9](https://github.com/molinfo-vienna/nerdd-frontend/commit/83d41b9570e4dbe529f2eaccd6767ed36596e453))
+* Memo click handler in DeleteActionButton ([d66ac8b](https://github.com/molinfo-vienna/nerdd-frontend/commit/d66ac8b5f3e47cfdd23b2c4d6aa52fa5e90540f7))
+
 ## [1.3.21](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.20...v1.3.21) (2025-09-17)
 
 
