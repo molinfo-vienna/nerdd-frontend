@@ -1,3 +1,10 @@
+## [1.3.24](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.23...v1.3.24) (2025-09-18)
+
+
+### Bug Fixes
+
+* Handle case of no parameters in DocsActionButton ([be86ff7](https://github.com/molinfo-vienna/nerdd-frontend/commit/be86ff7636e1863ef24c380f7224a8636245414b))
+
 ## [1.3.23](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.22...v1.3.23) (2025-09-18)
 
 
