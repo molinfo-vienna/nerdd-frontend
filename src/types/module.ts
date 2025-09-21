@@ -24,6 +24,11 @@ export interface Module {
     resultProperties: ResultProperty[]
     partners: Partner[]
     outputFormats: string[]
+    batchSize: number
+    secondsPerMolecule: number
+    startupTimeSeconds: number
+    maxNumMolecules: number
+    waitingTimeMinutes: number
 }
 
 export default Module
