@@ -1,3 +1,20 @@
+## [1.3.25](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.24...v1.3.25) (2025-09-21)
+
+
+### Bug Fixes
+
+* Add component for tiles in CreateJobHeader ([1f741e0](https://github.com/molinfo-vienna/nerdd-frontend/commit/1f741e053cb0106d558b276c7485fe474d0fc90a))
+* Add custom header to CreateJobs page ([e61ebb8](https://github.com/molinfo-vienna/nerdd-frontend/commit/e61ebb8a6038dc2a5fff70a17aadbf49f8dd5327))
+* Add performance characteristics to Module type ([2873b01](https://github.com/molinfo-vienna/nerdd-frontend/commit/2873b015d65d52239dd4994903c0cd9516562d1e))
+* Add waitingTimeMinutes field to Module ([42e619e](https://github.com/molinfo-vienna/nerdd-frontend/commit/42e619e8258fe9c4628c80dd471960e5def79171))
+* Always show links on job form ([371b56e](https://github.com/molinfo-vienna/nerdd-frontend/commit/371b56e663cdb3dc35b6bb2e465137973f02e559))
+* Generate performance characteristics in MockServer ([62dfe63](https://github.com/molinfo-vienna/nerdd-frontend/commit/62dfe630983f1d65188e88a53ccd774a173574c0))
+* Generate waitingTimeMinutes in MockServer ([f159848](https://github.com/molinfo-vienna/nerdd-frontend/commit/f15984876bb3595b8dc19ad8ffd7c6ef6d853438))
+* Implement separate header for CreateJobs page ([dbee3f3](https://github.com/molinfo-vienna/nerdd-frontend/commit/dbee3f3300ce936285eb426f9231d16932d016e6))
+* Make Tangle component more universal ([5bef67c](https://github.com/molinfo-vienna/nerdd-frontend/commit/5bef67c3d0645f8af99eedf0cf62a859823afa93))
+* Show waiting time in CreateJobsHeader ([0c4cd99](https://github.com/molinfo-vienna/nerdd-frontend/commit/0c4cd997b1ab8cbe7291b90cbd1119c7d094fc97))
+* Use consistent time units ([37cea8e](https://github.com/molinfo-vienna/nerdd-frontend/commit/37cea8ea8c552b467473e0b5c190830130eb1ab6))
+
 ## [1.3.24](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.23...v1.3.24) (2025-09-18)
 
 
