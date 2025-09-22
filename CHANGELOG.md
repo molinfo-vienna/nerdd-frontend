@@ -1,3 +1,10 @@
+## [1.3.26](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.25...v1.3.26) (2025-09-22)
+
+
+### Bug Fixes
+
+* Decrease icon size ([aa49427](https://github.com/molinfo-vienna/nerdd-frontend/commit/aa49427679abf5623462777799fcc6d7f1415373))
+
 ## [1.3.25](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.24...v1.3.25) (2025-09-21)
 
 
