@@ -4,7 +4,7 @@ import { File } from "./fileFieldSlice"
 
 type FileItemProps = {
     file: File
-    onClickDelete: (file: FileItemType) => void
+    onClickDelete: (file: File) => void
 }
 
 export default function FileItem({ file, onClickDelete }: FileItemProps) {
@@ -64,7 +64,7 @@ export default function FileItem({ file, onClickDelete }: FileItemProps) {
                         }}
                         type="button"
                     >
-                        <span className="visually-hidden">Close</span>
+                        <span className="visually-hidden">Delete</span>
                     </button>
                 ) : null}
             </div>

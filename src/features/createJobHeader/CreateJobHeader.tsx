@@ -177,7 +177,7 @@ export default function CreateJobHeader({ module }: CreateJobHeaderProps) {
                         <ul className="list-group list-group-flush">
                             <Tile>
                                 <Tile.Icon>
-                                    <FaWeightScale size={60} />
+                                    <FaWeightScale size={50} />
                                 </Tile.Icon>
                                 <Tile.Highlight>
                                     {module.maxNumMolecules} molecules
@@ -186,7 +186,7 @@ export default function CreateJobHeader({ module }: CreateJobHeaderProps) {
                             </Tile>
                             <Tile>
                                 <Tile.Icon>
-                                    <FaClock size={60} />
+                                    <FaClock size={50} />
                                 </Tile.Icon>
                                 <Tile.Highlight>
                                     {waitingTimeText}
@@ -195,7 +195,7 @@ export default function CreateJobHeader({ module }: CreateJobHeaderProps) {
                             </Tile>
                             <Tile>
                                 <Tile.Icon>
-                                    <IoSpeedometer size={60} />
+                                    <IoSpeedometer size={50} />
                                 </Tile.Icon>
                                 <Tile.Highlight>
                                     {processingTimeText} for{" "}

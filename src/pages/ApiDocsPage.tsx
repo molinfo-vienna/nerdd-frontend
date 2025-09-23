@@ -1,5 +1,5 @@
 import Documentation from "@/features/apiDocs/ApiDocs.mdx"
-import ApiHeader from "@/features/apiHeader/ApiHeader"
+import ModuleHeader from "@/features/moduleHeader/ModuleHeader"
 import TableOfContents from "@/features/tableOfContents/TableOfContents"
 import { useModule } from "@/services/hooks"
 import { useRef, useState } from "react"
@@ -20,10 +20,18 @@ export default function ApiDocsPage() {
         return <LoadingPage />
     }
 
+    const description = `All prediction modules can be used via our REST API to run predictions 
+        automatically. Select one of the tools to get a quickstart guide and an overview of all 
+        endpoints. For more details, see the [full API documentation](${baseUrl}/docs).`
+
     return (
         <Layout>
             <Layout.Header>
-                <ApiHeader baseUrl={baseUrl} />
+                <ModuleHeader
+                    title="REST API"
+                    description={description}
+                    module={module}
+                />
             </Layout.Header>
             {module != null && (
                 <div className="container py-4">

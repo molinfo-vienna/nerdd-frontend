@@ -25,6 +25,11 @@ export default function createRouter(children: React.ReactNode) {
                     element: <LandingPage />,
                 },
                 {
+                    path: "/about",
+                    id: "aboutGeneral",
+                    element: <AboutPage />,
+                },
+                {
                     path: "/api-docs",
                     id: "apiDocsGeneral",
                     element: <ApiDocsPage />,
