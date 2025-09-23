@@ -1,3 +1,17 @@
+## [1.3.27](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.26...v1.3.27) (2025-09-23)
+
+
+### Bug Fixes
+
+* Add route for general documentation ([5ae64d9](https://github.com/molinfo-vienna/nerdd-frontend/commit/5ae64d985bea861faa1a78f8d9860cd5ead49dd9))
+* Decrease icon size in header tiles ([8d86627](https://github.com/molinfo-vienna/nerdd-frontend/commit/8d86627b1646405d44abf23a5941bf2f96a81ede))
+* Delete deprecated and unused components ([45b8f36](https://github.com/molinfo-vienna/nerdd-frontend/commit/45b8f36fd4ab9a5b19f486fa8b2b0bef507757fd))
+* Fix footer links ([627cf3f](https://github.com/molinfo-vienna/nerdd-frontend/commit/627cf3f68fe6af1524b7fd9d22180431d9311e56))
+* Improve module type ([558faba](https://github.com/molinfo-vienna/nerdd-frontend/commit/558faba0a43e2eec62d3a9ccd4edd04f379c03cb))
+* Improve Publication type ([d3ca733](https://github.com/molinfo-vienna/nerdd-frontend/commit/d3ca733e1f559c9db190711cd33ffb280a0b4da6))
+* Show correct links in NavigationBar when visiting api docs ([28ca8a3](https://github.com/molinfo-vienna/nerdd-frontend/commit/28ca8a3a1f21faf5ce6a7417046b7fd1bb26c655))
+* Use correct links in footer ([547d7ad](https://github.com/molinfo-vienna/nerdd-frontend/commit/547d7adbff96fa0211748a1c7a4f4db108f33e21))
+
 ## [1.3.26](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.25...v1.3.26) (2025-09-22)
 
 
