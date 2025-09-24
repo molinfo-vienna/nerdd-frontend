@@ -1,4 +1,4 @@
-import { Module } from "@/types"
+import { Module, QueueStats } from "@/types"
 import { baseApi } from "./base"
 import { normalizeModule } from "./normalize"
 import recursiveSnakeToCamelCase from "./recursiveSnakeToCamelCase"
@@ -36,7 +36,19 @@ export const modulesApi = baseApi.injectEndpoints({
                 return normalizeModule(moduleCamelCase)
             },
         }),
+        getModuleQueueStats: builder.query<QueueStats, string>({
+            query: (moduleId) => `/modules/${moduleId}/queue`,
+            transformResponse: (response) => {
+                // convert snake_case to camelCase
+                const statsCamelCase = recursiveSnakeToCamelCase(response)
+                return statsCamelCase as QueueStats
+            },
+        }),
     }),
 })
 
-export const { useGetModulesQuery, useGetModuleQuery } = modulesApi
+export const {
+    useGetModulesQuery,
+    useGetModuleQuery,
+    useGetModuleQueueStatsQuery,
+} = modulesApi

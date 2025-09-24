@@ -9,12 +9,14 @@ type ModuleSelectionCardProps = {
     activeModuleId?: string
     modules?: Module[]
     isLoadingAllModules: boolean
+    subRoute: string
 }
 
 export default function ModuleSelectionCard({
     activeModuleId,
     modules,
     isLoadingAllModules,
+    subRoute,
 }: ModuleSelectionCardProps) {
     return (
         <div
@@ -35,7 +37,7 @@ export default function ModuleSelectionCard({
                                     active: module.id === activeModuleId,
                                 },
                             )}
-                            to={`/${module.id}/api`}
+                            to={`/${module.id}/${subRoute}`}
                         >
                             <LazyLoadImage
                                 src={

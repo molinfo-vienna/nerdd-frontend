@@ -6,6 +6,7 @@ import DeleteActionButton from "@/features/resultsHeader/DeleteActionButton"
 import DocsActionButton from "@/features/resultsHeader/DocsActionButton"
 import DownloadActionButton from "@/features/resultsHeader/DownloadActionButton"
 import ResultsHeader from "@/features/resultsHeader/ResultsHeader"
+import ResultsProgress from "@/features/resultsProgress/ResultsProgress"
 import ResultTable from "@/features/resultTable/ResultTable"
 import {
     selectAtomColorProperty,
@@ -226,15 +227,17 @@ export default function ResultsPage() {
             </Layout.Header>
 
             <div className="container-fluid py-4">
-                <div className="row justify-content-center">
-                    <div className="col-auto my-3">
-                        <Pagination
-                            moduleId={moduleId}
-                            jobId={jobId}
-                            currentPageOneBased={pageOneBased}
-                        />
+                {numberOfResults > 0 && (
+                    <div className="row justify-content-center">
+                        <div className="col-auto my-3">
+                            <Pagination
+                                moduleId={moduleId}
+                                jobId={jobId}
+                                currentPageOneBased={pageOneBased}
+                            />
+                        </div>
                     </div>
-                </div>
+                )}
 
                 {!waitingForFirstResult && (
                     <>
@@ -274,14 +277,7 @@ export default function ResultsPage() {
                 )}
 
                 {waitingForFirstResult && (
-                    <div className="row justify-content-center">
-                        <div className="col-md-auto mt-5 pt-5 text-center">
-                            <div className="spinner-border" role="status"></div>
-                            <div className="mt-2">
-                                <span>Waiting for first result</span>
-                            </div>
-                        </div>
-                    </div>
+                    <ResultsProgress module={module} job={job} />
                 )}
             </div>
         </Layout>

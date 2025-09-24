@@ -1,6 +1,7 @@
 import Tangle from "@/features/tangle/Tangle"
+import { useGetModuleQueueStatsQuery } from "@/services"
 import { type Module } from "@/types"
-import { useState, type ComponentType } from "react"
+import { useState } from "react"
 import {
     FaBook,
     FaBookOpen,
@@ -10,52 +11,40 @@ import {
 } from "react-icons/fa6"
 import { IoSpeedometer } from "react-icons/io5"
 import Markdown from "react-markdown"
-import { Link } from "react-router-dom"
+import HeaderLink from "../moduleHeader/HeaderLink"
 import Tile from "./Tile"
 
 type CreateJobHeaderProps = {
     module: Module
 }
 
-type IconItem = {
-    Icon: ComponentType<{ size?: number }>
-    caption: string
-    href?: string
-}
-
 export default function CreateJobHeader({ module }: CreateJobHeaderProps) {
-    const icons: IconItem[] = [
-        {
-            Icon: FaBookOpen,
-            caption: "Docs",
-            href: `/${module.id}/about`,
-        },
-        {
-            Icon: FaPlug,
-            caption: "API",
-            href: `/${module.id}/api`,
-        },
-        {
-            Icon: FaBook,
-            caption: "Cite",
-            href: `/${module.id}/cite`,
-        },
-    ]
+    const {
+        data: queueStats,
+        isLoading: isLoadingQueueStats,
+        error,
+    } = useGetModuleQueueStatsQuery(module.id)
 
     //
     // Estimate waiting time
     //
-    const waitingTimeMinutes = module.waitingTimeMinutes
+    const waitingTimeMinutes = queueStats?.waitingTimeMinutes
+    const prefix = queueStats?.estimate === "upper_bound" ? "<" : ">"
 
     let waitingTimeText
-    if (waitingTimeMinutes > 60) {
+    if (isLoadingQueueStats) {
+        waitingTimeText = "loading"
+    } else if (error || waitingTimeMinutes === undefined) {
+        console.error("Error loading queue stats", error)
+        waitingTimeText = "unknown"
+    } else if (waitingTimeMinutes > 60) {
         const waitingTimeHours = Math.floor(waitingTimeMinutes / 60)
         const remainingMinutes = Math.round(waitingTimeMinutes % 60)
-        waitingTimeText = `${waitingTimeHours}h, ${remainingMinutes}min`
+        waitingTimeText = `${prefix} ${waitingTimeHours}h, ${remainingMinutes}min`
     } else if (waitingTimeMinutes <= 1) {
         waitingTimeText = "< 1 min"
     } else {
-        waitingTimeText = `${waitingTimeMinutes} min`
+        waitingTimeText = `${prefix} ${waitingTimeMinutes} min`
     }
 
     //
@@ -148,22 +137,21 @@ export default function CreateJobHeader({ module }: CreateJobHeaderProps) {
                     <Markdown className="lead">{module.description}</Markdown>
                     {/* Info card as list of links */}
                     <div>
-                        {icons.map((icon, index) =>
-                            icon.href !== undefined ? (
-                                <Link
-                                    key={index}
-                                    className="text-decoration-none my-auto me-4"
-                                    to={icon.href}
-                                >
-                                    <icon.Icon size={15} />
-                                    <span className="ms-1">{icon.caption}</span>
-                                </Link>
-                            ) : (
-                                <div className="my-auto d-block">
-                                    {icon.caption}
-                                </div>
-                            ),
-                        )}
+                        <HeaderLink
+                            Icon={FaBookOpen}
+                            href={`/${module.id}/about`}
+                            caption="Docs"
+                        />
+                        <HeaderLink
+                            Icon={FaPlug}
+                            href={`/${module.id}/api`}
+                            caption="API"
+                        />
+                        <HeaderLink
+                            Icon={FaBook}
+                            href={`/${module.id}/cite`}
+                            caption="Cite"
+                        />
                     </div>
                 </div>
                 {/* Info card as column on large screens */}
@@ -189,7 +177,13 @@ export default function CreateJobHeader({ module }: CreateJobHeaderProps) {
                                     <FaClock size={50} />
                                 </Tile.Icon>
                                 <Tile.Highlight>
-                                    {waitingTimeText}
+                                    {isLoadingQueueStats ? (
+                                        <span className="placeholder">
+                                            10h, 50min
+                                        </span>
+                                    ) : (
+                                        waitingTimeText
+                                    )}
                                 </Tile.Highlight>
                                 <Tile.Label>Estimated time in queue</Tile.Label>
                             </Tile>

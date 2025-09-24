@@ -29,7 +29,6 @@ export interface Module {
     secondsPerMolecule: number
     startupTimeSeconds: number
     maxNumMolecules: number
-    waitingTimeMinutes: number
 }
 
 export default Module

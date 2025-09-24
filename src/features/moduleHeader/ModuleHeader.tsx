@@ -11,12 +11,14 @@ type ModuleHeaderProps = {
     module?: Module
     title: string
     description: string
+    subRoute: string
 }
 
 export default function ModuleHeader({
     module,
     title,
     description,
+    subRoute,
 }: ModuleHeaderProps) {
     const { modules, isLoading: isLoadingAllModules } = useModules()
 
@@ -94,6 +96,7 @@ export default function ModuleHeader({
                     modules={modules}
                     isLoadingAllModules={isLoadingAllModules}
                     activeModuleId={activeModule.id}
+                    subRoute={subRoute}
                 />
             </div>
         </section>
