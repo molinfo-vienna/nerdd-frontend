@@ -43,8 +43,8 @@ const Layout = ({ children }: LayoutProps) => {
             <div className="d-flex flex-column min-vh-100">
                 {developmentVersion && (
                     <div className="text-center bg-danger-subtle px-3 py-2">
-                        This is the development version of NERDD. It could be
-                        unstable and predictions may be deleted at any time.
+                        This web service is currently undergoing revision and
+                        review. Short disruptions of the system are possible.
                     </div>
                 )}
 
