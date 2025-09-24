@@ -1,3 +1,21 @@
+## [1.3.28](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.27...v1.3.28) (2025-09-24)
+
+
+### Bug Fixes
+
+* Distinguish subRoute in ModuleSelectionCard ([6380c5e](https://github.com/molinfo-vienna/nerdd-frontend/commit/6380c5e523a54ec0badc22472fdad7c25f220647))
+* Extract progress text on results page to separate component ([aecf965](https://github.com/molinfo-vienna/nerdd-frontend/commit/aecf96533c99a27fa879f995b6e8f804639dfe6f))
+* Fetch job waiting time ([3543a98](https://github.com/molinfo-vienna/nerdd-frontend/commit/3543a98bc923f39ad9fb6b9feb5eddcc1fa51c38))
+* Fetch waiting time in CreateJobHeader ([d88328b](https://github.com/molinfo-vienna/nerdd-frontend/commit/d88328bfbe8ba3e0bff8c72ee599b78ce223908c))
+* Hide Navigation when no results available ([e9d8f13](https://github.com/molinfo-vienna/nerdd-frontend/commit/e9d8f131986badec6d0b2fe46a75773027416ac3))
+* Implement new route for querying waiting time ([6f85039](https://github.com/molinfo-vienna/nerdd-frontend/commit/6f85039fe96ec2928e0414e584b0d618b8fd025f))
+* Make TableCell aware of type synonyms ([2946628](https://github.com/molinfo-vienna/nerdd-frontend/commit/2946628d5489b8795d6d7832e0669260fb79c034))
+* Memo ResultsProgress ([2dab7b8](https://github.com/molinfo-vienna/nerdd-frontend/commit/2dab7b86e238348de35ed104da929b142c0435e4))
+* Move queue stats into separate type ([05d3ede](https://github.com/molinfo-vienna/nerdd-frontend/commit/05d3ede3bb6e8592211c19c74d55da8d1e287529))
+* Run setValue in Tangle component within useEffect hook ([7aa2cb0](https://github.com/molinfo-vienna/nerdd-frontend/commit/7aa2cb02a795f69039f264f541a210202ea00110))
+* Update waiting time estimates every 5 min ([3e59fcf](https://github.com/molinfo-vienna/nerdd-frontend/commit/3e59fcf4c020ccaafc6c2bcaeda0db9335798793))
+* Use HeaderLink component in CreateJobHeader ([70af7bf](https://github.com/molinfo-vienna/nerdd-frontend/commit/70af7bf34569baf504936673806407ce46c06b81))
+
 ## [1.3.27](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.26...v1.3.27) (2025-09-23)
 
 
