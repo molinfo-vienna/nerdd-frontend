@@ -1,3 +1,10 @@
+## [1.3.29](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.28...v1.3.29) (2025-09-24)
+
+
+### Bug Fixes
+
+* Change website banner text ([cef5337](https://github.com/molinfo-vienna/nerdd-frontend/commit/cef53376c5274c3637579d522d80d10934457140))
+
 ## [1.3.28](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.27...v1.3.28) (2025-09-24)
 
 
