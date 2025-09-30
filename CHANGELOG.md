@@ -1,3 +1,13 @@
+## [1.3.30](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.29...v1.3.30) (2025-09-30)
+
+
+### Bug Fixes
+
+* Avoid displaying decimal places for waiting times ([b806aa5](https://github.com/molinfo-vienna/nerdd-frontend/commit/b806aa53a4f8e78baa60fdc613e31e2d3b97cff2))
+* Avoid line breaks in waiting time ([4dc9bbf](https://github.com/molinfo-vienna/nerdd-frontend/commit/4dc9bbf012160c0810403a416993e1fb6934001a))
+* Choose different neutral color ([30b1afc](https://github.com/molinfo-vienna/nerdd-frontend/commit/30b1afc71d9eccdd6b82f3957b3971017a3f189a))
+* Show navigation bar if any molecules were processed ([a1e8035](https://github.com/molinfo-vienna/nerdd-frontend/commit/a1e8035e0c7b3430336b3ae16e4bbe7f0f636b6a))
+
 ## [1.3.29](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.28...v1.3.29) (2025-09-24)
 
 
