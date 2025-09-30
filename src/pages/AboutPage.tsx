@@ -1,7 +1,7 @@
 import ModuleHeader from "@/features/moduleHeader/ModuleHeader"
 import TableOfContents from "@/features/tableOfContents/TableOfContents"
 import { useModule } from "@/services/hooks"
-import { useRef } from "react"
+import { useCallback, useState } from "react"
 import Markdown from "react-markdown"
 import rehypeSlug from "rehype-slug"
 import remarkGfm from "remark-gfm"
@@ -9,9 +9,19 @@ import Layout from "./Layout"
 import LoadingPage from "./LoadingPage"
 
 export default function AboutPage() {
-    const ref = useRef(null)
-
     const { module, isLoading } = useModule(false)
+
+    const [contentElement, setContentElement] = useState<HTMLElement | null>(
+        null,
+    )
+    const ref = useCallback(
+        (node: HTMLElement | null) => {
+            if (node !== null) {
+                setContentElement(node)
+            }
+        },
+        [setContentElement],
+    )
 
     if (isLoading) {
         return LoadingPage()
@@ -54,7 +64,11 @@ export default function AboutPage() {
                                 </Markdown>
                             </div>
                             <div className="col-4 d-none d-lg-block ps-xl-5">
-                                <TableOfContents contentRef={ref} />
+                                <TableOfContents
+                                    // we enforce rerendering the TOC when the module changes
+                                    key={module.id}
+                                    contentElement={contentElement}
+                                />
                             </div>
                         </>
                     )}
