@@ -89,7 +89,7 @@ export default function ResultsPage() {
             page: pageOneBased,
         },
         {
-            skip: moduleId === undefined || jobId === undefined,
+            skip: moduleId == null || jobId == null,
         },
     )
 
@@ -106,7 +106,7 @@ export default function ResultsPage() {
     }, [module, dispatch])
 
     useEffect(() => {
-        if (results === undefined) {
+        if (results == null) {
             return
         }
 
@@ -188,6 +188,10 @@ export default function ResultsPage() {
     //
     // status
     //
+    const showPagination =
+        job.numEntriesProcessed > 0 ||
+        (job.numEntriesTotal != null && job.numEntriesTotal > 0)
+
     const waitingForFirstResult =
         resultsGroupedByMolId.length === 0 ||
         isFetchingResults ||
@@ -227,9 +231,10 @@ export default function ResultsPage() {
             </Layout.Header>
 
             <div className="container-fluid py-4">
-                {job.numEntriesProcessed > 0 && (
+                {showPagination && (
                     // This pagination is shown if there is at least one result *in total*
-                    // (in contrast to the second pagination component below).
+                    // or we know the total number of results (in contrast to the second pagination
+                    // component below).
                     <div className="row justify-content-center">
                         <div className="col-auto my-3">
                             <Pagination
@@ -265,16 +270,16 @@ export default function ResultsPage() {
                                         </div>
                                     )}
                                 </div>
-                                {numberOfResults > 0 && (
-                                    // This pagination is only shown if there is at least one
-                                    // result *on this page*.
-                                    <Pagination
-                                        moduleId={moduleId}
-                                        jobId={jobId}
-                                        currentPageOneBased={pageOneBased}
-                                        className="mx-auto position-absolute start-50 translate-middle-x"
-                                    />
-                                )}
+                                {/*
+                                 * This pagination is only shown if there is at least one
+                                 * result *on this page*.
+                                 */}
+                                <Pagination
+                                    moduleId={moduleId}
+                                    jobId={jobId}
+                                    currentPageOneBased={pageOneBased}
+                                    className="mx-auto position-absolute start-50 translate-middle-x"
+                                />
                             </div>
                         </div>
                     </>
