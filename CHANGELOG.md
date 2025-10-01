@@ -1,3 +1,10 @@
+## [1.3.31](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.30...v1.3.31) (2025-10-01)
+
+
+### Bug Fixes
+
+* Always show navigation bar ([882f45a](https://github.com/molinfo-vienna/nerdd-frontend/commit/882f45a9aa983f9d5f088ce57e8d2343e3b9177e))
+
 ## [1.3.30](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.29...v1.3.30) (2025-09-30)
 
 
