@@ -23,7 +23,7 @@ const Layout = ({ children }: LayoutProps) => {
         // scrolls to the top of the page before the new content is rendered
         // -> use setTimeout to scroll after the new content is rendered
         if (hash === "") {
-            setTimeout(() => window.scrollTo(0, 0), 0)
+            setTimeout(() => window.scrollTo(0, 0), 500)
         }
     }, [pathname, hash])
 
@@ -41,12 +41,12 @@ const Layout = ({ children }: LayoutProps) => {
         <>
             {/* min-vh-100: content fills screen and scrolling down reveals footer */}
             <div className="d-flex flex-column min-vh-100">
-                {developmentVersion && (
+                {/* {developmentVersion && (
                     <div className="text-center bg-danger-subtle px-3 py-2">
                         This web service is currently undergoing revision and
                         review. Short disruptions of the system are possible.
                     </div>
-                )}
+                )} */}
 
                 {/* show navigation bar without background if no header is specified */}
                 {!hasHeader && <NavigationBar />}
