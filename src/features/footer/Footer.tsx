@@ -66,6 +66,12 @@ export default function Footer() {
                                     Discovery
                                 </span>
                             </li>
+                            <li className="mb-3">
+                                NERDD is free for both academic and commercial
+                                use. Some models have commercial-use
+                                restrictions due to their training data, which
+                                are clearly noted on each model's page.
+                            </li>
                             <li>
                                 <span className="fs-6">
                                     Developed by{" "}
