@@ -1,3 +1,13 @@
+## [1.3.32](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.31...v1.3.32) (2025-10-06)
+
+
+### Bug Fixes
+
+* Extend resultProperty type ([7a20327](https://github.com/molinfo-vienna/nerdd-frontend/commit/7a20327228bc890d354fed10788e9d8f328d0956))
+* Implement column sorting in redux slice ([802e658](https://github.com/molinfo-vienna/nerdd-frontend/commit/802e658ee6fff0a10464aa69692419b3dcb517c6))
+* Make columns sortable on UI ([2103512](https://github.com/molinfo-vienna/nerdd-frontend/commit/2103512189b41a4adad384f15448ec20c87d4332))
+* Move code into new ColumnHeader component ([6abb316](https://github.com/molinfo-vienna/nerdd-frontend/commit/6abb316de3f37b5e8b290f0def30ec9e8ccbafc2))
+
 ## [1.3.31](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.30...v1.3.31) (2025-10-01)
 
 
