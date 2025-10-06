@@ -1,4 +1,4 @@
-import type { PredictionTask, Result, ResultProperty } from "@/types"
+import type { Level, PredictionTask, Result, ResultProperty } from "@/types"
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { sortedIndexBy } from "lodash-es"
 
@@ -39,6 +39,7 @@ export type Column = {
     visibleName?: string
     visible?: boolean
     sortable?: boolean
+    level: Level
 }
 
 export type ResultGroup = {
@@ -54,6 +55,8 @@ export type ResultTableState = {
     groups: ResultPropertyGroup[]
     atomColorPropertyId: number
     resultPropertyMapping: Record<string, number>
+    sortBy?: string
+    sortAscending: boolean
 }
 
 const initialState: ResultTableState = {
@@ -63,6 +66,8 @@ const initialState: ResultTableState = {
     groups: [],
     atomColorPropertyId: -1,
     resultPropertyMapping: {},
+    sortBy: undefined,
+    sortAscending: true,
 }
 
 const resultTableSlice = createSlice({
@@ -134,6 +139,32 @@ const resultTableSlice = createSlice({
         },
         setTask: (state, action: PayloadAction<PredictionTask>) => {
             state.task = action.payload
+        },
+        toggleSortingColumn: (
+            state,
+            action: PayloadAction<{
+                sortBy: string
+            }>,
+        ) => {
+            const idx = state.resultPropertyMapping[action.payload.sortBy]
+            if (idx === undefined) {
+                // property not found
+                return
+            }
+
+            const property = state.resultProperties[idx]
+            if (!property.sortable || property.level === "molecule") {
+                // property is not sortable or has level "molecule"
+                return
+            }
+
+            if (state.sortBy === action.payload.sortBy) {
+                // toggle sorting order
+                state.sortAscending = !state.sortAscending
+            } else {
+                state.sortBy = action.payload.sortBy
+                state.sortAscending = true
+            }
         },
         setResults: (state, action: PayloadAction<Result[]>) => {
             state.results = action.payload
@@ -317,6 +348,7 @@ const resultTableSlice = createSlice({
                                 visibleName: group,
                                 visible: true,
                                 sortable: false,
+                                level: "molecule",
                             })
                         }
 
@@ -398,59 +430,119 @@ const resultTableSlice = createSlice({
             [
                 (state: ResultTableState) => state.task,
                 (state: ResultTableState) => state.results,
+                (state: ResultTableState) => state.resultProperties,
+                (state: ResultTableState) => state.resultPropertyMapping,
+                (state: ResultTableState) => state.sortBy,
+                (state: ResultTableState) => state.sortAscending,
             ],
-            (task, results) => {
-                // entries might have multiple child rows (atoms, derivatives)
-                // --> group results by molecule id
-
-                // sort results by molecule id (and atom id or derivative id)
+            (
+                task,
+                results,
+                resultProperties,
+                resultPropertyMapping,
+                sortBy,
+                sortAscending,
+            ) => {
+                // sort results by molecule id (and the specified sortBy property)
                 // -> construct a comparison function for sorting
-                let subKey: (result: Result) => number
+                let sortByFinal = undefined
                 if (task === "molecular_property_prediction") {
-                    subKey = () => 0
-                } else if (task === "atom_property_prediction") {
-                    subKey = (result) => result.atom_id ?? 0
-                } else if (task === "derivative_property_prediction") {
-                    subKey = (result) => result.derivative_id ?? 0
+                    // there are no groups within a molecule and we set an arbitrary property name
+                    sortByFinal = undefined
                 } else {
-                    return []
+                    if (sortBy != null) {
+                        const propertyIndex = resultPropertyMapping[sortBy]
+                        if (propertyIndex !== undefined) {
+                            // make sure that the property is sortable and has level "atom" or
+                            // "derivative"
+                            const property = resultProperties[propertyIndex]
+
+                            if (
+                                property.sortable &&
+                                ["atom", "derivative"].includes(property.level)
+                            ) {
+                                sortByFinal = sortBy
+                            }
+                        }
+                    } else if (task === "atom_property_prediction") {
+                        sortByFinal = "atom_id"
+                    } else if (task === "derivative_property_prediction") {
+                        sortByFinal = "derivative_id"
+                    }
                 }
 
-                return results.reduce((acc: ResultGroup[], result) => {
-                    // find corresponding mol_id in acc
-                    const groupIndex = sortedIndexBy(
-                        acc,
-                        result,
-                        (x: ResultGroup) => x.mol_id,
-                    )
-                    const group = acc[groupIndex]
+                let comparator: (a: Result, b: Result) => number
+                if (sortByFinal != null) {
+                    const comparatorBase = (a: Result, b: Result) => {
+                        if (a[sortByFinal!] == null && b[sortByFinal!] == null)
+                            return 0
+                        if (a[sortByFinal!] == null) return -1
+                        if (b[sortByFinal!] == null) return 1
 
-                    // check if mol_id is in acc
-                    if (group === undefined || group.mol_id !== result.mol_id) {
-                        // if mol_id is not in acc, add it at the correct index
-                        acc.splice(groupIndex, 0, {
-                            mol_id: result.mol_id,
-                            // the row indices to all entries in the molecule's group
-                            children: [result],
-                        })
-                    } else {
-                        // if mol_id is in acc, add the entry to the group
-                        // add entry at the correct index (sorted by atom_id or derivative_id)
-                        const subIndex = sortedIndexBy(
-                            group.children,
-                            result,
-                            subKey,
-                        )
-                        group.children.splice(subIndex, 0, result)
+                        if (a[sortByFinal!] < b[sortByFinal!]) return -1
+                        if (a[sortByFinal!] > b[sortByFinal!]) return 1
+                        return 0
                     }
+                    comparator = sortAscending
+                        ? comparatorBase
+                        : (a, b) => -comparatorBase(a, b)
+                } else {
+                    // no secondary sorting
+                    comparator = () => 0
+                }
 
-                    return acc
-                }, [])
+                // entries might have multiple child rows (atoms, derivatives)
+                // --> group results by molecule id
+                const sortedResults = results.reduce(
+                    (acc: ResultGroup[], result) => {
+                        // find corresponding mol_id in acc
+                        const groupIndex = sortedIndexBy(
+                            acc,
+                            result,
+                            (x: ResultGroup) => x.mol_id,
+                        )
+                        const group = acc[groupIndex]
+
+                        // check if mol_id is in acc
+                        if (
+                            group === undefined ||
+                            group.mol_id !== result.mol_id
+                        ) {
+                            // if mol_id is not in acc, add it at the correct index
+                            acc.splice(groupIndex, 0, {
+                                mol_id: result.mol_id,
+                                // the row indices to all entries in the molecule's group
+                                children: [result],
+                            })
+                        } else {
+                            // if mol_id is in acc, add the entry to the group
+                            // add entry at the correct index (sorted by atom_id or derivative_id)
+                            const subIndex = sortedIndexBy(
+                                group.children,
+                                result,
+                                (a) => comparator(a, result),
+                            )
+                            group.children.splice(subIndex, 0, result)
+                        }
+
+                        return acc
+                    },
+                    [],
+                )
+
+                return sortedResults
             },
         ),
         selectNumberOfResults: createSelector(
             [(state: ResultTableState) => state.results],
             (results: Result[]) => results.length,
+        ),
+        selectSortingColumn: createSelector(
+            [
+                (state: ResultTableState) => state.sortBy,
+                (state: ResultTableState) => state.sortAscending,
+            ],
+            (sortBy, sortAscending) => ({ sortBy, sortAscending }),
         ),
     },
 })
@@ -464,6 +556,7 @@ export const {
     setPropertyGroupIsColored,
     setResults,
     setTask,
+    toggleSortingColumn,
 } = resultTableSlice.actions
 
 export const {
@@ -474,6 +567,7 @@ export const {
     selectPossibleAtomColorProperties,
     selectResultsGroupedByMolId,
     selectNumberOfResults,
+    selectSortingColumn,
 } = resultTableSlice.selectors
 
 export default resultTableSlice.reducer

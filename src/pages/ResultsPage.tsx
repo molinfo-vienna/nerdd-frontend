@@ -9,12 +9,14 @@ import ResultsHeader from "@/features/resultsHeader/ResultsHeader"
 import ResultsProgress from "@/features/resultsProgress/ResultsProgress"
 import ResultTable from "@/features/resultTable/ResultTable"
 import {
+    Column,
     selectAtomColorProperty,
     selectAugmentedResultPropertyGroups,
     selectColumnRows,
     selectNumberOfResults,
     selectPossibleAtomColorProperties,
     selectResultsGroupedByMolId,
+    selectSortingColumn,
     selectVisibleResultProperties,
     setAtomColorProperty,
     setGroupVisibility,
@@ -24,6 +26,7 @@ import {
     setResultPropertyVisibility,
     setResults,
     setTask,
+    toggleSortingColumn,
 } from "@/features/resultTable/resultTableSlice"
 import { useGetResultsQuery } from "@/services"
 import { useJobStatus, useModule } from "@/services/hooks"
@@ -53,6 +56,7 @@ export default function ResultsPage() {
     )
     const resultsGroupedByMolId = useAppSelector(selectResultsGroupedByMolId)
     const numberOfResults = useAppSelector(selectNumberOfResults)
+    const { sortBy, sortAscending } = useAppSelector(selectSortingColumn)
 
     //
     // get parameters from url
@@ -167,6 +171,19 @@ export default function ResultsPage() {
     )
 
     //
+    // column sorting
+    //
+    const handleClickSort = useCallback(
+        (column: Column) => {
+            dispatch(
+                toggleSortingColumn({
+                    sortBy: column.name,
+                }),
+            )
+        },
+        [dispatch],
+    )
+    //
     // error handling
     //
     if (errorResults) {
@@ -266,6 +283,9 @@ export default function ResultsPage() {
                                                 resultProperties={
                                                     visibleResultProperties
                                                 }
+                                                onClickSort={handleClickSort}
+                                                sortBy={sortBy}
+                                                sortAscending={sortAscending}
                                             />
                                         </div>
                                     )}
