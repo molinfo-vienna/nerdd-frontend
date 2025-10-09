@@ -1,3 +1,10 @@
+## [1.3.33](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.32...v1.3.33) (2025-10-09)
+
+
+### Bug Fixes
+
+* Prevent tooltip to catch key events ([eeb8ca5](https://github.com/molinfo-vienna/nerdd-frontend/commit/eeb8ca5818e51b6c92cdcfcc4792981965b976c3))
+
 ## [1.3.32](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.31...v1.3.32) (2025-10-06)
 
 
