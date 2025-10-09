@@ -70,6 +70,9 @@ export default function Tooltip({
     const click = useClick(context, {
         // should be used in combination with useHover
         ignoreMouse: true,
+        // do not catch "space" or "enter" key presses here
+        // -> user can still type "space" in text fields
+        keyboardHandlers: false,
     })
     const focus = useFocus(context)
     const dismiss = useDismiss(context, {
