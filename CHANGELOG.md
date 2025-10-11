@@ -1,3 +1,12 @@
+## [1.3.34](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.33...v1.3.34) (2025-10-11)
+
+
+### Bug Fixes
+
+* Extend ResultProperty type ([404ee0a](https://github.com/molinfo-vienna/nerdd-frontend/commit/404ee0ab720ab3d7f6242cf5f423cae32548083d))
+* Use choice label as display text ([dc1087f](https://github.com/molinfo-vienna/nerdd-frontend/commit/dc1087fb69fbed6cef0707ba53857b0312b0a25e))
+* Use choice value to decide color ([cc5469d](https://github.com/molinfo-vienna/nerdd-frontend/commit/cc5469dcbdd1d76d74ff635332c72b3e902d4863))
+
 ## [1.3.33](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.32...v1.3.33) (2025-10-09)
 
 
