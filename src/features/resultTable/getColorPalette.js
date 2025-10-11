@@ -15,7 +15,7 @@ export default function getColorPalette(palettes, resultProperty) {
     if (colorPaletteField.domain != null) {
         domain = colorPaletteField.domain
     } else if (resultProperty.choices != null) {
-        domain = resultProperty.choices.map((choice) => choice.label)
+        domain = resultProperty.choices.map((choice) => choice.value)
     } else if (resultProperty.type === "bool") {
         domain = [false, true]
     } else {

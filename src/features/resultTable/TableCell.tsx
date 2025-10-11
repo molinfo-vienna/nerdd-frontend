@@ -193,7 +193,18 @@ export default function TableCell({
         if (value == null) {
             cellContent = "-"
         } else {
-            cellContent = value
+            if (resultProperty.choices != null) {
+                const choice = resultProperty.choices.find(
+                    (choice) => choice.value === value,
+                )
+                if (choice != null) {
+                    cellContent = choice.label
+                } else {
+                    cellContent = value
+                }
+            } else {
+                cellContent = value
+            }
         }
     } else {
         console.warn(
