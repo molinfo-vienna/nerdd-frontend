@@ -2,7 +2,7 @@ import Documentation from "@/features/apiDocs/ApiDocs.mdx"
 import ModuleHeader from "@/features/moduleHeader/ModuleHeader"
 import TableOfContents from "@/features/tableOfContents/TableOfContents"
 import { useModule } from "@/services/hooks"
-import { useRef, useState } from "react"
+import { useCallback, useState } from "react"
 import Layout from "./Layout"
 import LoadingPage from "./LoadingPage"
 
@@ -12,7 +12,18 @@ export default function ApiDocsPage() {
 
     const { module, isLoading } = useModule(false)
 
-    const ref = useRef(null)
+    const [contentElement, setContentElement] = useState<HTMLElement | null>(
+        null,
+    )
+
+    const ref = useCallback(
+        (node: HTMLElement | null) => {
+            if (node !== null) {
+                setContentElement(node)
+            }
+        },
+        [setContentElement],
+    )
 
     const [selectedLanguage, setSelectedLanguage] = useState("python")
 
@@ -46,7 +57,11 @@ export default function ApiDocsPage() {
                             />
                         </div>
                         <div className="col-4 d-none d-lg-block ps-xl-5">
-                            <TableOfContents contentRef={ref} />
+                            <TableOfContents
+                                // we enforce rerendering the TOC when the module changes
+                                key={module.id}
+                                contentElement={contentElement}
+                            />
                         </div>
                     </div>
                 </div>

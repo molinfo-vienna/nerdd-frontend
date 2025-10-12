@@ -1,4 +1,4 @@
-import { type RefObject, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import ScrollSpy from "react-scrollspy-navigation"
 import "./TableOfContents.css"
@@ -12,7 +12,7 @@ type TOCItem = {
 }
 
 type TableOfContentsProps = {
-    contentRef: RefObject<HTMLElement>
+    contentElement: HTMLElement | null
 }
 
 const renderTOC = (toc: TOCItem[]) => {
@@ -50,17 +50,20 @@ const renderTOC = (toc: TOCItem[]) => {
     )
 }
 
-export default function TableOfContents({ contentRef }: TableOfContentsProps) {
+export default function TableOfContents({
+    contentElement,
+}: TableOfContentsProps) {
     const [toc, setToc] = useState<TOCItem | null>(null)
     const navigate = useNavigate()
 
     const offsetTop = 50
 
     useEffect(() => {
-        if (!contentRef.current) return
+        if (contentElement == null) return
 
-        const content = contentRef.current
-        const headings = content.querySelectorAll("h1, h2, h3, h4, h5, h6")
+        const headings = contentElement.querySelectorAll(
+            "h1, h2, h3, h4, h5, h6",
+        )
 
         // create a tree structure from the headings
         const toc: TOCItem = {
@@ -106,7 +109,7 @@ export default function TableOfContents({ contentRef }: TableOfContentsProps) {
         }
 
         setToc(toc)
-    }, [contentRef])
+    }, [contentElement])
 
     const scrollToHash = (hash) => {
         const id = hash.slice(1)
