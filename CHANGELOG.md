@@ -1,3 +1,11 @@
+## [1.3.35](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.34...v1.3.35) (2025-10-12)
+
+
+### Bug Fixes
+
+* Accept HTMLElement in TOC ([06699f6](https://github.com/molinfo-vienna/nerdd-frontend/commit/06699f6daaadbad5281ceb12c6f5f0db4e032faa))
+* Rerender TOC when module changes ([986e81e](https://github.com/molinfo-vienna/nerdd-frontend/commit/986e81e5d663902fc3c594c47a7b51fd1a913fdc))
+
 ## [1.3.34](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.33...v1.3.34) (2025-10-11)
 
 
