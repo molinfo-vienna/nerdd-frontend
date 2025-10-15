@@ -1,6 +1,7 @@
 import classNames from "classnames"
 import { Children, cloneElement, ReactElement, ReactNode } from "react"
 import "./TabCard.css"
+import "./arctis.css"
 
 import CopyToClipboard from "./CopyToClipboard"
 

@@ -4,7 +4,6 @@ import hljs from "highlight.js/lib/core"
 import { useMemo } from "react"
 import { FaRegFileAlt } from "react-icons/fa"
 import { FaBook } from "react-icons/fa6"
-import "./arctis.css"
 import TabCard from "../tabCard/TabCard"
 import bibtex from "./bibtex"
 
