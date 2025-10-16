@@ -3,7 +3,7 @@ import { type Module } from "@/types"
 import classNames from "classnames"
 import { FaBook, FaBookOpen, FaPlug } from "react-icons/fa6"
 import Markdown from "react-markdown"
-import { Link } from "react-router-dom"
+import { Link, useMatches } from "react-router-dom"
 import HeaderLink from "./HeaderLink"
 import ModuleSelectionCard from "./ModuleSelectionCard"
 
@@ -20,6 +20,10 @@ export default function ModuleHeader({
     description,
     subRoute,
 }: ModuleHeaderProps) {
+    // get current route id (for link highlighting)
+    const matches = useMatches()
+    const routeId = matches.at(-1)?.id
+
     const { modules, isLoading: isLoadingAllModules } = useModules()
 
     const pseudoModule = {
@@ -49,23 +53,25 @@ export default function ModuleHeader({
                     <Markdown className="lead">
                         {activeModule.description}
                     </Markdown>
-                    {/* Info card as list of links */}
                     {activeModule?.id && (
                         <div>
                             <HeaderLink
                                 Icon={FaBookOpen}
                                 href={`/${activeModule.id}/about`}
                                 caption="Docs"
+                                active={routeId === "about"}
                             />
                             <HeaderLink
                                 Icon={FaPlug}
                                 href={`/${activeModule.id}/api`}
                                 caption="API"
+                                active={routeId === "apiDocs"}
                             />
                             <HeaderLink
                                 Icon={FaBook}
                                 href={`/${activeModule.id}/cite`}
                                 caption="Cite"
+                                active={routeId === "cite"}
                             />
                         </div>
                     )}
