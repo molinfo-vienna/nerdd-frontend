@@ -12,6 +12,7 @@ import {
 import { IoSpeedometer } from "react-icons/io5"
 import Markdown from "react-markdown"
 import HeaderLink from "../moduleHeader/HeaderLink"
+import PublicationDialog from "../publicationDialog/PublicationDialog"
 import Tile from "./Tile"
 
 type CreateJobHeaderProps = {
@@ -115,6 +116,11 @@ export default function CreateJobHeader({ module }: CreateJobHeaderProps) {
         processingTimeText = `< 1s`
     }
 
+    //
+    // citation modal
+    //
+    const [citeDialogOpen, setCiteDialogOpen] = useState(false)
+
     // Notes about the responsive design:
     // * Header:
     //   * consists of two parts: (1) title & description and (2) info card
@@ -149,8 +155,13 @@ export default function CreateJobHeader({ module }: CreateJobHeaderProps) {
                         />
                         <HeaderLink
                             Icon={FaBook}
-                            href={`/${module.id}/cite`}
+                            onClick={() => setCiteDialogOpen(true)}
                             caption="Cite"
+                        />
+                        <PublicationDialog
+                            isOpen={citeDialogOpen}
+                            setIsOpen={setCiteDialogOpen}
+                            publications={module.publications}
                         />
                     </div>
                 </div>
