@@ -37,11 +37,11 @@ function transformToApaRaw(publications: Publication[]): string {
 function transformToApa(
     publications: Publication[],
 ): JSX.Element[] | JSX.Element {
-    return publications.map((pub) => {
+    return publications.map((pub, index) => {
         const authors = pub.authors.map(formatAuthor).join(", ")
 
         return (
-            <p>
+            <p key={index}>
                 {authors} ({pub.year}). {pub.title}. <em>{pub.journal}</em>.{" "}
                 <a href={`https://doi.org/${pub.doi}`} className="text-nowrap">
                     {pub.doi}
@@ -130,14 +130,14 @@ export default function PublicationCard({
     style,
     onSelectStyle,
 }: PublicationCardProps) {
-    const augmentedPublications = [...publications, nerddPublication]
-
     const styles = useMemo(() => {
+        const augmentedPublications = [...publications, nerddPublication]
+
         return mapping.map(({ transformRaw, transform }) => ({
             raw: transformRaw(augmentedPublications),
             content: transform(augmentedPublications),
         }))
-    }, [augmentedPublications])
+    }, [publications])
 
     return (
         <TabCard activeTab={style} onSelectTab={onSelectStyle}>
