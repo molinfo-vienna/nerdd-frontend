@@ -120,7 +120,11 @@ export default function ApiCard({
     }, [selectedLanguage, codeSnippets])
 
     return (
-        <TabCard activeTab={selectedLanguage} onSelectTab={onSelectLanguage}>
+        <TabCard
+            activeTab={selectedLanguage}
+            onSelectTab={onSelectLanguage}
+            className="mb-5"
+        >
             {mapping.map(({ language, label, icon }, i) => (
                 <TabCard.Tab
                     key={language}
