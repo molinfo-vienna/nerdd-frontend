@@ -3,7 +3,7 @@ import classNames from "classnames"
 import { ReactNode, useCallback, useEffect, useState } from "react"
 
 type DeleteJobDialogProps = {
-    size: "sm" | "md" | "lg" | "xl"
+    size?: "sm" | "md" | "lg" | "xl"
     title: string
     backdrop?: boolean | "static"
     keyboard?: boolean
