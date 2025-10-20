@@ -7,7 +7,7 @@ import PublicationCard from "./PublicationCard"
 type PublicationDialogProps = {
     isOpen: boolean
     setIsOpen: (isOpen: boolean) => void
-    publications: Publication[]
+    publications?: Publication[]
 }
 
 export default function PublicationDialog({
