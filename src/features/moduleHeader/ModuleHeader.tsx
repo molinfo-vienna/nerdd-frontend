@@ -1,9 +1,11 @@
 import { useModules } from "@/services"
 import { type Module } from "@/types"
 import classNames from "classnames"
+import { useState } from "react"
 import { FaBook, FaBookOpen, FaPlug } from "react-icons/fa6"
 import Markdown from "react-markdown"
 import { Link, useMatches } from "react-router-dom"
+import PublicationDialog from "../publicationDialog/PublicationDialog"
 import HeaderLink from "./HeaderLink"
 import ModuleSelectionCard from "./ModuleSelectionCard"
 
@@ -33,6 +35,11 @@ export default function ModuleHeader({
     }
 
     const activeModule = module == null ? pseudoModule : module
+
+    //
+    // citation modal
+    //
+    const [citeDialogOpen, setCiteDialogOpen] = useState(false)
 
     // Notes about the responsive design:
     // * Header:
@@ -69,9 +76,13 @@ export default function ModuleHeader({
                             />
                             <HeaderLink
                                 Icon={FaBook}
-                                href={`/${activeModule.id}/cite`}
+                                onClick={() => setCiteDialogOpen(true)}
                                 caption="Cite"
-                                active={routeId === "cite"}
+                            />
+                            <PublicationDialog
+                                isOpen={citeDialogOpen}
+                                setIsOpen={setCiteDialogOpen}
+                                publications={module?.publications}
                             />
                         </div>
                     )}
