@@ -2,10 +2,17 @@ import Tangle from "@/features/tangle/Tangle"
 import { useGetModuleQueueStatsQuery } from "@/services"
 import { type Module } from "@/types"
 import { useState } from "react"
-import { FaBookOpen, FaClock, FaPlug, FaWeightScale } from "react-icons/fa6"
+import {
+    FaBook,
+    FaBookOpen,
+    FaClock,
+    FaPlug,
+    FaWeightScale,
+} from "react-icons/fa6"
 import { IoSpeedometer } from "react-icons/io5"
 import Markdown from "react-markdown"
 import HeaderLink from "../moduleHeader/HeaderLink"
+import PublicationDialog from "../publicationDialog/PublicationDialog"
 import Tile from "./Tile"
 
 type CreateJobHeaderProps = {
@@ -146,7 +153,7 @@ export default function CreateJobHeader({ module }: CreateJobHeaderProps) {
                             href={`/${module.id}/api`}
                             caption="API"
                         />
-                        {/* <HeaderLink
+                        <HeaderLink
                             Icon={FaBook}
                             onClick={() => setCiteDialogOpen(true)}
                             caption="Cite"
@@ -154,8 +161,8 @@ export default function CreateJobHeader({ module }: CreateJobHeaderProps) {
                         <PublicationDialog
                             isOpen={citeDialogOpen}
                             setIsOpen={setCiteDialogOpen}
-                            publications={module.publications}
-                        /> */}
+                            moduleId={module.id}
+                        />
                     </div>
                 </div>
                 {/* Info card as column on large screens */}
