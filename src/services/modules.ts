@@ -36,6 +36,9 @@ export const modulesApi = baseApi.injectEndpoints({
                 return normalizeModule(moduleCamelCase)
             },
         }),
+        getModulePublications: builder.query<Module, string>({
+            query: (moduleId) => `/modules/${moduleId}/publications`,
+        }),
         getModuleQueueStats: builder.query<QueueStats, string>({
             query: (moduleId) => `/modules/${moduleId}/queue`,
             transformResponse: (response) => {
@@ -50,5 +53,6 @@ export const modulesApi = baseApi.injectEndpoints({
 export const {
     useGetModulesQuery,
     useGetModuleQuery,
+    useGetModulePublicationsQuery,
     useGetModuleQueueStatsQuery,
 } = modulesApi
