@@ -334,6 +334,44 @@ export default function MockServer({
                         },
                     )
 
+                    // GET /jobs/:jobId/output.:format
+                    // (download output file)
+                    this.get("/jobs/:jobId/:format", (schema, request) => {
+                        if (return404) {
+                            return new Response(
+                                404,
+                                {},
+                                recursiveCamelToSnakeCase({
+                                    error: "Output file not found",
+                                }),
+                            )
+                        }
+
+                        const jobId = request.params.jobId
+                        const format = request.params.format
+
+                        const jobs = store.getState().debug.jobs
+                        const job = jobs[jobId]
+                        if (job === undefined) {
+                            return new Response(
+                                404,
+                                {},
+                                recursiveCamelToSnakeCase({
+                                    error: "Job not found",
+                                }),
+                            )
+                        }
+
+                        const headers = {
+                            "Content-Disposition": `attachment; filename="output.${format}"`,
+                            "Content-Type": "application/octet-stream",
+                        }
+
+                        const fakeFileContent = "dsflkjhfdsaklfjhdsrfaljh"
+
+                        return new Response(200, headers, fakeFileContent)
+                    })
+
                     // GET /modules
                     // (return all module configs)
                     this.get("/modules", () => {
@@ -343,7 +381,6 @@ export default function MockServer({
                     // GET /modules/:moduleId/logo
                     // (return all module configs)
                     this.get("/modules/:moduleId/logo", (schema, request) => {
-                        console.log("yup")
                         const moduleId = request.params.moduleId
 
                         if (return404 || moduleConfigs[moduleId] == null) {
@@ -358,6 +395,27 @@ export default function MockServer({
 
                         return {}
                     })
+
+                    // GET /modules/:moduleId/publications
+                    // (return all publications)
+                    this.get(
+                        "/modules/:moduleId/publications",
+                        (schema, request) => {
+                            const moduleId = request.params.moduleId
+
+                            if (return404 || moduleConfigs[moduleId] == null) {
+                                return new Response(
+                                    404,
+                                    {},
+                                    { detail: "Module not found" },
+                                )
+                            }
+
+                            const moduleConfig = moduleConfigs[moduleId]
+
+                            return []
+                        },
+                    )
 
                     // GET /modules
                     // (return all module configs)
@@ -409,18 +467,6 @@ export default function MockServer({
 
                             const file = request.requestBody.get("file")
                             const filename = file.name
-
-                            // let reader = new FileReader()
-
-                            // reader.readAsText(request.requestBody.get("file"))
-
-                            // reader.onload = function () {
-                            //     console.log(reader.result)
-                            // }
-
-                            // reader.onerror = function () {
-                            //     console.log(reader.error)
-                            // }
 
                             const newSourceId = sourceId()
                             dispatch(
