@@ -3,6 +3,9 @@ import { createRoot } from "react-dom/client"
 
 import "./index.scss"
 
+import "@fontsource/open-sans/latin-400.css?display=swap"
+import "@fontsource/overpass/latin-500.css?display=swap"
+
 import Root from "./app/Root"
 import Providers from "./providers"
 
