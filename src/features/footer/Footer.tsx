@@ -194,7 +194,6 @@ export default function Footer() {
                                             alt={partner.name}
                                             loading="lazy"
                                             decoding="async"
-                                            fetchPriority="low"
                                             className="img-fluid"
                                             style={{
                                                 maxHeight: "5rem",
