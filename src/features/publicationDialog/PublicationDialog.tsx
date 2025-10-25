@@ -1,6 +1,5 @@
-import { useCallback, useState } from "react"
+import { lazy, Suspense, useCallback, useState } from "react"
 import Dialog from "../dialog/Dialog"
-import PublicationCard from "./PublicationCard"
 
 type PublicationDialogProps = {
     isOpen: boolean
@@ -13,6 +12,7 @@ export default function PublicationDialog({
     setIsOpen,
     moduleId,
 }: PublicationDialogProps) {
+    const PublicationCard = lazy(() => import("./PublicationCard"))
     const [selectedStyle, setSelectedStyle] = useState("apa")
 
     const onSelectStyle = useCallback(
@@ -32,11 +32,21 @@ export default function PublicationDialog({
             isLoading={false}
             onAccept={() => {}}
         >
-            <PublicationCard
-                moduleId={moduleId}
-                style={selectedStyle}
-                onSelectStyle={onSelectStyle}
-            />
+            <Suspense
+                fallback={
+                    <div className="d-flex justify-content-center py-4">
+                        <div className="spinner-border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                }
+            >
+                <PublicationCard
+                    moduleId={moduleId}
+                    style={selectedStyle}
+                    onSelectStyle={onSelectStyle}
+                />
+            </Suspense>
         </Dialog>
     )
 }
