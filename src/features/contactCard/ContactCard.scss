@@ -1,0 +1,25 @@
+$speed-in: 0.1s;
+$speed-out: 1s;
+
+// note: we use .card.contact-card to make this rule more specific
+// -> the following properties have precedence over the default card properties
+.card.contact-card {
+    max-width: 40rem;
+
+    .card-header {
+        background-color: transparent;
+    }
+
+    .contact-icon {
+        width: 23px;
+        flex-shrink: 0;
+        display: inline-flex;
+        align-items: flex-start;
+        justify-content: center;
+        margin-top: -0.2em;
+    }
+
+    .contact-text {
+        line-height: 1.4;
+    }
+}
