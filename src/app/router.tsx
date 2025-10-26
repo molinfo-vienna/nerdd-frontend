@@ -9,7 +9,7 @@ const ApiDocsPage = lazy(() => import("@/pages/ApiDocsPage"))
 const CreateJobPage = lazy(() => import("@/pages/CreateJobPage"))
 const AboutPage = lazy(() => import("@/pages/AboutPage"))
 const ResultsPage = lazy(() => import("@/pages/ResultsPage"))
-const ConstructionPage = lazy(() => import("@/pages/ConstructionPage"))
+const ContactPage = lazy(() => import("@/pages/ContactPage"))
 
 export default function createRouter(children: React.ReactNode) {
     return createBrowserRouter([
@@ -36,7 +36,7 @@ export default function createRouter(children: React.ReactNode) {
                 {
                     path: "/contact",
                     id: "contact",
-                    element: <ConstructionPage />,
+                    element: <ContactPage />,
                 },
                 {
                     path: "/:moduleId",
