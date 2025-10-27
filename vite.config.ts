@@ -103,9 +103,9 @@ export default defineConfig(({ mode }) => ({
                     // were suboptimal. Use "npm run analyze" to see the created chunks.
 
                     if (isInGraph(id, "index.tsx", getModuleInfo)) {
-                        return "landing-page"
+                        return "LandingPage"
                     } else if (id.includes("CreateJobPage")) {
-                        return "create-job-page"
+                        return "CreateJobPage"
                     }
                 },
             },
