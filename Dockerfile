@@ -26,7 +26,10 @@ RUN DISABLE_ESLINT_PLUGIN=true \
 #
 # RUN SERVER
 #
-FROM nginx:1.27.3
+FROM alpine:3.19
+
+# install nginx and brotli module
+RUN apk add brotli nginx nginx-mod-http-brotli
 
 # necessary to display the image on Github
 LABEL org.opencontainers.image.source="https://github.com/molinfo-vienna/nerdd-frontend"
