@@ -1,14 +1,13 @@
 #
 # BUILD
 #
-FROM node:24 AS build
+FROM node:25.6.0-bullseye-slim AS build
 
-# create directory app as root user 
-# change ownership to user "node" (predifined in "node:alpine" image)
-RUN mkdir /app && chown -R node:node /app
+# create app directory
 WORKDIR /app
+RUN chown node:node /app
 
-# do the rest as user "node"
+# switch to non-root user
 USER node
 
 # install dependencies
