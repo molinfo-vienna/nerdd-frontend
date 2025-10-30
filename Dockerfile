@@ -35,6 +35,7 @@ LABEL org.opencontainers.image.source="https://github.com/molinfo-vienna/nerdd-f
 
 # copy custom nginx config
 COPY ./nginx/server.conf /etc/nginx/http.d/server.conf
+COPY ./nginx/security-headers.conf /etc/nginx/http.d/security-headers.conf
 
 # copy the built React app to Nginx's web server directory
 COPY --from=build /app/build /usr/share/nginx/html
