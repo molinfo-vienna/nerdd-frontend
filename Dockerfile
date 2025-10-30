@@ -18,8 +18,8 @@ RUN npm ci && npm cache clean --force
 COPY --chown=node:node . .
 
 # DISABLE_ESLINT_PLUGIN=true: compile despite eslint warnings
-RUN DISABLE_ESLINT_PLUGIN=true \
-    npm run build
+ENV DISABLE_ESLINT_PLUGIN=true
+RUN npm run build
 
 
 #
@@ -32,6 +32,9 @@ RUN apk add --no-cache brotli nginx nginx-mod-http-brotli
 
 # necessary to display the image on Github
 LABEL org.opencontainers.image.source="https://github.com/molinfo-vienna/nerdd-frontend"
+
+# copy custom nginx config
+COPY ./nginx/server.conf /etc/nginx/http.d/server.conf
 
 # copy the built React app to Nginx's web server directory
 COPY --from=build /app/build /usr/share/nginx/html
