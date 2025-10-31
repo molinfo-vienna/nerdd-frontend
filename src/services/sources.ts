@@ -4,7 +4,7 @@ import recursiveSnakeToCamelCase from "./recursiveSnakeToCamelCase"
 export const sourcesApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         addSource: builder.mutation({
-            query: ({ file }) => {
+            query: ({ file, onUploadProgress }) => {
                 const body = new FormData()
                 body.append("file", file)
 
@@ -12,6 +12,7 @@ export const sourcesApi = baseApi.injectEndpoints({
                     url: "/sources",
                     method: "PUT",
                     body,
+                    onUploadProgress,
                 }
             },
             transformResponse: recursiveSnakeToCamelCase,
