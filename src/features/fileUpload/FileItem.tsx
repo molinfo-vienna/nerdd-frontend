@@ -1,3 +1,4 @@
+import ProgressBar from "@/features/progressBar/ProgressBar"
 import classNames from "classnames"
 import { FaRegCircleCheck, FaRegCircleXmark } from "react-icons/fa6"
 import { File } from "./fileFieldSlice"
@@ -12,7 +13,18 @@ export default function FileItem({ file, onClickDelete }: FileItemProps) {
         <li key={file.id}>
             <div className="d-flex my-1">
                 {/* pending */}
-                {file.status === "pending" ? (
+                {file.status === "pending" && file.progress > 0 ? (
+                    <ProgressBar
+                        value={file.progress}
+                        max={100}
+                        width="1rem"
+                        height="1rem"
+                        strokeWidth={15}
+                        className="me-1"
+                        showText={false}
+                    />
+                ) : null}
+                {file.status === "pending" && file.progress <= 0 ? (
                     <div
                         className="spinner-border spinner-border-sm text-primary"
                         role="status"
