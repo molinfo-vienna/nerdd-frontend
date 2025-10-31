@@ -46,7 +46,6 @@ export default function FileItem({ file, onClickDelete }: FileItemProps) {
                         "text-danger": file.status === "error",
                     })}
                 >
-                    {" "}
                     {file.filename}
                     {file.errorMessage ? (
                         <span className="text-danger">
@@ -55,6 +54,11 @@ export default function FileItem({ file, onClickDelete }: FileItemProps) {
                         </span>
                     ) : null}
                 </div>
+                {file.status === "pending" ? (
+                    <span className="small text-muted pe-2">
+                        {file.progress}%
+                    </span>
+                ) : null}
                 {/* delete */}
                 {file.status !== "deleting" ? (
                     <button
