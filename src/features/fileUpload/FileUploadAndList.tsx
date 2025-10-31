@@ -12,6 +12,7 @@ import {
     deleteFile,
     deleteFileField,
     setErrorMessage,
+    setProgress,
     setSourceData,
     setStatus,
     type File,
@@ -67,7 +68,18 @@ export default function FileUploadAndList({
                 )
 
                 // upload file to the server
-                const request = addSource({ file })
+                const request = addSource({
+                    file,
+                    onUploadProgress: (uploadProgress: number) => {
+                        dispatch(
+                            setProgress({
+                                fileFieldName: name,
+                                id,
+                                progress: uploadProgress,
+                            }),
+                        )
+                    },
+                })
 
                 // store request to be able to cancel it
                 setRequests((requests) => ({
@@ -77,7 +89,11 @@ export default function FileUploadAndList({
 
                 request.then((response) => {
                     // case 1: upload was aborted
-                    if (response.error?.name === "AbortError") {
+                    if (
+                        response.error?.name === "AbortError" ||
+                        (response.error?.status === "CUSTOM_ERROR" &&
+                            response.error?.error === "AbortError")
+                    ) {
                         return
                     } else if (response.error) {
                         console.error(response.error)
@@ -127,6 +143,13 @@ export default function FileUploadAndList({
                             status: "success",
                         }),
                     )
+                    dispatch(
+                        setProgress({
+                            fileFieldName: name,
+                            id,
+                            progress: 100,
+                        }),
+                    )
 
                     // remove request object from the map
                     setRequests((requests) => {
@@ -171,7 +194,7 @@ export default function FileUploadAndList({
                     dispatch(
                         setStatus({
                             fileFieldName: name,
-                            id,
+                            id: file.id,
                             status: "error",
                         }),
                     )
@@ -186,7 +209,7 @@ export default function FileUploadAndList({
                     dispatch(
                         setErrorMessage({
                             fileFieldName: name,
-                            id,
+                            id: file.id,
                             errorMessage,
                         }),
                     )
@@ -207,11 +230,7 @@ export default function FileUploadAndList({
                     "is-invalid": meta.touched && meta.error,
                 })}
             >
-                <FileUpload
-                    name={name}
-                    onDrop={onDrop}
-                    className="form-control"
-                />
+                <FileUpload name={name} onDrop={onDrop} />
             </div>
             {meta.touched && meta.error && (
                 <div className="invalid-feedback">{meta.error}</div>
