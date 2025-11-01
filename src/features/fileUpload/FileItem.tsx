@@ -11,16 +11,15 @@ type FileItemProps = {
 export default function FileItem({ file, onClickDelete }: FileItemProps) {
     return (
         <li key={file.id}>
-            <div className="d-flex my-1">
+            <div className="d-flex align-items-center my-1">
                 {/* pending */}
                 {file.status === "pending" && file.progress > 0 ? (
                     <ProgressBar
                         value={file.progress}
                         max={100}
-                        width="1rem"
-                        height="1rem"
-                        strokeWidth={15}
-                        className="me-1"
+                        width="1em"
+                        height="1em"
+                        strokeWidth={17}
                         showText={false}
                     />
                 ) : null}
@@ -43,16 +42,17 @@ export default function FileItem({ file, onClickDelete }: FileItemProps) {
                 ) : null}
                 {/* success */}
                 {file.status === "success" ? (
-                    <span className="text-success">
+                    <span className="text-success lh-1">
                         <FaRegCircleCheck />
                     </span>
                 ) : null}
                 {/* error */}
                 {file.status === "error" ? (
-                    <span className="text-danger">
+                    <span className="text-danger lh-1">
                         <FaRegCircleXmark />
                     </span>
                 ) : null}
+                {/* filename */}
                 <div
                     className={classNames("text-truncate flex-fill ps-2 pe-5", {
                         "text-danger": file.status === "error",
