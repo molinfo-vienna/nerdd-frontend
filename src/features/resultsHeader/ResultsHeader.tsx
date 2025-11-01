@@ -33,6 +33,8 @@ export default function ResultsHeader({
                     <ProgressBar
                         value={job.numEntriesProcessed}
                         max={job.numEntriesTotal}
+                        width={90}
+                        height={90}
                         className="mx-3"
                     />
                     {/* Module name & status */}
