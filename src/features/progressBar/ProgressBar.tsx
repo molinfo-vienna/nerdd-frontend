@@ -15,8 +15,8 @@ type ProgressBarProps = {
 export default function ProgressBar({
     value,
     max,
-    width = 90,
-    height = 90,
+    width = "100%",
+    height = "100%",
     strokeWidth = 8,
     className,
     showText = true,
@@ -46,6 +46,11 @@ export default function ProgressBar({
                         fontWeight: "bold",
                     },
                 }}
+                // w-100: fixes an issue where the CircularProgressbar svg has 0 width inside a
+                //     "display: flex" container making it invisible
+                // align-middle: fixes a centering issue with CircularProgressbarWithChildren
+                //     (https://github.com/kevinsqi/react-circular-progressbar/issues/94)
+                className="d-block w-100 align-middle"
             />
         </div>
     )
