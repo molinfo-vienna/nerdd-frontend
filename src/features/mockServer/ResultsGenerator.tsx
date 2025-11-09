@@ -2,6 +2,7 @@ import { useAppDispatch } from "@/app/hooks"
 import {
     addMolecule,
     addOutputFile,
+    DebugJob,
     setNumEntriesTotal,
     updateJob,
 } from "@/features/debug/debugSlice"
@@ -10,10 +11,7 @@ import { useNavigate } from "react-router-dom"
 import { makeButton, useTweaks } from "use-tweaks"
 
 type ResultsGeneratorProps = {
-    job: {
-        id: string
-        moduleId: string
-    }
+    job: DebugJob
     predictionSpeed: number
 }
 
@@ -26,7 +24,7 @@ export default function ResultsGenerator({
 
     useTweaks("Jobs", {
         ...makeButton(`Goto job ${job.id}`, () =>
-            navigate(`${job.moduleId}/${job.id}`),
+            navigate(`${job.jobType}/${job.id}`),
         ),
     })
 
