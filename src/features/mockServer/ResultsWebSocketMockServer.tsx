@@ -1,7 +1,7 @@
+import { useDevelopmentAppSelector } from "@/app/hooks"
 import { Server as SocketServer } from "mock-socket"
 import { useEffect, useState } from "react"
 import { DebugJob } from "../debug/debugSlice"
-import { useDebugSelector } from "../debug/useDebugSelector"
 import { generateResult } from "./fake"
 import recursiveCamelToSnakeCase from "./recursiveCamelToSnakeCase"
 
@@ -17,7 +17,7 @@ export default function ResultsWebSocketMockServer({
     const [socketServer, setSocketServer] = useState<SocketServer | null>(null)
     const jobType = job.jobType
 
-    const module = useDebugSelector(
+    const module = useDevelopmentAppSelector(
         (state) => state.debug.moduleConfigs[jobType],
     )
 

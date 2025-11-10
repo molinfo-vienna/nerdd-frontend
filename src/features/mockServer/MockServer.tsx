@@ -1,14 +1,15 @@
-import { useAppDispatch } from "@/app/hooks"
+import { useAppDispatch, useDevelopmentAppStore } from "@/app/hooks"
 import {
     createJob,
     createSource,
+    DebugJob,
     deleteJob,
     deleteSource,
 } from "@/features/debug/debugSlice"
 import { baseApi } from "@/services"
+import { Module } from "@/types"
 import { createServer, Response } from "miragejs"
 import { Fragment, useEffect } from "react"
-import { useStore } from "react-redux"
 import {
     generateModuleQueueStats,
     generateResults,
@@ -24,11 +25,11 @@ type MockServerProps = {
     enabled: boolean
     return404: boolean
     logRequests: boolean
-    moduleConfigs: Record<string, any>
+    moduleConfigs: Record<string, Module>
     pageSize: number
     numResults: number
     predictionSpeed: number
-    jobs: Record<string, any>
+    jobs: Record<string, DebugJob>
 }
 
 export default function MockServer({
@@ -42,7 +43,7 @@ export default function MockServer({
     jobs,
 }: MockServerProps) {
     const dispatch = useAppDispatch()
-    const store = useStore()
+    const store = useDevelopmentAppStore()
 
     // rest server
     useEffect(() => {
@@ -55,13 +56,14 @@ export default function MockServer({
 
                     this.namespace = "/api"
 
-                    // POST /:moduleId/jobs
+                    // POST /:jobType/jobs
                     // (create a job and return the job id)
-                    this.post("/:moduleId/jobs", (schema, request) => {
+                    this.post("/:jobType/jobs", (schema, request) => {
                         // get correct module
-                        const moduleId = request.params.moduleId
+                        const jobType = request.params.jobType
 
-                        const sources = request.requestBody.get("sources") || []
+                        const sources =
+                            request.requestBody.getAll("sources") || []
 
                         // check if all specified sources exist
                         if (sources !== undefined) {
@@ -95,14 +97,13 @@ export default function MockServer({
                         dispatch(
                             createJob({
                                 jobId: newJobId,
-                                jobType: moduleId,
+                                jobType,
                                 params,
                                 numResults,
                             }),
                         )
 
-                        const state = store.getState()
-                        const job = state.debug.jobs[newJobId]
+                        const job = store.getState().debug.jobs[newJobId]
 
                         const jobResponse = {
                             ...job,
@@ -112,7 +113,6 @@ export default function MockServer({
                             numEntriesTotal: job.showNumEntriesTotal
                                 ? job.numEntriesTotal
                                 : undefined,
-                            showNumEntriesTotal: undefined,
                             numPagesTotal: job.showNumEntriesTotal
                                 ? Math.ceil(job.numEntriesTotal / pageSize)
                                 : undefined,
@@ -121,9 +121,9 @@ export default function MockServer({
                         return recursiveCamelToSnakeCase(jobResponse)
                     })
 
-                    // DELETE /:moduleId/jobs/:jobId
+                    // DELETE /:jobType/jobs/:jobId
                     // (delete a job)
-                    this.delete("/:moduleId/jobs/:jobId", (schema, request) => {
+                    this.delete("/:jobType/jobs/:jobId", (schema, request) => {
                         const jobId = request.params.jobId
 
                         // delete the job
@@ -136,9 +136,9 @@ export default function MockServer({
                         return new Response(204)
                     })
 
-                    // GET /:moduleId/jobs/:jobId
+                    // GET /:jobType/jobs/:jobId
                     // (return the job status)
-                    this.get("/:moduleId/jobs/:jobId", (schema, request) => {
+                    this.get("/:jobType/jobs/:jobId", (schema, request) => {
                         if (return404) {
                             return new Response(
                                 404,
@@ -149,7 +149,7 @@ export default function MockServer({
                             )
                         }
 
-                        const moduleId = request.params.moduleId
+                        const jobType = request.params.jobType
                         const jobId = request.params.jobId
 
                         const jobs = store.getState().debug.jobs
@@ -158,14 +158,13 @@ export default function MockServer({
                             dispatch(
                                 createJob({
                                     jobId,
-                                    jobType: moduleId,
+                                    jobType,
                                     params: {},
                                     numResults,
                                 }),
                             )
 
-                            const state = store.getState()
-                            job = state.debug.jobs[jobId]
+                            job = store.getState().debug.jobs[jobId]
                         }
 
                         const jobResponse = {
@@ -185,10 +184,10 @@ export default function MockServer({
                         return recursiveCamelToSnakeCase(jobResponse)
                     })
 
-                    // GET /:moduleId/jobs/:jobId/results
+                    // GET /:jobType/jobs/:jobId/results
                     // (return results for a job)
                     this.get(
-                        "/:moduleId/jobs/:jobId/results",
+                        "/:jobType/jobs/:jobId/results",
                         (schema, request) => {
                             if (return404) {
                                 return new Response(
@@ -202,7 +201,7 @@ export default function MockServer({
                                 request.queryParams.incomplete === "true" ||
                                 false
 
-                            const moduleId = request.params.moduleId
+                            const jobType = request.params.jobType
                             const jobId = request.params.jobId
                             const pageOneBased =
                                 parseInt(request.queryParams.page) || 1
@@ -217,14 +216,13 @@ export default function MockServer({
                                 dispatch(
                                     createJob({
                                         jobId,
-                                        jobType: moduleId,
+                                        jobType,
                                         params: {},
                                         numResults,
                                     }),
                                 )
 
-                                const state = store.getState()
-                                job = state.debug.jobs[jobId]
+                                job = store.getState().debug.jobs[jobId]
                             }
 
                             const jobResponse = {
@@ -378,12 +376,12 @@ export default function MockServer({
                         return Object.values(moduleConfigs)
                     })
 
-                    // GET /modules/:moduleId/logo
+                    // GET /modules/:jobType/logo
                     // (return all module configs)
-                    this.get("/modules/:moduleId/logo", (schema, request) => {
-                        const moduleId = request.params.moduleId
+                    this.get("/modules/:jobType/logo", (schema, request) => {
+                        const jobType = request.params.jobType
 
-                        if (return404 || moduleConfigs[moduleId] == null) {
+                        if (return404 || moduleConfigs[jobType] == null) {
                             return new Response(
                                 404,
                                 {},
@@ -391,19 +389,19 @@ export default function MockServer({
                             )
                         }
 
-                        const moduleConfig = moduleConfigs[moduleId]
+                        const moduleConfig = moduleConfigs[jobType]
 
                         return {}
                     })
 
-                    // GET /modules/:moduleId/publications
+                    // GET /modules/:jobType/publications
                     // (return all publications)
                     this.get(
-                        "/modules/:moduleId/publications",
+                        "/modules/:jobType/publications",
                         (schema, request) => {
-                            const moduleId = request.params.moduleId
+                            const jobType = request.params.jobType
 
-                            if (return404 || moduleConfigs[moduleId] == null) {
+                            if (return404 || moduleConfigs[jobType] == null) {
                                 return new Response(
                                     404,
                                     {},
@@ -411,7 +409,7 @@ export default function MockServer({
                                 )
                             }
 
-                            const moduleConfig = moduleConfigs[moduleId]
+                            const moduleConfig = moduleConfigs[jobType]
 
                             return []
                         },
@@ -419,10 +417,10 @@ export default function MockServer({
 
                     // GET /modules
                     // (return all module configs)
-                    this.get("/modules/:moduleId", (schema, request) => {
-                        const moduleId = request.params.moduleId
+                    this.get("/modules/:jobType", (schema, request) => {
+                        const jobType = request.params.jobType
 
-                        if (return404 || moduleConfigs[moduleId] == null) {
+                        if (return404 || moduleConfigs[jobType] == null) {
                             return new Response(
                                 404,
                                 {},
@@ -430,15 +428,15 @@ export default function MockServer({
                             )
                         }
 
-                        return moduleConfigs[moduleId]
+                        return moduleConfigs[jobType]
                     })
 
-                    // GET /modules/:moduleId/queue
+                    // GET /modules/:jobType/queue
                     // (return module queue stats)
-                    this.get("/modules/:moduleId/queue", (schema, request) => {
-                        const moduleId = request.params.moduleId
+                    this.get("/modules/:jobType/queue", (schema, request) => {
+                        const jobType = request.params.jobType
 
-                        if (return404 || moduleConfigs[moduleId] == null) {
+                        if (return404 || moduleConfigs[jobType] == null) {
                             return new Response(
                                 404,
                                 {},
@@ -447,7 +445,7 @@ export default function MockServer({
                         }
 
                         // generate fake module stats
-                        const queueStats = generateModuleQueueStats(moduleId)
+                        const queueStats = generateModuleQueueStats(jobType)
 
                         return queueStats
                     })
@@ -476,8 +474,8 @@ export default function MockServer({
                                 }),
                             )
 
-                            const state = store.getState()
-                            const source = state.debug.sources[newSourceId]
+                            const source =
+                                store.getState().debug.sources[newSourceId]
 
                             return recursiveCamelToSnakeCase(source)
                         },
