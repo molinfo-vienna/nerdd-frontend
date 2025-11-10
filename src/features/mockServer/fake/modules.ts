@@ -1,8 +1,9 @@
 import d3Palettes from "@/features/colorPalettes/d3Palettes"
+import { Module, PredictionTask } from "@/types"
 import { faker } from "@faker-js/faker"
 import { generateValue } from "./util"
 
-const taskTypes = [
+const taskTypes: PredictionTask[] = [
     "molecular_property_prediction",
     "atom_property_prediction",
     "derivative_property_prediction",
@@ -18,7 +19,7 @@ const logoUrls = Array.from({ length: 9 }).map(
     (_, i) => `/resources/fake/module-logos/${i + 1}.svg`,
 )
 
-function capitalize(string) {
+function capitalize(string: string) {
     return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
@@ -31,7 +32,7 @@ function longPhrase() {
     return `${capitalize(words)}`
 }
 
-export function choice(dataType) {
+export function choice(dataType: string) {
     return {
         value: generateValue(dataType),
         label: phrase(),
@@ -323,7 +324,7 @@ function generatePublication() {
     }
 }
 
-export function generateModuleConfig(i) {
+export function generateModuleConfig(i: number): Module {
     faker.seed(i)
 
     const task = faker.helpers.arrayElement(taskTypes)
@@ -464,17 +465,17 @@ export function generateModuleConfig(i) {
     }
 }
 
-export function generateModuleConfigArray(num) {
+export function generateModuleConfigArray(num: number) {
     return Array.from({ length: num }, (_, i) => generateModuleConfig(i))
 }
 
-export function generateModuleConfigDict(num) {
+export function generateModuleConfigDict(num: number) {
     const moduleConfigs = generateModuleConfigArray(num)
 
     return Object.fromEntries(moduleConfigs.map((c) => [c.name, c]))
 }
 
-export function generateModuleQueueStats(moduleId) {
+export function generateModuleQueueStats(moduleId: string) {
     return {
         module_id: moduleId,
         waiting_time_minutes: faker.number.int({ min: 0, max: 10000 }),
