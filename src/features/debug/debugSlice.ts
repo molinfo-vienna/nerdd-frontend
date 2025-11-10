@@ -1,4 +1,3 @@
-import type { RootState } from "@/app/store"
 import { generateModuleConfigDict } from "@/features/mockServer/fake/modules"
 import type { Job, Module, Source } from "@/types"
 import { createSlice } from "@reduxjs/toolkit"
@@ -12,16 +11,6 @@ export type DebugState = {
     moduleConfigs: Record<string, Module>
     jobs: Record<string, DebugJob>
     sources: Record<string, Source>
-}
-
-export type DebugRootState = RootState & { debug: DebugState }
-
-export const selectDebug = (state: RootState): DebugState => {
-    if (state.debug == null) {
-        throw new Error("Debug state is only available in development mode.")
-    }
-
-    return state.debug
 }
 
 const initialState: DebugState = {
