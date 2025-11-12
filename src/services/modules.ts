@@ -1,5 +1,5 @@
 import { Module, QueueStats } from "@/types"
-import { baseApi } from "./base"
+import { baseApi } from "./api"
 import { normalizeModule } from "./normalize"
 import recursiveSnakeToCamelCase from "./recursiveSnakeToCamelCase"
 

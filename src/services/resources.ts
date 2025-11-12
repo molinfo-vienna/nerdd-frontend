@@ -1,4 +1,4 @@
-import { baseApi } from "./base"
+import { baseApi } from "./api"
 
 export const resourcesApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({

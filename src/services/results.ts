@@ -1,4 +1,4 @@
-import { baseApi } from "./base"
+import { baseApi } from "./api"
 import websocketQuery from "./websocketQuery"
 
 // Define a service using a base URL and expected endpoints
