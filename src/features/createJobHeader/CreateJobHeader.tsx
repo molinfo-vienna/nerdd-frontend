@@ -100,15 +100,15 @@ export default function CreateJobHeader({ module }: CreateJobHeaderProps) {
         processingTimeText = `${days} days`
     } else if (processingTimeSeconds > 60 * 60) {
         // more than 1 hour -> show hours
-        const hours = Math.floor(processingTimeSeconds / (60 * 60))
+        const hours = Math.round(processingTimeSeconds / (60 * 60))
         processingTimeText = `${hours}h`
     } else if (processingTimeSeconds > 60) {
         // more than 1 minute -> show minutes
-        const minutes = Math.floor(processingTimeSeconds / 60)
+        const minutes = Math.round(processingTimeSeconds / 60)
         processingTimeText = `${minutes}min`
     } else if (processingTimeSeconds > 1) {
         // more than 1 second -> show seconds
-        const seconds = Math.floor(processingTimeSeconds)
+        const seconds = Math.round(processingTimeSeconds)
         processingTimeText = `${seconds}s`
     } else {
         // less than 1 second -> show "< 1s"
