@@ -1,3 +1,10 @@
+## [1.3.37](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.36...v1.3.37) (2025-11-14)
+
+
+### Bug Fixes
+
+* Use round instead of floor when displaying processing time ([452df22](https://github.com/molinfo-vienna/nerdd-frontend/commit/452df22d9698bdad3f28892f00fccc23f188be88))
+
 ## [1.3.36](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.35...v1.3.36) (2025-11-14)
 
 
