@@ -1,3 +1,11 @@
+## [1.3.36](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.35...v1.3.36) (2025-11-14)
+
+
+### Bug Fixes
+
+* Add free access statement in footer ([639ae8c](https://github.com/molinfo-vienna/nerdd-frontend/commit/639ae8caacf327b4e7efd6b205baeb1400a27200))
+* Remove development note in header ([290caf4](https://github.com/molinfo-vienna/nerdd-frontend/commit/290caf4e0978332b89542d5eb4bbe43ada2225ab))
+
 ## [1.3.35](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.34...v1.3.35) (2025-10-12)
 
 
