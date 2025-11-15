@@ -1,5 +1,5 @@
 import CreateJobHeader from "@/features/createJobHeader/CreateJobHeader"
-import JobForm from "@/features/jobForm/JobForm"
+import JobForm, { type SubmitHandler } from "@/features/jobForm/JobForm"
 import { useAddJobMutation } from "@/services"
 import { useModule } from "@/services/hooks"
 import { FORM_ERROR } from "final-form"
@@ -11,23 +11,41 @@ import LoadingPage from "./LoadingPage"
 export default function CreateJobPage() {
     const navigate = useNavigate()
 
-    const [addJob, {}] = useAddJobMutation()
+    const [addJob] = useAddJobMutation()
 
     const { module, isLoading } = useModule()
 
-    const onSubmit = useCallback(
+    const onSubmit: SubmitHandler = useCallback(
         async (values) => {
+            // for type safety, ensure module is defined
+            if (module === undefined) {
+                // (should never throw because the form won't render if module is undefined)
+                throw new Error("Module is undefined")
+            }
+
             // input
             let inputs: string[] = []
             let sources: string[] = []
-            if (values.inputType === "text") {
+            if (values.inputType === "text" && values.input !== undefined) {
                 inputs = [values.input]
-            } else if (values.inputType === "file") {
-                sources = values.inputFile.map((file) => file.sourceData.id)
-            } else if (values.inputType === "draw") {
+            } else if (
+                values.inputType === "file" &&
+                values.inputFile !== undefined
+            ) {
+                sources = values.inputFile.map(
+                    (file) => file.sourceData?.id || "",
+                )
+            } else if (
+                values.inputType === "draw" &&
+                values.inputDrawn !== undefined
+            ) {
                 inputs = [values.inputDrawn]
             } else if (values.inputType === "example") {
                 inputs = [module.exampleSmiles]
+            } else {
+                // this case should never be reached because of form validation
+                // if it is reached, let the server return an error because of empty inputs
+                inputs = []
             }
 
             // all other job parameters
@@ -84,6 +102,12 @@ export default function CreateJobPage() {
 
     if (isLoading) {
         return LoadingPage()
+    }
+
+    // if isLoading is false, module has to be defined (otherwise useModule would throw an error)
+    // -> this is just to satisfy TypeScript's type checker
+    if (module === undefined) {
+        return
     }
 
     return (
