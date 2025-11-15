@@ -1,3 +1,4 @@
+import { File } from "@/features/fileUpload/fileFieldSlice"
 import { type Module } from "@/types"
 import { createForm, FORM_ERROR, FormApi } from "final-form"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
@@ -7,9 +8,20 @@ import DynamicInput from "./DynamicInput"
 import JobParameterField from "./JobParameterField"
 import Row from "./Row"
 
+type JobFormValues = {
+    inputType: "text" | "file" | "draw" | "example"
+    input?: string
+    inputFile?: File[]
+    inputDrawn?: string
+} & Record<string, any>
+
+export type SubmitHandler = (
+    values: JobFormValues,
+) => Promise<Record<string, string> | undefined>
+
 type JobFormProps = {
     module: Module
-    onSubmit: (values: any) => Promise<any>
+    onSubmit: SubmitHandler
 }
 
 export default function JobForm({ module, onSubmit }: JobFormProps) {
@@ -26,7 +38,7 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
     // Validation
     //
     const validate = useCallback(
-        (values) => {
+        (values: JobFormValues) => {
             const errors: Record<string, string> = {}
 
             // input
@@ -53,8 +65,10 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
 
             // wait for file uploads to finish
             if (
+                values.inputType === "file" &&
+                values.inputFile !== undefined &&
                 // all files uploaded?
-                values.inputFile?.filter((file) =>
+                values.inputFile.filter((file) =>
                     ["pending", "deleting"].includes(file.status),
                 ).length > 0
             ) {
@@ -229,16 +243,20 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
                                             </span>
                                         </button>
                                     )}
-                                    {submitRequested && errors[FORM_ERROR] && (
-                                        <div className="ms-3 text-body-secondary">
-                                            {errors[FORM_ERROR]}
-                                        </div>
-                                    )}
-                                    {!errors[FORM_ERROR] && submitError && (
-                                        <div className="ms-3 text-danger">
-                                            {submitError}
-                                        </div>
-                                    )}
+                                    {submitRequested &&
+                                        errors !== undefined &&
+                                        errors[FORM_ERROR] && (
+                                            <div className="ms-3 text-body-secondary">
+                                                {errors[FORM_ERROR]}
+                                            </div>
+                                        )}
+                                    {(errors === undefined ||
+                                        !errors[FORM_ERROR]) &&
+                                        submitError && (
+                                            <div className="ms-3 text-danger">
+                                                {submitError}
+                                            </div>
+                                        )}
                                 </div>
                             </Row>
                         </form>
