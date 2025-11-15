@@ -7,7 +7,7 @@ export interface Choice {
 
 export interface ResultProperty {
     name: string
-    type?: string
+    type: string
     visibleName: string
     precision?: number
     group: string
