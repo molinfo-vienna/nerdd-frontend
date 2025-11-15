@@ -10,7 +10,6 @@ type FileUploadProps = {
 
 export default function FileUpload({ name, onDrop }: FileUploadProps) {
     const {
-        acceptedFiles,
         getRootProps,
         getInputProps,
         isFocused,
