@@ -1,10 +1,13 @@
 import { useAppSelector } from "@/app/hooks"
+import ImagePlaceholder from "@/features/placeholder/ImagePlaceholder"
+import {
+    ResultGroup,
+    selectAtomColorProperty,
+} from "@/features/resultTable/resultTableSlice"
 import { useGetResourceQuery } from "@/services/resources"
 import parse, { attributesToProps, domToReact } from "html-react-parser"
 import { useEffect, useMemo, useRef, useState } from "react"
-import ImagePlaceholder from "../placeholder/ImagePlaceholder"
 import "./Molecule.css"
-import { ResultGroup, selectAtomColorProperty } from "./resultTableSlice"
 
 type MoleculeProps = {
     svgValue: string
