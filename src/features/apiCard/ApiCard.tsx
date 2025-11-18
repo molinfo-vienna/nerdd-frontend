@@ -1,14 +1,11 @@
 import hljs from "highlight.js/lib/core"
 import python from "highlight.js/lib/languages/python"
 
-import classNames from "classnames"
 import { FaPython } from "react-icons/fa6"
-import "./ApiCard.css"
-import "./arctis.css"
 
 import { Module } from "@/types"
 import { useMemo } from "react"
-import CopyToClipboard from "./CopyToClipboard"
+import TabCard from "../tabCard/TabCard"
 import createComplexJobPython from "./createComplexJobPython.md?raw"
 import createJobWithFilePython from "./createJobWithFilePython.md?raw"
 import createSimpleJobPython from "./createSimpleJobPython.md?raw"
@@ -123,65 +120,27 @@ export default function ApiCard({
     }, [selectedLanguage, codeSnippets])
 
     return (
-        <div className="card rounded-4 hljs border-0 mb-5 bg-primary-subtle">
-            <div className="card-header text-primary bg-primary-subtle border-0 pb-0 border-bottom">
-                <ul className="nav nav-pills ms-2" role="tablist">
-                    {mapping.map(({ language, label, icon }) => (
-                        <li key={language} className="" role="presentation">
-                            <button
-                                className={classNames(
-                                    "btn btn-underline fs-7",
-                                    {
-                                        active: selectedLanguage === language,
-                                    },
-                                )}
-                                id={`${language}-button`}
-                                type="button"
-                                role="tab"
-                                aria-controls={language}
-                                aria-selected={selectedLanguage === language}
-                                onClick={() => onSelectLanguage(language)}
-                            >
-                                <span className="align-middle">{icon}</span>
-                                <span className="ms-2 align-middle">
-                                    {label}
-                                </span>
-                            </button>
-                        </li>
-                    ))}
-                    {/* Add an item filling the remaining space to push the last tab to the right */}
-                    <li className="flex-fill"></li>
-                    {/* Copy to clipboard */}
-                    <li className="nav-item">
-                        <CopyToClipboard textToCopy={selectedCode} />
-                    </li>
-                </ul>
-            </div>
-            <div className="card-body tab-content">
-                {codeSnippets.map((m) => (
-                    <div
-                        key={m.language}
-                        className={classNames("tab-pane px-3", {
-                            active: selectedLanguage === m.language,
-                        })}
-                        id={`${m.language}-tab`}
-                        role="tabpanel"
-                        aria-labelledby={`${m.language}-tab`}
-                        tabIndex={0}
-                    >
-                        <pre className="mb-1 bg-primary-subtle">
-                            <code
-                                className={`hljs language-${m.language} bg-primary-subtle p-0`}
-                                dangerouslySetInnerHTML={{
-                                    __html: hljs.highlight(m.code, {
-                                        language: m.language,
-                                    }).value,
-                                }}
-                            />
-                        </pre>
-                    </div>
-                ))}
-            </div>
-        </div>
+        <TabCard activeTab={selectedLanguage} onSelectTab={onSelectLanguage}>
+            {mapping.map(({ language, label, icon }, i) => (
+                <TabCard.Tab
+                    key={language}
+                    name={language}
+                    label={label}
+                    icon={icon}
+                    contentToCopy={codeSnippets[i].code}
+                >
+                    <pre className="mb-1 bg-primary-subtle">
+                        <code
+                            className={`hljs language-${language} bg-primary-subtle p-0`}
+                            dangerouslySetInnerHTML={{
+                                __html: hljs.highlight(codeSnippets[i].code, {
+                                    language: language,
+                                }).value,
+                            }}
+                        />
+                    </pre>
+                </TabCard.Tab>
+            ))}
+        </TabCard>
     )
 }
