@@ -1,3 +1,13 @@
+## [1.3.39](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.38...v1.3.39) (2025-11-18)
+
+
+### Bug Fixes
+
+* Add attributes to file download links ([ae4f8aa](https://github.com/molinfo-vienna/nerdd-frontend/commit/ae4f8aaaedef8fbbc6173240fb8531b36b534c4f))
+* Determine active header link ([9d876e9](https://github.com/molinfo-vienna/nerdd-frontend/commit/9d876e90f8768fa0b28dd3acbb5a79d30fb92f60))
+* Highlight active header link ([b2c3ef9](https://github.com/molinfo-vienna/nerdd-frontend/commit/b2c3ef908fdaa04e86e9a30057fbe03f6ce4d489))
+* Highlight active module ([105cacf](https://github.com/molinfo-vienna/nerdd-frontend/commit/105cacf3b57ad5231c179fcf2699e3ab0a845091))
+
 ## [1.3.38](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.37...v1.3.38) (2025-11-18)
 
 
