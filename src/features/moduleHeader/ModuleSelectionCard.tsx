@@ -47,7 +47,13 @@ export default function ModuleSelectionCard({
                                 alt={module.visibleName}
                                 className="card-img-top p-2"
                             />
-                            <span>{module.visibleName}</span>
+                            <span
+                                className={classNames("text-center", {
+                                    "fw-bold": module.id === activeModuleId,
+                                })}
+                            >
+                                {module.visibleName}
+                            </span>
                         </Link>
                     ))}
                 {isLoadingAllModules &&

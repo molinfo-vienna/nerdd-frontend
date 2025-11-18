@@ -16,9 +16,9 @@ function DownloadActionButton({
     job,
     outputFormats,
 }: DownloadActionButtonProps) {
-    const outputFiles = job.outputFiles ?? []
+    const outputFiles = job?.outputFiles ?? []
     const outputFileItems = outputFormats.map((format) => {
-        const fileFromStatus = outputFiles.find((f) => f.format == format)
+        const fileFromStatus = outputFiles.find((f) => f?.format === format)
         const status = fileFromStatus === undefined ? "disabled" : ""
         return {
             format,
@@ -27,7 +27,7 @@ function DownloadActionButton({
         }
     })
 
-    const disabled = outputFiles.length == 0
+    const disabled = outputFiles.length === 0
 
     const button = (
         <div className="btn-group dropdown-center" role="group">
@@ -50,6 +50,9 @@ function DownloadActionButton({
                             className={`dropdown-item ${item.status}`}
                             to={item.url}
                             target="_blank"
+                            rel="noopener noreferrer"
+                            aria-disabled={item.status === "disabled"}
+                            tabIndex={item.status === "disabled" ? -1 : 0}
                             download
                         >
                             <FaFileLines size={24} className="me-2" />
