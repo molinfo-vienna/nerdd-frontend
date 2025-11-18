@@ -1,3 +1,19 @@
+## [1.3.38](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.37...v1.3.38) (2025-11-18)
+
+
+### Bug Fixes
+
+* Add content to citation page ([a40b7fe](https://github.com/molinfo-vienna/nerdd-frontend/commit/a40b7fe1c40da8dd0a9dfc550acc1c43ee810181))
+* Create PublicationCard ([c9e9dd1](https://github.com/molinfo-vienna/nerdd-frontend/commit/c9e9dd11e8ffc534ceb719262a87894ce64292a0))
+* Extract TabCard as a generalization of ApiCard ([745c9d4](https://github.com/molinfo-vienna/nerdd-frontend/commit/745c9d4caa091f843d9f6e689766db02caee4e5d))
+* Implement simple bibtex syntax definition ([6369e28](https://github.com/molinfo-vienna/nerdd-frontend/commit/6369e28305abb6329ef31e93c5a378c7953949f0))
+* Let ApiCard use TabCard ([afc9a3c](https://github.com/molinfo-vienna/nerdd-frontend/commit/afc9a3c956c237b6452c2e076c4830dcf6c3572d))
+* Move CopyToClipboard component ([c40efaa](https://github.com/molinfo-vienna/nerdd-frontend/commit/c40efaae65fc4eea95318c74c0fa3b40e274ffb3))
+* Move CopyToClipboard component - part II ([fc0dbe4](https://github.com/molinfo-vienna/nerdd-frontend/commit/fc0dbe4f54f7eaf3f56b7c9b9825c1232f070437))
+* Move highlightjs theme to TabCard ([3c2bb8b](https://github.com/molinfo-vienna/nerdd-frontend/commit/3c2bb8bbff98c8379891103c063c012fd01fff24))
+* Move styles from ApiCard to TabCard ([8e1a951](https://github.com/molinfo-vienna/nerdd-frontend/commit/8e1a95137d71ff63a4c4c0e59c9fccc0f0fa4b69))
+* Update css import ([71a5e7a](https://github.com/molinfo-vienna/nerdd-frontend/commit/71a5e7a98d9df4b6878825065902c01d40255fec))
+
 ## [1.3.37](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.36...v1.3.37) (2025-11-14)
 
 
