@@ -222,7 +222,7 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
                                 <div className="d-flex align-items-center">
                                     {!submitRequested && !submitting && (
                                         <button
-                                            className="btn btn-lg btn-primary text-nowrap"
+                                            className="btn btn-lg btn-primary text-nowrap d-inline-flex align-items-center"
                                             onClick={() =>
                                                 handleDelayedSubmit(form)
                                             }
@@ -236,7 +236,7 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
                                     )}
                                     {(submitRequested || submitting) && (
                                         <button
-                                            className="btn btn-lg btn-primary text-nowrap"
+                                            className="btn btn-lg btn-primary text-nowrap d-inline-flex align-items-center"
                                             disabled
                                         >
                                             <span
