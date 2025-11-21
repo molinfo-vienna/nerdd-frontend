@@ -1,4 +1,4 @@
-import { useJobStatus, useModule } from "@/services/hooks"
+import { useJobStatus, useModule, useModules } from "@/services/hooks"
 import { Collapse } from "bootstrap"
 import classNames from "classnames"
 import { useCallback, useState } from "react"
@@ -14,6 +14,9 @@ export default function NavigationBar() {
     // get the module to receive the module name
     const { module } = useModule(false)
     const { job } = useJobStatus(false)
+
+    // get all modules for the module dropdown
+    const { modules } = useModules(false)
 
     // configure the breadcrumb elements based on the page
     let breadcrumbElements: Array<
@@ -213,6 +216,30 @@ export default function NavigationBar() {
                                 >
                                     About us
                                 </Link>
+                            </li>
+                            <li className="nav-item dropdown">
+                                <a
+                                    className="nav-link dropdown-toggle"
+                                    href="#"
+                                    role="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                >
+                                    Modules
+                                </a>
+                                <ul className="dropdown-menu">
+                                    {modules != null &&
+                                        modules.map((module) => (
+                                            <li key={module.id}>
+                                                <Link
+                                                    to={`/${module.id}`}
+                                                    className="dropdown-item"
+                                                >
+                                                    {module.visibleName}
+                                                </Link>
+                                            </li>
+                                        ))}
+                                </ul>
                             </li>
                             <li className="nav-item">
                                 <Link to="/api-docs" className="nav-link">
