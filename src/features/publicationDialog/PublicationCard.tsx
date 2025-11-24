@@ -37,11 +37,11 @@ function transformToApaRaw(publications: Publication[]): string {
 function transformToApa(
     publications: Publication[],
 ): JSX.Element[] | JSX.Element {
-    return publications.map((pub) => {
+    return publications.map((pub, index) => {
         const authors = pub.authors.map(formatAuthor).join(", ")
 
         return (
-            <p>
+            <p key={index}>
                 {authors} ({pub.year}). {pub.title}. <em>{pub.journal}</em>.{" "}
                 <a href={`https://doi.org/${pub.doi}`} className="text-nowrap">
                     {pub.doi}
@@ -120,7 +120,7 @@ const nerddPublication: Publication = {
 }
 
 type PublicationCardProps = {
-    publications: Publication[]
+    publications?: Publication[]
     style: string
     onSelectStyle: (language: string) => void
 }
@@ -130,14 +130,20 @@ export default function PublicationCard({
     style,
     onSelectStyle,
 }: PublicationCardProps) {
-    const augmentedPublications = [...publications, nerddPublication]
+    const isLoading = publications == null
 
     const styles = useMemo(() => {
+        if (isLoading) {
+            return []
+        }
+
+        const augmentedPublications = [...publications, nerddPublication]
+
         return mapping.map(({ transformRaw, transform }) => ({
             raw: transformRaw(augmentedPublications),
             content: transform(augmentedPublications),
         }))
-    }, [augmentedPublications])
+    }, [publications, isLoading])
 
     return (
         <TabCard activeTab={style} onSelectTab={onSelectStyle}>
@@ -147,9 +153,18 @@ export default function PublicationCard({
                     name={style}
                     label={label}
                     icon={icon}
-                    contentToCopy={styles[i].raw}
+                    contentToCopy={!isLoading ? styles[i].raw : undefined}
                 >
-                    {styles[i].content}
+                    {!isLoading && styles[i].content}
+                    {isLoading && (
+                        <p className="placeholder-glow">
+                            <span className="placeholder col-7"></span>{" "}
+                            <span className="placeholder col-4"></span>{" "}
+                            <span className="placeholder col-4"></span>{" "}
+                            <span className="placeholder col-6"></span>{" "}
+                            <span className="placeholder col-8"></span>{" "}
+                        </p>
+                    )}
                 </TabCard.Tab>
             ))}
         </TabCard>

@@ -15,6 +15,7 @@ export default function CopyToClipboard({ textToCopy }: CopyToClipboardProps) {
     return (
         <button
             className="btn btn-transparent text-decoration-none"
+            disabled={textToCopy === undefined}
             onClick={handleClick}
         >
             <FaRegClipboard size={18} />

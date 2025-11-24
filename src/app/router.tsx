@@ -6,7 +6,6 @@ import LoadingPage from "@/pages/LoadingPage"
 
 const LandingPage = lazy(() => import("@/pages/LandingPage"))
 const ApiDocsPage = lazy(() => import("@/pages/ApiDocsPage"))
-const CitationPage = lazy(() => import("@/pages/CitationPage"))
 const CreateJobPage = lazy(() => import("@/pages/CreateJobPage"))
 const AboutPage = lazy(() => import("@/pages/AboutPage"))
 const ResultsPage = lazy(() => import("@/pages/ResultsPage"))
@@ -35,11 +34,6 @@ export default function createRouter(children: React.ReactNode) {
                     element: <ApiDocsPage />,
                 },
                 {
-                    path: "/cite",
-                    id: "citeGeneral",
-                    element: <CitationPage />,
-                },
-                {
                     path: "/contact",
                     id: "contact",
                     element: <ConstructionPage />,
@@ -58,11 +52,6 @@ export default function createRouter(children: React.ReactNode) {
                     path: "/:moduleId/api",
                     id: "apiDocs",
                     element: <ApiDocsPage />,
-                },
-                {
-                    path: "/:moduleId/cite",
-                    id: "cite",
-                    element: <CitationPage />,
                 },
                 {
                     // put this route at the bottom to avoid conflicts with other routes

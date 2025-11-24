@@ -23,6 +23,7 @@ export default function TabCard({
     activeTab,
     onSelectTab,
     children,
+    className,
 }: TabCardProps) {
     const childrenArray = Children.toArray(children)
     const tabs: ReactElement<TabCardTabProps>[] = childrenArray
@@ -37,7 +38,12 @@ export default function TabCard({
     const selectedContent = selectedTab ? selectedTab.props.contentToCopy : ""
 
     return (
-        <div className="card rounded-4 hljs border-0 mb-5 bg-primary-subtle">
+        <div
+            className={classNames(
+                className,
+                "card rounded-4 hljs border-0 bg-primary-subtle",
+            )}
+        >
             <div className="card-header text-primary bg-primary-subtle border-0 pb-0 border-bottom">
                 <ul className="nav nav-pills ms-2" role="tablist">
                     {tabs.map(({ props: { name, label, icon } }) => (
