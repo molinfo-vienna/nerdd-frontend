@@ -1,3 +1,20 @@
+## [1.3.40](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.39...v1.3.40) (2025-11-24)
+
+
+### Bug Fixes
+
+* Add a dialog to show publications ([a0d983e](https://github.com/molinfo-vienna/nerdd-frontend/commit/a0d983ecf8650f386ba7b38ee4bb199464d4534c))
+* Allow deferred loading of publications ([d10c01f](https://github.com/molinfo-vienna/nerdd-frontend/commit/d10c01fa33e5928bf6421bfe7321a58c93d84a65))
+* Give HeaderLink an onClick prop ([0b0cbb0](https://github.com/molinfo-vienna/nerdd-frontend/commit/0b0cbb0f140203080d20d378429125733c832a3c))
+* Implement dialog base component ([f7136b9](https://github.com/molinfo-vienna/nerdd-frontend/commit/f7136b9782fd3b1ac7b830c51da74abc27d46ed3))
+* Let DeleteJobDialog use base Dialog component ([06e0ed0](https://github.com/molinfo-vienna/nerdd-frontend/commit/06e0ed098e7a0323b6bbf0fa3b03e1af902a720e))
+* Make dialog size optional ([0825468](https://github.com/molinfo-vienna/nerdd-frontend/commit/0825468d7690676e13d18d21cd5d736289708396))
+* Move publication components to publicationDialog feature ([a31a23a](https://github.com/molinfo-vienna/nerdd-frontend/commit/a31a23a91adbd0f023ad08f6a3427e5645d72549))
+* Open publication dialog on job creation page ([38813a5](https://github.com/molinfo-vienna/nerdd-frontend/commit/38813a5618de598b50ca96e81723332087609c96))
+* Remove CitationPage ([895fb3a](https://github.com/molinfo-vienna/nerdd-frontend/commit/895fb3afaf9c68db7813cd48aaf84e18b881ee01))
+* Remove margin in TabCard ([8223d08](https://github.com/molinfo-vienna/nerdd-frontend/commit/8223d0807ef733acb91b964791b91234e71c32e2))
+* Use PublicationDialog in ModuleHeader ([ef71be9](https://github.com/molinfo-vienna/nerdd-frontend/commit/ef71be966a83c99e2c3b26b5916a3e59e08fc7c8))
+
 ## [1.3.39](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.38...v1.3.39) (2025-11-18)
 
 
