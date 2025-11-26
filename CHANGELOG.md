@@ -1,3 +1,10 @@
+## [1.3.41](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.40...v1.3.41) (2025-11-26)
+
+
+### Bug Fixes
+
+* Remove citation button temporarily ([8969386](https://github.com/molinfo-vienna/nerdd-frontend/commit/89693867c34cac367ffda9aa80abb70b8cf675e3))
+
 ## [1.3.40](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.39...v1.3.40) (2025-11-24)
 
 
