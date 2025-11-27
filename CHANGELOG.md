@@ -1,3 +1,11 @@
+## [1.3.44](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.43...v1.3.44) (2025-11-27)
+
+
+### Bug Fixes
+
+* Do not interpret md files as react mdx ([426b72f](https://github.com/molinfo-vienna/nerdd-frontend/commit/426b72ff92b371f346990f0c9d915d5e2374393e))
+* Use ES2021 compile target ([b71c94f](https://github.com/molinfo-vienna/nerdd-frontend/commit/b71c94f348e183747fffecd5614372abe8d042f1))
+
 ## [1.3.43](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.42...v1.3.43) (2025-11-27)
 
 
