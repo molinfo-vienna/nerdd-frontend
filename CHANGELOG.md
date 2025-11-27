@@ -1,3 +1,10 @@
+## [1.3.43](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.42...v1.3.43) (2025-11-27)
+
+
+### Bug Fixes
+
+* Downgrade sass compiler ([459bc1c](https://github.com/molinfo-vienna/nerdd-frontend/commit/459bc1c1e4cc0b2b61d47e5ea55fad39f61d30ec))
+
 ## [1.3.42](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.41...v1.3.42) (2025-11-27)
 
 
