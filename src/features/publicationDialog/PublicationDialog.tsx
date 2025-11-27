@@ -1,5 +1,3 @@
-import { Publication } from "@/types"
-
 import { useCallback, useState } from "react"
 import Dialog from "../dialog/Dialog"
 import PublicationCard from "./PublicationCard"
@@ -7,13 +5,13 @@ import PublicationCard from "./PublicationCard"
 type PublicationDialogProps = {
     isOpen: boolean
     setIsOpen: (isOpen: boolean) => void
-    publications?: Publication[]
+    moduleId?: string
 }
 
 export default function PublicationDialog({
     isOpen,
     setIsOpen,
-    publications,
+    moduleId,
 }: PublicationDialogProps) {
     const [selectedStyle, setSelectedStyle] = useState("apa")
 
@@ -35,7 +33,7 @@ export default function PublicationDialog({
             onAccept={() => {}}
         >
             <PublicationCard
-                publications={publications}
+                moduleId={moduleId}
                 style={selectedStyle}
                 onSelectStyle={onSelectStyle}
             />

@@ -1,7 +1,7 @@
 #
 # BUILD
 #
-FROM node:23 AS build
+FROM node:24 AS build
 
 # create directory app as root user 
 # change ownership to user "node" (predifined in "node:alpine" image)

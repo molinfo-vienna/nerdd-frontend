@@ -2,9 +2,10 @@ import { useModules } from "@/services"
 import { type Module } from "@/types"
 import classNames from "classnames"
 import { useState } from "react"
-import { FaBookOpen, FaPlug } from "react-icons/fa6"
+import { FaBook, FaBookOpen, FaPlug } from "react-icons/fa6"
 import Markdown from "react-markdown"
 import { Link, useMatches } from "react-router-dom"
+import PublicationDialog from "../publicationDialog/PublicationDialog"
 import HeaderLink from "./HeaderLink"
 import ModuleSelectionCard from "./ModuleSelectionCard"
 
@@ -73,7 +74,7 @@ export default function ModuleHeader({
                                 caption="API"
                                 active={routeId === "apiDocs"}
                             />
-                            {/* <HeaderLink
+                            <HeaderLink
                                 Icon={FaBook}
                                 onClick={() => setCiteDialogOpen(true)}
                                 caption="Cite"
@@ -81,8 +82,8 @@ export default function ModuleHeader({
                             <PublicationDialog
                                 isOpen={citeDialogOpen}
                                 setIsOpen={setCiteDialogOpen}
-                                publications={module?.publications}
-                            /> */}
+                                moduleId={module?.id}
+                            />
                         </div>
                     )}
                     <div
