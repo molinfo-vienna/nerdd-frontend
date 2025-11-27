@@ -8,7 +8,10 @@ import tsconfigPaths from "vite-tsconfig-paths"
 
 export default defineConfig(({ mode }) => ({
     plugins: [
-        mdx({ rehypePlugins: [rehypeSlug] }) as PluginOption,
+        mdx({
+            rehypePlugins: [rehypeSlug],
+            include: /\.mdx$/, // Only process .mdx files, not .md files
+        }) as PluginOption,
         react(),
         visualizer({
             open: true,
