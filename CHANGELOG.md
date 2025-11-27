@@ -1,3 +1,16 @@
+## [1.3.42](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.41...v1.3.42) (2025-11-27)
+
+
+### Bug Fixes
+
+* Add citation-js dependencies ([e2bef21](https://github.com/molinfo-vienna/nerdd-frontend/commit/e2bef21f2727acf629f495ed5b01b36b2a6da664))
+* Add endpoint for publications ([13081ec](https://github.com/molinfo-vienna/nerdd-frontend/commit/13081ec39fe13659cf08ab7c15a3d6a3128f05d8))
+* Copy nerdd publication to separate file ([ad637a4](https://github.com/molinfo-vienna/nerdd-frontend/commit/ad637a4ec60cc359d0ae7bb50483b4a90dcb5554))
+* Enable citation links ([7644f8f](https://github.com/molinfo-vienna/nerdd-frontend/commit/7644f8f31588e50dcfedeaa2edafd3b29ab52f3b))
+* Fetch publications on demand ([b268ec8](https://github.com/molinfo-vienna/nerdd-frontend/commit/b268ec8b4e74aac168b6c7265ca8fb5c529d00c3))
+* Increase node version in container files ([8deb7b7](https://github.com/molinfo-vienna/nerdd-frontend/commit/8deb7b79f4ee3cc95baaa9239b209301fac5695c))
+* Use citation-js for formatting publications ([1d929e2](https://github.com/molinfo-vienna/nerdd-frontend/commit/1d929e279d545ad7058e48d6fe54ee8aa035e295))
+
 ## [1.3.41](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.40...v1.3.41) (2025-11-26)
 
 
