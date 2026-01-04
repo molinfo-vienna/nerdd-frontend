@@ -38,7 +38,7 @@ export default function Footer() {
     const partners = module?.partners ?? defaultPartners
 
     return (
-        <footer className="bd-footer text-body-secondary">
+        <footer className="text-body-secondary">
             {/*
              * border-top: a line to separate footer from content
              * py-4: space between line and content
