@@ -38,9 +38,13 @@ const Layout = ({ children }: LayoutProps) => {
     )
 
     return (
-        <>
-            {/* min-vh-100: content fills screen and scrolling down reveals footer */}
-            <div className="d-flex flex-column min-vh-100">
+        <div className="page d-flex flex-column">
+            {/* 
+                The class page-content aims to make the footer either 
+                a) fully visible (for long screens) or
+                b) fully hidden (for short screens).
+            */}
+            <div className="page-content d-flex flex-column">
                 {/* {developmentVersion && (
                     <div className="text-center bg-danger-subtle px-3 py-2">
                         This web service is currently undergoing revision and
@@ -63,7 +67,7 @@ const Layout = ({ children }: LayoutProps) => {
             </div>
 
             <Footer />
-        </>
+        </div>
     )
 }
 
