@@ -1,3 +1,11 @@
+## [1.3.46](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.45...v1.3.46) (2026-01-07)
+
+
+### Bug Fixes
+
+* Delete fetchPriority ([3c3eb1c](https://github.com/molinfo-vienna/nerdd-frontend/commit/3c3eb1cd715d3a4a7ffc5f9f70132c331b9aaf73))
+* Use display=swap for deferred font loading ([5849224](https://github.com/molinfo-vienna/nerdd-frontend/commit/584922433cc80bd8f49a2c07011cd1b7f1fd5e3d))
+
 ## [1.3.45](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.44...v1.3.45) (2026-01-07)
 
 
