@@ -1,3 +1,13 @@
+## [1.3.45](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.44...v1.3.45) (2026-01-07)
+
+
+### Bug Fixes
+
+* Decrease size of institution logos ([baf006b](https://github.com/molinfo-vienna/nerdd-frontend/commit/baf006bc1311c1d73b436911a216e82fce16f79a))
+* Include landing page in main bundle to improve initial loading time ([89ec3fc](https://github.com/molinfo-vienna/nerdd-frontend/commit/89ec3fca6addd8a43110e7f0d21931d5348d6cdd))
+* Use deferred loading for logo images ([ac6a1c6](https://github.com/molinfo-vienna/nerdd-frontend/commit/ac6a1c66becd150c2618d54dfe51965e21f4d359))
+* Use lazy loading for PublicationCard ([fa58140](https://github.com/molinfo-vienna/nerdd-frontend/commit/fa5814071bdcfb6296596e2d5893f50b029824f2))
+
 ## [1.3.44](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.43...v1.3.44) (2025-11-27)
 
 
