@@ -26,11 +26,11 @@ export default function Footer() {
     const defaultPartners = [
         {
             name: "University of Vienna",
-            logo: "/resources/images/logo_vienna.gif",
+            logo: "/resources/images/logo_vienna.png",
         },
         {
             name: "University of Hamburg",
-            logo: "/resources/images/logo_hamburg.gif",
+            logo: "/resources/images/logo_hamburg.png",
         },
     ]
 
@@ -192,6 +192,9 @@ export default function Footer() {
                                         <img
                                             src={partner.logo}
                                             alt={partner.name}
+                                            loading="lazy"
+                                            decoding="async"
+                                            fetchPriority="low"
                                             className="img-fluid"
                                             style={{
                                                 maxHeight: "5rem",

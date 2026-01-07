@@ -2,9 +2,9 @@ import { lazy } from "react"
 import { createBrowserRouter } from "react-router-dom"
 
 import ForwardError from "@/features/errorHandling/ForwardError"
+import LandingPage from "@/pages/LandingPage"
 import LoadingPage from "@/pages/LoadingPage"
 
-const LandingPage = lazy(() => import("@/pages/LandingPage"))
 const ApiDocsPage = lazy(() => import("@/pages/ApiDocsPage"))
 const CreateJobPage = lazy(() => import("@/pages/CreateJobPage"))
 const AboutPage = lazy(() => import("@/pages/AboutPage"))
