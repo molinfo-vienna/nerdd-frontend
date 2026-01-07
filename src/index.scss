@@ -7,12 +7,8 @@
 // After settling on a font you should 
 // * search your font on fontsource.org
 // * install it locally via npm install @fontsource/<font-name>
-// * import it in your scss file like this:
-// @import "@fontsource/<font-name>/400.css";
-
-// load all fonts
-@import "@fontsource/overpass/latin-500.css";
-@import "@fontsource/open-sans/latin-400.css";
+// * import it in index.tsx like this:
+//     import "@fontsource/<font-name>/400.css?display=swap"
 
 // fonts tried for main body text
 // * Martel Sans: weird spacing
