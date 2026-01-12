@@ -1,45 +1,57 @@
 import classNames from "classnames"
-import { type ReactNode, type RefObject, useRef } from "react"
+import { type ReactNode, useCallback, useRef } from "react"
+import { TooltipPositionProvider } from "./TooltipPositionReferenceContext"
 import Tooltip from "./Tooltip"
 
 type RowProps = {
     helpText?: string
     children: ReactNode
-    positionReference?: RefObject<HTMLElement | null>
     className?: string
 }
 
-export default function Row({
-    helpText,
-    children,
-    positionReference,
-    className,
-}: RowProps) {
-    const ref = useRef<HTMLDivElement>(null)
+export default function Row({ helpText, children, className }: RowProps) {
+    const fallbackTooltipPositionReference = useRef<HTMLDivElement>(null)
+    const internalTooltipPositionReference = useRef<HTMLElement>(null)
 
-    // we always put the anchor of the tooltip centered w.r.t. the first child
-    // the remaining children are rendered, but do not influence the tooltip position
+    const setFallbackTooltipPositionReference = useCallback(
+        (element: HTMLDivElement | null) => {
+            fallbackTooltipPositionReference.current = element
+            if (internalTooltipPositionReference.current === null) {
+                internalTooltipPositionReference.current = element
+            }
+        },
+        [],
+    )
+
+    const setTooltipPositionReference = useCallback(
+        (element: HTMLElement | null) => {
+            internalTooltipPositionReference.current =
+                element ?? fallbackTooltipPositionReference.current
+        },
+        [],
+    )
+
+    // The connection line starts at the first child. The tooltip text itself remains
+    // aligned to the right edge of this row.
     const [firstChild, ...restChildren] = Array.isArray(children)
         ? children
         : [children]
 
     return (
-        <div className={classNames(className, "mb-3")}>
-            <Tooltip
-                helpText={helpText}
-                positionReference={
-                    positionReference === undefined ? ref : positionReference
-                }
-            >
-                {/* again: tooltip is centered at the first child */}
-                {positionReference === undefined ? (
-                    <div ref={ref}>{firstChild}</div>
-                ) : (
-                    firstChild
-                )}
-                {/* remaining children are also rendered */}
-                {restChildren}
-            </Tooltip>
-        </div>
+        <TooltipPositionProvider value={setTooltipPositionReference}>
+            <div className={classNames(className, "mb-3")}>
+                <Tooltip
+                    helpText={helpText}
+                    tooltipPositionReference={internalTooltipPositionReference}
+                >
+                    {/* The remaining children do not influence the connection line. */}
+                    <div ref={setFallbackTooltipPositionReference}>
+                        {firstChild}
+                    </div>
+                    {/* remaining children are also rendered */}
+                    {restChildren}
+                </Tooltip>
+            </div>
+        </TooltipPositionProvider>
     )
 }
