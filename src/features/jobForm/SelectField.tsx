@@ -1,6 +1,6 @@
 import classNames from "classnames"
-import { type RefObject } from "react"
 import { type FieldRenderProps } from "react-final-form"
+import { useTooltipPositionReference } from "./TooltipPositionReferenceContext"
 
 type SelectOption = {
     label: string
@@ -10,7 +10,6 @@ type SelectOption = {
 type SelectFieldProps = FieldRenderProps<string> & {
     label?: string
     choices: SelectOption[]
-    positionReference?: RefObject<HTMLSelectElement>
     className?: string
 }
 
@@ -19,10 +18,10 @@ export default function SelectField({
     meta,
     label,
     choices,
-    positionReference,
     className,
 }: SelectFieldProps) {
     const error = meta.error || meta.submitError
+    const tooltipPositionReference = useTooltipPositionReference()
     return (
         <div className="form-floating mb-3">
             <select
@@ -30,7 +29,7 @@ export default function SelectField({
                     "is-invalid": meta.touched && error,
                 })}
                 {...input}
-                ref={positionReference}
+                ref={tooltipPositionReference}
             >
                 <option disabled value="">
                     Select...

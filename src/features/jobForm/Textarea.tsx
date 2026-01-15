@@ -1,9 +1,8 @@
 import classNames from "classnames"
-import { type RefObject } from "react"
 import { type FieldRenderProps } from "react-final-form"
+import { useTooltipPositionReference } from "./TooltipPositionReferenceContext"
 
 type TextareaProps = FieldRenderProps<string> & {
-    positionReference?: RefObject<HTMLTextAreaElement | null>
     rows?: number
     placeholder?: string
     className?: string
@@ -12,12 +11,12 @@ type TextareaProps = FieldRenderProps<string> & {
 export default function Textarea({
     input,
     meta,
-    positionReference,
     rows,
     placeholder,
     className,
 }: TextareaProps) {
     const error = meta.error || meta.submitError
+    const tooltipPositionReference = useTooltipPositionReference()
     return (
         <>
             <textarea
@@ -27,7 +26,7 @@ export default function Textarea({
                     "is-invalid": meta.touched && error,
                 })}
                 {...input}
-                ref={positionReference}
+                ref={tooltipPositionReference}
             ></textarea>
             {meta.touched && error && (
                 <div className="invalid-feedback">{error}</div>

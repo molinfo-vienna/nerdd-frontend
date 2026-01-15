@@ -1,11 +1,10 @@
 import classNames from "classnames"
-import { type RefObject } from "react"
 import { type FieldRenderProps } from "react-final-form"
+import { useTooltipPositionReference } from "./TooltipPositionReferenceContext"
 
 type TextFieldProps = FieldRenderProps<string> & {
     label?: string
     placeholder?: string
-    positionReference?: RefObject<HTMLInputElement | null>
 }
 
 export default function TextField({
@@ -13,9 +12,9 @@ export default function TextField({
     meta,
     label,
     placeholder,
-    positionReference,
 }: TextFieldProps) {
     const error = meta.error || meta.submitError
+    const tooltipPositionReference = useTooltipPositionReference()
     return (
         <div className="form-floating mb-3">
             <input
@@ -25,7 +24,7 @@ export default function TextField({
                     "is-invalid": meta.touched && error,
                 })}
                 {...input}
-                ref={positionReference}
+                ref={tooltipPositionReference}
             />
             {label && (
                 <label htmlFor={input.name} className="form-label">

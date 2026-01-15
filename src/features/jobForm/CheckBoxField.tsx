@@ -1,10 +1,9 @@
 import classNames from "classnames"
-import { type RefObject } from "react"
 import { type FieldRenderProps } from "react-final-form"
+import { useTooltipPositionReference } from "./TooltipPositionReferenceContext"
 
 type CheckBoxFieldProps = FieldRenderProps<boolean> & {
     label?: string
-    positionReference?: RefObject<HTMLInputElement | null>
     className?: string
 }
 
@@ -12,10 +11,10 @@ export default function CheckBoxField({
     input,
     meta,
     label,
-    positionReference,
     className,
 }: CheckBoxFieldProps) {
     const error = meta.error || meta.submitError
+    const tooltipPositionReference = useTooltipPositionReference()
     return (
         <div className="form-check form-check-lg">
             <input
@@ -30,7 +29,7 @@ export default function CheckBoxField({
                 <label
                     htmlFor={input.name}
                     className="form-check-label fs-6 align-middle"
-                    ref={positionReference}
+                    ref={tooltipPositionReference}
                 >
                     {label}
                 </label>
