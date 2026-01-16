@@ -1,5 +1,7 @@
 import {
+    autoUpdate,
     arrow,
+    type Middleware,
     safePolygon,
     useClick,
     useDismiss,
@@ -11,8 +13,10 @@ import {
     useTransitionStyles,
 } from "@floating-ui/react"
 import {
+    type CSSProperties,
     type ReactNode,
     type RefObject,
+    useCallback,
     useEffect,
     useRef,
     useState,
@@ -23,27 +27,60 @@ import "./style.css"
 type TooltipProps = {
     children: ReactNode
     helpText?: string
-    positionReference: RefObject<HTMLElement | null>
+    tooltipPositionReference: RefObject<HTMLElement | null>
 }
 
 export default function Tooltip({
     children,
     helpText,
-    positionReference,
+    tooltipPositionReference,
 }: TooltipProps) {
     const [isOpen, setIsOpen] = useState(false)
 
     const arrowRef = useRef(null)
+    const rowReferenceRef = useRef<HTMLDivElement>(null)
+
+    const alignToRowEnd: Middleware = {
+        name: "alignToRowEnd",
+        fn({ x, rects }) {
+            const rowRight =
+                rowReferenceRef.current?.getBoundingClientRect().right
+            const controlRight = rects.reference.x + rects.reference.width
+            const connectionLineExtension = Math.max(
+                0,
+                (rowRight ?? controlRight) - controlRight,
+            )
+
+            return {
+                x: x + connectionLineExtension,
+                data: { connectionLineExtension },
+            }
+        },
+    }
 
     // check if the help text is empty
     const hasHelpText = helpText != null && helpText.trim().length > 0
 
-    const { refs, floatingStyles, context } = useFloating({
+    const { refs, floatingStyles, context, middlewareData } = useFloating({
         placement: "right",
         open: isOpen,
         onOpenChange: setIsOpen,
-        middleware: [arrow({ element: arrowRef })],
+        middleware: [alignToRowEnd, arrow({ element: arrowRef })],
+        whileElementsMounted: autoUpdate,
     })
+
+    const setRowReference = useCallback(
+        (element: HTMLDivElement | null) => {
+            rowReferenceRef.current = element
+            refs.setReference(element)
+        },
+        [refs],
+    )
+
+    const connectionLineExtension =
+        (middlewareData.alignToRowEnd?.connectionLineExtension as
+            | number
+            | undefined) ?? 0
 
     // fade-in and fade-out transition styles
     const { isMounted, styles } = useTransitionStyles(context, {
@@ -95,14 +132,14 @@ export default function Tooltip({
     ])
 
     useEffect(() => {
-        if (positionReference.current) {
-            refs.setPositionReference(positionReference.current)
+        if (tooltipPositionReference.current) {
+            refs.setPositionReference(tooltipPositionReference.current)
         }
-    }, [positionReference, refs])
+    }, [tooltipPositionReference, refs])
 
     return (
         <div>
-            <div ref={refs.setReference} {...getReferenceProps()}>
+            <div ref={setRowReference} {...getReferenceProps()}>
                 {children}
             </div>
             {isMounted && hasHelpText && (
@@ -127,6 +164,11 @@ export default function Tooltip({
                             <div
                                 className="align-self-stretch connection-line"
                                 ref={arrowRef}
+                                style={
+                                    {
+                                        "--connection-line-extension": `${connectionLineExtension}px`,
+                                    } as CSSProperties
+                                }
                             >
                                 {/*
                                  * We need another flexbox for centering the line
