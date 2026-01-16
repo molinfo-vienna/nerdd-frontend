@@ -1,6 +1,5 @@
 import {
     autoUpdate,
-    arrow,
     type Middleware,
     safePolygon,
     useClick,
@@ -37,7 +36,6 @@ export default function Tooltip({
 }: TooltipProps) {
     const [isOpen, setIsOpen] = useState(false)
 
-    const arrowRef = useRef(null)
     const rowReferenceRef = useRef<HTMLDivElement>(null)
 
     const alignToRowEnd: Middleware = {
@@ -65,7 +63,7 @@ export default function Tooltip({
         placement: "right",
         open: isOpen,
         onOpenChange: setIsOpen,
-        middleware: [alignToRowEnd, arrow({ element: arrowRef })],
+        middleware: [alignToRowEnd],
         whileElementsMounted: autoUpdate,
     })
 
@@ -163,7 +161,6 @@ export default function Tooltip({
                              */}
                             <div
                                 className="align-self-stretch connection-line"
-                                ref={arrowRef}
                                 style={
                                     {
                                         "--connection-line-extension": `${connectionLineExtension}px`,
