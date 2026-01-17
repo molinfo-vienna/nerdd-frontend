@@ -9,9 +9,16 @@ type RowProps = {
 }
 
 export default function Row({ helpText, children, className }: RowProps) {
+    // check if the help text is empty
+    const hasHelpText = helpText != null && helpText.trim().length > 0
+
     return (
         <div className={classNames(className, "mb-3")}>
-            <Tooltip helpText={helpText}>{children}</Tooltip>
+            {hasHelpText ? (
+                <Tooltip helpText={helpText}>{children}</Tooltip>
+            ) : (
+                children
+            )}
         </div>
     )
 }

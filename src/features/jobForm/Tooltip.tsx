@@ -24,7 +24,7 @@ import "./style.css"
 
 type TooltipProps = {
     children: ReactNode
-    helpText?: string
+    helpText: string
 }
 
 export default function Tooltip({ children, helpText }: TooltipProps) {
@@ -50,9 +50,6 @@ export default function Tooltip({ children, helpText }: TooltipProps) {
             }
         },
     }
-
-    // check if the help text is empty
-    const hasHelpText = helpText != null && helpText.trim().length > 0
 
     const { refs, floatingStyles, context, middlewareData } = useFloating({
         placement: "right",
@@ -142,7 +139,7 @@ export default function Tooltip({ children, helpText }: TooltipProps) {
                     {children}
                 </div>
             </TooltipPositionProvider>
-            {isMounted && hasHelpText && (
+            {isMounted && (
                 <div
                     ref={refs.setFloating}
                     style={floatingStyles}
