@@ -14,29 +14,24 @@ import {
 import {
     type CSSProperties,
     type ReactNode,
-    type RefObject,
     useCallback,
-    useEffect,
     useRef,
     useState,
 } from "react"
 import Markdown from "react-markdown"
+import { TooltipPositionProvider } from "./TooltipPositionReferenceContext"
 import "./style.css"
 
 type TooltipProps = {
     children: ReactNode
     helpText?: string
-    tooltipPositionReference: RefObject<HTMLElement | null>
 }
 
-export default function Tooltip({
-    children,
-    helpText,
-    tooltipPositionReference,
-}: TooltipProps) {
+export default function Tooltip({ children, helpText }: TooltipProps) {
     const [isOpen, setIsOpen] = useState(false)
 
     const rowReferenceRef = useRef<HTMLDivElement>(null)
+    const tooltipPositionReferenceRef = useRef<HTMLElement>(null)
 
     const alignToRowEnd: Middleware = {
         name: "alignToRowEnd",
@@ -71,6 +66,17 @@ export default function Tooltip({
         (element: HTMLDivElement | null) => {
             rowReferenceRef.current = element
             refs.setReference(element)
+            refs.setPositionReference(
+                tooltipPositionReferenceRef.current ?? element,
+            )
+        },
+        [refs],
+    )
+
+    const setTooltipPositionReference = useCallback(
+        (element: HTMLElement | null) => {
+            tooltipPositionReferenceRef.current = element
+            refs.setPositionReference(element ?? rowReferenceRef.current)
         },
         [refs],
     )
@@ -129,17 +135,13 @@ export default function Tooltip({
         role,
     ])
 
-    useEffect(() => {
-        if (tooltipPositionReference.current) {
-            refs.setPositionReference(tooltipPositionReference.current)
-        }
-    }, [tooltipPositionReference, refs])
-
     return (
         <div>
-            <div ref={setRowReference} {...getReferenceProps()}>
-                {children}
-            </div>
+            <TooltipPositionProvider value={setTooltipPositionReference}>
+                <div ref={setRowReference} {...getReferenceProps()}>
+                    {children}
+                </div>
+            </TooltipPositionProvider>
             {isMounted && hasHelpText && (
                 <div
                     ref={refs.setFloating}
