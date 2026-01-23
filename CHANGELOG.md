@@ -1,3 +1,12 @@
+## [1.3.47](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.46...v1.3.47) (2026-01-23)
+
+
+### Bug Fixes
+
+* Add ContactCard component ([0360dfe](https://github.com/molinfo-vienna/nerdd-frontend/commit/0360dfe9c0a699cfbeedf2dcabd5a4f6cf970021))
+* Add ContactPage ([4fd436c](https://github.com/molinfo-vienna/nerdd-frontend/commit/4fd436c96369e435a167270f75dfa49de9e832dc))
+* Link /contact route to ContactPage ([4475782](https://github.com/molinfo-vienna/nerdd-frontend/commit/4475782d9c9a71b1e33db436eb84512c55b55937))
+
 ## [1.3.46](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.45...v1.3.46) (2026-01-07)
 
 
