@@ -1,3 +1,11 @@
+## [1.3.48](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.47...v1.3.48) (2026-01-25)
+
+
+### Bug Fixes
+
+* Improve interactivity of processing time tangle ([a93ae41](https://github.com/molinfo-vienna/nerdd-frontend/commit/a93ae415b84ffbfbcf975c2ca9cd154bf1c7e8d9))
+* Wrap Tangle for processing time in memo ([57451d6](https://github.com/molinfo-vienna/nerdd-frontend/commit/57451d6e5a8ee5083cef0623d8ec89b42aa29b50))
+
 ## [1.3.47](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.46...v1.3.47) (2026-01-23)
 
 
