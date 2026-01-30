@@ -1,3 +1,12 @@
+## [1.3.49](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.48...v1.3.49) (2026-01-30)
+
+
+### Bug Fixes
+
+* Load tweak panel reducer only in dev mode ([3dd6af6](https://github.com/molinfo-vienna/nerdd-frontend/commit/3dd6af602a76bdd8c94aca8ebf2d9c0baa61c781))
+* Use consistent names for build chunks ([398e9c5](https://github.com/molinfo-vienna/nerdd-frontend/commit/398e9c5523f2499047946e531a51a0a75fbd87e6))
+* Use manual chunking to reduce roundtrips ([7a597b2](https://github.com/molinfo-vienna/nerdd-frontend/commit/7a597b27bff3a2343fc2f41e0835359f293ad4fb))
+
 ## [1.3.48](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.47...v1.3.48) (2026-01-25)
 
 
