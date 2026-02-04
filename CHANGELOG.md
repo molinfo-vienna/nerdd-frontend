@@ -1,3 +1,14 @@
+## [1.3.50](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.49...v1.3.50) (2026-02-04)
+
+
+### Bug Fixes
+
+* Add nginx server conf ([278bbdc](https://github.com/molinfo-vienna/nerdd-frontend/commit/278bbdc9497de8ec54ebf5e6a4e807ca158b7d40))
+* Install brotli compression library and nginx extension ([dd0d86c](https://github.com/molinfo-vienna/nerdd-frontend/commit/dd0d86c5b87e14b7189ac2669641d9e4cb460cb2))
+* Move security headers into separate file ([56f65f3](https://github.com/molinfo-vienna/nerdd-frontend/commit/56f65f371da6b4e69c1084705a2434832102c6b4))
+* Update node version in Dockerfile ([8db42b7](https://github.com/molinfo-vienna/nerdd-frontend/commit/8db42b759144946ded7d4ff724d0185c374cf45a))
+* Use --no-cache option in Dockerfile ([12fdd8c](https://github.com/molinfo-vienna/nerdd-frontend/commit/12fdd8ce3a774b28d2ce3dc139fdf232d559f44e))
+
 ## [1.3.49](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.48...v1.3.49) (2026-01-30)
 
 
