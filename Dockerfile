@@ -1,14 +1,13 @@
 #
 # BUILD
 #
-FROM node:24 AS build
+FROM node:25.6.0-bullseye-slim AS build
 
-# create directory app as root user 
-# change ownership to user "node" (predifined in "node:alpine" image)
-RUN mkdir /app && chown -R node:node /app
+# create app directory
 WORKDIR /app
+RUN chown node:node /app
 
-# do the rest as user "node"
+# switch to non-root user
 USER node
 
 # install dependencies
@@ -19,17 +18,24 @@ RUN npm ci && npm cache clean --force
 COPY --chown=node:node . .
 
 # DISABLE_ESLINT_PLUGIN=true: compile despite eslint warnings
-RUN DISABLE_ESLINT_PLUGIN=true \
-    npm run build
+ENV DISABLE_ESLINT_PLUGIN=true
+RUN npm run build
 
 
 #
 # RUN SERVER
 #
-FROM nginx:1.27.3
+FROM alpine:3.19
+
+# install nginx and brotli module
+RUN apk add --no-cache brotli nginx nginx-mod-http-brotli
 
 # necessary to display the image on Github
 LABEL org.opencontainers.image.source="https://github.com/molinfo-vienna/nerdd-frontend"
+
+# copy custom nginx config
+COPY ./nginx/server.conf /etc/nginx/http.d/server.conf
+COPY ./nginx/security-headers.conf /etc/nginx/http.d/security-headers.conf
 
 # copy the built React app to Nginx's web server directory
 COPY --from=build /app/build /usr/share/nginx/html
