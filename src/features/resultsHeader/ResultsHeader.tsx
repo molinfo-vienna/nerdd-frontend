@@ -31,12 +31,15 @@ export default function ResultsHeader({
                 >
                     {/* Progress bar */}
                     <ProgressBar
-                        numEntriesProcessed={job.numEntriesProcessed}
-                        numEntriesTotal={job.numEntriesTotal}
+                        value={job.numEntriesProcessed}
+                        max={job.numEntriesTotal}
+                        width={90}
+                        height={90}
+                        className="mx-3"
                     />
                     {/* Module name & status */}
                     <div className="d-flex flex-column py-3 me-lg-3">
-                        {/* mb-n1: use negative margin to compensate for font with excessive 
+                        {/* mb-n1: use negative margin to compensate for font with excessive
                             margin at the bottom */}
                         <h1 className="text-primary fw-bold my-auto mb-n1">
                             {module.visibleName}

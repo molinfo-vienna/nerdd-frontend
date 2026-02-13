@@ -4,6 +4,7 @@ export interface File {
     filename: string
     id: string
     status: "pending" | "success" | "error" | "deleting"
+    progress: number
     errorMessage?: string
     sourceId?: string
     sourceData?: string
@@ -26,6 +27,7 @@ const fileFieldSlice = createSlice({
                 filename: action.payload.filename,
                 id: action.payload.id,
                 status: "pending",
+                progress: 0,
                 sourceId: null,
             })
         },
@@ -33,6 +35,13 @@ const fileFieldSlice = createSlice({
             const fileField = state[action.payload.fileFieldName]
             const file = fileField.find((file) => file.id === action.payload.id)
             file.status = action.payload.status
+        },
+        setProgress(state, action) {
+            const fileField = state[action.payload.fileFieldName]
+            const file = fileField.find((file) => file.id === action.payload.id)
+            if (file !== undefined) {
+                file.progress = action.payload.progress
+            }
         },
         setErrorMessage(state, action) {
             const fileField = state[action.payload.fileFieldName]
@@ -68,6 +77,7 @@ export const {
     deleteFileField,
     addPendingFile,
     setStatus,
+    setProgress,
     setErrorMessage,
     deleteFile,
     setSourceData,
