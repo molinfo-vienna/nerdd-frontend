@@ -1,3 +1,18 @@
+## [1.3.51](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.50...v1.3.51) (2026-02-13)
+
+
+### Bug Fixes
+
+* Add base query function that allows tracking upload progress ([3e8a6d3](https://github.com/molinfo-vienna/nerdd-frontend/commit/3e8a6d3a4889ae3a5d712f46436c392e62ce8575))
+* Add onUploadProgress parameter to addSource endpoint ([0eddff0](https://github.com/molinfo-vienna/nerdd-frontend/commit/0eddff0a058423ac596883d26b016634995cc85b))
+* Add progress field to file state ([709446e](https://github.com/molinfo-vienna/nerdd-frontend/commit/709446e0698996b10ece6d1e5211ecf65568b532))
+* Align element in FileItem vertically ([c8e0b61](https://github.com/molinfo-vienna/nerdd-frontend/commit/c8e0b61a5fcaba7484be992ce66d4ad5da9900e3))
+* Forward progress updates to FileItem components ([b27a1db](https://github.com/molinfo-vienna/nerdd-frontend/commit/b27a1db92611f744c18c2eb86b5312adadd06240))
+* Prefer bootstrap classes in ProgressBar ([4dc8776](https://github.com/molinfo-vienna/nerdd-frontend/commit/4dc8776410d2a83926c75b880b56bcee9b140163))
+* Show upload progress in FileItem component ([8b481d4](https://github.com/molinfo-vienna/nerdd-frontend/commit/8b481d4cf2e6c2893139493f773e2797f84af015))
+* Specify progress bar size explicitly ([b9ea76b](https://github.com/molinfo-vienna/nerdd-frontend/commit/b9ea76b1bac6d682438c3cbe3d62a504b6d5847f))
+* Use ProgressBar to show upload progress in FileItem ([ac0431b](https://github.com/molinfo-vienna/nerdd-frontend/commit/ac0431b15a10260da889338ff715dc1944f470fa))
+
 ## [1.3.50](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.49...v1.3.50) (2026-02-04)
 
 
