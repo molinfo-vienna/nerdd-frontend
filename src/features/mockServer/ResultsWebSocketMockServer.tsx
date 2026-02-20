@@ -1,15 +1,12 @@
+import { useDevelopmentAppSelector } from "@/app/hooks"
 import { Server as SocketServer } from "mock-socket"
 import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
+import { DebugJob } from "../debug/debugSlice"
 import { generateResult } from "./fake"
 import recursiveCamelToSnakeCase from "./recursiveCamelToSnakeCase"
 
 type ResultsWebSocketMockServerProps = {
-    job: {
-        id: string | number
-        jobType: string
-        numEntriesProcessed: number
-    }
+    job: DebugJob
     pageSize: number
 }
 
@@ -18,9 +15,11 @@ export default function ResultsWebSocketMockServer({
     pageSize,
 }: ResultsWebSocketMockServerProps) {
     const [socketServer, setSocketServer] = useState<SocketServer | null>(null)
-    const moduleId = job.jobType
+    const jobType = job.jobType
 
-    const module = useSelector((state) => state.debug.moduleConfigs[moduleId])
+    const module = useDevelopmentAppSelector(
+        (state) => state.debug.moduleConfigs[jobType],
+    )
 
     // create a socket server
     useEffect(() => {
@@ -28,7 +27,7 @@ export default function ResultsWebSocketMockServer({
         const wsProtocol = window.location.protocol === "https:" ? "wss" : "ws"
         const wsHost = window.location.hostname
         const wsPort = window.location.port ? `:${window.location.port}` : ""
-        const wsUrl = `${wsProtocol}://${wsHost}${wsPort}/websocket/${moduleId}/jobs/${job.id}/results`
+        const wsUrl = `${wsProtocol}://${wsHost}${wsPort}/websocket/${jobType}/jobs/${job.id}/results`
 
         const server = new SocketServer(wsUrl)
 
@@ -42,7 +41,7 @@ export default function ResultsWebSocketMockServer({
             server.clients().forEach((client) => client.close())
             server.stop()
         }
-    }, [moduleId, job.id])
+    }, [jobType, job.id])
 
     // send a new result if numEntriesProcessed changes
     useEffect(() => {

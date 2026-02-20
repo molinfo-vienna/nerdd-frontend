@@ -1,3 +1,4 @@
+import { ResultProperty } from "@/types"
 import { faker } from "@faker-js/faker"
 
 const problemTypes = [
@@ -21,7 +22,7 @@ function generateProblem() {
     ]
 }
 
-export function generateResultPropertyValue(resultProperty) {
+export function generateResultPropertyValue(resultProperty: ResultProperty) {
     if (resultProperty.choices !== undefined) {
         return faker.helpers.arrayElement(resultProperty.choices).value
     } else {
@@ -29,7 +30,7 @@ export function generateResultPropertyValue(resultProperty) {
     }
 }
 
-export function generateValue(dataType) {
+export function generateValue(dataType: string) {
     if (dataType === "string") {
         return faker.lorem.words({ min: 1, max: 4 })
     } else if (dataType === "bool") {

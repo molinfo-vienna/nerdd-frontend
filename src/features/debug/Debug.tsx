@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from "@/app/hooks"
+import { useAppDispatch, useDevelopmentAppSelector } from "@/app/hooks"
 import MockServer from "@/features/mockServer/MockServer"
 import TweakPanel from "@/features/tweakPanel/TweakPanel"
 import { useDebounce, useLocalStorage } from "@uidotdev/usehooks"
@@ -22,8 +22,10 @@ type DebugSettings = {
 
 export default function Debug({ children }: DebugProps) {
     const dispatch = useAppDispatch()
-    const moduleConfigs = useAppSelector((state) => state.debug.moduleConfigs)
-    const jobs = useAppSelector((state) => state.debug.jobs)
+    const moduleConfigs = useDevelopmentAppSelector(
+        (state) => state.debug.moduleConfigs,
+    )
+    const jobs = useDevelopmentAppSelector((state) => state.debug.jobs)
 
     const [settings, setSettings] = useLocalStorage<DebugSettings>("debug", {
         // whether the mock server should be used (instead of the real API)

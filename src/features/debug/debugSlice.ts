@@ -2,10 +2,14 @@ import { generateModuleConfigDict } from "@/features/mockServer/fake/modules"
 import type { Job, Module, Source } from "@/types"
 import { createSlice } from "@reduxjs/toolkit"
 
+export type DebugJob = Job & {
+    numEntriesTotal: number // in Job this is optional, but in debugging it is always defined
+    showNumEntriesTotal: boolean
+}
+
 export type DebugState = {
-    key: number
     moduleConfigs: Record<string, Module>
-    jobs: Record<string, Job>
+    jobs: Record<string, DebugJob>
     sources: Record<string, Source>
 }
 
