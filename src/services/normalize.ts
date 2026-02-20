@@ -17,6 +17,7 @@ function normalizeResultProperty(resultProperty): ResultProperty {
         visibleName:
             resultProperty.visibleName ||
             upperFirst(camelCase(resultProperty.name)),
+        type: resultProperty.type || "string",
         // temporary: force problem list to be invisible at the start
         visible:
             (resultProperty.visible ?? true) &&
