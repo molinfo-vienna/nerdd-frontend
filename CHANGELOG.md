@@ -1,3 +1,11 @@
+## [1.3.55](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.54...v1.3.55) (2026-02-20)
+
+
+### Bug Fixes
+
+* Improve types in fileFieldSlice ([0a3e25e](https://github.com/molinfo-vienna/nerdd-frontend/commit/0a3e25e0ae7932ba886dcb87777693a472412452))
+* Simplify form submission logic ([ba9a992](https://github.com/molinfo-vienna/nerdd-frontend/commit/ba9a99272b12a2702a4feef589055994e211f276))
+
 ## [1.3.54](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.53...v1.3.54) (2026-02-20)
 
 
