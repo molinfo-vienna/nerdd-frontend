@@ -1,3 +1,11 @@
+## [1.3.54](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.53...v1.3.54) (2026-02-20)
+
+
+### Bug Fixes
+
+* Declare resultProperty.type as non-optional ([ac32ae3](https://github.com/molinfo-vienna/nerdd-frontend/commit/ac32ae3cdcc60614bf39ceec7b01ef75c3ff7c72))
+* Make sure that resultProperty.type is always defined ([c78eaf8](https://github.com/molinfo-vienna/nerdd-frontend/commit/c78eaf8d01b11e0749e515c8bae0bc22ba324009))
+
 ## [1.3.53](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.52...v1.3.53) (2026-02-20)
 
 
