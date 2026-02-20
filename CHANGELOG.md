@@ -1,3 +1,21 @@
+## [1.3.52](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.51...v1.3.52) (2026-02-20)
+
+
+### Bug Fixes
+
+* Add AppStore type ([f3fbd29](https://github.com/molinfo-vienna/nerdd-frontend/commit/f3fbd2946e50f4dcd346fe22c14e6750b9c84063))
+* Add types to faker functions ([2e168cc](https://github.com/molinfo-vienna/nerdd-frontend/commit/2e168ccd820b2cdf0b020fab0db38dc92e797301))
+* Add useAppStore hook ([4660a0e](https://github.com/molinfo-vienna/nerdd-frontend/commit/4660a0e695bcc90aa8c4df2ad048095260ff1223))
+* Add useDebugSelector hook assuming state.debug exists ([c280f11](https://github.com/molinfo-vienna/nerdd-frontend/commit/c280f114ef9d229e3ce0b114f849af6b0e539237))
+* Define DebugJob as an extension of Job ([d0e343e](https://github.com/molinfo-vienna/nerdd-frontend/commit/d0e343eb95fad42e8a19cb47e9242a983571cb47))
+* Define different redux hooks for production and development ([61c4327](https://github.com/molinfo-vienna/nerdd-frontend/commit/61c43275ff631326d1c9251bdedd9eb1edef67aa))
+* Implement selector ensuring existance of state.debug ([bf23714](https://github.com/molinfo-vienna/nerdd-frontend/commit/bf23714b393477a1127d358a7bc4b6f1f0c02f68))
+* Replace useAppSelector with useDebugSelector in Debug component ([c999af7](https://github.com/molinfo-vienna/nerdd-frontend/commit/c999af76ba56471fa2927358abbb77e5918f771b))
+* Use DebugJob in mock components ([3a47d2c](https://github.com/molinfo-vienna/nerdd-frontend/commit/3a47d2ca9acc6a31f9dba6f98fe06c12fd51a5ee))
+* Use development hooks in Debug component ([5a3b56f](https://github.com/molinfo-vienna/nerdd-frontend/commit/5a3b56fb8f7ea7223fd832ce399407a25b9ea818))
+* Use development hooks in mock classes ([2901041](https://github.com/molinfo-vienna/nerdd-frontend/commit/2901041544a55f379e832e1b446b7de69e652a5c))
+* Use separate redux stores for production and development ([54b68ee](https://github.com/molinfo-vienna/nerdd-frontend/commit/54b68eea6007e93c5621d42bbec9541826579542))
+
 ## [1.3.51](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.50...v1.3.51) (2026-02-13)
 
 
