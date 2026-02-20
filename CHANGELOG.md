@@ -1,3 +1,18 @@
+## [1.3.53](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.52...v1.3.53) (2026-02-20)
+
+
+### Bug Fixes
+
+* Add types to jobs api service ([dd6d8e4](https://github.com/molinfo-vienna/nerdd-frontend/commit/dd6d8e4962112227e7690aaafa8f88d810ed91cb))
+* Add types to sources api service ([32a84ff](https://github.com/molinfo-vienna/nerdd-frontend/commit/32a84ff5c93f103dadcfe49a4917534e79a0a07f))
+* Export all base query creators ([5ef97d3](https://github.com/molinfo-vienna/nerdd-frontend/commit/5ef97d3e77e13cd9ed672d5cd0baa94d8718d2d6))
+* Implement mergedBaseQuery for selecting correct base query ([b3c5e76](https://github.com/molinfo-vienna/nerdd-frontend/commit/b3c5e7699f88a369571262acc249ed055dc4b45d))
+* Move auxiliary base query types to separate file ([b1ce9c3](https://github.com/molinfo-vienna/nerdd-frontend/commit/b1ce9c36afdb919037791676598e6a6b63966bdd))
+* Move fetchBaseQuery to separate file ([503d218](https://github.com/molinfo-vienna/nerdd-frontend/commit/503d2181e45be41fac2c13f4e778945192371707))
+* Move uploadProgressBaseQuery to separate file ([9ecccbe](https://github.com/molinfo-vienna/nerdd-frontend/commit/9ecccbeb5e787367d07b3e31a545a0e43bc801d3))
+* Simplify base api code ([7d19e81](https://github.com/molinfo-vienna/nerdd-frontend/commit/7d19e812ad99fd8dc8b66d8d0db49dfccddb1b62))
+* Use correct import for base api ([48fed03](https://github.com/molinfo-vienna/nerdd-frontend/commit/48fed0333db69e7dc52f8576f9a091fb529305ff))
+
 ## [1.3.52](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.51...v1.3.52) (2026-02-20)
 
 
