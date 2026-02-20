@@ -1,5 +1,5 @@
 import PopUp from "@/features/popup/PopUp"
-import ProblemIcon from "./ProblemIcon"
+import ProblemIcon from "@/features/resultTable/cellTypes/ProblemIcon"
 
 type ProblemListBadgeProps = {
     problems: Array<[string, string]>

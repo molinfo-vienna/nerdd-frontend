@@ -1,19 +1,20 @@
 import classNames from "classnames"
-import ProblemIcon from "./ProblemIcon"
+import ProblemIcon from "@/features/resultTable/cellTypes/ProblemIcon"
 import "./ProblemIcon.css"
+import type { CellRendererProps } from "./types"
 
-type ProblemListCellProps = {
-    problems: [string, string][]
-}
+export default function ProblemListCellRenderer({ value }: CellRendererProps) {
+    if (value == null) {
+        return "-"
+    }
 
-export default function ProblemListCell({ problems }: ProblemListCellProps) {
     return (
         <ul className="list-unstyled problem-list mb-0">
-            {problems.map(([problemType, message], i) => (
+            {value.map(([problemType, message], i) => (
                 <li
                     key={i}
                     className={classNames("d-flex", {
-                        "mb-1": i < problems.length - 1,
+                        "mb-1": i < value.length - 1,
                     })}
                 >
                     <ProblemIcon
