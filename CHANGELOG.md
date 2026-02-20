@@ -1,3 +1,10 @@
+## [1.3.56](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.55...v1.3.56) (2026-02-20)
+
+
+### Bug Fixes
+
+* Simplify table cell component ([1892685](https://github.com/molinfo-vienna/nerdd-frontend/commit/1892685b4e53fc1907db5c3ebdee81ce38d95e91))
+
 ## [1.3.55](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.54...v1.3.55) (2026-02-20)
 
 
