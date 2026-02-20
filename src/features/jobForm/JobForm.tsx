@@ -1,15 +1,27 @@
+import { File } from "@/features/fileUpload/fileFieldSlice"
 import { type Module } from "@/types"
-import { createForm, FORM_ERROR, FormApi } from "final-form"
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { FORM_ERROR, FormApi } from "final-form"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { Field, Form } from "react-final-form"
 import { FaPaperPlane } from "react-icons/fa6"
 import DynamicInput from "./DynamicInput"
 import JobParameterField from "./JobParameterField"
 import Row from "./Row"
 
+type JobFormValues = {
+    inputType: "text" | "file" | "draw" | "example"
+    input?: string
+    inputFile?: File[]
+    inputDrawn?: string
+} & Record<string, any>
+
+export type SubmitHandler = (
+    values: JobFormValues,
+) => Promise<Record<string, string> | undefined>
+
 type JobFormProps = {
     module: Module
-    onSubmit: (values: any) => Promise<any>
+    onSubmit: SubmitHandler
 }
 
 export default function JobForm({ module, onSubmit }: JobFormProps) {
@@ -22,11 +34,15 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
     const [formPending, setFormPending] = useState(false)
     const [submitRequested, setSubmitRequested] = useState(false)
 
+    // we need to keep a reference to the form instance in order to trigger the submit
+    // programmatically
+    const formRef = useRef<FormApi<JobFormValues> | null>(null)
+
     //
     // Validation
     //
     const validate = useCallback(
-        (values) => {
+        (values: JobFormValues) => {
             const errors: Record<string, string> = {}
 
             // input
@@ -53,8 +69,10 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
 
             // wait for file uploads to finish
             if (
+                values.inputType === "file" &&
+                values.inputFile !== undefined &&
                 // all files uploaded?
-                values.inputFile?.filter((file) =>
+                values.inputFile.filter((file) =>
                     ["pending", "deleting"].includes(file.status),
                 ).length > 0
             ) {
@@ -75,29 +93,27 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
         [module, setFormPending],
     )
 
-    //
-    // create form
-    //
-    const formApi = useMemo(
-        () => createForm({ onSubmit, validate }),
-        [onSubmit, validate],
+    // This function is called when the user clicks the submit button.
+    const handleDelayedSubmit = useCallback(
+        (form: FormApi<JobFormValues>) => {
+            formRef.current = form
+            setSubmitRequested(true)
+        },
+        [setSubmitRequested],
     )
 
-    const handleDelayedSubmit = useCallback(() => {
-        setSubmitRequested(true)
-    }, [setSubmitRequested])
-
+    // Whenever a submit was requested and all uploads have finished (formPending is false), we
+    // trigger the form submission programmatically.
     useEffect(() => {
         if (!formPending && submitRequested) {
             try {
-                formApi.submit()
+                formRef.current?.submit()
             } finally {
+                setFormPending(false)
                 setSubmitRequested(false)
             }
         }
-    }, [formPending, formApi, submitRequested, setSubmitRequested])
-
-    const formRef = useRef<FormApi>(formApi)
+    }, [formPending, submitRequested, setSubmitRequested, setFormPending])
 
     return (
         <div className="row justify-content-center">
@@ -105,17 +121,19 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
                 <h2 className="mb-5">Start prediction</h2>
 
                 <Form
+                    onSubmit={onSubmit}
+                    validate={validate}
                     subscription={{
                         submitting: true,
                         errors: true,
                         submitError: true,
                     }}
-                    form={formRef.current}
                     render={({
                         handleSubmit,
                         submitting,
                         errors,
                         submitError,
+                        form,
                     }) => (
                         <form onSubmit={handleSubmit} noValidate>
                             <Row>
@@ -188,7 +206,6 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
                                     </div>
                                 </>
                             </Row>
-
                             <DynamicInput
                                 exampleSmiles={module.exampleSmiles}
                             />
@@ -206,7 +223,9 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
                                     {!submitRequested && !submitting && (
                                         <button
                                             className="btn btn-lg btn-primary text-nowrap"
-                                            onClick={handleDelayedSubmit}
+                                            onClick={() =>
+                                                handleDelayedSubmit(form)
+                                            }
                                         >
                                             <FaPaperPlane
                                                 size={15}
@@ -229,16 +248,20 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
                                             </span>
                                         </button>
                                     )}
-                                    {submitRequested && errors[FORM_ERROR] && (
-                                        <div className="ms-3 text-body-secondary">
-                                            {errors[FORM_ERROR]}
-                                        </div>
-                                    )}
-                                    {!errors[FORM_ERROR] && submitError && (
-                                        <div className="ms-3 text-danger">
-                                            {submitError}
-                                        </div>
-                                    )}
+                                    {submitRequested &&
+                                        errors !== undefined &&
+                                        errors[FORM_ERROR] && (
+                                            <div className="ms-3 text-body-secondary">
+                                                {errors[FORM_ERROR]}
+                                            </div>
+                                        )}
+                                    {(errors === undefined ||
+                                        !errors[FORM_ERROR]) &&
+                                        submitError && (
+                                            <div className="ms-3 text-danger">
+                                                {submitError}
+                                            </div>
+                                        )}
                                 </div>
                             </Row>
                         </form>

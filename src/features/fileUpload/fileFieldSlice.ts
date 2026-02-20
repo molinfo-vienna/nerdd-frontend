@@ -1,3 +1,4 @@
+import { Source } from "@/types"
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 
 export interface File {
@@ -7,7 +8,7 @@ export interface File {
     progress: number
     errorMessage?: string
     sourceId?: string
-    sourceData?: string
+    sourceData?: Source
 }
 
 const initialState: Record<string, File[]> = {}
@@ -28,13 +29,15 @@ const fileFieldSlice = createSlice({
                 id: action.payload.id,
                 status: "pending",
                 progress: 0,
-                sourceId: null,
+                sourceId: undefined,
             })
         },
         setStatus(state, action) {
             const fileField = state[action.payload.fileFieldName]
             const file = fileField.find((file) => file.id === action.payload.id)
-            file.status = action.payload.status
+            if (file !== undefined) {
+                file.status = action.payload.status
+            }
         },
         setProgress(state, action) {
             const fileField = state[action.payload.fileFieldName]
@@ -57,11 +60,6 @@ const fileFieldSlice = createSlice({
                 file.sourceData = action.payload.sourceData
             }
         },
-        setRequest(state, action) {
-            const fileField = state[action.payload.fileFieldName]
-            const file = fileField.find((file) => file.id === action.payload.id)
-            file.request = action.payload.request
-        },
         deleteFile(state, action) {
             const fileField = state[action.payload.fileFieldName]
             const index = fileField.findIndex(
@@ -81,7 +79,6 @@ export const {
     setErrorMessage,
     deleteFile,
     setSourceData,
-    setRequest,
 } = fileFieldSlice.actions
 
 export default fileFieldSlice.reducer

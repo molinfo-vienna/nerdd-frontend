@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from "@/app/hooks"
 import { useAddSourceMutation, useDeleteSourceMutation } from "@/services"
 import classNames from "classnames"
 import { useCallback, useEffect, useState, type RefObject } from "react"
+import { FileWithPath } from "react-dropzone"
 import { FieldRenderProps } from "react-final-form"
 import { v4 as uuidv4 } from "uuid"
 import FileList from "./FileList"
@@ -20,7 +21,7 @@ import {
 
 type FileUploadAndListProps = FieldRenderProps<File[]> & {
     name: string
-    tooltipPositionReference?: RefObject<HTMLElement>
+    tooltipPositionReference?: RefObject<HTMLDivElement>
 }
 
 export default function FileUploadAndList({
@@ -47,12 +48,14 @@ export default function FileUploadAndList({
         input.onChange(files)
     }, [files, input])
 
-    const [addSource, {}] = useAddSourceMutation()
+    const [addSource] = useAddSourceMutation()
 
-    const [requests, setRequests] = useState({})
+    // store pending requests to be able to cancel them
+    type Request = ReturnType<typeof addSource>
+    const [requests, setRequests] = useState<Record<string, Request>>({})
 
     const onDrop = useCallback(
-        (acceptedFiles) => {
+        (acceptedFiles: FileWithPath[]) => {
             // upload all files to the server
             acceptedFiles.forEach((file) => {
                 // generate unique id for the file (because filename isn't unique)
@@ -162,7 +165,7 @@ export default function FileUploadAndList({
         [name, addSource, dispatch],
     )
 
-    const [deleteSource, {}] = useDeleteSourceMutation()
+    const [deleteSource] = useDeleteSourceMutation()
 
     const handleDelete = (file: File) => {
         dispatch(
@@ -183,6 +186,10 @@ export default function FileUploadAndList({
 
             // get sourceId
             const sourceId = file.sourceData?.id
+
+            if (sourceId === undefined) {
+                return
+            }
 
             deleteSource({ sourceId }).then((response) => {
                 if (response.error?.name === "AbortError") {
