@@ -1,3 +1,4 @@
+import { useColorPalettesContext } from "@/features/colorPalettes/hooks"
 import type { Module, Result } from "@/types"
 import classNames from "classnames"
 import { rgb } from "d3-color"
@@ -12,7 +13,6 @@ type TableCellProps = {
     selectedAtom?: number
     className?: string
     onAtomSelect?: (atomId?: number) => void
-    propertyPalettes: Record<string, any>
 }
 
 export default function TableCell({
@@ -23,8 +23,8 @@ export default function TableCell({
     selectedAtom,
     className,
     onAtomSelect,
-    propertyPalettes,
 }: TableCellProps) {
+    const { getColor } = useColorPalettesContext()
     const value = result[resultProperty.name]
 
     // compressed: cell is smaller when it refers to an atom / derivative entry
@@ -43,7 +43,6 @@ export default function TableCell({
         selectedAtom,
         className,
         onAtomSelect,
-        propertyPalettes,
         value,
         compressed,
     }
@@ -55,7 +54,7 @@ export default function TableCell({
     // figure out background color (and contrast text color)
     //
     const backgroundColor = resultProperty.colored
-        ? propertyPalettes[resultProperty.name](value)
+        ? getColor(resultProperty.name, value)
         : undefined
     let needsLightText = false
     if (backgroundColor !== undefined) {
@@ -90,11 +89,11 @@ export default function TableCell({
         style: {
             backgroundColor,
         },
-        onMouseEnter: (e) =>
+        onMouseEnter: () =>
             resultProperty.level === "atom" && onAtomSelect
                 ? onAtomSelect(result.atom_id)
                 : null,
-        onMouseOut: (e) =>
+        onMouseOut: () =>
             resultProperty.level === "atom" && onAtomSelect
                 ? onAtomSelect(undefined)
                 : null,

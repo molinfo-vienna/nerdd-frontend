@@ -10,7 +10,6 @@ export type CellRendererProps = {
     selectedAtom?: number
     className?: string
     onAtomSelect?: (atomId?: number) => void
-    propertyPalettes: Record<string, any>
     value: any
     compressed: boolean
 }

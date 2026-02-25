@@ -1,4 +1,5 @@
 import { useAppSelector } from "@/app/hooks"
+import { useColorPalettesContext } from "@/features/colorPalettes/hooks"
 import ImagePlaceholder from "@/features/placeholder/ImagePlaceholder"
 import {
     ResultGroup,
@@ -14,7 +15,6 @@ type MoleculeProps = {
     selectedAtom?: number
     onAtomSelect?: (atomId?: number) => void
     group: ResultGroup
-    propertyPalettes: Record<string, any>
 }
 
 export default function Molecule({
@@ -22,9 +22,9 @@ export default function Molecule({
     selectedAtom,
     onAtomSelect,
     group,
-    propertyPalettes,
 }: MoleculeProps) {
     const atomColorProperty = useAppSelector(selectAtomColorProperty)
+    const { getPalette } = useColorPalettesContext()
 
     const [svgAsString, setSvgAsString] = useState(svgValue)
     const [svg, setSvg] = useState<React.ReactElement | null>(null)
@@ -49,7 +49,7 @@ export default function Molecule({
     const atomColors = useMemo(() => {
         if (atomColorProperty == null || onAtomSelect == null) return undefined
 
-        const colorScale = propertyPalettes[atomColorProperty?.name]
+        const colorScale = getPalette(atomColorProperty?.name)
         if (colorScale == null) return undefined
 
         // if a molecule has only one atom entry with atom_id = null, then it is a dummy row
@@ -68,7 +68,7 @@ export default function Molecule({
         }
 
         return atomColors
-    }, [group, atomColorProperty, propertyPalettes])
+    }, [group, atomColorProperty, getPalette])
 
     //
     // to improve performance, we render the SVG only once

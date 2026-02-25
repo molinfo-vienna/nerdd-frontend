@@ -1,7 +1,9 @@
-import d3Palettes from "@/features/colorPalettes/d3Palettes"
+import { d3PaletteGenerator } from "@/features/colorPalettes/generators/d3"
 import { Module, PredictionTask } from "@/types"
 import { faker } from "@faker-js/faker"
 import { generateValue } from "./util"
+
+const d3Palettes = d3PaletteGenerator()
 
 const taskTypes: PredictionTask[] = [
     "molecular_property_prediction",

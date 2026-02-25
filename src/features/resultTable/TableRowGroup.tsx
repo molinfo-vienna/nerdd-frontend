@@ -8,14 +8,12 @@ type TableRowGroupProps = {
     group: ResultGroup
     module: Module
     resultProperties: AugmentedResultProperty[]
-    propertyPalettes: Record<string, any>
 }
 
 export default function TableRowGroup({
     group,
     module,
     resultProperties,
-    propertyPalettes,
 }: TableRowGroupProps) {
     //
     // handle mouse over event
@@ -25,7 +23,7 @@ export default function TableRowGroup({
     )
 
     const handleAtomSelect = useCallback(
-        (atomId: number) => {
+        (atomId?: number) => {
             setSelectedAtom(atomId)
         },
         [setSelectedAtom],
@@ -52,9 +50,8 @@ export default function TableRowGroup({
                             onAtomSelect={
                                 module.task === "atom_property_prediction"
                                     ? handleAtomSelect
-                                    : null
+                                    : undefined
                             }
-                            propertyPalettes={propertyPalettes}
                         />
                     ),
             )}

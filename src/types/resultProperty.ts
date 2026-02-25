@@ -5,6 +5,18 @@ export interface Choice {
     label: string
 }
 
+export type PaletteType = "categorical" | "sequential" | "diverging"
+
+export type DomainSpec = unknown[]
+
+export type RangeSpec = string | unknown[]
+
+export type ColorPaletteSpec = {
+    type?: PaletteType
+    domain?: DomainSpec
+    range?: RangeSpec
+}
+
 export interface ResultProperty {
     name: string
     type: string
@@ -14,7 +26,7 @@ export interface ResultProperty {
     level: Level
     visible: boolean
     choices?: Choice[]
-    colorPalette?: string
+    colorPalette?: string | ColorPaletteSpec
     sortable: boolean
 }
 

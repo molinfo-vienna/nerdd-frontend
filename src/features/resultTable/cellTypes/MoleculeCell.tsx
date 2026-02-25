@@ -1,6 +1,6 @@
-import { RxCross1 } from "react-icons/rx"
 import Molecule from "@/features/resultTable/cellTypes/Molecule"
 import ProblemListBadge from "@/features/resultTable/cellTypes/ProblemListBadge"
+import { RxCross1 } from "react-icons/rx"
 import type { CellRendererProps } from "./types"
 
 export default function MoleculeCell({
@@ -9,7 +9,6 @@ export default function MoleculeCell({
     group,
     selectedAtom,
     onAtomSelect,
-    propertyPalettes,
     value,
 }: CellRendererProps) {
     if (resultProperty.name === "preprocessed_mol") {
@@ -26,8 +25,6 @@ export default function MoleculeCell({
                     <Molecule
                         svgValue={value}
                         group={group}
-                        // color palette for atoms
-                        propertyPalettes={propertyPalettes}
                         // atom selection
                         selectedAtom={selectedAtom}
                         onAtomSelect={onAtomSelect}
@@ -51,7 +48,6 @@ export default function MoleculeCell({
                 <Molecule
                     svgValue={value}
                     group={group}
-                    propertyPalettes={propertyPalettes}
                     // atom selection is disabled
                 />
             )}

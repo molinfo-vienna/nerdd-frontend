@@ -6,5 +6,13 @@ export type { Partner } from "./partner"
 export type { Publication } from "./publication"
 export type { QueueStats } from "./queueStats"
 export type { Result } from "./result"
-export type { Choice, Level, ResultProperty } from "./resultProperty"
+export type {
+    Choice,
+    ColorPaletteSpec,
+    DomainSpec,
+    Level,
+    PaletteType,
+    RangeSpec,
+    ResultProperty,
+} from "./resultProperty"
 export type { Source } from "./source"
