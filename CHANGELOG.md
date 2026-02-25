@@ -1,3 +1,23 @@
+## [1.3.57](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.56...v1.3.57) (2026-02-25)
+
+
+### Bug Fixes
+
+* Add a custom hook useColorPalettesContext ([c1d8e26](https://github.com/molinfo-vienna/nerdd-frontend/commit/c1d8e26581b8398c0c1e4510d0974ec5fca78a20))
+* Create d3 palettes in a function ([d1d21cc](https://github.com/molinfo-vienna/nerdd-frontend/commit/d1d21cc62c66468c66c4fa58c1e547ea57edd9f7))
+* Create nerdd palettes in a function ([cd55af9](https://github.com/molinfo-vienna/nerdd-frontend/commit/cd55af96001ccc1610102670184cc457242e581d))
+* Get color palettes from context in Molecule component ([351b9f3](https://github.com/molinfo-vienna/nerdd-frontend/commit/351b9f300c46c3bea9018b49e7ae571f07b2477c))
+* Implement ColorPalettesProvider ([c4d21fd](https://github.com/molinfo-vienna/nerdd-frontend/commit/c4d21fddcaa6600f5c8dc28e590afd3bf88a3a69))
+* Install d3 types ([21a940b](https://github.com/molinfo-vienna/nerdd-frontend/commit/21a940b3ad93c05fec4db6620e41ec934819f066))
+* Install vite-plugin-pwa ([812d884](https://github.com/molinfo-vienna/nerdd-frontend/commit/812d884512ad911d9074775d5a367f437ed45fb8))
+* Merge palettes in separate subdirectory ([0294299](https://github.com/molinfo-vienna/nerdd-frontend/commit/029429984fc34ba572fd8cd50d14013929c6736c))
+* Move color utils ([ce15de2](https://github.com/molinfo-vienna/nerdd-frontend/commit/ce15de26b4d6f2d540c8d498ee67ac7d79d39f77))
+* Move null palette ([6b97e90](https://github.com/molinfo-vienna/nerdd-frontend/commit/6b97e90c9bda52260b92737364b3b0c278c56801))
+* Simplify cell components by not drilling down propertyPalettes ([8cc23fe](https://github.com/molinfo-vienna/nerdd-frontend/commit/8cc23fe57036235555b3c838eac66da77a4565a9))
+* Simplify getColorPalette function ([a0be492](https://github.com/molinfo-vienna/nerdd-frontend/commit/a0be4920380963b31caec1c6f94bde9680d34190))
+* Simplify ResultTable by using ColorPalettesProvider ([57f6232](https://github.com/molinfo-vienna/nerdd-frontend/commit/57f62327f53d33529ef07dc290a590fb80e45fbc))
+* Update package-lock.json ([f50df6e](https://github.com/molinfo-vienna/nerdd-frontend/commit/f50df6ee17b9b8d3dcb242a5ba3d3b587cc77cea))
+
 ## [1.3.56](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.55...v1.3.56) (2026-02-20)
 
 
