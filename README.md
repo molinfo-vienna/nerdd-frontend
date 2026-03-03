@@ -35,13 +35,12 @@
 
 ## Introduction
 
-**nerdd-frontend** is a web interface for prediction models in cheminformatics. nerdd-frontend is
-part of the NERDD platform, which provides access to a collection of prediction models. Based on
-that, nerdd-frontend gives each model
+**nerdd-frontend** is the web interface of the NERDD platform. NERDD provides a collection of
+prediction models for cheminformatics, and nerdd-frontend gives each model
 
 * an entry on the landing page,
-* a prediction form based on the model's input specification,
-* a results page showing prediction results in a structured data table, and
+* a page for submitting prediction jobs based on the model's input specification,
+* a results page displaying prediction results in a structured data table, and
 * additional pages for model documentation and API usage.
 
 The application was built with React and offers:
@@ -55,7 +54,7 @@ The application was built with React and offers:
 
 ## Contribute
 
-* Fork and clone the code
+* Fork and / or clone the code
 * `npm install`
 * `npm start`
 * open a browser on localhost:3000
