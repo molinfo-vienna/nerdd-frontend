@@ -18,13 +18,16 @@ export default function HeaderLink({
 }: HeaderLinkProps) {
     return href !== undefined || onClick !== undefined ? (
         <Link
-            className={classNames("text-decoration-none my-auto me-4", {
-                "fw-bold": active,
-            })}
+            className={classNames(
+                "text-decoration-none my-auto me-4 d-inline-flex align-items-center",
+                {
+                    "fw-bold": active,
+                },
+            )}
             to={href}
             onClick={onClick}
         >
-            <Icon size={15} />
+            <Icon size={16} />
             <span className="ms-1">{caption}</span>
         </Link>
     ) : (
