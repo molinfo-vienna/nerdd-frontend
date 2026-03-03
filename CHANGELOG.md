@@ -1,3 +1,11 @@
+## [1.3.59](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.58...v1.3.59) (2026-03-03)
+
+
+### Bug Fixes
+
+* Add a navigation bar link to switch module ([09f3bac](https://github.com/molinfo-vienna/nerdd-frontend/commit/09f3bacda74b14ddc26f07cf9f82b687a320341c))
+* Cache modules from server ([e04e2bc](https://github.com/molinfo-vienna/nerdd-frontend/commit/e04e2bcf7127fac5ecd46b1ccc5b618380a5f847))
+
 ## [1.3.58](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.57...v1.3.58) (2026-03-03)
 
 
