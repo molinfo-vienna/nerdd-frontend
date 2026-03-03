@@ -7,6 +7,7 @@ export const modulesApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getModules: builder.query<Module[], void>({
             query: () => "/modules",
+            keepUnusedDataFor: 600,
             transformResponse: (response) => {
                 // convert snake_case to camelCase
                 const responseCamelCase = recursiveSnakeToCamelCase(response)
