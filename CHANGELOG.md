@@ -1,3 +1,11 @@
+## [1.3.58](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.57...v1.3.58) (2026-03-03)
+
+
+### Bug Fixes
+
+* Align icons in header links ([17957d4](https://github.com/molinfo-vienna/nerdd-frontend/commit/17957d42c4b471268a30a5f6db5f6f916609e4cc))
+* Align icons in submit button ([c877a26](https://github.com/molinfo-vienna/nerdd-frontend/commit/c877a26c77b83227c456f1533a6507f12bc699b1))
+
 ## [1.3.57](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.56...v1.3.57) (2026-02-25)
 
 
