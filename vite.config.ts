@@ -4,6 +4,7 @@ import path from "node:path"
 import rehypeSlug from "rehype-slug"
 import { visualizer } from "rollup-plugin-visualizer"
 import { defineConfig, type PluginOption } from "vite"
+import { VitePWA } from "vite-plugin-pwa"
 import { sri } from "vite-plugin-sri3"
 import tsconfigPaths from "vite-tsconfig-paths"
 
@@ -38,6 +39,18 @@ export default defineConfig(({ mode }) => ({
             include: /\.mdx$/, // Only process .mdx files, not .md files
         }) as PluginOption,
         react(),
+        VitePWA({
+            // Keep a downloaded update waiting until we choose to update the UI
+            // (this is decided in PWAUpdater.tsx).
+            registerType: "autoUpdate",
+            // Keep using the existing public/manifest.json until installable
+            // app metadata and icons are addressed separately.
+            manifest: false,
+            workbox: {
+                // Precache only the Vite application shell.
+                globPatterns: ["assets/**/*.{js,css,woff,woff2}", "index.html"],
+            },
+        }),
         visualizer({
             open: true,
             template: "treemap",
