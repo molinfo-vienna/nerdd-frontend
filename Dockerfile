@@ -34,6 +34,7 @@ RUN apk add --no-cache brotli nginx nginx-mod-http-brotli
 LABEL org.opencontainers.image.source="https://github.com/molinfo-vienna/nerdd-frontend"
 
 # copy custom nginx config
+COPY ./nginx/default.conf /etc/nginx/http.d/default.conf
 COPY ./nginx/server.conf /etc/nginx/http.d/server.conf
 COPY ./nginx/security-headers.conf /etc/nginx/http.d/security-headers.conf
 
