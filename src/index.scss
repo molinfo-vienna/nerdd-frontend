@@ -275,3 +275,46 @@ a.primary-muted-link:focus {
         --bs-spacer-#{$key}: #{$value};
     }
 }
+
+//
+// Chemical elements (for certain prepared molecule SVGs)
+//
+.text-carbon {
+    color: $gray-900 !important;
+    fill: currentColor !important;
+}
+
+.text-nitrogen {
+    color: $blue !important;
+    fill: currentColor !important;
+}
+
+.text-oxygen {
+    color: $red !important;
+    fill: currentColor !important;
+}
+
+.text-sulfur {
+    color: $yellow !important;
+    fill: currentColor !important;
+}
+
+.text-phosphorus {
+    color: $orange !important;
+    fill: currentColor !important;
+}
+
+.text-chlorine {
+    color: $green !important;
+    fill: currentColor !important;
+}
+
+.text-fluorine {
+    color: $cyan !important;
+    fill: currentColor !important;
+}
+
+.text-hydrogen {
+    color: $gray-600 !important;
+    fill: currentColor !important;
+}
