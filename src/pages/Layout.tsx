@@ -7,11 +7,6 @@ type LayoutProps = {
 }
 
 const Layout = ({ children }: LayoutProps) => {
-    // const developmentVersion = ["localhost", "dev-nerdd.univie.ac.at"].includes(
-    //     window.location.hostname,
-    // )
-    const developmentVersion = true
-
     //
     // check if children contains Layout.Header
     //
@@ -30,13 +25,6 @@ const Layout = ({ children }: LayoutProps) => {
                 b) fully hidden (for short screens).
             */}
             <div className="page-content d-flex flex-column">
-                {/* {developmentVersion && (
-                    <div className="text-center bg-danger-subtle px-3 py-2">
-                        This web service is currently undergoing revision and
-                        review. Short disruptions of the system are possible.
-                    </div>
-                )} */}
-
                 {/* show navigation bar without background if no header is specified */}
                 {!hasHeader && <NavigationBar />}
 
