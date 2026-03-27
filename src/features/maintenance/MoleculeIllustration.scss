@@ -3,6 +3,13 @@
     &__halo {
         fill: var(--bs-primary-bg-subtle);
         opacity: 0.35;
+        transition: opacity 0.3s ease;
+    }
+
+    &--loading {
+        .molecule-illustration__halo {
+            animation: molecule-halo-pulse 2s ease-in-out infinite;
+        }
     }
 
     &__guides {
@@ -13,6 +20,10 @@
         circle {
             stroke-dasharray: 2 9;
         }
+    }
+
+    &__molecule {
+        animation: molecule-fade-in 0.25s ease-out;
     }
 
     &__reactive-atom {
@@ -28,6 +39,26 @@
             stroke-width: 2.5;
             opacity: 0.35;
         }
+    }
+}
+
+@keyframes molecule-halo-pulse {
+    0%,
+    100% {
+        opacity: 0.25;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+
+@keyframes molecule-fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 }
 
