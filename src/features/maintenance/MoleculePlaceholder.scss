@@ -1,0 +1,32 @@
+.molecule-placeholder {
+    color: var(--bs-primary);
+
+    &__bonds {
+        line {
+            stroke: currentColor;
+            stroke-width: 2.5;
+            stroke-dasharray: 4 4;
+            stroke-linecap: round;
+            opacity: 0.25;
+            animation: molecule-placeholder-pulse 1.8s ease-in-out infinite;
+        }
+    }
+
+    &__atoms {
+        circle {
+            fill: currentColor;
+            opacity: 0.35;
+            animation: molecule-placeholder-pulse 1.8s ease-in-out infinite;
+        }
+    }
+}
+
+@keyframes molecule-placeholder-pulse {
+    0%,
+    100% {
+        opacity: 0.2;
+    }
+    50% {
+        opacity: 0.45;
+    }
+}
