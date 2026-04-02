@@ -52,7 +52,9 @@ export default defineConfig(({ mode }) => ({
                 navigateFallbackDenylist: [/^\/api\//],
                 runtimeCaching: [
                     {
-                        urlPattern: /\/api\/modules\/?$/,
+                        // cache /api/modules and /api/modules/:moduleId
+                        // avoid sub-routes like /api/modules/:moduleId/queue
+                        urlPattern: /\/api\/modules(?:\/[^/]+)?\/?$/,
                         handler: "StaleWhileRevalidate",
                         options: {
                             cacheName: "nerdd-modules-cache",
@@ -60,7 +62,7 @@ export default defineConfig(({ mode }) => ({
                                 statuses: [0, 200],
                             },
                             expiration: {
-                                maxEntries: 10,
+                                maxEntries: 30,
                                 maxAgeSeconds: 365 * 24 * 60 * 60, // 365 days
                             },
                         },
