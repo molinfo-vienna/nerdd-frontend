@@ -1,3 +1,10 @@
+## [1.3.60](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.59...v1.3.60) (2026-04-20)
+
+
+### Bug Fixes
+
+* Put headers on a single line ([b966c9c](https://github.com/molinfo-vienna/nerdd-frontend/commit/b966c9c5d494fafaf3da52f1db8dc25532e7681b))
+
 ## [1.3.59](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.58...v1.3.59) (2026-03-03)
 
 
