@@ -167,6 +167,26 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+// Keep the footer completely below the fold on shorter screens. A viewport height of 900px
+// approximates the usable browser area on a 1080p desktop display. On taller screens, switch to
+// a conventional sticky-footer layout so the footer sits at the bottom of otherwise short pages.
+.page-content {
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+@media (min-height: 1200px) {
+    .page {
+        min-height: 100vh;
+        min-height: 100dvh;
+    }
+
+    .page-content {
+        flex: 1 1 auto;
+        min-height: 0;
+    }
+}
+
 // A muted link is a link that is styled like regular text, but will look like a link when hovered.
 a.muted-link {
     color: $body-secondary-color;
