@@ -1,3 +1,11 @@
+## [1.3.61](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.60...v1.3.61) (2026-07-02)
+
+
+### Bug Fixes
+
+* Make the footer fully visible on long screens ([307e0fe](https://github.com/molinfo-vienna/nerdd-frontend/commit/307e0fe3c7a1ef02b478fadcd38a898a0775f331))
+* Remove orphaned css class in Footer ([d4c5bd8](https://github.com/molinfo-vienna/nerdd-frontend/commit/d4c5bd887808c6439928c42c4dfd9044fb10f30d))
+
 ## [1.3.60](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.59...v1.3.60) (2026-04-20)
 
 
