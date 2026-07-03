@@ -1,3 +1,13 @@
+## [1.3.62](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.61...v1.3.62) (2026-07-03)
+
+
+### Bug Fixes
+
+* Adapt TOC component to ScrollRestoration ([82dc556](https://github.com/molinfo-vienna/nerdd-frontend/commit/82dc5564dfd30c985e697fb3fa13754fba8baff3))
+* Add scroll spacer in TOC via CSS ([8e52a65](https://github.com/molinfo-vienna/nerdd-frontend/commit/8e52a65507428dbc74030d0e74ea2287e3df6d59))
+* Replace naive window scrolling with ScrollRestoration component ([31d2b15](https://github.com/molinfo-vienna/nerdd-frontend/commit/31d2b156eb162bb2c6717ac230e7a3848cfbb87c))
+* Use class toc-content in pages ([b6b5048](https://github.com/molinfo-vienna/nerdd-frontend/commit/b6b50486194663e92aa7dbdb12e990a97becd7b3))
+
 ## [1.3.61](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.60...v1.3.61) (2026-07-02)
 
 
