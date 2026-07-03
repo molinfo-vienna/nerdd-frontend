@@ -1,7 +1,6 @@
 import Footer from "@/features/footer/Footer"
 import NavigationBar from "@/features/navigationBar/NavigationBar"
-import { Children, useEffect, type ReactNode } from "react"
-import { useLocation } from "react-router-dom"
+import { Children, type ReactNode } from "react"
 
 type LayoutProps = {
     children: ReactNode
@@ -12,20 +11,6 @@ const Layout = ({ children }: LayoutProps) => {
     //     window.location.hostname,
     // )
     const developmentVersion = true
-
-    //
-    // whenever the route changes, scroll to the top of the page
-    //
-    const { pathname, hash } = useLocation()
-
-    useEffect(() => {
-        // window.scrollTo(0, 0) does not work here, because the browser
-        // scrolls to the top of the page before the new content is rendered
-        // -> use setTimeout to scroll after the new content is rendered
-        if (hash === "") {
-            setTimeout(() => window.scrollTo(0, 0), 500)
-        }
-    }, [pathname, hash])
 
     //
     // check if children contains Layout.Header

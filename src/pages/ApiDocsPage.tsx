@@ -48,7 +48,10 @@ export default function ApiDocsPage() {
             {module != null && (
                 <div className="container py-4">
                     <div className="row justify-content-center">
-                        <div className="col col-lg-8 col-xl-6" ref={ref}>
+                        <div
+                            className="toc-content col col-lg-8 col-xl-6"
+                            ref={ref}
+                        >
                             <Documentation
                                 baseUrl={baseUrl}
                                 module={module}

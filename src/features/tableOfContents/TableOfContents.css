@@ -26,3 +26,8 @@
     font-weight: bold;
     color: var(--bs-primary) !important;
 }
+
+/* Leave space above headings when ScrollRestoration follows a hash link. */
+.toc-content :is(h1, h2, h3, h4, h5, h6)[id] {
+    scroll-margin-top: var(--bs-spacer-5);
+}

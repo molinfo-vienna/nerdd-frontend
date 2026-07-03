@@ -54,7 +54,10 @@ export default function AboutPage() {
                 <div className="row justify-content-center">
                     {module?.about && (
                         <>
-                            <div className="col col-lg-8 col-xl-6" ref={ref}>
+                            <div
+                                className="toc-content col col-lg-8 col-xl-6"
+                                ref={ref}
+                            >
                                 <Markdown
                                     rehypePlugins={[rehypeSlug]}
                                     remarkPlugins={[remarkGfm]}

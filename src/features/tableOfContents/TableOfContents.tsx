@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { type MouseEvent, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import ScrollSpy from "react-scrollspy-navigation"
 import "./TableOfContents.css"
@@ -56,8 +56,6 @@ export default function TableOfContents({
     const [toc, setToc] = useState<TOCItem | null>(null)
     const navigate = useNavigate()
 
-    const offsetTop = 50
-
     useEffect(() => {
         if (contentElement == null) return
 
@@ -111,25 +109,13 @@ export default function TableOfContents({
         setToc(toc)
     }, [contentElement])
 
-    const scrollToHash = (hash) => {
-        const id = hash.slice(1)
-        const target = document.getElementById(id)
-        if (target) {
-            window.scrollTo({
-                top: target.offsetTop - offsetTop,
-                left: target.offsetLeft,
-                behavior: "smooth",
-            })
-        }
-    }
-
-    // when mounting, scroll to heading matching the URL hash
+    // ScrollRestoration can run while asynchronously loaded documentation still shows its loading
+    // page. Once the TOC is built, retry an initial hash in case its heading did not exist yet.
     useEffect(() => {
-        const { hash } = window.location
+        if (toc === null || window.location.hash === "") return
 
-        if (toc && hash) {
-            scrollToHash(hash)
-        }
+        const id = decodeURIComponent(window.location.hash.slice(1))
+        document.getElementById(id)?.scrollIntoView()
     }, [toc])
 
     if (!toc) {
@@ -141,31 +127,17 @@ export default function TableOfContents({
     //
     const renderedToc = renderTOC(toc.children)
 
-    // The normal click handler of ScrollSpy does not work. We replace it with
-    // our own handler that scrolls to the target element and updates the URL.
-
-    const handleClick = (e) => {
-        const href = e.target.getAttribute("href")
-        scrollToHash(href)
-    }
-
-    const handleChangeActiveId = (id) => {
-        // update the URL with the new active id
-        // (replace=true to avoid creating a new history entry)
-        navigate(`#${id}`, { replace: true })
+    // ScrollSpy prevents the anchor's default navigation. Forward the hash to React Router so
+    // ScrollRestoration can perform the scroll and create a normal history entry.
+    const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+        const href = event.currentTarget.getAttribute("href")
+        if (href !== null) {
+            navigate(href)
+        }
     }
 
     return (
-        <ScrollSpy
-            activeClass="active"
-            // When clicking on a link in the toc, scroll to the corresponding heading
-            // but leave some space at the top of the screen.
-            offsetTop={offsetTop}
-            // when the user scrolls somewhere, update the URL
-            onChangeActiveId={handleChangeActiveId}
-            // replace the click handler with our own
-            onClickEach={handleClick}
-        >
+        <ScrollSpy activeClass="active" onClickEach={handleClick}>
             <nav id="toc" className="toc">
                 {renderedToc}
             </nav>
