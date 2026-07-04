@@ -1,3 +1,19 @@
+## [1.3.63](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.62...v1.3.63) (2026-07-04)
+
+
+### Bug Fixes
+
+* Compute tooltip connection line using a middleware ([9c5be01](https://github.com/molinfo-vienna/nerdd-frontend/commit/9c5be013703443b8cd82d8bfcea5be9816d3c47b))
+* Fetch tooltip position reference in field components from provider ([7eb4ae5](https://github.com/molinfo-vienna/nerdd-frontend/commit/7eb4ae5c1fb8b6679969576a4869387833511ce3))
+* Move TooltipPositionProvider into Tooltip component ([d094e19](https://github.com/molinfo-vienna/nerdd-frontend/commit/d094e19a62021784c854a337a16827bc5d664e80))
+* Remove arrow middleware in Tooltip ([bd3fd50](https://github.com/molinfo-vienna/nerdd-frontend/commit/bd3fd50368dff12f452a77258ef04844b8a0471e))
+* Remove position reference in DynamicInput component ([6a4d253](https://github.com/molinfo-vienna/nerdd-frontend/commit/6a4d25393af3482ecbb79b74a8cc165af0a54cd0))
+* Remove unnecessary grouping of checkboxes in JobForm ([a6c68aa](https://github.com/molinfo-vienna/nerdd-frontend/commit/a6c68aaffa91291648df6dfc0c4ec6354f8a506a))
+* Render tooltip only if help text is not empty ([3821e7d](https://github.com/molinfo-vienna/nerdd-frontend/commit/3821e7d77c162011b900138c283c7405a22083ca))
+* Use context pattern for passing tooltip position reference ([3ffbdeb](https://github.com/molinfo-vienna/nerdd-frontend/commit/3ffbdebfab51b650aa8cbf64ad5050fcf757c783))
+* Use correct type for ref ([ae7cdd6](https://github.com/molinfo-vienna/nerdd-frontend/commit/ae7cdd64c70e9a235633d0f6c300a385820f469e))
+* Use dashed lines for tooltip connection lines ([39f824a](https://github.com/molinfo-vienna/nerdd-frontend/commit/39f824a89877cddcc6a5ba74eaee55dbe5b3657e))
+
 ## [1.3.62](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.61...v1.3.62) (2026-07-03)
 
 
