@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks"
 import { useAddSourceMutation, useDeleteSourceMutation } from "@/services"
 import classNames from "classnames"
-import { useCallback, useEffect, useState, type RefObject } from "react"
+import { useCallback, useEffect, useState, type Ref } from "react"
 import { FileWithPath } from "react-dropzone"
 import { FieldRenderProps } from "react-final-form"
 import { v4 as uuidv4 } from "uuid"
@@ -21,7 +21,7 @@ import {
 
 type FileUploadAndListProps = FieldRenderProps<File[]> & {
     name: string
-    tooltipPositionReference?: RefObject<HTMLDivElement>
+    tooltipPositionReference?: Ref<HTMLDivElement>
 }
 
 export default function FileUploadAndList({

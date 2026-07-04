@@ -1,5 +1,6 @@
 import {
-    arrow,
+    autoUpdate,
+    type Middleware,
     safePolygon,
     useClick,
     useDismiss,
@@ -11,39 +12,76 @@ import {
     useTransitionStyles,
 } from "@floating-ui/react"
 import {
+    type CSSProperties,
     type ReactNode,
-    type RefObject,
-    useEffect,
+    useCallback,
     useRef,
     useState,
 } from "react"
 import Markdown from "react-markdown"
+import { TooltipPositionProvider } from "./TooltipPositionReferenceContext"
 import "./style.css"
 
 type TooltipProps = {
     children: ReactNode
-    helpText?: string
-    positionReference: RefObject<HTMLElement | null>
+    helpText: string
 }
 
-export default function Tooltip({
-    children,
-    helpText,
-    positionReference,
-}: TooltipProps) {
+export default function Tooltip({ children, helpText }: TooltipProps) {
     const [isOpen, setIsOpen] = useState(false)
 
-    const arrowRef = useRef(null)
+    const rowReferenceRef = useRef<HTMLDivElement>(null)
+    const tooltipPositionReferenceRef = useRef<HTMLElement>(null)
 
-    // check if the help text is empty
-    const hasHelpText = helpText != null && helpText.trim().length > 0
+    const alignToRowEnd: Middleware = {
+        name: "alignToRowEnd",
+        fn({ x, rects }) {
+            const rowRight =
+                rowReferenceRef.current?.getBoundingClientRect().right
+            const controlRight = rects.reference.x + rects.reference.width
+            const connectionLineExtension = Math.max(
+                0,
+                (rowRight ?? controlRight) - controlRight,
+            )
 
-    const { refs, floatingStyles, context } = useFloating({
+            return {
+                x: x + connectionLineExtension,
+                data: { connectionLineExtension },
+            }
+        },
+    }
+
+    const { refs, floatingStyles, context, middlewareData } = useFloating({
         placement: "right",
         open: isOpen,
         onOpenChange: setIsOpen,
-        middleware: [arrow({ element: arrowRef })],
+        middleware: [alignToRowEnd],
+        whileElementsMounted: autoUpdate,
     })
+
+    const setRowReference = useCallback(
+        (element: HTMLDivElement | null) => {
+            rowReferenceRef.current = element
+            refs.setReference(element)
+            refs.setPositionReference(
+                tooltipPositionReferenceRef.current ?? element,
+            )
+        },
+        [refs],
+    )
+
+    const setTooltipPositionReference = useCallback(
+        (element: HTMLElement | null) => {
+            tooltipPositionReferenceRef.current = element
+            refs.setPositionReference(element ?? rowReferenceRef.current)
+        },
+        [refs],
+    )
+
+    const connectionLineExtension =
+        (middlewareData.alignToRowEnd?.connectionLineExtension as
+            | number
+            | undefined) ?? 0
 
     // fade-in and fade-out transition styles
     const { isMounted, styles } = useTransitionStyles(context, {
@@ -94,18 +132,14 @@ export default function Tooltip({
         role,
     ])
 
-    useEffect(() => {
-        if (positionReference.current) {
-            refs.setPositionReference(positionReference.current)
-        }
-    }, [positionReference, refs])
-
     return (
         <div>
-            <div ref={refs.setReference} {...getReferenceProps()}>
-                {children}
-            </div>
-            {isMounted && hasHelpText && (
+            <TooltipPositionProvider value={setTooltipPositionReference}>
+                <div ref={setRowReference} {...getReferenceProps()}>
+                    {children}
+                </div>
+            </TooltipPositionProvider>
+            {isMounted && (
                 <div
                     ref={refs.setFloating}
                     style={floatingStyles}
@@ -126,7 +160,11 @@ export default function Tooltip({
                              */}
                             <div
                                 className="align-self-stretch connection-line"
-                                ref={arrowRef}
+                                style={
+                                    {
+                                        "--connection-line-extension": `${connectionLineExtension}px`,
+                                    } as CSSProperties
+                                }
                             >
                                 {/*
                                  * We need another flexbox for centering the line

@@ -137,74 +137,71 @@ export default function JobForm({ module, onSubmit }: JobFormProps) {
                     }) => (
                         <form onSubmit={handleSubmit} noValidate>
                             <Row>
-                                {/* grouping everything in a fragment is necessary here  */}
-                                <>
-                                    <div className="form-check form-check-inline">
-                                        <Field
-                                            name="inputType"
-                                            id="inputTextOption"
-                                            component="input"
-                                            type="radio"
-                                            className="form-check-input"
-                                            value="text"
-                                            initialValue="text"
-                                        />
-                                        <label
-                                            htmlFor="inputTextOption"
-                                            className="form-check-label"
-                                        >
-                                            Enter text
-                                        </label>
-                                    </div>
-                                    <div className="form-check form-check-inline">
-                                        <Field
-                                            name="inputType"
-                                            id="inputFileOption"
-                                            component="input"
-                                            type="radio"
-                                            className="form-check-input"
-                                            value="file"
-                                        />
-                                        <label
-                                            htmlFor="inputFileOption"
-                                            className="form-check-label"
-                                        >
-                                            Upload file
-                                        </label>
-                                    </div>
-                                    <div className="form-check form-check-inline">
-                                        <Field
-                                            name="inputType"
-                                            id="inputDrawOption"
-                                            component="input"
-                                            type="radio"
-                                            className="form-check-input"
-                                            value="draw"
-                                        />
-                                        <label
-                                            htmlFor="inputDrawOption"
-                                            className="form-check-label"
-                                        >
-                                            Draw molecule
-                                        </label>
-                                    </div>
-                                    <div className="form-check form-check-inline">
-                                        <Field
-                                            name="inputType"
-                                            id="inputExampleOption"
-                                            component="input"
-                                            type="radio"
-                                            className="form-check-input"
-                                            value="example"
-                                        />
-                                        <label
-                                            htmlFor="inputExampleOption"
-                                            className="form-check-label"
-                                        >
-                                            Use example
-                                        </label>
-                                    </div>
-                                </>
+                                <div className="form-check form-check-inline">
+                                    <Field
+                                        name="inputType"
+                                        id="inputTextOption"
+                                        component="input"
+                                        type="radio"
+                                        className="form-check-input"
+                                        value="text"
+                                        initialValue="text"
+                                    />
+                                    <label
+                                        htmlFor="inputTextOption"
+                                        className="form-check-label"
+                                    >
+                                        Enter text
+                                    </label>
+                                </div>
+                                <div className="form-check form-check-inline">
+                                    <Field
+                                        name="inputType"
+                                        id="inputFileOption"
+                                        component="input"
+                                        type="radio"
+                                        className="form-check-input"
+                                        value="file"
+                                    />
+                                    <label
+                                        htmlFor="inputFileOption"
+                                        className="form-check-label"
+                                    >
+                                        Upload file
+                                    </label>
+                                </div>
+                                <div className="form-check form-check-inline">
+                                    <Field
+                                        name="inputType"
+                                        id="inputDrawOption"
+                                        component="input"
+                                        type="radio"
+                                        className="form-check-input"
+                                        value="draw"
+                                    />
+                                    <label
+                                        htmlFor="inputDrawOption"
+                                        className="form-check-label"
+                                    >
+                                        Draw molecule
+                                    </label>
+                                </div>
+                                <div className="form-check form-check-inline">
+                                    <Field
+                                        name="inputType"
+                                        id="inputExampleOption"
+                                        component="input"
+                                        type="radio"
+                                        className="form-check-input"
+                                        value="example"
+                                    />
+                                    <label
+                                        htmlFor="inputExampleOption"
+                                        className="form-check-label"
+                                    >
+                                        Use example
+                                    </label>
+                                </div>
                             </Row>
                             <DynamicInput
                                 exampleSmiles={module.exampleSmiles}

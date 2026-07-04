@@ -1,5 +1,4 @@
 import classNames from "classnames"
-import { useRef } from "react"
 import { Field, useField } from "react-final-form"
 import MoleculeEditor from "../moleculeEditor/MoleculeEditor"
 import FileField from "./FileField"
@@ -20,20 +19,10 @@ export default function DynamicInput({ exampleSmiles }: DynamicInputProps) {
         input: { value: inputType },
     } = useField("inputType", { subscription: { value: true } })
 
-    // The file field contains a drop zone and a list of uploaded files. We want to
-    // position the tooltip at the center of the *upload zone* (ignoring the list of
-    // uploaded files). To do this, we need to get a reference to the upload zone and
-    // pass it to the tooltip component.
-    const inputTextFieldTooltipPositionReference =
-        useRef<HTMLTextAreaElement>(null)
-    const fileFieldTooltipPositionReference = useRef<HTMLElement>(null)
-    const inputDrawnTooltipPositionReference = useRef<HTMLElement>(null)
-
     return (
         <>
             <Row
                 helpText="Use any of the formats SMILES, SDF or InChI."
-                positionReference={inputTextFieldTooltipPositionReference}
                 className={classNames({
                     "d-none": inputType !== "text",
                 })}
@@ -42,7 +31,6 @@ export default function DynamicInput({ exampleSmiles }: DynamicInputProps) {
                     name="input"
                     id="input"
                     rows={5}
-                    positionReference={inputTextFieldTooltipPositionReference}
                     aria-describedby="inputHelp"
                     initialValue=""
                     placeholder={placeholderSmiles}
@@ -57,7 +45,6 @@ export default function DynamicInput({ exampleSmiles }: DynamicInputProps) {
                 className={classNames({
                     "d-none": inputType !== "file",
                 })}
-                positionReference={fileFieldTooltipPositionReference}
             >
                 <Field
                     name="inputFile"
@@ -68,7 +55,6 @@ export default function DynamicInput({ exampleSmiles }: DynamicInputProps) {
                     //    -> this triggers another rerender
                     component={FileField}
                     aria-describedby="inputFileHelp"
-                    positionReference={fileFieldTooltipPositionReference}
                     multiple
                 />
             </Row>
@@ -84,7 +70,6 @@ export default function DynamicInput({ exampleSmiles }: DynamicInputProps) {
                     initialValue={""}
                     component={MoleculeEditorField}
                     aria-describedby="inputDrawnHelp"
-                    positionReference={inputDrawnTooltipPositionReference}
                 />
             </Row>
 

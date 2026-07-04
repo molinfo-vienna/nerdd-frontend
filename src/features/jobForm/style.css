@@ -1,6 +1,16 @@
 .connection-line {
-    /* length of the line connecting tooltip and its reference element */
-    width: 100px;
+    /* Keep tooltip text aligned while extending the line to shorter controls. */
+    --connection-line-extension: 0px;
+    width: calc(100px + var(--connection-line-extension));
+    margin-left: calc(-1 * var(--connection-line-extension));
+}
+
+.connection-line .border-bottom {
+    height: 1px;
+    border-bottom: 0 !important;
+    background-image: repeating-linear-gradient(to right,
+            var(--bs-border-color) 0 8px,
+            transparent 8px 14px);
 }
 
 .tooltip-text {
