@@ -1,3 +1,11 @@
+## [1.3.64](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.63...v1.3.64) (2026-08-09)
+
+
+### Bug Fixes
+
+* Adapt user interface to API changes ([3bccdd9](https://github.com/molinfo-vienna/nerdd-frontend/commit/3bccdd9133068e020ed81d29c21ea6b0c7b17475))
+* Move fields from Module to QueueStats ([91c9c87](https://github.com/molinfo-vienna/nerdd-frontend/commit/91c9c8756758ebbc925233248dfc97f74193073d))
+
 ## [1.3.63](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.62...v1.3.63) (2026-07-04)
 
 
