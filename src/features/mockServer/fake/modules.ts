@@ -453,17 +453,6 @@ export function generateModuleConfig(i: number): Module {
         about: generateAbout(i),
         output_formats: ["csv", "sdf"],
         batch_size: faker.number.int({ min: 10, max: 1000 }),
-        seconds_per_molecule: faker.number.float({
-            min: 0.01,
-            max: 30,
-            precision: 0.01,
-        }),
-        startupTimeSeconds: faker.number.float({
-            min: 0.01,
-            max: 30,
-            precision: 0.01,
-        }),
-        max_num_molecules: faker.number.int({ min: 1000, max: 1000000 }),
     }
 }
 
@@ -483,5 +472,17 @@ export function generateModuleQueueStats(moduleId: string) {
         waiting_time_minutes: faker.number.int({ min: 0, max: 10000 }),
         num_active_jobs: faker.number.int({ min: 0, max: 100 }),
         estimate: faker.helpers.arrayElement(["upper_bound", "lower_bound"]),
+        seconds_per_molecule: faker.number.float({
+            min: 0.01,
+            max: 30,
+            precision: 0.01,
+        }),
+        startup_time_seconds: faker.number.float({
+            min: 0.01,
+            max: 30,
+            precision: 0.01,
+        }),
+        max_num_molecules: faker.number.int({ min: 1000, max: 1000000 }),
+        checkpoint_size: faker.number.int({ min: 1, max: 1000 }),
     }
 }

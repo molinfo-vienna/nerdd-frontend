@@ -76,8 +76,8 @@ function ResultsProgress({ module, job }: ResultsProgressProps) {
                       // then it needs to process the first batch (firstBatchSize * secondsPerMolecule)
                       // subtract the time that has already passed (timePassedSeconds)
                       Math.ceil(
-                          module.startupTimeSeconds +
-                              firstBatchSize * module.secondsPerMolecule -
+                          data.startupTimeSeconds +
+                              firstBatchSize * data.secondsPerMolecule -
                               timePassedSeconds,
                       ),
                       60,

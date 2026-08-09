@@ -111,7 +111,15 @@ export default function CreateJobHeader({ module }: CreateJobHeaderProps) {
                                     <FaWeightScale size={50} />
                                 </Tile.Icon>
                                 <Tile.Highlight>
-                                    {module.maxNumMolecules} molecules
+                                    {isLoadingQueueStats ? (
+                                        <span className="placeholder">
+                                            1,000 molecules
+                                        </span>
+                                    ) : queueStats ? (
+                                        `${queueStats.maxNumMolecules} molecules`
+                                    ) : (
+                                        "unknown"
+                                    )}
                                 </Tile.Highlight>
                                 <Tile.Label>Maximum job size</Tile.Label>
                             </Tile>
@@ -135,16 +143,26 @@ export default function CreateJobHeader({ module }: CreateJobHeaderProps) {
                                     <IoSpeedometer size={50} />
                                 </Tile.Icon>
                                 <Tile.Highlight>
-                                    <ProcessingTimeTangle
-                                        maxNumMolecules={module.maxNumMolecules}
-                                        batchSize={module.batchSize}
-                                        secondsPerMolecule={
-                                            module.secondsPerMolecule
-                                        }
-                                        startupTimeSeconds={
-                                            module.startupTimeSeconds
-                                        }
-                                    />
+                                    {isLoadingQueueStats ? (
+                                        <span className="placeholder">
+                                            10 min
+                                        </span>
+                                    ) : queueStats ? (
+                                        <ProcessingTimeTangle
+                                            maxNumMolecules={
+                                                queueStats.maxNumMolecules
+                                            }
+                                            batchSize={module.batchSize}
+                                            secondsPerMolecule={
+                                                queueStats.secondsPerMolecule
+                                            }
+                                            startupTimeSeconds={
+                                                queueStats.startupTimeSeconds
+                                            }
+                                        />
+                                    ) : (
+                                        "unknown"
+                                    )}
                                 </Tile.Highlight>
                                 <Tile.Label>
                                     Estimated processing time

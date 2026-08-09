@@ -26,9 +26,6 @@ export interface Module {
     partners: Partner[]
     outputFormats: string[]
     batchSize: number
-    secondsPerMolecule: number
-    startupTimeSeconds: number
-    maxNumMolecules: number
 }
 
 export default Module
