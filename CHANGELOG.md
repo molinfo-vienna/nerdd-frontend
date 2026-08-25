@@ -1,3 +1,12 @@
+## [1.3.65](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.64...v1.3.65) (2026-08-25)
+
+
+### Bug Fixes
+
+* Adapt index.html ([37db6d8](https://github.com/molinfo-vienna/nerdd-frontend/commit/37db6d807b017fe9a91af19d2a30a444958f9ac9))
+* Configure a PWA service worker ([38fe7f2](https://github.com/molinfo-vienna/nerdd-frontend/commit/38fe7f2648a2d3e3d95e10b7a0157dc354c8bc86))
+* Exempt service worker code from cache ([c7a1e28](https://github.com/molinfo-vienna/nerdd-frontend/commit/c7a1e28fbfffbfadd8b1f040bfdf49766b4039fe))
+
 ## [1.3.64](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.63...v1.3.64) (2026-08-09)
 
 
