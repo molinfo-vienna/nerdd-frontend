@@ -1,3 +1,10 @@
+## [1.3.66](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.65...v1.3.66) (2026-08-29)
+
+
+### Bug Fixes
+
+* Add missing slash ([643ba1f](https://github.com/molinfo-vienna/nerdd-frontend/commit/643ba1f71881788b3042895703a31ed1bd89d9b6))
+
 ## [1.3.65](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.64...v1.3.65) (2026-08-25)
 
 
