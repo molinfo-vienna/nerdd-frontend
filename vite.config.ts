@@ -49,7 +49,7 @@ export default defineConfig(({ mode }) => ({
             workbox: {
                 // Precache only the Vite application shell.
                 globPatterns: ["assets/**/*.{js,css,woff,woff2}", "index.html"],
-                navigateFallbackDenylist: [/^\/api/],
+                navigateFallbackDenylist: [/^\/api\//],
             },
         }),
         visualizer({
