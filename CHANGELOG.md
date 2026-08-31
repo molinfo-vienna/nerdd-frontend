@@ -1,3 +1,10 @@
+## [1.3.67](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.66...v1.3.67) (2026-08-31)
+
+
+### Bug Fixes
+
+* Overwrite Alpine's default nginx config ([a4011b5](https://github.com/molinfo-vienna/nerdd-frontend/commit/a4011b54569968535a400dd818484073d381ea45))
+
 ## [1.3.66](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.65...v1.3.66) (2026-08-29)
 
 
