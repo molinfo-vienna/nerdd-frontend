@@ -1,3 +1,17 @@
+## [1.3.68](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.67...v1.3.68) (2026-09-16)
+
+
+### Bug Fixes
+
+* Add a debugging route for maintenance page ([4fa389e](https://github.com/molinfo-vienna/nerdd-frontend/commit/4fa389e4e31f98c1d09658da79ace08e1a9d2793))
+* Add structure images for maintenance molecules ([ff42639](https://github.com/molinfo-vienna/nerdd-frontend/commit/ff42639b5a16fec11567ee68090ea50a31e1e284))
+* Add styles for molecule renderings ([d8fb3c9](https://github.com/molinfo-vienna/nerdd-frontend/commit/d8fb3c98a90dad506c12b942d804910e0d31530f))
+* Create component for molecule animation ([00549db](https://github.com/molinfo-vienna/nerdd-frontend/commit/00549db1aa3c9149ec8c2d13a065983588043856))
+* Create MaintenancePage component ([96efc61](https://github.com/molinfo-vienna/nerdd-frontend/commit/96efc61e8357f8b5ff5ca0c216c269741934acf8))
+* Extract ModuleDropdown in separate component ([c9221c1](https://github.com/molinfo-vienna/nerdd-frontend/commit/c9221c104e03b1f2026c9a8219dedf5dc54cccf1))
+* Forward error 503 to MaintenancePage ([c539b23](https://github.com/molinfo-vienna/nerdd-frontend/commit/c539b23da437544b5a09dfe25373de429641db88))
+* Remove developmentVersion flag in Layout ([2a1ce0a](https://github.com/molinfo-vienna/nerdd-frontend/commit/2a1ce0aa167993375a1a8e5359cffdd5535ab0b7))
+
 ## [1.3.67](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.66...v1.3.67) (2026-08-31)
 
 
