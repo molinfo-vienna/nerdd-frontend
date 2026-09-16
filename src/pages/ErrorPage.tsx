@@ -2,12 +2,17 @@ import { NerddError } from "@/app/errors"
 import classNames from "classnames"
 import { BsExclamationCircle } from "react-icons/bs"
 import Layout from "./Layout"
+import MaintenancePage from "./MaintenancePage"
 
 type ErrorPageProps = {
     error: NerddError
 }
 
 export default function ErrorPage({ error }: ErrorPageProps) {
+    if (error.status === 503) {
+        return <MaintenancePage error={error} />
+    }
+
     // pad the status code to 3 digits, e.g. 20 -> 020
     const statusString = error.status.toString().padStart(3, "0")
 

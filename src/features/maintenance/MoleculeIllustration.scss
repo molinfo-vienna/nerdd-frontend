@@ -1,0 +1,72 @@
+.molecule-illustration {
+
+    &__halo {
+        fill: var(--bs-primary-bg-subtle);
+        opacity: 0.35;
+    }
+
+    &__guides {
+        stroke: var(--bs-primary);
+        stroke-width: 1;
+        opacity: 0.15;
+
+        circle {
+            stroke-dasharray: 2 9;
+        }
+    }
+
+    &__reactive-atom {
+        circle {
+            fill: none !important;
+            stroke: currentColor;
+            stroke-width: 2.5;
+        }
+
+        .molecule-illustration__pulse {
+            fill: none !important;
+            stroke: currentColor;
+            stroke-width: 2.5;
+            opacity: 0.35;
+        }
+    }
+}
+
+.text-carbon {
+    color: var(--bs-gray-900) !important;
+    fill: currentColor !important;
+}
+
+.text-nitrogen {
+    color: var(--bs-blue) !important;
+    fill: currentColor !important;
+}
+
+.text-oxygen {
+    color: var(--bs-red) !important;
+    fill: currentColor !important;
+}
+
+.text-sulfur {
+    color: var(--bs-yellow) !important;
+    fill: currentColor !important;
+}
+
+.text-phosphorus {
+    color: var(--bs-orange) !important;
+    fill: currentColor !important;
+}
+
+.text-chlorine {
+    color: var(--bs-green) !important;
+    fill: currentColor !important;
+}
+
+.text-fluorine {
+    color: var(--bs-cyan) !important;
+    fill: currentColor !important;
+}
+
+.text-hydrogen {
+    color: var(--bs-gray-600) !important;
+    fill: currentColor !important;
+}

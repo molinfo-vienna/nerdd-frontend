@@ -4,6 +4,7 @@ import { createBrowserRouter } from "react-router-dom"
 import ForwardError from "@/features/errorHandling/ForwardError"
 import LandingPage from "@/pages/LandingPage"
 import LoadingPage from "@/pages/LoadingPage"
+import MaintenancePage from "@/pages/MaintenancePage"
 
 const ApiDocsPage = lazy(() => import("@/pages/ApiDocsPage"))
 const CreateJobPage = lazy(() => import("@/pages/CreateJobPage"))
@@ -65,6 +66,13 @@ export default function createRouter(children: React.ReactNode) {
                     path: "/loading",
                     id: "loading",
                     element: <LoadingPage />,
+                },
+                {
+                    // this route only exists for debugging purposes
+                    // (no link should point to this page)
+                    path: "/maintenance",
+                    id: "maintenance",
+                    element: <MaintenancePage />,
                 },
             ],
         },
