@@ -1,6 +1,6 @@
 import { NerddError } from "@/app/errors"
 import MoleculeIllustration from "@/features/maintenance/MoleculeIllustration"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { FaArrowRight, FaRotateRight } from "react-icons/fa6"
 import Layout from "./Layout"
 
@@ -86,6 +86,8 @@ const MAINTENANCE_SVGS: MaintenanceMolecule[] = [
     },
 ]
 
+const svgCache = new Map<string, string>()
+
 type MaintenancePageProps = {
     error?: NerddError
 }
@@ -98,6 +100,58 @@ export default function MaintenancePage({ error }: MaintenancePageProps) {
         Math.floor(Math.random() * MAINTENANCE_SVGS.length),
     )
     const molecule = MAINTENANCE_SVGS[moleculeIndex]
+    const [svgText, setSvgText] = useState<string | null>(
+        () => svgCache.get(molecule.src) ?? null,
+    )
+
+    // prefetch all SVGs in the background
+    useEffect(() => {
+        MAINTENANCE_SVGS.forEach((m) => {
+            if (!svgCache.has(m.src)) {
+                fetch(m.src)
+                    .then((res) => res.text())
+                    .then((text) => svgCache.set(m.src, text))
+                    .catch(() => { })
+            }
+        })
+    }, [])
+
+    useEffect(() => {
+        const cached = svgCache.get(molecule.src)
+        if (cached) {
+            setSvgText(cached)
+            return
+        }
+
+        let active = true
+        setSvgText(null)
+
+        const startTime = Date.now()
+        // enforce minimum loading duration on the first/uncached load to prevent a "blink" when switching molecules
+        const minLoadingDuration = 400
+
+        fetch(molecule.src)
+            .then((res) => res.text())
+            .then((text) => {
+                svgCache.set(molecule.src, text)
+                if (!active) return
+
+                const elapsed = Date.now() - startTime
+                const remaining = Math.max(0, minLoadingDuration - elapsed)
+                setTimeout(() => {
+                    if (!active) return
+                    setSvgText(text)
+                }, remaining)
+            })
+            .catch(() => {
+                if (!active) return
+            })
+
+        // cancel fetch if component unmounts or molecule changes before fetch returns
+        return () => {
+            active = false
+        }
+    }, [molecule.src])
 
     const handleNextMolecule = () => {
         setMoleculeIndex((prev) => (prev + 1) % MAINTENANCE_SVGS.length)
@@ -119,14 +173,30 @@ export default function MaintenancePage({ error }: MaintenancePageProps) {
                             system and optimize the infrastructure. Please check
                             back in a few moments.
                         </p>
-                        <p className="text-body-secondary lh-lg mb-4 d-none d-lg-block">
-                            Living organisms need maintenance too. The molecule
-                            on the right is{" "}
-                            <strong className="text-nowrap">
-                                {molecule.title}
-                            </strong>
-                            , which {molecule.description}.
-                        </p>
+                        {!svgText ? (
+                            <div className="placeholder-glow text-body-secondary lh-lg mb-4 d-none d-lg-block">
+                                <div className="row gx-2">
+                                    <div className="col-2"><span className="placeholder w-100"></span></div>
+                                    <div className="col-3"><span className="placeholder w-100"></span></div>
+                                    <div className="col-3"><span className="placeholder w-100"></span></div>
+                                    <div className="col-4"><span className="placeholder w-100"></span></div>
+                                </div>
+                                <div className="row gx-2">
+                                    <div className="col-3"><span className="placeholder w-100"></span></div>
+                                    <div className="col-4"><span className="placeholder w-100"></span></div>
+                                    <div className="col-3"><span className="placeholder w-100"></span></div>
+                                </div>
+                            </div>
+                        ) : (
+                            <p className="text-body-secondary lh-lg mb-4 d-none d-lg-block">
+                                Living organisms need maintenance too. The
+                                molecule on the right is{" "}
+                                <strong className="text-nowrap">
+                                    {molecule.title}
+                                </strong>
+                                , which {molecule.description}.
+                            </p>
+                        )}
                         <button
                             type="button"
                             className="btn btn-primary text-nowrap d-inline-flex align-items-center me-3"
@@ -158,7 +228,7 @@ export default function MaintenancePage({ error }: MaintenancePageProps) {
                         aria-hidden="true"
                     >
                         <div className="mx-auto">
-                            <MoleculeIllustration src={molecule.src} />
+                            <MoleculeIllustration svgText={svgText} />
                         </div>
                     </div>
                 </div>
