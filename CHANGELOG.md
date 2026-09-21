@@ -1,3 +1,12 @@
+## [1.3.69](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.68...v1.3.69) (2026-09-21)
+
+
+### Bug Fixes
+
+* Add MoleculePlaceholder component ([a3b5f32](https://github.com/molinfo-vienna/nerdd-frontend/commit/a3b5f32918961c608afcb30ed6795052a4f9f36d))
+* Move loading mechanic to MaintenancePage ([5c114e1](https://github.com/molinfo-vienna/nerdd-frontend/commit/5c114e1aef088df8a00d04c3d7d074560ff8b48e))
+* Show MoleculePlaceholder while loading a molecule svg ([9b3a4a1](https://github.com/molinfo-vienna/nerdd-frontend/commit/9b3a4a1e79dd717877d2a21a9a1b827aa9386cc8))
+
 ## [1.3.68](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.67...v1.3.68) (2026-09-16)
 
 
