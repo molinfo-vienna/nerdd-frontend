@@ -1,3 +1,12 @@
+## [1.3.70](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.69...v1.3.70) (2026-11-02)
+
+
+### Bug Fixes
+
+* Cache /api/modules on client ([13ff8bd](https://github.com/molinfo-vienna/nerdd-frontend/commit/13ff8bdea468762211d8c2ae4cd41442b98b7709))
+* Cache /api/modules/:moduleId ([656448f](https://github.com/molinfo-vienna/nerdd-frontend/commit/656448f973bdf67e949fb81e9373e95784e0fd7f))
+* Preload /api/modules in index.html ([dd5cc4e](https://github.com/molinfo-vienna/nerdd-frontend/commit/dd5cc4efa77ad4fe5a4ea04f362870e70e5eb6c8))
+
 ## [1.3.69](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.68...v1.3.69) (2026-09-21)
 
 
