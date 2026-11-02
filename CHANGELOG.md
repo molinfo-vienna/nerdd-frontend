@@ -1,3 +1,10 @@
+## [1.3.71](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.70...v1.3.71) (2026-11-02)
+
+
+### Bug Fixes
+
+* Update browserslist-db ([96f74f2](https://github.com/molinfo-vienna/nerdd-frontend/commit/96f74f21b324b7301142648e58687db53c32b3ba))
+
 ## [1.3.70](https://github.com/molinfo-vienna/nerdd-frontend/compare/v1.3.69...v1.3.70) (2026-11-02)
 
 
