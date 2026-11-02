@@ -7,6 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="Next-generation E-Resource for Drug Discovery" />
     <link rel="manifest" href="/manifest.json" />
+
+    <!-- Speed up landing page by loading /api/modules in parallel -->
+    <link rel="preload" href="/api/modules" as="fetch" crossorigin="anonymous" />
+
     <title>NERDD</title>
 </head>
 
